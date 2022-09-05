@@ -1,14 +1,16 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Navbar from "./components/utils/Navbar";
-import Planner from "./components/plannerPage/Planner";
-import Router from "./shared/Router";
+
+import './App.css';
+import Layout from './components/utils/Layout';
+import Router from './shared/Router';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <>
-      <Router />
-    </>
+    <div>
+      <Layout>
+        <Router />
+      </Layout>
+    </div>
   );
 }
 
