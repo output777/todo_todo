@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainPage from '../pages/MainPage';
@@ -21,4 +22,4 @@ const Router = () => {
   )
 }
 
-export default Router
+export default Router;
