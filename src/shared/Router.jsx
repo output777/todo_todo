@@ -1,12 +1,10 @@
-
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import MainPage from '../pages/MainPage';
-import LoginPage from '../pages/LoginPage';
-import PlannerPage from '../pages/PlannerPage';
-import StatisticsPage from '../pages/StatisticsPage';
-import MyPage from '../pages/MyPage';
-
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "../pages/MainPage";
+import LoginPage from "../pages/LoginPage";
+import PlannerPage from "../pages/PlannerPage";
+import StatisticsPage from "../pages/StatisticsPage";
+import MyPage from "../pages/MyPage";
 
 const Router = () => {
   return (
@@ -19,7 +17,7 @@ const Router = () => {
         <Route path='/statistics' element={<StatisticsPage />} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default Router;
