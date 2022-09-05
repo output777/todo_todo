@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Layout from "../components/utils/Layout";
+import Main from "../components/mainPage/Main";
 
 const MainPage = () => {
   return (
-    <div>MainPage</div>
-  )
-}
+    <Layout>
+      <Main />
+    </Layout>
+  );
+};
 
-export default MainPage
+export default MainPage;
