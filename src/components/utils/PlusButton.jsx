@@ -3,18 +3,14 @@ import styled from "styled-components";
 import plusBottonSvg from "../../assets/img/plusBottonSvg.svg";
 
 const PlusButton = () => {
-  return <StPlusButton></StPlusButton>;
+  return <StPlusButton src={plusBottonSvg} />;
 };
 
 export default PlusButton;
 
-const StPlusButton = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: #ff8f27;
-  border-radius: 200px;
-
-  position: absolute;
-  right: 5%;
-  bottom: 13%;
+const StPlusButton = styled.img`
+  position: fixed;
+  /* float: right; */
+  right: 3%;
+  bottom: 10%;
 `;

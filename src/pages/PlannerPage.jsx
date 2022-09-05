@@ -14,4 +14,7 @@ const PlannerPage = () => {
 
 export default PlannerPage;
 
-const StBackground = styled.div``;
+const Stdiv = styled.div`
+  background-color: #fafafa;
+  height: 100vh;
+`;

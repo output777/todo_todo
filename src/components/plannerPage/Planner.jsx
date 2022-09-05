@@ -17,7 +17,7 @@ const Planner = () => {
         <img src={calendarSvg} />
       </StDateDiv>
       <StAchievementRateDiv>
-        <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv>
+        {/* <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv> */}
         <StAMentionDiv>거의 다 왔어요!</StAMentionDiv>
 
         <StProgressBarDiv>
@@ -31,9 +31,9 @@ const Planner = () => {
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StNothingTodoNoticeDiv>
-        <p>추가된 투두리스트가 없습니다!</p>
-        <p>우측 하단에 있는 수정 버튼을 눌러</p>
-        <p>투두리스트를 추가해주세요.</p>
+        <div>추가된 투두리스트가 없습니다!</div>
+        <div>우측 하단에 있는 수정 버튼을 눌러</div>
+        <div>투두리스트를 추가해주세요.</div>
       </StNothingTodoNoticeDiv>
       <StTodosDiv>
         <StTodoNotDone>
@@ -61,7 +61,7 @@ const StDiv = styled.div`
   position: static;
   z-index: -1;
   background-color: #fafafa;
-  padding-bottom: 250px;
+  padding-bottom: 100%;
 `;
 const StDateDiv = styled.div`
   display: flex;
@@ -106,7 +106,11 @@ const StNothingTodoNoticeDiv = styled.div`
   width: 60%;
   margin: 10% auto;
   text-align: center;
-  color: grey;
+  color: #9f9e9e;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 15px;
 `;
 
 const StSpan = styled.span`
@@ -144,7 +148,7 @@ const StTodoDone = styled.div`
   margin: auto;
   border-radius: 40px;
   border: 2px solid #efefef;
-  background-color: #ffffff;
+  background-color: #fafafa;
   color: #d7d5d5;
 
   display: flex;

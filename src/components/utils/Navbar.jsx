@@ -71,12 +71,13 @@ const Navbar = () => {
 export default Navbar;
 
 const StNav = styled.div`
-  width: 100%;
   position: fixed;
+  z-index: 2;
+  width: 100%;
   height: 10%;
   bottom: 0;
-  z-index: 2;
   border-top: 1px solid #ddd;
+  background-color: white;
 
   display: flex;
   flex-direction: row;
