@@ -1,11 +1,8 @@
-import './App.css';
+import "./App.css";
+import Router from "../src/shared/Router";
 
 function App() {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;
