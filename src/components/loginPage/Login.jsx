@@ -6,8 +6,20 @@ import Phrases from "../../assets/img/loginPage/Phrases.svg";
 import kakaoLogin from "../../assets/img/loginPage/kakaoLogin.svg";
 import naverLogin from "../../assets/img/loginPage/naverLogin.svg";
 import googleLogin from "../../assets/img/loginPage/googleLogin.svg";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
+
+  const onKakaoLoginHandler = () => {
+    window.location.href = 'https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Fuser%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3D7961d1dae4bcc3e0b41dac5ca7150775';
+
+    // const PARAMS = new URL(document.location).searchParams;
+    // const KAKAO_CODE = PARAMS.get('code');
+    // console.log(KAKAO_CODE);
+  }
+
+
+
   return (
     <StLoginContainer>
       <StPhrases src={Phrases} />
@@ -17,7 +29,7 @@ const Login = () => {
       </StLogobox>
 
       <StLoginBtnbox>
-        <StKakaoBtn src={kakaoLogin} />
+        <StKakaoBtn onClick={onKakaoLoginHandler}>카카오 로그인</StKakaoBtn>
         <StNaverBtn src={naverLogin} />
         <StGoogleBtn src={googleLogin} />
       </StLoginBtnbox>
@@ -60,7 +72,7 @@ const StLoginBtnbox = styled.div`
   position: relative;
   left: 30px;
 `;
-const StKakaoBtn = styled.img`
+const StKakaoBtn = styled.button`
   margin-bottom: -5%;
 `;
 const StNaverBtn = styled.img`
