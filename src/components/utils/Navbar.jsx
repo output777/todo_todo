@@ -78,9 +78,6 @@ const StNav = styled.div`
   z-index: 2;
   border-top: 1px solid #ddd;
 
-  /* top: 100px; */
-  /* box-sizing: border-box; */
-  /* background-color: #fff; */
   display: flex;
   flex-direction: row;
   align-items: center;
