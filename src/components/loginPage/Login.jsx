@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/loginPage/logo.svg";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
@@ -7,15 +7,22 @@ import kakaoLogin from "../../assets/img/loginPage/kakaoLogin.svg";
 import naverLogin from "../../assets/img/loginPage/naverLogin.svg";
 import googleLogin from "../../assets/img/loginPage/googleLogin.svg";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
 
-  const onKakaoLoginHandler = () => {
-    window.location.href = 'https://accounts.kakao.com/login?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fresponse_type%3Dcode%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Fuser%252Fkakao%252Fcallback%26through_account%3Dtrue%26client_id%3D7961d1dae4bcc3e0b41dac5ca7150775';
 
-    // const PARAMS = new URL(document.location).searchParams;
-    // const KAKAO_CODE = PARAMS.get('code');
-    // console.log(KAKAO_CODE);
+
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI
+  console.log(REDIRECT_URI);
+
+  const onKakaoLoginHandler = async () => {
+    // CPRS ERROR 발생
+    // const data = await axios.get(`https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`);
+
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    console.log(window.location.href)
   }
 
 
@@ -54,6 +61,7 @@ const StLogo = styled.img`
   left: 15px;
   top: 10px;
 `;
+
 const StLogoPencil = styled.img`
   width: 38px;
   height: 38px;

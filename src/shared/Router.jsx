@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import PlannerPage from "../pages/PlannerPage";
 import StatisticsPage from "../pages/StatisticsPage";
 import MyPage from "../pages/MyPage";
+import KakaoLogin from "../components/loginPage/KakaoLogin";
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path='/my' element={<MyPage />} />
         <Route path='/planner' element={<PlannerPage />} />
         <Route path='/statistics' element={<StatisticsPage />} />
+        <Route path='/user/kakao/callback' element={<KakaoLogin />} />
       </Routes>
     </BrowserRouter>
   );
