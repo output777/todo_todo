@@ -6,6 +6,7 @@ import { __kakaoLogin } from '../../redux/modules/loginSlice';
 
 const KakaoLogin = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY
@@ -19,11 +20,12 @@ const KakaoLogin = () => {
     console.log('rendering~~')
     // get을 안해도 저절로 실행이 되네?
     dispatch(__kakaoLogin(KAKAO_CODE))
+    // navigate('/my')
   }, [])
 
 
   return (
-    <div>KakaoLogin</div>
+    <div>로딩중...</div>
   )
 }
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI
+const KAKAO_BASE_URL = process.env.REACT_APP_KAKAO_BASE_URL
 
 const initialState = {
   token: false,
@@ -10,7 +10,7 @@ const initialState = {
 export const __kakaoLogin = createAsyncThunk('kakao/login', async (payload, thunkAPI) => {
   console.log(payload)
   try {
-    const data = await axios.get(`http://13.125.241.100/user/kakao/callback?code=${payload}`)
+    const data = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`)
     console.log(data);
     return thunkAPI.fulfillWithValue(data);
   } catch (error) {
