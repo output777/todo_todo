@@ -8,25 +8,30 @@ const initialState = {
 }
 
 export const __kakaoLogin = createAsyncThunk('kakao/login', async (payload, thunkAPI) => {
-  console.log(payload)
   try {
-    const data = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`)
+    const { data } = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`)
     console.log(data);
+
+    localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
+
+
     return thunkAPI.fulfillWithValue(data);
   } catch (error) {
     console.log(error);
+    // window.alert('로그인에 실패하였습니다.')
     return thunkAPI.rejectWithValue(error);
   }
 })
 
-export const kakaoLoginSlice = createSlice({
-  name: 'kakaoLogin',
+
+export const loginSlice = createSlice({
+  name: 'loginSlice',
   initialState,
   reducers: {},
   extraReducers: {
-
   }
 })
 
-export const { } = kakaoLoginSlice.actions;
-export default kakaoLoginSlice.reducer;
+export const { } = loginSlice.actions;
+export default loginSlice.reducer;
