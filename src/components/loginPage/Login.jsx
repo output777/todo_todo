@@ -10,11 +10,9 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
-
-
-
-  const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY
-  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI
+  //카카오 로그인
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
   console.log(REDIRECT_URI);
 
   const onKakaoLoginHandler = async () => {
@@ -22,10 +20,19 @@ const Login = () => {
     // const data = await axios.get(`https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`);
 
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    console.log(window.location.href)
-  }
+    console.log(window.location.href);
+  };
 
+  //구글 로그인
 
+  const GOOGLE_REST_API_KEY = process.env.REACT_APP_GOOGLE_REST_API_KEY;
+  const GOOGLE_REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+  console.log(GOOGLE_REDIRECT_URI);
+
+  const onGoogleLoginHandler = async () => {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${GOOGLE_REST_API_KEY}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code`;
+    console.log(window.location.href);
+  };
 
   return (
     <StLoginContainer>
@@ -38,7 +45,7 @@ const Login = () => {
       <StLoginBtnbox>
         <StKakaoBtn onClick={onKakaoLoginHandler}>카카오 로그인</StKakaoBtn>
         <StNaverBtn src={naverLogin} />
-        <StGoogleBtn src={googleLogin} />
+        <StGoogleBtn onClick={onGoogleLoginHandler}>구글 로그인</StGoogleBtn>
       </StLoginBtnbox>
     </StLoginContainer>
   );
@@ -86,6 +93,6 @@ const StKakaoBtn = styled.button`
 const StNaverBtn = styled.img`
   margin-bottom: -5%;
 `;
-const StGoogleBtn = styled.img`
+const StGoogleBtn = styled.button`
   margin-bottom: -5%;
 `;
