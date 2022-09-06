@@ -46,7 +46,7 @@ const Login = () => {
       <StLoginBtnbox>
         <StKakaoBtn onClick={onKakaoLoginHandler}>카카오 로그인</StKakaoBtn>
         <StNaverBtn src={naverLogin} />
-        <StGoogleBtn onClick={onGoogleLoginHandler}>구글 로그인</StGoogleBtn>
+        <StGoogleBtn onClick={onGoogleLoginHandler}>구글 로그인!</StGoogleBtn>
       </StLoginBtnbox>
     </StLoginContainer>
   );
