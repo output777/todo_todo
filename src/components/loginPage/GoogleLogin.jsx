@@ -13,6 +13,8 @@ const GoogleLogin = () => {
   console.log(GOOGLE_CODE);
 
   useEffect(() => {
+    console.log("rendering~~");
+
     dispatch(__googleLogin(GOOGLE_CODE));
     navigate("/my");
   }, []);

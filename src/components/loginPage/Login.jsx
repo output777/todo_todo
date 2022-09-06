@@ -28,6 +28,7 @@ const Login = () => {
   const GOOGLE_REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
   console.log(GOOGLE_REDIRECT_URI);
 
+
   const onGoogleLoginHandler = () => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${GOOGLE_REST_API_KEY}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code`;
     console.log(window.location.href);
