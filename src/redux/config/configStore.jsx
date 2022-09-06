@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import kakaoLoginSlice from "../modules/loginSlice";
+import loginSlice from "../modules/loginSlice";
 
 export const store = configureStore({
   reducer: {
-    kakaoLoginSlice,
+    loginSlice,
   }
 })

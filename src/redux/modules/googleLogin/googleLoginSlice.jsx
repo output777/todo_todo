@@ -14,11 +14,8 @@ export const __googleLogin = createAsyncThunk(
         `http://13.125.241.100/user/google/callback?code=${payload}`
       );
       console.log(data);
-      console.log("accessToken", data.data.accessToken);
-      console.log("refreshToken", data.data.refreshToken);
       localStorage.setItem("accessToken", data.data.accessToken);
       localStorage.setItem("refreshToken", data.data.refreshToken);
-      // localStorage.removeItem('myCat');
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);

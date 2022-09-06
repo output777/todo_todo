@@ -7,6 +7,7 @@ import StatisticsPage from "../pages/StatisticsPage";
 import MyPage from "../pages/MyPage";
 import KakaoLogin from "../components/loginPage/KakaoLogin";
 import GoogleLogin from "../components/loginPage/GoogleLogin";
+import NaverLogin from "../components/loginPage/NaverLogin";
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
         <Route path='/statistics' element={<StatisticsPage />} />
         <Route path='/user/kakao/callback' element={<KakaoLogin />} />
         <Route path='/user/google/callback' element={<GoogleLogin />} />
+        <Route path='/user/naver/callback' element={<NaverLogin />} />
       </Routes>
     </BrowserRouter>
   );

@@ -6,6 +6,7 @@ import { __googleLogin } from "../../redux/modules/googleLogin/googleLoginSlice"
 const GoogleLogin = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   console.log(location);
   const GOOGLE_CODE = location.search.split("=")[1].split("&")[0];
@@ -13,7 +14,9 @@ const GoogleLogin = () => {
 
   useEffect(() => {
     console.log("rendering~~");
+
     dispatch(__googleLogin(GOOGLE_CODE));
+    navigate("/my");
   }, []);
 
   return <div>Google Login</div>;
