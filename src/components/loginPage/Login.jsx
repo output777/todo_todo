@@ -58,6 +58,7 @@ const Login = () => {
         <NaverLogin />
         <StNaverBtn onClick={onNaverLoginHandler}>네이버 로그인</StNaverBtn>
         <StGoogleBtn onClick={onGoogleLoginHandler}>구글 로그인</StGoogleBtn>
+
       </StLoginBtnbox>
     </StLoginContainer>
   );
