@@ -12,10 +12,8 @@ const KakaoLogin = () => {
   const KAKAO_CODE = location.search.split('=')[1];
 
   useEffect(() => {
-    console.log('rendering~~')
-    // get을 안해도 저절로 실행이 되네?
     dispatch(__kakaoLogin(KAKAO_CODE))
-    navigate('/my')
+    navigate('/main')
   }, [])
 
 
