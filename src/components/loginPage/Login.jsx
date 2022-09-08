@@ -52,10 +52,10 @@ const Login = () => {
 export default Login;
 
 const StLoginContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const StLogobox = styled.div``;
 
@@ -81,7 +81,6 @@ const StPhrases = styled.img`
   top: 50px;
 `;
 const StLoginBtnbox = styled.div`
-
   margin-top: 100px;
 `;
 const StKakaoBtn = styled.button`
@@ -122,8 +121,8 @@ const StGoogleBtnImg = styled.img`
   right: 18px;
 `;
 
-const StGoogleBtnFont = styled.span`;
-    margin-top: 100px;
-    position: relative;
-    left: 30px;
-    `;
+const StGoogleBtnFont = styled.span`
+  margin-top: 100px;
+  position: relative;
+  left: px;
+`;
