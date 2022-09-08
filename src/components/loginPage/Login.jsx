@@ -122,17 +122,8 @@ const StGoogleBtnImg = styled.img`
   right: 18px;
 `;
 
-const StGoogleBtnFont = styled.span``;
+const StGoogleBtnFont = styled.span`;
     margin-top: 100px;
     position: relative;
     left: 30px;
-    `;
-const StKakaoBtn = styled.button`
-    margin-bottom: -5%;
-    `;
-const StNaverBtn = styled.button`
-    margin-bottom: -5%;
-    `;
-const StGoogleBtn = styled.button`
-    margin-bottom: -5%;
     `;
