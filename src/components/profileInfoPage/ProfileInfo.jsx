@@ -12,24 +12,24 @@ const ProfileInfo = () => {
   const [highschoolResult, setHighschoolResult] = useState([]);
 
   const oneRef = useRef(null);
-  const twoeRef = useRef(null);
+  const twoRef = useRef(null);
   const threeRef = useRef(null);
 
   const onClickOneRefHandler = () => {
     oneRef.current.classList.add('active')
-    twoeRef.current.classList.remove('active')
+    twoRef.current.classList.remove('active')
     threeRef.current.classList.remove('active')
   }
 
   const onClickTwoRefHandler = () => {
     oneRef.current.classList.remove('active')
-    twoeRef.current.classList.add('active')
+    twoRef.current.classList.add('active')
     threeRef.current.classList.remove('active')
   }
 
   const onClickThreeRefHandler = () => {
     oneRef.current.classList.remove('active')
-    twoeRef.current.classList.remove('active')
+    twoRef.current.classList.remove('active')
     threeRef.current.classList.add('active')
   }
 
@@ -124,7 +124,7 @@ const ProfileInfo = () => {
         <p>고등학교</p>
         <div className='gradeBox'>
           <div ref={oneRef} onClick={onClickOneRefHandler}>1학년</div>
-          <div ref={twoeRef} onClick={onClickTwoRefHandler}>2학년</div>
+          <div ref={twoRef} onClick={onClickTwoRefHandler}>2학년</div>
           <div ref={threeRef} onClick={onClickThreeRefHandler}>3학년</div>
         </div>
         <div className='inputBox' style={{ display: 'flex' }}>
