@@ -1,19 +1,86 @@
 {
-  "posts": [
+  "test1": [
     {
-      "id": 1,
-      "title": "json-server",
+      "id": 11,
+      "title": "",
+      "nickname": "nickname1",
+      "author": "typicode"
+    },
+    {
+      "id": 12,
+      "title": "",
+      "nickname": "nickname2",
       "author": "typicode"
     }
   ],
-  "comments": [
+  "test2": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 21,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
+    },
+    {
+      "id": 22,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
     }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "test3": [
+    {
+      "id": 31,
+      "title": "",
+      "nickname": "nickname3",
+      "author": "typicode"
+    },
+    {
+      "id": 32,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
+    }
+  ],
+  "test4": [
+    {
+      "id": 41,
+      "title": "",
+      "nickname": "nickname3",
+      "author": "typicode"
+    },
+    {
+      "id": 42,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
+    }
+  ],
+  "test5": [
+    {
+      "id": 51,
+      "title": "",
+      "nickname": "nickname3",
+      "author": "typicode"
+    },
+    {
+      "id": 52,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
+    }
+  ],
+  "test6": [
+    {
+      "id": 61,
+      "title": "",
+      "nickname": "nickname3",
+      "author": "typicode"
+    },
+    {
+      "id": 62,
+      "title": "",
+      "nickname": "nickname2",
+      "author": "typicode"
+    }
+  ]
 }
