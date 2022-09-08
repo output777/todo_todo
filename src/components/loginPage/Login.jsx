@@ -4,6 +4,9 @@ import logo from "../../assets/img/loginPage/logo.svg";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import Phrases from "../../assets/img/loginPage/Phrases.svg";
 import Naver from "./Naver";
+import "bootstrap/dist/css/bootstrap.min.css";
+import kakaoUnion from "../../assets/img/loginPage/kakaoUnion.svg";
+import googleUnion from "../../assets/img/loginPage/googleUnion.svg";
 
 const Login = () => {
   //카카오 로그인
@@ -32,9 +35,15 @@ const Login = () => {
       </StLogobox>
 
       <StLoginBtnbox>
-        <StKakaoBtn onClick={onKakaoLoginHandler}>카카오 로그인</StKakaoBtn>
+        <StKakaoBtn onClick={onKakaoLoginHandler}>
+          <StKakaoBtnImg src={kakaoUnion} />
+          <StKakaoBtnFont>카카오 로그인</StKakaoBtnFont>
+        </StKakaoBtn>
         <Naver />
-        <StGoogleBtn onClick={onGoogleLoginHandler}>구글 로그인</StGoogleBtn>
+        <StGoogleBtn onClick={onGoogleLoginHandler}>
+          <StGoogleBtnImg src={googleUnion} />
+          <StGoogleBtnFont>구글 로그인</StGoogleBtnFont>
+        </StGoogleBtn>
       </StLoginBtnbox>
     </StLoginContainer>
   );
@@ -72,6 +81,48 @@ const StPhrases = styled.img`
   top: 50px;
 `;
 const StLoginBtnbox = styled.div`
+
+  margin-top: 100px;
+`;
+const StKakaoBtn = styled.button`
+  width: 280px;
+  height: 50px;
+  border: 1px solid #e8e8e8;
+  background: #ffe768;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  margin-bottom: 5%;
+`;
+
+const StKakaoBtnImg = styled.img`
+  position: relative;
+  right: 10px;
+`;
+
+const StKakaoBtnFont = styled.span`
+  position: relative;
+  left: 5px;
+`;
+const StNaverBtn = styled.button`
+  margin-bottom: 5%;
+`;
+const StGoogleBtn = styled.button`
+  width: 280px;
+  height: 50px;
+
+  background: #ffffff;
+
+  border: 1px solid #e8e8e8;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+`;
+
+const StGoogleBtnImg = styled.img`
+  position: relative;
+  right: 18px;
+`;
+
+const StGoogleBtnFont = styled.span``;
     margin-top: 100px;
     position: relative;
     left: 30px;
