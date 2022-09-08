@@ -1,19 +1,27 @@
 {
-  "posts": [
+  "todos": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "asdf": "",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "zxc": "",
+      "id": 2
+    },
+    {
+      "asd": "",
+      "id": 3
+    },
+    {
+      "asd123": "",
+      "id": 4
+    },
+    {
+      "asd": "",
+      "id": 5
+    },
+    {
+      "id": 6
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

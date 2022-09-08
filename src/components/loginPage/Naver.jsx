@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const Naver = () => {
   const naverRef = useRef();
-  //추가-정성일:네이버측에서 제공하는 버튼을 index.css에서 display:none으로 숨기고
-  //커스텀 버튼을 대신해서 보여주는 대신 커스텀 버튼 클릭시 네이버 버튼의 a태그가 클릭되도록 합니다
+  // 추가-정성일:네이버측에서 제공하는 버튼을 index.css에서 display:none으로 숨기고
+  // 커스텀 버튼을 대신해서 보여주는 대신 커스텀 버튼 클릭시 네이버 버튼의 a태그가 클릭되도록 하기위함
   const { naver } = window;
   console.log(naver);
   const NAVER_REST_API_KEY = process.env.REACT_APP_NAVER_API_KEY;
@@ -67,6 +67,8 @@ const StNaverLoginBtn = styled.div`
   border-radius: 16px;
 
   margin-bottom: 5%;
+
+  cursor: pointer;
 `;
 const StNaverBtnImg = styled.img`
   position: relative;

@@ -1,4 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  __getTodos,
+  __postTodos,
+  __updateTodos,
+  __deleteTodos,
+} from "../../redux/modules/plannerSlice";
+
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,6 +18,20 @@ import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
 
 const Planner = () => {
+  const [todo, setTodo] = useState([]);
+  const [content, setContent] = useState();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getTodos());
+  }, [dispatch]);
+
+  const onSubmitHandler = (todo) => {
+    setTodo([...todo, { id: todo.length + 1, content: content }]);
+  };
+  console.log(todo);
+  console.log(content);
   return (
     <StDiv>
       <StDateDiv>
@@ -27,7 +49,7 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant="warning" />
+          <ProgressBar now={50} variant='warning' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StNothingTodoNoticeDiv>
@@ -36,13 +58,31 @@ const Planner = () => {
         <div>투두리스트를 추가해주세요.</div>
       </StNothingTodoNoticeDiv>
       <StTodosDiv>
-        <StTodoNotDone>
-          <StTodoLeft>
-            <img src={notDoneSvg} /> <span>영어단어 100개 외우기</span>
-          </StTodoLeft>
+        <div>
+          {todo?.map((todo) => (
+            <div key={todo.id}>
+              <StTodoNotDone>
+                <StTodoLeft>
+                  <img src={notDoneSvg} />{" "}
+                  <input
+                    onChange={(event) => {
+                      setContent(event.target.value);
+                    }}
+                  />
+                </StTodoLeft>
+                <button
+                  onClick={() => {
+                    dispatch(__postTodos(content));
+                  }}
+                >
+                  작성
+                </button>
+                <StTodoRightImg src={threeDotSvg} />
+              </StTodoNotDone>
+            </div>
+          ))}
+        </div>
 
-          <StTodoRightImg src={threeDotSvg} />
-        </StTodoNotDone>
         <StTodoDone>
           <StTodoLeft>
             <img src={doneSvg}></img> <span>영어단어 100개 외우기</span>
@@ -50,7 +90,11 @@ const Planner = () => {
           <StTodoRightImg src={threeDotDoneSvg} />
         </StTodoDone>
       </StTodosDiv>
-      <PlusButton />
+      <button
+        onClick={() => {
+          onSubmitHandler(todo);
+        }}
+      />
     </StDiv>
   );
 };
