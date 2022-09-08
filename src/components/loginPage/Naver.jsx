@@ -27,9 +27,11 @@ const Naver = () => {
   };
 
   const getToken = () => {
+
     const token = window.location.href.split("=")[1].split("&")[0];
     localStorage.setItem("access_token", token);
   };
+
 
   useEffect(() => {
     initializeNaverLogin();
