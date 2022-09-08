@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import axios from "axios";
 import { escapeRegExp } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
@@ -5,15 +6,40 @@ import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
 import regionSvg from "../../assets/img/regionSvg.svg";
 import { debounce } from "lodash";
+=======
+import axios from 'axios';
+import { debounce, escapeRegExp } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import searchSvg from '../../assets/img/searchSvg.svg'
+import regionSvg from '../../assets/img/regionSvg.svg'
+import cancelSvg from '../../assets/img/cancelSvg.svg';
+>>>>>>> Stashed changes
 
 const ProfileInfo = () => {
+  const [nickname, setNickname] = useState('');
+
   const [highschools, setHighschools] = useState([]);
   const [highschoolInput, setHighschoolInput] = useState("");
   const [highschoolResult, setHighschoolResult] = useState([]);
 
+  const nicknameRef = useRef(null);
   const oneRef = useRef(null);
   const twoRef = useRef(null);
   const threeRef = useRef(null);
+
+
+  const onChangeNicknameHandler = (e) => {
+    const { value } = e.target;
+    let val = value.trim();
+    setNickname(val);
+
+    if (val.length > 0) {
+      nicknameRef.current.classList.add('active');
+    } else {
+      nicknameRef.current.classList.remove('active');
+    }
+  }
 
   const onClickOneRefHandler = () => {
     oneRef.current.classList.add("active");
@@ -43,7 +69,6 @@ const ProfileInfo = () => {
   const ch2pattern = (ch) => {
     const offset = 44032;
 
-    // 한국어 음절
     if (/[가-힣]/.test(ch)) {
       const chCode = ch.charCodeAt(0) - offset;
 
@@ -56,7 +81,6 @@ const ProfileInfo = () => {
       return `[\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     }
 
-    // 한글 자음
     if (/[ㄱ-ㅎ]/.test(ch)) {
       const con2syl = {
         ㄱ: "가".charCodeAt(0),
@@ -75,8 +99,6 @@ const ProfileInfo = () => {
       const end = begin + 587;
       return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     }
-    // 그 외엔 그대로 내보냄
-    // escapeRegExp는 lodash에서 가져옴
     return escapeRegExp(ch);
   };
 
@@ -92,6 +114,7 @@ const ProfileInfo = () => {
 
     const regex = createFuzzyMatcher(val);
 
+<<<<<<< Updated upstream
     const resultData = highschools
       .filter((row) => {
         return regex.test(row["schoolName"]);
@@ -99,13 +122,30 @@ const ProfileInfo = () => {
       .map((row) => {
         return { school: row["schoolName"], region: row["region"] };
       });
+=======
+    const resultData = highschools.filter((row) => {
+      return regex.test(row['schoolName'])
+    }).map((row) => {
+      console.log(row);
+      return { school: row['schoolName'], adres: row['adres'] };
+    });
+>>>>>>> Stashed changes
     setHighschoolResult(resultData);
   };
 
   const onClickSelectHandler = (e) => {
-    console.log(e.target.textContent);
     setHighschoolInput(e.target.textContent);
+<<<<<<< Updated upstream
   };
+=======
+    setHighschoolResult([])
+  }
+
+  const onClickSearchCancelHandler = () => {
+    setHighschoolInput('');
+    setHighschoolResult([]);
+  }
+>>>>>>> Stashed changes
 
   useEffect(() => {
     getHighschool();
@@ -118,8 +158,13 @@ const ProfileInfo = () => {
       </StInfoTitle>
       <StInfoNicknameBox>
         <p>닉네임</p>
+<<<<<<< Updated upstream
         <div style={{ display: "flex" }}>
           <input type="text" placeholder="2-12자의 영문 한글만 사용 가능" />
+=======
+        <div ref={nicknameRef}>
+          <input type='text' placeholder='2-12자의 영문 한글만 사용 가능' value={nickname} onChange={onChangeNicknameHandler} />
+>>>>>>> Stashed changes
           <button>중복 확인</button>
         </div>
       </StInfoNicknameBox>
@@ -136,6 +181,7 @@ const ProfileInfo = () => {
             3학년
           </div>
         </div>
+<<<<<<< Updated upstream
         <div className="inputBox" style={{ display: "flex" }}>
           <input
             type="text"
@@ -146,10 +192,26 @@ const ProfileInfo = () => {
           <button>
             <img src={searchSvg} alt="search" />
           </button>
+=======
+        <div className='inputBox' style={{ display: 'flex' }}>
+          <input type='text' placeholder='고등학교를 검색해주세요' value={highschoolInput} onChange={onChangeSearchHandler} />
+          {highschoolInput.length > 0
+            ?
+            <button onClick={onClickSearchCancelHandler}>
+              <img src={cancelSvg} alt='search' />
+            </button>
+            :
+            <button>
+              <img src={searchSvg} alt='search' />
+            </button>
+          }
+>>>>>>> Stashed changes
         </div>
+
       </StHighschoolBox>
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
+<<<<<<< Updated upstream
           ? highschoolResult &&
             highschoolResult.map((data, index) => (
               <div
@@ -165,6 +227,16 @@ const ProfileInfo = () => {
               </div>
             ))
           : null}
+=======
+          ? highschoolResult && highschoolResult.map((data, index) => (
+            <div className='content' key={index}>
+              <div className='school' onClick={onClickSelectHandler}>{data.school}</div>
+              <div className='region'><img src={regionSvg} />{data.adres}</div>
+            </div>
+          ))
+          : null
+        }
+>>>>>>> Stashed changes
       </StHighschoolSearchBox>
       <StBtnBox>
         <button>투두투두 시작하기!</button>
@@ -182,34 +254,72 @@ const StInfoTitle = styled.div`
 const StInfoNicknameBox = styled.div`
   padding: 1rem 0;
 
+<<<<<<< Updated upstream
   & input {
     border: 1px solid #e8e8e8;
     padding: 0.5rem;
+=======
+  & div {
+    display: flex;
+    align-items:center;
+  }
+
+  & div input {
+    border: 1px solid #E8E8E8;
+    height: 54px;
+    padding: 0 0.5rem;
+>>>>>>> Stashed changes
     width: 240px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     outline: none;
   }
 
-  & input::placeholder {
+  & div input::placeholder {
     font-size: 0.9rem;
   }
 
+<<<<<<< Updated upstream
   & button {
     border: 1px solid #e8e8e8;
+=======
+  & div button {
+    border: 1px solid #E8E8E8;
+>>>>>>> Stashed changes
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    padding: 0.7rem 1rem;
+    height: 54px;
+    padding: 0 1rem;
     font-size: 0.9rem;
     background-color: #fff;
     color: #ff7b00;
   }
+<<<<<<< Updated upstream
 `;
 
 const StHighschoolBox = styled.div`
   padding: 1rem 0;
 
+=======
+
+  & div.active input {
+    border: 1px solid #FF7B00;
+    border-right: 1px solid #E8E8E8;
+    transition: border 0.2s;
+  }
+
+  & div.active button {
+    border: 1px solid #FF7B00;
+    border-left: none;
+    transition: border 0.2s;
+  }
+`
+
+const StHighschoolBox = styled.div`
+  padding: 1rem 0 0.5rem 0;
+  
+>>>>>>> Stashed changes
   & .gradeBox {
     display: flex;
 
@@ -264,6 +374,7 @@ const StHighschoolSearchBox = styled.div`
   height: 220px;
   background-color: #fafafa;
   overflow-y: scroll;
+  border-radius: 10px;
 
   & .content {
     align-items: center;
@@ -271,10 +382,11 @@ const StHighschoolSearchBox = styled.div`
 
     .school {
       font-size: 1rem;
+      padding:0.5rem 0;
     }
 
     .region {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       color: #9f9e9e;
     }
   }

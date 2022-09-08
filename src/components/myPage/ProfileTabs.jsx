@@ -5,7 +5,6 @@ import ProfilePlanner from './ProfilePlanner';
 
 const ProfileTabs = () => {
   const [change, setChange] = useState(true);
-
   const photoRef = useRef(null);
   const plannerRef = useRef(null);
 
