@@ -162,7 +162,7 @@ const ProfileInfo = () => {
             <button onClick={onClickSearchCancelHandler}>
               <img src={cancelSvg} alt='search' />
             </button>
-          ) : (
+            :
             <button>
               <img src={searchSvg} alt='search' />
             </button>
