@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import HeatmapSample from "../components/statisticsPage/HeatmapSample";
 
 const StatisticsPage = () => {
-  return (
-    <div>StatisticsPage</div>
-  )
-}
+  return <HeatmapSample />;
+};
 
-export default StatisticsPage
+export default StatisticsPage;
