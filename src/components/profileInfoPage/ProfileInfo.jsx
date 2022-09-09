@@ -1,10 +1,12 @@
-import axios from "axios";
-import { debounce, escapeRegExp } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import searchSvg from "../../assets/img/searchSvg.svg";
-import regionSvg from "../../assets/img/regionSvg.svg";
-import cancelSvg from "../../assets/img/cancelSvg.svg";
+
+import axios from 'axios';
+import { debounce, escapeRegExp } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import searchSvg from '../../assets/img/searchSvg.svg'
+import regionSvg from '../../assets/img/regionSvg.svg'
+import cancelSvg from '../../assets/img/cancelSvg.svg';
+
 
 const ProfileInfo = () => {
   const [nickname, setNickname] = useState("");
@@ -103,27 +105,25 @@ const ProfileInfo = () => {
 
     const regex = createFuzzyMatcher(val);
 
-    const resultData = highschools
-      .filter((row) => {
-        return regex.test(row["schoolName"]);
-      })
-      .map((row) => {
-        return { school: row["schoolName"], adres: row["adres"] };
-      });
 
+    const resultData = highschools.filter((row) => {
+      return regex.test(row['schoolName'])
+    }).map((row) => {
+      console.log(row);
+      return { school: row['schoolName'], adres: row['adres'] };
+    });
     setHighschoolResult(resultData);
   };
 
   const onClickSelectHandler = (e) => {
     setHighschoolInput(e.target.textContent);
-
-    setHighschoolResult([]);
-  };
+    setHighschoolResult([])
+  }
 
   const onClickSearchCancelHandler = () => {
     setHighschoolInput("");
     setHighschoolResult([]);
-  };
+  }
 
   useEffect(() => {
     getHighschool();
@@ -138,13 +138,7 @@ const ProfileInfo = () => {
         <p>닉네임</p>
 
         <div ref={nicknameRef}>
-          <input
-            type='text'
-            placeholder='2-12자의 영문 한글만 사용 가능'
-            value={nickname}
-            onChange={onChangeNicknameHandler}
-          />
-
+          <input type='text' placeholder='2-12자의 영문 한글만 사용 가능' value={nickname} onChange={onChangeNicknameHandler} />
           <button>중복 확인</button>
         </div>
       </StInfoNicknameBox>
@@ -161,15 +155,10 @@ const ProfileInfo = () => {
             3학년
           </div>
         </div>
-
-        <div className='inputBox' style={{ display: "flex" }}>
-          <input
-            type='text'
-            placeholder='고등학교를 검색해주세요'
-            value={highschoolInput}
-            onChange={onChangeSearchHandler}
-          />
-          {highschoolInput.length > 0 ? (
+        <div className='inputBox' style={{ display: 'flex' }}>
+          <input type='text' placeholder='고등학교를 검색해주세요' value={highschoolInput} onChange={onChangeSearchHandler} />
+          {highschoolInput.length > 0
+            ?
             <button onClick={onClickSearchCancelHandler}>
               <img src={cancelSvg} alt='search' />
             </button>
@@ -177,24 +166,19 @@ const ProfileInfo = () => {
             <button>
               <img src={searchSvg} alt='search' />
             </button>
-          )}
+          }
         </div>
       </StHighschoolBox>
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
-          ? highschoolResult &&
-            highschoolResult.map((data, index) => (
-              <div className='content' key={index}>
-                <div className='school' onClick={onClickSelectHandler}>
-                  {data.school}
-                </div>
-                <div className='region'>
-                  <img src={regionSvg} />
-                  {data.adres}
-                </div>
-              </div>
-            ))
-          : null}
+          ? highschoolResult && highschoolResult.map((data, index) => (
+            <div className='content' key={index}>
+              <div className='school' onClick={onClickSelectHandler}>{data.school}</div>
+              <div className='region'><img src={regionSvg} />{data.adres}</div>
+            </div>
+          ))
+          : null
+        }
       </StHighschoolSearchBox>
       <StBtnBox>
         <button>투두투두 시작하기!</button>
@@ -221,7 +205,6 @@ const StInfoNicknameBox = styled.div`
     border: 1px solid #e8e8e8;
     height: 54px;
     padding: 0 0.5rem;
-
     width: 240px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -233,7 +216,7 @@ const StInfoNicknameBox = styled.div`
   }
 
   & div button {
-    border: 1px solid #e8e8e8;
+    border: 1px solid #E8E8E8;
 
     border-left: none;
     border-top-right-radius: 10px;
@@ -260,7 +243,7 @@ const StInfoNicknameBox = styled.div`
 
 const StHighschoolBox = styled.div`
   padding: 1rem 0 0.5rem 0;
-
+  
   & .gradeBox {
     display: flex;
 
