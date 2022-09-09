@@ -111,7 +111,6 @@ const ProfileInfo = () => {
         console.log(row);
         return { school: row["schoolName"], adres: row["adres"] };
       });
-
     setHighschoolResult(resultData);
   };
 
@@ -144,7 +143,6 @@ const ProfileInfo = () => {
             value={nickname}
             onChange={onChangeNicknameHandler}
           />
-
           <button>중복 확인</button>
         </div>
       </StInfoNicknameBox>
@@ -232,6 +230,7 @@ const StInfoNicknameBox = styled.div`
 
   & div button {
     border: 1px solid #e8e8e8;
+
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
