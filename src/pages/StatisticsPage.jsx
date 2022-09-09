@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Calendar from "../components/statisticsPage/Calendar";
 
 const StatisticsPage = () => {
   return (
-    <div>StatisticsPage</div>
-  )
-}
+    <div>
+      StatisticsPage
+      <Calendar />
+    </div>
+  );
+};
 
-export default StatisticsPage
+export default StatisticsPage;

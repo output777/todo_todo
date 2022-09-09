@@ -1,23 +1,13 @@
-<<<<<<< Updated upstream
 import axios from "axios";
-import { escapeRegExp } from "lodash";
+import { debounce, escapeRegExp } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
 import regionSvg from "../../assets/img/regionSvg.svg";
-import { debounce } from "lodash";
-=======
-import axios from 'axios';
-import { debounce, escapeRegExp } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
-import searchSvg from '../../assets/img/searchSvg.svg'
-import regionSvg from '../../assets/img/regionSvg.svg'
-import cancelSvg from '../../assets/img/cancelSvg.svg';
->>>>>>> Stashed changes
+import cancelSvg from "../../assets/img/cancelSvg.svg";
 
 const ProfileInfo = () => {
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState("");
 
   const [highschools, setHighschools] = useState([]);
   const [highschoolInput, setHighschoolInput] = useState("");
@@ -28,18 +18,17 @@ const ProfileInfo = () => {
   const twoRef = useRef(null);
   const threeRef = useRef(null);
 
-
   const onChangeNicknameHandler = (e) => {
     const { value } = e.target;
     let val = value.trim();
     setNickname(val);
 
     if (val.length > 0) {
-      nicknameRef.current.classList.add('active');
+      nicknameRef.current.classList.add("active");
     } else {
-      nicknameRef.current.classList.remove('active');
+      nicknameRef.current.classList.remove("active");
     }
-  }
+  };
 
   const onClickOneRefHandler = () => {
     oneRef.current.classList.add("active");
@@ -114,38 +103,27 @@ const ProfileInfo = () => {
 
     const regex = createFuzzyMatcher(val);
 
-<<<<<<< Updated upstream
     const resultData = highschools
       .filter((row) => {
         return regex.test(row["schoolName"]);
       })
       .map((row) => {
-        return { school: row["schoolName"], region: row["region"] };
+        console.log(row);
+        return { school: row["schoolName"], adres: row["adres"] };
       });
-=======
-    const resultData = highschools.filter((row) => {
-      return regex.test(row['schoolName'])
-    }).map((row) => {
-      console.log(row);
-      return { school: row['schoolName'], adres: row['adres'] };
-    });
->>>>>>> Stashed changes
+
     setHighschoolResult(resultData);
   };
 
   const onClickSelectHandler = (e) => {
     setHighschoolInput(e.target.textContent);
-<<<<<<< Updated upstream
+    setHighschoolResult([]);
   };
-=======
-    setHighschoolResult([])
-  }
 
   const onClickSearchCancelHandler = () => {
-    setHighschoolInput('');
+    setHighschoolInput("");
     setHighschoolResult([]);
-  }
->>>>>>> Stashed changes
+  };
 
   useEffect(() => {
     getHighschool();
@@ -158,13 +136,15 @@ const ProfileInfo = () => {
       </StInfoTitle>
       <StInfoNicknameBox>
         <p>닉네임</p>
-<<<<<<< Updated upstream
-        <div style={{ display: "flex" }}>
-          <input type="text" placeholder="2-12자의 영문 한글만 사용 가능" />
-=======
+
         <div ref={nicknameRef}>
-          <input type='text' placeholder='2-12자의 영문 한글만 사용 가능' value={nickname} onChange={onChangeNicknameHandler} />
->>>>>>> Stashed changes
+          <input
+            type="text"
+            placeholder="2-12자의 영문 한글만 사용 가능"
+            value={nickname}
+            onChange={onChangeNicknameHandler}
+          />
+
           <button>중복 확인</button>
         </div>
       </StInfoNicknameBox>
@@ -181,7 +161,6 @@ const ProfileInfo = () => {
             3학년
           </div>
         </div>
-<<<<<<< Updated upstream
         <div className="inputBox" style={{ display: "flex" }}>
           <input
             type="text"
@@ -189,54 +168,32 @@ const ProfileInfo = () => {
             value={highschoolInput}
             onChange={onChangeSearchHandler}
           />
-          <button>
-            <img src={searchSvg} alt="search" />
-          </button>
-=======
-        <div className='inputBox' style={{ display: 'flex' }}>
-          <input type='text' placeholder='고등학교를 검색해주세요' value={highschoolInput} onChange={onChangeSearchHandler} />
-          {highschoolInput.length > 0
-            ?
+          {highschoolInput.length > 0 ? (
             <button onClick={onClickSearchCancelHandler}>
-              <img src={cancelSvg} alt='search' />
+              <img src={cancelSvg} alt="search" />
             </button>
-            :
+          ) : (
             <button>
-              <img src={searchSvg} alt='search' />
+              <img src={searchSvg} alt="search" />
             </button>
-          }
->>>>>>> Stashed changes
+          )}
         </div>
-
       </StHighschoolBox>
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
-<<<<<<< Updated upstream
           ? highschoolResult &&
             highschoolResult.map((data, index) => (
-              <div
-                className="content"
-                key={index}
-                onClick={onClickSelectHandler}
-              >
-                <div className="school">{data.school}</div>
+              <div className="content" key={index}>
+                <div className="school" onClick={onClickSelectHandler}>
+                  {data.school}
+                </div>
                 <div className="region">
                   <img src={regionSvg} />
-                  {data.region}
+                  {data.adres}
                 </div>
               </div>
             ))
           : null}
-=======
-          ? highschoolResult && highschoolResult.map((data, index) => (
-            <div className='content' key={index}>
-              <div className='school' onClick={onClickSelectHandler}>{data.school}</div>
-              <div className='region'><img src={regionSvg} />{data.adres}</div>
-            </div>
-          ))
-          : null
-        }
->>>>>>> Stashed changes
       </StHighschoolSearchBox>
       <StBtnBox>
         <button>투두투두 시작하기!</button>
@@ -254,21 +211,15 @@ const StInfoTitle = styled.div`
 const StInfoNicknameBox = styled.div`
   padding: 1rem 0;
 
-<<<<<<< Updated upstream
-  & input {
-    border: 1px solid #e8e8e8;
-    padding: 0.5rem;
-=======
   & div {
     display: flex;
-    align-items:center;
+    align-items: center;
   }
 
   & div input {
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
     height: 54px;
     padding: 0 0.5rem;
->>>>>>> Stashed changes
     width: 240px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -279,13 +230,8 @@ const StInfoNicknameBox = styled.div`
     font-size: 0.9rem;
   }
 
-<<<<<<< Updated upstream
-  & button {
-    border: 1px solid #e8e8e8;
-=======
   & div button {
-    border: 1px solid #E8E8E8;
->>>>>>> Stashed changes
+    border: 1px solid #e8e8e8;
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -295,31 +241,23 @@ const StInfoNicknameBox = styled.div`
     background-color: #fff;
     color: #ff7b00;
   }
-<<<<<<< Updated upstream
-`;
-
-const StHighschoolBox = styled.div`
-  padding: 1rem 0;
-
-=======
 
   & div.active input {
-    border: 1px solid #FF7B00;
-    border-right: 1px solid #E8E8E8;
+    border: 1px solid #ff7b00;
+    border-right: 1px solid #e8e8e8;
     transition: border 0.2s;
   }
 
   & div.active button {
-    border: 1px solid #FF7B00;
+    border: 1px solid #ff7b00;
     border-left: none;
     transition: border 0.2s;
   }
-`
+`;
 
 const StHighschoolBox = styled.div`
   padding: 1rem 0 0.5rem 0;
-  
->>>>>>> Stashed changes
+
   & .gradeBox {
     display: flex;
 
@@ -382,7 +320,7 @@ const StHighschoolSearchBox = styled.div`
 
     .school {
       font-size: 1rem;
-      padding:0.5rem 0;
+      padding: 0.5rem 0;
     }
 
     .region {
