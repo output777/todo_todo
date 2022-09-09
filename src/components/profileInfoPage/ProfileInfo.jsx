@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { debounce, escapeRegExp } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react'
@@ -6,8 +7,9 @@ import searchSvg from '../../assets/img/searchSvg.svg'
 import regionSvg from '../../assets/img/regionSvg.svg'
 import cancelSvg from '../../assets/img/cancelSvg.svg';
 
+
 const ProfileInfo = () => {
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState("");
 
   const [highschools, setHighschools] = useState([]);
   const [highschoolInput, setHighschoolInput] = useState("");
@@ -18,18 +20,17 @@ const ProfileInfo = () => {
   const twoRef = useRef(null);
   const threeRef = useRef(null);
 
-
   const onChangeNicknameHandler = (e) => {
     const { value } = e.target;
     let val = value.trim();
     setNickname(val);
 
     if (val.length > 0) {
-      nicknameRef.current.classList.add('active');
+      nicknameRef.current.classList.add("active");
     } else {
-      nicknameRef.current.classList.remove('active');
+      nicknameRef.current.classList.remove("active");
     }
-  }
+  };
 
   const onClickOneRefHandler = () => {
     oneRef.current.classList.add("active");
@@ -104,6 +105,7 @@ const ProfileInfo = () => {
 
     const regex = createFuzzyMatcher(val);
 
+
     const resultData = highschools.filter((row) => {
       return regex.test(row['schoolName'])
     }).map((row) => {
@@ -119,7 +121,7 @@ const ProfileInfo = () => {
   }
 
   const onClickSearchCancelHandler = () => {
-    setHighschoolInput('');
+    setHighschoolInput("");
     setHighschoolResult([]);
   }
 
@@ -134,6 +136,7 @@ const ProfileInfo = () => {
       </StInfoTitle>
       <StInfoNicknameBox>
         <p>닉네임</p>
+
         <div ref={nicknameRef}>
           <input type='text' placeholder='2-12자의 영문 한글만 사용 가능' value={nickname} onChange={onChangeNicknameHandler} />
           <button>중복 확인</button>
@@ -141,7 +144,7 @@ const ProfileInfo = () => {
       </StInfoNicknameBox>
       <StHighschoolBox>
         <p>고등학교</p>
-        <div className="gradeBox">
+        <div className='gradeBox'>
           <div ref={oneRef} onClick={onClickOneRefHandler}>
             1학년
           </div>
@@ -159,13 +162,12 @@ const ProfileInfo = () => {
             <button onClick={onClickSearchCancelHandler}>
               <img src={cancelSvg} alt='search' />
             </button>
-            :
+          ) : (
             <button>
               <img src={searchSvg} alt='search' />
             </button>
           }
         </div>
-
       </StHighschoolBox>
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
@@ -196,11 +198,11 @@ const StInfoNicknameBox = styled.div`
 
   & div {
     display: flex;
-    align-items:center;
+    align-items: center;
   }
 
   & div input {
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
     height: 54px;
     padding: 0 0.5rem;
     width: 240px;
@@ -215,6 +217,7 @@ const StInfoNicknameBox = styled.div`
 
   & div button {
     border: 1px solid #E8E8E8;
+
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -226,17 +229,17 @@ const StInfoNicknameBox = styled.div`
   }
 
   & div.active input {
-    border: 1px solid #FF7B00;
-    border-right: 1px solid #E8E8E8;
+    border: 1px solid #ff7b00;
+    border-right: 1px solid #e8e8e8;
     transition: border 0.2s;
   }
 
   & div.active button {
-    border: 1px solid #FF7B00;
+    border: 1px solid #ff7b00;
     border-left: none;
     transition: border 0.2s;
   }
-`
+`;
 
 const StHighschoolBox = styled.div`
   padding: 1rem 0 0.5rem 0;
@@ -303,7 +306,7 @@ const StHighschoolSearchBox = styled.div`
 
     .school {
       font-size: 1rem;
-      padding:0.5rem 0;
+      padding: 0.5rem 0;
     }
 
     .region {
