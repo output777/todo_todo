@@ -11,7 +11,7 @@ import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
-import doneSvg from "../../assets/img/doneSvg.svg";
+// import doneSvg from '../../assets/img/doneSvg.svg';
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
@@ -85,7 +85,7 @@ const Planner = () => {
 
         <StTodoDone>
           <StTodoLeft>
-            <img src={doneSvg}></img> <span>영어단어 100개 외우기</span>
+            <img src='#'></img> <span>영어단어 100개 외우기</span>
           </StTodoLeft>
           <StTodoRightImg src={threeDotDoneSvg} />
         </StTodoDone>
