@@ -10,11 +10,11 @@ import {
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import calendarSvg from "../../assets/img/calendarSvg.svg";
+// import calendarSvg from "../../assets/img/calendarSvg.svg";
 // import doneSvg from '../../assets/img/doneSvg.svg';
-import notDoneSvg from "../../assets/img/notDoneSvg.svg";
-import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
-import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+// import notDoneSvg from "../../assets/img/notDoneSvg.svg";
+// import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
+// import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
 
 const Planner = () => {
@@ -36,7 +36,7 @@ const Planner = () => {
     <StDiv>
       <StDateDiv>
         <StSpan>9월 3일 목요일</StSpan>
-        <img src={calendarSvg} />
+        <img src='#' />
       </StDateDiv>
       <StAchievementRateDiv>
         {/* <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv> */}
@@ -63,7 +63,7 @@ const Planner = () => {
             <div key={todo.id}>
               <StTodoNotDone>
                 <StTodoLeft>
-                  <img src={notDoneSvg} />{" "}
+                  <img src='#' />{" "}
                   <input
                     onChange={(event) => {
                       setContent(event.target.value);
@@ -77,7 +77,7 @@ const Planner = () => {
                 >
                   작성
                 </button>
-                <StTodoRightImg src={threeDotSvg} />
+                <StTodoRightImg src='#' />
               </StTodoNotDone>
             </div>
           ))}
@@ -87,7 +87,7 @@ const Planner = () => {
           <StTodoLeft>
             <img src='#'></img> <span>영어단어 100개 외우기</span>
           </StTodoLeft>
-          <StTodoRightImg src={threeDotDoneSvg} />
+          <StTodoRightImg src='#' />
         </StTodoDone>
       </StTodosDiv>
       <button
