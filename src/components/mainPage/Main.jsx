@@ -4,6 +4,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
+import InfiniteScroll from "./InfiniteScroll";
 
 const Main = () => {
   const [month, setMonth] = useState(true);
@@ -47,17 +48,14 @@ const Main = () => {
               <StGaugeText>
                 이번달 플래너 달성률<span>80%</span>
               </StGaugeText>
-              <ProgressBar
-                now={80}
-                style={{ backgroundColor: "#eee", color: "#74E272" }}
-              />
+              <ProgressBar now={80} />
             </StthisMonthGauge>
 
             <StTotalGauge>
               <StGaugeText>
                 플래너 총 달성률<span>15%</span>
               </StGaugeText>
-              <ProgressBar now={20} variant='danger' />
+              <ProgressBar now={20} variant="danger" />
             </StTotalGauge>
           </StGaugebox>
         </StAchievementsBox>
@@ -128,12 +126,9 @@ const Main = () => {
       </StRankingBtnBox>
 
       <StRankingBoxContainer>
-        <StRankingBox>
-          <StRankingNumber>100</StRankingNumber>
-          <StRankingProfile />
-          <StRankingNickname>닉네임닉네임닉...</StRankingNickname>
-          <StRankingScore>30000</StRankingScore>
-        </StRankingBox>
+        <StScrollDiv>
+          <InfiniteScroll />
+        </StScrollDiv>
       </StRankingBoxContainer>
     </StMainContainer>
   );
@@ -141,19 +136,23 @@ const Main = () => {
 
 export default Main;
 
-const StMainContainer = styled.div``;
+const StMainContainer = styled.div`
+  background-color: #fafafa;
+`;
 
 const StPhrasesbox = styled.div`
   position: relative;
   top: 25px;
   margin-left: 20px;
+
   span {
     color: #ff7b00;
     font-weight: 700;
   }
   div {
     margin-top: 5px;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 20px;
   }
 `;
 
@@ -184,14 +183,7 @@ const StAchievementsBox = styled.div`
   height: 220px;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
-`;
-const StTopBoxHead = styled.div``;
-
-const StRankingButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  margin: 10px 0px 10px 0px;
+  background-color: white;
 `;
 
 const StScrollDiv = styled.div`
@@ -242,6 +234,7 @@ const StRankingPhrases = styled.div`
 
 const StRankingBtnBox = styled.div`
   margin-left: 18px;
+  margin-bottom: 5px;
 `;
 
 const StMonthRankingBtn = styled.button`
@@ -311,47 +304,9 @@ const StWeeklyRankingBtn2nd = styled.button`
   }
 `;
 
-const StRankingBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 350px;
-  height: 70px;
-
-  background: #ffffff;
-
-  box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
-  border-radius: 19px;
-
-  margin-top: 12px;
-  padding-left: 15px;
-  padding-right: 15px;
-`;
-
 const StRankingBoxContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const StRankingNumber = styled.div`
-  font-weight: 700;
-  font-size: 15px;
-  color: #ff7b00;
-`;
-
-const StRankingProfile = styled.div`
-  width: 45px;
-  height: 45px;
-  background-color: #eee;
-  border-radius: 100%;
-`;
-
-const StRankingNickname = styled.div``;
-
-const StRankingScore = styled.div`
-  font-weight: 700;
-  color: #9f9e9e;
 `;
 
 const StModalTop = styled.div`

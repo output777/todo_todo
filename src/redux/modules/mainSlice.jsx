@@ -36,7 +36,8 @@ export const mainSlice = createSlice({
     },
     [__getMainRank.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      // console.log("rejected action.payload", action.payload);
+      state.error = "마지막 페이지 입니다.";
     },
     [__getMainRank.pending]: (state) => {
       state.isLoading = true;
