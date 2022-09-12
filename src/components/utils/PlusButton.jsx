@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import plusBottonSvg from "../../assets/img/plusBottonSvg.svg";
+import plusButtonSvg from "../../assets/img/plusButtonSvg.svg";
 
-const PlusButton = () => {
-  return <StPlusButton src={plusBottonSvg} />;
+const PlusButton = ({ onClick }) => {
+  return <StPlusButton src={plusButtonSvg} onClick={onClick} />;
 };
 
 export default PlusButton;

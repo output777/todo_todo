@@ -71,7 +71,7 @@ const InfiniteScroll = () => {
       {mainRankList.map((each) => (
         <StDiv key={each.id}>{each.title}</StDiv>
       ))}
-      <div ref={targetRef}>1</div>
+      <div ref={targetRef}></div>
     </div>
   );
 };

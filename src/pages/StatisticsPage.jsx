@@ -1,5 +1,5 @@
 import React from "react";
-import Calendar from "react-calendar";
+import Calendar from "../components/statisticsPage/Calendar";
 import HeatmapSample from "../components/statisticsPage/HeatmapSample";
 
 const StatisticsPage = () => {
