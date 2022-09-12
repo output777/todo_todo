@@ -1,8 +1,0 @@
-{
-  "test1": [
-    { "id": 11, "nickName": "nickName11" },
-    { "id": 12, "nickName": "nickName12" },
-    { "id": 13, "nickName": "nickName13" },
-    { "id": 14, "nickName": "nickName14" }
-  ]
-}
