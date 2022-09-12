@@ -71,6 +71,8 @@ const Main = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
+            width="350px"
+            height="330px"
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
