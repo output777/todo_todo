@@ -10,11 +10,11 @@ import {
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import calendarSvg from "../../assets/img/calendarSvg.svg";
-// import doneSvg from '../../assets/img/doneSvg.svg';
-// import notDoneSvg from "../../assets/img/notDoneSvg.svg";
-// import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
-// import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+import calendarSvg from "../../assets/img/calendarSvg.svg";
+import doneSvg from "../../assets/img/doneSvg.svg";
+import notDoneSvg from "../../assets/img/notDoneSvg.svg";
+import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
+import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
 
 const Planner = () => {
@@ -51,7 +51,7 @@ const Planner = () => {
     <StDiv>
       <StDateDiv>
         <StSpan>9월 3일 목요일</StSpan>
-        <img src='#' />
+        <img src="#" />
       </StDateDiv>
       <StAchievementRateDiv>
         {/* <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv> */}
@@ -64,7 +64,7 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant='temp' />
+          <ProgressBar now={50} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StNothingTodoNoticeDiv>
@@ -87,9 +87,9 @@ const Planner = () => {
 
         <StTodoDone>
           <StTodoLeft>
-            <img src='#'></img> <span>영어단어 100개 외우기</span>
+            <img src="#"></img> <span>영어단어 100개 외우기</span>
           </StTodoLeft>
-          <StTodoRightImg src='#' />
+          <StTodoRightImg src="#" />
         </StTodoDone>
       </StTodosDiv>
 
