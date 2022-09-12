@@ -12,7 +12,7 @@ const GoogleLogin = () => {
 
   useEffect(() => {
     dispatch(__googleLogin(GOOGLE_CODE));
-    navigate("/main");
+    navigate("/profileinfo");
   }, []);
 
   return <div>Google Login</div>;

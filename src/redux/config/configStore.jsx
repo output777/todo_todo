@@ -5,8 +5,8 @@ import mainSlice from "../modules/mainSlice";
 
 export const store = configureStore({
   reducer: {
-    loginSlice,
-    PlannerSlice,
-    mainSlice,
+    login: loginSlice,
+    planner: PlannerSlice,
+    main: mainSlice,
   },
 });

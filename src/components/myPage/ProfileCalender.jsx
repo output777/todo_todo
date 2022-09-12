@@ -9,6 +9,8 @@ const ProfileCalender = () => {
   let now = new Date();
   let date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+  console.log(day)
+  console.log(typeof day)
   const makeWeekArr = (data) => {
     let day = data.getDay();
     let week = [];
@@ -32,6 +34,7 @@ const ProfileCalender = () => {
   const onPressArrowRight = () => {
     let newDate = new Date(day.valueOf() + 86400000 * 7);
     console.log(newDate);
+    console.log(typeof newDate);
     let newWeek = makeWeekArr(newDate);
     setDay(newDate);
     setWeeklist(newWeek)

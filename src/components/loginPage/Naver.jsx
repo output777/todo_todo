@@ -36,7 +36,7 @@ const Naver = () => {
   useEffect(() => {
     initializeNaverLogin();
     userAccessToken();
-  });
+  }, []);
 
   const handleClick = () => {
     naverRef.current.children[0].click();
