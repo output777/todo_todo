@@ -49,7 +49,7 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant='warning' />
+          <ProgressBar now={50} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StNothingTodoNoticeDiv>
@@ -174,6 +174,11 @@ const StProgressBarDiv = styled.div`
   gap: 10px;
   /* border: 1px solid black; */
   margin: 20px auto;
+  .bg-temp {
+    background-color: #ffdb80;
+    /* background-color: #74e272; */
+    //background-color: #74e272;
+  }
 `;
 
 const StNumberDiv = styled.div`

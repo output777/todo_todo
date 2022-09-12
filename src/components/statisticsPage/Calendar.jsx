@@ -7,10 +7,17 @@ import styled from "styled-components";
 
 const Calendar = () => {
   const marks = [
-    { achivementRate: 24, day: "12-09-2022" },
-    { achivementRate: 49, day: "17-09-2022" },
-    { achivementRate: 27, day: "22-09-2022" },
-    { achivementRate: 100, day: "16-09-2022" },
+    { achievementRate: 15, day: "01-09-2022" },
+    { achievementRate: 25, day: "02-09-2022" },
+    { achievementRate: 55, day: "05-09-2022" },
+    { achievementRate: 90, day: "08-09-2022" },
+    { achievementRate: 23, day: "12-09-2022" },
+    { achievementRate: 30, day: "13-09-2022" },
+    { achievementRate: 55, day: "14-09-2022" },
+    { achievementRate: 49, day: "17-09-2022" },
+    { achievementRate: 70, day: "21-09-2022" },
+    { achievementRate: 27, day: "22-09-2022" },
+    { achievementRate: 100, day: "16-09-2022" },
   ];
 
   return (
@@ -25,9 +32,10 @@ const Calendar = () => {
             marks.find((x) => {
               if (
                 x.day === moment(date).format("DD-MM-YYYY") &&
-                x.achivementRate < 25
-              )
+                x.achievementRate < 25
+              ) {
                 return x;
+              }
             })
           ) {
             return "highlight1";
@@ -36,10 +44,11 @@ const Calendar = () => {
             marks.find((x) => {
               if (
                 x.day === moment(date).format("DD-MM-YYYY") &&
-                x.achivementRate >= 25 &&
-                x.achivementRate < 50
-              )
+                x.achievementRate >= 25 &&
+                x.achievementRate < 50
+              ) {
                 return x;
+              }
             })
           ) {
             return "highlight2";
@@ -48,8 +57,8 @@ const Calendar = () => {
             marks.find((x) => {
               if (
                 x.day === moment(date).format("DD-MM-YYYY") &&
-                x.achivementRate >= 50 &&
-                x.achivementRate < 75
+                x.achievementRate >= 50 &&
+                x.achievementRate < 75
               )
                 return x;
             })
@@ -60,7 +69,7 @@ const Calendar = () => {
             marks.find((x) => {
               if (
                 x.day === moment(date).format("DD-MM-YYYY") &&
-                x.achivementRate >= 75
+                x.achievementRate >= 75
               )
                 return x;
             })
@@ -120,8 +129,8 @@ const StDiv = styled.div`
     text-decoration: none;
   }
   /* .react-calendar__month-view__days__day--weekend {
-  color: #d10000;
- } */
+    color: #2e32ff; //주말 날짜 색깔
+  } */
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
     background: #f8faf8; /*호버시 백그라운드*/
