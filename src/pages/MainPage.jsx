@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <Layout>
       <Main />
-      <InfiniteScroll />
+      {/* <InfiniteScroll /> */}
       <Navbar />
     </Layout>
   );

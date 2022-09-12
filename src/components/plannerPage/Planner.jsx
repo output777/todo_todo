@@ -77,10 +77,10 @@ const Planner = () => {
           {todos?.map((todo) => (
             <StTodoNotDone key={todo.id}>
               <StTodoLeft>
-                <img src={notDoneSvg} />
+                <img src='#' />
                 <span>{todo.content}</span>
               </StTodoLeft>
-              <StTodoRightImg src={threeDotSvg} />
+              <StTodoRightImg src='#' />
             </StTodoNotDone>
           ))}
         </div>
