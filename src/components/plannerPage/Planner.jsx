@@ -89,6 +89,10 @@ const Planner = () => {
     setModalVisible(false);
   };
 
+  const A = (e) => {
+    dispatch(__deleteTodo(localStorage.getItem("todoId")));
+  };
+
   useEffect(() => {
     dispatch(__getTodo());
   }, [dispatch]);
@@ -171,11 +175,9 @@ const Planner = () => {
                       수정
                     </div>
                     <div
-                      onClick={(e) => {
-                        e.stopPropagation();
+                      onClick={() => {
                         closeModal();
-                        dispatch(__deleteTodo(localStorage.getItem("todoId")));
-                        console.log(e.target.id);
+                        A();
                       }}
                     >
                       삭제
