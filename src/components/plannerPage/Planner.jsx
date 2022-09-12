@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  __getTodos,
-  __postTodos,
-  __updateTodos,
-  __deleteTodos,
+  __getTodo,
+  __postTodo,
+  __updateTodo,
+  __deleteTodo,
 } from "../../redux/modules/plannerSlice";
 
 import styled from "styled-components";
@@ -18,20 +18,35 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PlusButton from "../utils/PlusButton";
 
 const Planner = () => {
-  const [todo, setTodo] = useState([]);
-  const [content, setContent] = useState();
+  const [todo, setTodo] = useState({
+    content: "",
+  });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__getTodos());
+    dispatch(__getTodo());
   }, [dispatch]);
 
-  const onSubmitHandler = (todo) => {
-    setTodo([...todo, { id: todo.length + 1, content: content }]);
+  const onChangeHandler = (e) => {
+    const { value } = e.target;
+    setTodo({
+      ...todo,
+      content: value,
+    });
   };
-  console.log(todo);
-  console.log(content);
+
+  const onSubmitHandler = (e) => {
+    dispatch(__postTodo(todo));
+
+    setTodo({
+      content: "",
+    });
+  };
+
+  const todos = useSelector((state) => state.PlannerSlice.todos);
+  console.log(todos);
+
   return (
     <StDiv>
       <StDateDiv>
@@ -49,7 +64,7 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant="temp" />
+          <ProgressBar now={50} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StNothingTodoNoticeDiv>
@@ -59,27 +74,14 @@ const Planner = () => {
       </StNothingTodoNoticeDiv>
       <StTodosDiv>
         <div>
-          {todo?.map((todo) => (
-            <div key={todo.id}>
-              <StTodoNotDone>
-                <StTodoLeft>
-                  <img src='#' />{" "}
-                  <input
-                    onChange={(event) => {
-                      setContent(event.target.value);
-                    }}
-                  />
-                </StTodoLeft>
-                <button
-                  onClick={() => {
-                    dispatch(__postTodos(content));
-                  }}
-                >
-                  작성
-                </button>
-                <StTodoRightImg src='#' />
-              </StTodoNotDone>
-            </div>
+          {todos?.map((todo) => (
+            <StTodoNotDone key={todo.id}>
+              <StTodoLeft>
+                <img src={notDoneSvg} />
+                <span>{todo.content}</span>
+              </StTodoLeft>
+              <StTodoRightImg src={threeDotSvg} />
+            </StTodoNotDone>
           ))}
         </div>
 
@@ -90,7 +92,9 @@ const Planner = () => {
           <StTodoRightImg src='#' />
         </StTodoDone>
       </StTodosDiv>
-      <button
+
+      <input onChange={onChangeHandler} />
+      <PlusButton
         onClick={() => {
           onSubmitHandler(todo);
         }}

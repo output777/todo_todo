@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const __getTodos = createAsyncThunk(
-  "getTodos",
+export const __getTodo = createAsyncThunk(
+  "todo/getTodo",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get("http://localhost:3001/todos");
@@ -13,21 +13,21 @@ export const __getTodos = createAsyncThunk(
   }
 );
 
-export const __postTodos = createAsyncThunk("postTodos", async (newTodos) => {
-  const data = await axios.post("http://localhost:3001/todos", newTodos);
+export const __postTodo = createAsyncThunk("todo/postTodo", async (newTodo) => {
+  const data = await axios.post("http://localhost:3001/todos", newTodo);
   return data.data;
 });
 
-export const __deleteTodos = createAsyncThunk(
-  "deleteTodos",
+export const __deleteTodo = createAsyncThunk(
+  "todo/deleteTodo",
   async (payload, thunkAPI) => {
     await axios.delete(`http://localhost:3001/todos/${payload}`);
     return payload;
   }
 );
 
-export const __updateTodos = createAsyncThunk(
-  "patchTodos",
+export const __updateTodo = createAsyncThunk(
+  "todos/updateTodos",
   async (payload, thunkAPI) => {
     try {
       console.log("payload", payload);
@@ -42,53 +42,54 @@ export const __updateTodos = createAsyncThunk(
     }
   }
 );
-
 const initialState = {
   todos: [],
   isLoading: false,
   error: null,
 };
 
-export const PlannerSlice = createSlice({
-  name: "todos",
+export const plannerSlice = createSlice({
+  name: "planner",
   initialState,
   reducers: {},
   extraReducers: {
-    [__getTodos.fulfilled]: (state, action) => {
+    [__getTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = action.payload;
     },
-    [__getTodos.rejected]: (state, action) => {
+    [__getTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__getTodos.pending]: (state) => {
+    [__postTodo.fulfilled]: (state, action) => {
+      state.todos = [...state.todos, action.payload];
+    },
+    [__deleteTodo.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [__postTodos.pending]: (state) => {
-      state.isSuccess = false;
-      state.isLoading = true;
+    [__deleteTodo.fulfilled]: (state, action) => {
+      state.todos = state.todos.filter((item) => item.id !== action.payload);
     },
-    [__postTodos.fulfilled]: (state, action) => {
-      state.isSuccess = true;
-      state.isLoading = false;
-      state.todos.push(action.payload);
-    },
-    [__postTodos.rejected]: (state, action) => {
+    [__deleteTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
-    [__deleteTodos.fulfilled]: (state, action) => {
-      const target = state.todos.findIndex(
-        (comment) => comment.id === action.payload
-      );
-
-      state.todos.splice(target, 1);
+    [__updateTodo.pending]: (state) => {
+      state.isLoading = true;
     },
-    [__deleteTodos.rejected]: () => {},
-    [__deleteTodos.pending]: () => {},
+    [__updateTodo.fulfilled]: (state, action) => {
+      console.log("action", action);
+      state.isLoading = false;
+      state.todos = [action.payload];
+    },
+    [__updateTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export default PlannerSlice.reducer;
+export default plannerSlice.reducer;
