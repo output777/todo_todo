@@ -26,13 +26,13 @@ export const __deleteTodo = createAsyncThunk(
   }
 );
 
-export const __updateTodo = createAsyncThunk(
-  "todos/updateTodos",
+export const __completeTodo = createAsyncThunk(
+  "todo/updateTodo",
   async (payload, thunkAPI) => {
     try {
       console.log("payload", payload);
       const data = await axios.patch(
-        `http://localhost:3001/${payload.id}`,
+        `http://localhost:3001/todos/${payload.id}`,
         payload
       );
 
@@ -77,15 +77,21 @@ export const plannerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__updateTodo.pending]: (state) => {
+    [__completeTodo.pending]: (state) => {
       state.isLoading = true;
     },
-    [__updateTodo.fulfilled]: (state, action) => {
+    [__completeTodo.fulfilled]: (state, action) => {
       console.log("action", action);
       state.isLoading = false;
-      state.todos = [action.payload];
+      state.todos = state.todos.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return { ...todo, isComplete: action.payload.isComplete };
+        } else {
+          return todo;
+        }
+      });
     },
-    [__updateTodo.rejected]: (state, action) => {
+    [__completeTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

@@ -34,8 +34,8 @@ const Modal = ({
         visible={visible}
       >
         <ModalInner
-          tabIndex="0"
-          className="modal-inner"
+          tabIndex='0'
+          className='modal-inner'
           width={width}
           height={height}
         >

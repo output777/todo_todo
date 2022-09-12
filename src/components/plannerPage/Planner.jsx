@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   __getTodo,
   __postTodo,
-  __updateTodo,
+  __completeTodo,
   __deleteTodo,
 } from "../../redux/modules/plannerSlice";
 
@@ -16,11 +16,15 @@ import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
+import Modal from "../utils/Modal";
 
 const Planner = () => {
   const [todo, setTodo] = useState({
     content: "",
+    isComplete: false,
   });
+
+  const [input, setInput] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,22 +40,52 @@ const Planner = () => {
     });
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = () => {
     dispatch(__postTodo(todo));
 
     setTodo({
+      ...todo,
       content: "",
+      isComplete: false,
     });
+  };
+
+
+  const onInputHadnler = () => {
+    if (input == false) {
+      setInput(true);
+    } else if (input == true) {
+      setInput(false);
+    }
+  };
+
+  const onCompleteHandler = (todo) => {
+    {
+      dispatch(
+        __completeTodo({
+          ...todo,
+          isComplete: true,
+        })
+      );
+    }
+  };
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   const todos = useSelector((state) => state.planner.todos);
   console.log(todos);
-
   return (
     <StDiv>
       <StDateDiv>
         <StSpan>9월 3일 목요일</StSpan>
-        <img src="#" />
+        <img src={calendarSvg} />
       </StDateDiv>
       <StAchievementRateDiv>
         {/* <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv> */}
@@ -67,38 +101,73 @@ const Planner = () => {
           <ProgressBar now={50} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
-      <StNothingTodoNoticeDiv>
-        <div>추가된 투두리스트가 없습니다!</div>
-        <div>우측 하단에 있는 수정 버튼을 눌러</div>
-        <div>투두리스트를 추가해주세요.</div>
-      </StNothingTodoNoticeDiv>
-      <StTodosDiv>
-        <div>
-          {todos?.map((todo) => (
-            <StTodoNotDone key={todo.id}>
+
+      <div>
+        {input ? (
+          <StInputBox>
+            <input onChange={onChangeHandler} />
+            <button
+              onClick={() => {
+                onSubmitHandler(todo);
+              }}
+            >
+              작성
+            </button>
+          </StInputBox>
+        ) : null}
+      </div>
+
+      {todos.length == 0 ? (
+        <StNothingTodoNoticeDiv>
+          <div>추가된 투두리스트가 없습니다!</div>
+          <div>우측 하단에 있는 수정 버튼을 눌러</div>
+          <div>투두리스트를 추가해주세요.</div>
+        </StNothingTodoNoticeDiv>
+      ) : (
+        <StNotDoneTodosDiv>
+          {todos?.map((todo) =>
+            todo.isComplete === false ? (
+              <StTodoNotDone key={todo.id}>
+                <StTodoLeft>
+                  <img
+                    src={notDoneSvg}
+                    onClick={() => onCompleteHandler(todo)}
+                  />
+                  <span>{todo.content}</span>
+                </StTodoLeft>
+                <StTodoRightImg src={threeDotSvg} onClick={openModal} />
+                {modalVisible && (
+                  <Modal
+                    visible={modalVisible}
+                    closable={true}
+                    maskClosable={true}
+                    onClose={closeModal}
+                    width='100px'
+                    height='50px'
+                  >
+                    asd
+                  </Modal>
+                )}
+              </StTodoNotDone>
+            ) : null
+          )}
+        </StNotDoneTodosDiv>
+      )}
+
+      <StDoneTodosDiv>
+        {todos?.map((todo) =>
+          todo.isComplete === true ? (
+            <StTodoDone key={todo.id}>
               <StTodoLeft>
-                <img src='#' />
+                <img src={doneSvg} />
                 <span>{todo.content}</span>
               </StTodoLeft>
-              <StTodoRightImg src='#' />
-            </StTodoNotDone>
-          ))}
-        </div>
-
-        <StTodoDone>
-          <StTodoLeft>
-            <img src="#"></img> <span>영어단어 100개 외우기</span>
-          </StTodoLeft>
-          <StTodoRightImg src="#" />
-        </StTodoDone>
-      </StTodosDiv>
-
-      <input onChange={onChangeHandler} />
-      <PlusButton
-        onClick={() => {
-          onSubmitHandler(todo);
-        }}
-      />
+              <StTodoRightImg src={threeDotDoneSvg} />
+            </StTodoDone>
+          ) : null
+        )}
+      </StDoneTodosDiv>
+      <PlusButton onClick={onInputHadnler} />
     </StDiv>
   );
 };
@@ -222,7 +291,15 @@ const StTodoNotDone = styled.div`
   justify-content: space-between;
 `;
 
-const StTodosDiv = styled.div`
+const StNotDoneTodosDiv = styled.div`
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const StDoneTodosDiv = styled.div`
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -238,4 +315,8 @@ const StTodoLeft = styled.div`
 `;
 const StTodoRightImg = styled.img`
   margin-right: 2%;
+`;
+
+const StInputBox = styled.div`
+  margin-top: 5%;
 `;
