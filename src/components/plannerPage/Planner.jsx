@@ -50,6 +50,7 @@ const Planner = () => {
     });
   };
 
+
   const onInputHadnler = () => {
     if (input == false) {
       setInput(true);
@@ -97,7 +98,7 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant='temp' />
+          <ProgressBar now={50} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
 

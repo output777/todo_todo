@@ -8,7 +8,6 @@ const MainPage = () => {
   return (
     <Layout>
       <Main />
-      {/* <InfiniteScroll /> */}
       <Navbar />
     </Layout>
   );

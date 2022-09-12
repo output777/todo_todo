@@ -30,7 +30,7 @@ const Modal = ({
       <ModalWrapper
         className={className}
         onClick={maskClosable ? onMaskClick : null}
-        tabIndex='-1'
+        tabIndex="-1"
         visible={visible}
       >
         <ModalInner
