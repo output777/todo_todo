@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import Main from "../mainPage/Main";
 
 const Modal = ({
   className,
@@ -9,6 +10,8 @@ const Modal = ({
   closable,
   visible,
   children,
+  width,
+  height,
 }) => {
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -30,7 +33,12 @@ const Modal = ({
         tabIndex='-1'
         visible={visible}
       >
-        <ModalInner tabIndex='0' className='modal-inner'>
+        <ModalInner
+          tabIndex='0'
+          className='modal-inner'
+          width={width}
+          height={height}
+        >
           {closable}
           {children}
         </ModalInner>
@@ -74,8 +82,8 @@ const ModalInner = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   background-color: #fff;
   border-radius: 48px;
-  width: 350px;
-  height: 330px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   max-width: 480px;
   top: 40%;
   transform: translateY(-50%);
