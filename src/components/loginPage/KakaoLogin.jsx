@@ -12,8 +12,8 @@ const KakaoLogin = () => {
   const KAKAO_CODE = location.search.split('=')[1];
 
   useEffect(() => {
-    dispatch(__kakaoLogin(KAKAO_CODE))
-    navigate('/main')
+    dispatch(__kakaoLogin(KAKAO_CODE));
+    // navigate('/main')
   }, [])
 
 

@@ -13,7 +13,10 @@ export const __getMainRank = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(`http://localhost:3001/test${payload}`);
-      console.log(data);
+      // const data = await axios.get(
+      //   `http://http://13.125.241.100/?/page=${payload}&size=3`
+      // );
+      // console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -27,7 +30,7 @@ export const mainSlice = createSlice({
   reducers: {},
   extraReducers: {
     [__getMainRank.fulfilled]: (state, action) => {
-      console.log("action.payload", action.payload);
+      // console.log("action.payload", action.payload);
       state.isLoading = false;
       state.mainRankList.push(...action.payload);
     },

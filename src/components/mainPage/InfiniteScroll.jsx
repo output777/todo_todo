@@ -10,7 +10,6 @@ const InfiniteScroll = () => {
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
-  // const [items, setItems] = useState([]);
   let options = {
     root: null,
     threshold: 0.5,
@@ -19,7 +18,7 @@ const InfiniteScroll = () => {
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
-        dispatch(__getMainRank(page));
+        dispatch(__getMainRank(page)); // size도 payload로 보내기
 
         observer.unobserve(entry.target);
         setPage((prev) => prev + 1);
@@ -28,23 +27,6 @@ const InfiniteScroll = () => {
     [mainRankList]
   );
   console.log("mainRankList", mainRankList);
-
-  // const checkIntersect = useCallback(
-  //   ([entry], observer) => {
-  //     if (entry.isIntersecting && !isLoaded) {
-  //       axios.get(`http://localhost:3001/test${page}`).then((res) => {
-  //         console.log("res.data", res.data);
-  //         setItems((prev) => [...prev, ...res.data]);
-  //       });
-
-  //       observer.unobserve(entry.target);
-  //       setPage((prev) => prev + 1);
-  //     }
-  //   },
-  //   [items]
-  // );
-
-  // console.log("items", items);
 
   useEffect(() => {
     let observer;
@@ -58,20 +40,12 @@ const InfiniteScroll = () => {
 
   console.log("page", page);
 
-  //   const observer = new IntersectionObserver(checkIntersect, {
-  //     ...options,
-  //   });
-
-  useEffect(() => {
-    console.log(targetRef.current);
-  }, []);
-
   return (
     <div>
       {mainRankList.map((each) => (
         <StDiv key={each.id}>{each.title}</StDiv>
       ))}
-      <div ref={targetRef}></div>
+      <StRefDiv ref={targetRef}></StRefDiv>
     </div>
   );
 };
@@ -79,6 +53,17 @@ const InfiniteScroll = () => {
 export default InfiniteScroll;
 
 const StDiv = styled.div`
-  border: 1px solid black;
-  height: 500px;
+  width: 90%;
+  margin: 10px auto 10px auto;
+  height: 65px;
+  box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
+  border-radius: 19px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StRefDiv = styled.div`
+  height: 50px;
 `;

@@ -182,11 +182,31 @@ const StAchievementsBox = styled.div`
 
   width: 350px;
   height: 220px;
-
-  background: #ffffff;
-
-  border: 1px solid #e8e8e8;
+  box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
+`;
+const StTopBoxHead = styled.div``;
+
+const StRankingButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 10px 0px 10px 0px;
+`;
+
+const StScrollDiv = styled.div`
+  overflow: scroll;
+  height: 300px;
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+    border-radius: 0px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #d1d1d1;
+  }
 `;
 
 const StthisMonthGauge = styled.div`
