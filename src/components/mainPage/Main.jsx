@@ -55,7 +55,7 @@ const Main = () => {
               <StGaugeText>
                 플래너 총 달성률<span>15%</span>
               </StGaugeText>
-              <ProgressBar now={20} variant="danger" />
+              <ProgressBar now={20} variant='danger' />
             </StTotalGauge>
           </StGaugebox>
         </StAchievementsBox>
@@ -73,6 +73,7 @@ const Main = () => {
             onClose={closeModal}
             width='350px'
             height='330px'
+            radius='48px'
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>

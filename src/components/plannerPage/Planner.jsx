@@ -24,13 +24,14 @@ const Planner = () => {
     isComplete: false,
   });
 
+  const todos = useSelector((state) => state.planner.todos);
+  console.log(todos);
+
   const [input, setInput] = useState(false);
 
-  const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
 
-  useEffect(() => {
-    dispatch(__getTodo());
-  }, [dispatch]);
+  const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
     const { value } = e.target;
@@ -50,7 +51,6 @@ const Planner = () => {
     });
   };
 
-
   const onInputHadnler = () => {
     if (input == false) {
       setInput(true);
@@ -69,18 +69,30 @@ const Planner = () => {
       );
     }
   };
+  const onEditHadnler = () => {
+    if (edit == false) {
+      setEdit(true);
+    }
+  };
+
+  console.log(edit);
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
+    console.log(e.target);
+    console.log(e.target.id);
     setModalVisible(true);
+    localStorage.setItem("todoId", e.target.id);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  const todos = useSelector((state) => state.planner.todos);
-  console.log(todos);
+  useEffect(() => {
+    dispatch(__getTodo());
+  }, [dispatch]);
+
   return (
     <StDiv>
       <StDateDiv>
@@ -98,11 +110,11 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant="temp" />
+          <ProgressBar now={50} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
 
-      <div>
+      <StInputContainer>
         {input ? (
           <StInputBox>
             <input onChange={onChangeHandler} />
@@ -115,7 +127,7 @@ const Planner = () => {
             </button>
           </StInputBox>
         ) : null}
-      </div>
+      </StInputContainer>
 
       {todos.length == 0 ? (
         <StNothingTodoNoticeDiv>
@@ -135,17 +147,39 @@ const Planner = () => {
                   />
                   <span>{todo.content}</span>
                 </StTodoLeft>
-                <StTodoRightImg src={threeDotSvg} onClick={openModal} />
+                <StTodoRightImg
+                  src={threeDotSvg}
+                  onClick={openModal}
+                  id={todo.id}
+                />
                 {modalVisible && (
                   <Modal
                     visible={modalVisible}
                     closable={true}
                     maskClosable={true}
                     onClose={closeModal}
-                    width='100px'
-                    height='50px'
+                    width='150px'
+                    height='100px'
+                    backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
-                    asd
+                    <div
+                      onClick={() => {
+                        closeModal();
+                        onEditHadnler();
+                      }}
+                    >
+                      수정
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        closeModal();
+                        dispatch(__deleteTodo(localStorage.getItem("todoId")));
+                        console.log(e.target.id);
+                      }}
+                    >
+                      삭제
+                    </div>
                   </Modal>
                 )}
               </StTodoNotDone>
@@ -318,5 +352,9 @@ const StTodoRightImg = styled.img`
 `;
 
 const StInputBox = styled.div`
-  margin-top: 5%;
+  padding-top: 20px;
+`;
+
+const StInputContainer = styled.div`
+  height: 50px;
 `;
