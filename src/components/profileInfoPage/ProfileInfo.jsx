@@ -175,7 +175,7 @@ const ProfileInfo = () => {
   }, []);
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div style={{ padding: "1rem 1rem 0.5rem 1rem", height: '100%', background: '#fff' }}>
       <StInfoTitle>
         <p style={{ margin: 0 }}>회원 정보를 입력해주세요</p>
       </StInfoTitle>
@@ -262,12 +262,20 @@ const ProfileInfo = () => {
 
 const StInfoTitle = styled.div`
   font-size: 1.4rem;
-  padding: 1.5rem 1rem 1rem 1rem;
+  padding: 0.5rem 1rem;
+  box-sizing:border-box;
+  height:8%;
   border-bottom: 1px solid #ffe9d4;
 `;
 
 const StInfoNicknameBox = styled.div`
-  padding: 1rem 0;
+  padding: 0.5rem 0 1rem 0;
+  height:18%;
+  box-sizing:border-box;
+
+  & p {
+    margin-bottom:5px;
+  }
 
   & form {
     display: flex;
@@ -278,7 +286,7 @@ const StInfoNicknameBox = styled.div`
     border: 1px solid #e8e8e8;
     height: 54px;
     padding: 0 0.5rem;
-    width: 240px;
+    width: 75%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     outline: none;
@@ -304,7 +312,7 @@ const StInfoNicknameBox = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     height: 54px;
-    padding: 0 1rem;
+    width:25%;
     font-size: 0.9rem;
     background-color: #fff;
     color: #ff7b00;
@@ -339,10 +347,23 @@ const StInfoNicknameBox = styled.div`
     left:0;
     top: 0;
   }
+
+  & span {
+    display: inline-block;
+    font-size:0.8rem;
+    height:32px;
+    margin:0;
+  }
 `;
 
 const StHighschoolBox = styled.div`
-  padding: 1rem 0 0.5rem 0;
+  padding-top: 0.7rem;
+  height: 26%;
+  box-sizing:border-box;
+
+  & p {
+    margin-bottom: 0.5rem;
+  }
 
   & .gradeBox {
     display: flex;
@@ -369,8 +390,8 @@ const StHighschoolBox = styled.div`
     input {
       border: 1px solid #e8e8e8;
       border-right: none;
-      padding: 0.5rem;
-      width: 290px;
+      padding: 0.8rem;
+      width: 90%;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
       outline: none;
@@ -385,7 +406,8 @@ const StHighschoolBox = styled.div`
       border-left: none;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      padding: 0.7rem 1rem;
+      padding: 0.8rem 0rem;
+      width:10%;
       font-size: 0.9rem;
       background-color: #fff;
       color: #ff7b00;
@@ -395,10 +417,10 @@ const StHighschoolBox = styled.div`
 
 const StHighschoolSearchBox = styled.div`
   width: 100%;
-  height: 220px;
   background-color: #fafafa;
   overflow-y: scroll;
   border-radius: 10px;
+  height:40%;
 
   & .content {
     align-items: center;
@@ -420,14 +442,16 @@ const StBtnBox = styled.form`
   display: flex;
   justify-content: center;
   background-color: #fafafa;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
+  height:8%;
 
   & button {
     background-color: #ff8f27;
     border: none;
     width: 280px;
-    height: 50px;
-    border-radius: 16px;
+    height:50px;
+    font-size:1rem;
+    border-radius: 12px;
     color: white;
     margin: 0;
   }

@@ -60,7 +60,7 @@ const StNaverLoginBtn = styled.div`
   justify-content: center;
 
   width: 280px;
-  height: 50px;
+  height: 10vh
 
   background: #ffffff;
 

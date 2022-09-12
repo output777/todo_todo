@@ -6,8 +6,8 @@ import { __getMainRank } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 
 const InfiniteScroll = () => {
-  const { mainRankList } = useSelector((state) => state.mainSlice);
-  const { error } = useSelector((state) => state.mainSlice);
+  const { mainRankList } = useSelector((state) => state.main);
+  const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
