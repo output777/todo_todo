@@ -6,6 +6,7 @@ export const __getTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get("http://localhost:3001/todos");
+      console.log('data', data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -39,7 +40,9 @@ export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/todos/${payload}`);
+      const data = await axios.delete(`http://localhost:3001/todos/${payload}`);
+      console.log('payload', payload)
+      console.log('data!!!', data)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -105,7 +108,8 @@ export const plannerSlice = createSlice({
     },
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todos = state.todos.filter((item) => item.id !== action.payload);
+      console.log('action', action.payload);
+      state.todos = state.todos.filter((item) => item.id !== Number(action.payload));
     },
     [__deleteTodo.rejected]: (state, action) => {
       state.isLoading = false;

@@ -24,8 +24,8 @@ const Planner = () => {
     isComplete: false,
   });
 
-  const todos = useSelector((state) => state.planner.todos);
-  console.log(todos);
+  const { todos } = useSelector((state) => state.planner);
+  console.log('todos', todos);
 
   const [input, setInput] = useState(false);
 
@@ -89,8 +89,10 @@ const Planner = () => {
     setModalVisible(false);
   };
 
-  const A = (e) => {
-    dispatch(__deleteTodo(localStorage.getItem("todoId")));
+  const A = () => {
+    closeModal();
+    const id = localStorage.getItem("todoId");
+    dispatch(__deleteTodo(id));
   };
 
   useEffect(() => {
@@ -175,10 +177,7 @@ const Planner = () => {
                       수정
                     </div>
                     <div
-                      onClick={() => {
-                        closeModal();
-                        A();
-                      }}
+                      onClick={A}
                     >
                       삭제
                     </div>
