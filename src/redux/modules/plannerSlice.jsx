@@ -18,16 +18,37 @@ export const __postTodo = createAsyncThunk("todo/postTodo", async (newTodo) => {
   return data.data;
 });
 
+export const __updateTodo = createAsyncThunk(
+  "todo/updateTodo",
+  async (payload, thunkAPI) => {
+    try {
+      console.log("payload", payload);
+      const data = await axios.patch(
+        `http://localhost:3001/todos/${payload.id}`,
+        payload
+      );
+
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
-    await axios.delete(`http://localhost:3001/todos/${payload}`);
-    return payload;
+    try {
+      await axios.delete(`http://localhost:3001/todos/${payload}`);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
 export const __completeTodo = createAsyncThunk(
-  "todo/updateTodo",
+  "todo/completeTodo",
   async (payload, thunkAPI) => {
     try {
       console.log("payload", payload);
@@ -67,10 +88,23 @@ export const plannerSlice = createSlice({
     [__postTodo.fulfilled]: (state, action) => {
       state.todos = [...state.todos, action.payload];
     },
+    [__updateTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateTodo.fulfilled]: (state, action) => {
+      console.log("action", action);
+      state.isLoading = false;
+      state.worries = [action.payload];
+    },
+    [__updateTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     [__deleteTodo.pending]: (state, action) => {
       state.isLoading = true;
     },
     [__deleteTodo.fulfilled]: (state, action) => {
+      state.isLoading = false;
       state.todos = state.todos.filter((item) => item.id !== action.payload);
     },
     [__deleteTodo.rejected]: (state, action) => {
