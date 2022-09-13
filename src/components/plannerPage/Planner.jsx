@@ -80,8 +80,7 @@ const Planner = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = (e) => {
-    console.log(e.target);
-    console.log(e.target.id);
+    console.log(typeof e.target.id);
     setModalVisible(true);
     localStorage.setItem("todoId", e.target.id);
   };
@@ -90,6 +89,7 @@ const Planner = () => {
   };
 
   const onDeleteHandler = () => {
+    console.log(localStorage.getItem("todoId"));
     dispatch(__deleteTodo(localStorage.getItem("todoId")));
     closeModal();
   };
@@ -143,8 +143,8 @@ const Planner = () => {
       ) : (
         <StNotDoneTodosDiv>
           {todos?.map((todo) =>
-            todo.isComplete === false ? (
-              <StTodoNotDone key={todo.id}>
+            todo.complete === false ? (
+              <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
                   <img
                     src={notDoneSvg}
@@ -154,8 +154,8 @@ const Planner = () => {
                 </StTodoLeft>
                 <StTodoRightImg
                   src={threeDotSvg}
-                  onClick={openModal}
-                  id={todo.id}
+                  onClick={(e) => openModal(e)}
+                  id={todo.todoId}
                 />
                 {modalVisible && (
                   <Modal
@@ -179,8 +179,8 @@ const Planner = () => {
 
       <StDoneTodosDiv>
         {todos?.map((todo) =>
-          todo.isComplete === true ? (
-            <StTodoDone key={todo.id}>
+          todo.complete === true ? (
+            <StTodoDone key={todo.todoId}>
               <StTodoLeft>
                 <img src={doneSvg} />
                 <span>{todo.content}</span>
