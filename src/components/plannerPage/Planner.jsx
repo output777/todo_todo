@@ -25,7 +25,7 @@ const Planner = () => {
   });
 
   const { todos } = useSelector((state) => state.planner);
-  console.log('todos', todos);
+  console.log("todos", todos);
 
   const [input, setInput] = useState(false);
 
@@ -48,6 +48,7 @@ const Planner = () => {
       ...todo,
       content: "",
       isComplete: false,
+      edit: false,
     });
   };
 
@@ -69,13 +70,12 @@ const Planner = () => {
       );
     }
   };
-  const onEditHadnler = () => {
-    if (edit == false) {
+  const onEditHandler = () => {
+    if (edit === false) {
       setEdit(true);
     }
+    closeModal();
   };
-
-  console.log(edit);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -89,10 +89,9 @@ const Planner = () => {
     setModalVisible(false);
   };
 
-  const A = () => {
+  const onDeleteHandler = () => {
+    dispatch(__deleteTodo(localStorage.getItem("todoId")));
     closeModal();
-    const id = localStorage.getItem("todoId");
-    dispatch(__deleteTodo(id));
   };
 
   useEffect(() => {
@@ -151,7 +150,7 @@ const Planner = () => {
                     src={notDoneSvg}
                     onClick={() => onCompleteHandler(todo)}
                   />
-                  <span>{todo.content}</span>
+                  {edit ? <input /> : <span>{todo.content}</span>}
                 </StTodoLeft>
                 <StTodoRightImg
                   src={threeDotSvg}
@@ -168,19 +167,8 @@ const Planner = () => {
                     height='100px'
                     backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
-                    <div
-                      onClick={() => {
-                        closeModal();
-                        onEditHadnler();
-                      }}
-                    >
-                      수정
-                    </div>
-                    <div
-                      onClick={A}
-                    >
-                      삭제
-                    </div>
+                    <div onClick={onEditHandler}>수정</div>
+                    <div onClick={onDeleteHandler}>삭제</div>
                   </Modal>
                 )}
               </StTodoNotDone>
