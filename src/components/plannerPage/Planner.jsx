@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __getTodo,
@@ -25,13 +25,22 @@ const Planner = () => {
   });
 
   const { todos } = useSelector((state) => state.planner);
-  console.log("todos", todos);
+  console.log("todos", todos.length);
 
   const [input, setInput] = useState(false);
 
   const [edit, setEdit] = useState(false);
 
   const dispatch = useDispatch();
+
+
+  const todoInputRef = useRef([]);
+  let todoContentRef = useRef([]);
+  todoInputRef.current = [];
+  todoContentRef.current = [];
+
+  console.log('todoInputRef', todoInputRef)
+  console.log('todoContentRef', todoContentRef)
 
   const onChangeHandler = (e) => {
     const { value } = e.target;
@@ -71,6 +80,13 @@ const Planner = () => {
     }
   };
   const onEditHandler = () => {
+    console.log('todoInputRef', todoInputRef, todoInputRef.current)
+    console.log('todoContentRef', todoContentRef, todoContentRef.current)
+
+    let index = localStorage.getItem('index');
+    todoInputRef.current[index].classList.add('show');
+    todoContentRef.current[index].classList.remove('show');
+
     if (edit === false) {
       setEdit(true);
     }
@@ -79,23 +95,38 @@ const Planner = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openModal = (e) => {
-    console.log(typeof e.target.id);
+
+  const openModal = (e, index) => {
+    console.log(e, index);
+    console.log(e.target.id);
     setModalVisible(true);
     localStorage.setItem("todoId", e.target.id);
+    localStorage.setItem("index", index);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
 
   const onDeleteHandler = () => {
-    console.log(localStorage.getItem("todoId"));
     dispatch(__deleteTodo(localStorage.getItem("todoId")));
     closeModal();
   };
 
+  const addTodoInputRefs = (el) => {
+    if (el) {
+      todoInputRef.current.push(el);
+    }
+  }
+
+  const addTodoContentRefs = (el) => {
+    if (el) {
+      todoContentRef.current.push(el);
+    }
+  }
+
   useEffect(() => {
     dispatch(__getTodo());
+    console.log('todos', todos, todos.length);
   }, [dispatch]);
 
   return (
@@ -142,7 +173,7 @@ const Planner = () => {
         </StNothingTodoNoticeDiv>
       ) : (
         <StNotDoneTodosDiv>
-          {todos?.map((todo) =>
+          {todos?.map((todo, index) =>
             todo.complete === false ? (
               <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
@@ -150,11 +181,12 @@ const Planner = () => {
                     src={notDoneSvg}
                     onClick={() => onCompleteHandler(todo)}
                   />
-                  {edit ? <input /> : <span>{todo.content}</span>}
+                  <input ref={addTodoInputRefs} />
+                  <span className="show" ref={addTodoContentRefs}>{todo.content}</span>
                 </StTodoLeft>
                 <StTodoRightImg
                   src={threeDotSvg}
-                  onClick={(e) => openModal(e)}
+                  onClick={(e) => openModal(e, index)}
                   id={todo.todoId}
                 />
                 {modalVisible && (
@@ -183,7 +215,7 @@ const Planner = () => {
             <StTodoDone key={todo.todoId}>
               <StTodoLeft>
                 <img src={doneSvg} />
-                <span>{todo.content}</span>
+                <span className="show">{todo.content}</span>
               </StTodoLeft>
               <StTodoRightImg src={threeDotDoneSvg} />
             </StTodoDone>
@@ -335,6 +367,23 @@ const StTodoLeft = styled.div`
   align-items: center;
   gap: 10px;
   font-weight: bold;
+
+  & input {
+    display:none;
+  }
+
+  & input.show  {
+    display:block;
+  }
+
+  & span {
+    display: none
+  }
+
+  & span.show {
+    display: block
+  }
+
 `;
 const StTodoRightImg = styled.img`
   margin-right: 2%;

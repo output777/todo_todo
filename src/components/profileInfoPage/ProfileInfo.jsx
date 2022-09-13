@@ -10,9 +10,11 @@ import {
   __userInfoRegister,
 } from "../../redux/modules/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProfileInfo = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { nicknameCheck } = useSelector((state) => state.login);
 
   const [nickname, setNickname] = useState("");
@@ -175,10 +177,12 @@ const ProfileInfo = () => {
     const newUserInfoRegister = {
       nickname: nickname,
       highschool: highschoolInput,
-      grade: grade,
-    };
-    dispatch(__userInfoRegister(newUserInfoRegister));
-  };
+      grade: grade
+    }
+    dispatch(__userInfoRegister(newUserInfoRegister))
+    navigate("/main");
+  }
+
 
   useEffect(() => {
     getHighschool();
@@ -255,17 +259,17 @@ const ProfileInfo = () => {
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
           ? highschoolResult &&
-            highschoolResult.map((data, index) => (
-              <div className="content" key={index}>
-                <div className="school" onClick={onClickSelectHandler}>
-                  {data.school}
-                </div>
-                <div className="region">
-                  <img src={regionSvg} />
-                  {data.adres}
-                </div>
+          highschoolResult.map((data, index) => (
+            <div className="content" key={index}>
+              <div className="school" onClick={onClickSelectHandler}>
+                {data.school}
               </div>
-            ))
+              <div className="region">
+                <img src={regionSvg} />
+                {data.adres}
+              </div>
+            </div>
+          ))
           : null}
       </StHighschoolSearchBox>
       <StBtnBox onSubmit={onSubmitRegisterHandler}>

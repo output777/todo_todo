@@ -40,6 +40,7 @@ export const __googleLogin = createAsyncThunk(
       console.log(data);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem('nickname', data.nickname)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
@@ -125,6 +126,7 @@ export const loginSlice = createSlice({
     },
     [__googleLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.user = action.payload;
       state.nickname = action.payload.nickname;
       state.token = true;
     },
@@ -160,5 +162,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const {} = loginSlice.actions;
+export const { } = loginSlice.actions;
 export default loginSlice.reducer;
