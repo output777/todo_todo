@@ -2,33 +2,34 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const KAKAO_BASE_URL = process.env.REACT_APP_KAKAO_BASE_URL
-const GOOGLE_BASE_URL = process.env.REACT_APP_GOOGLE_BASE_URL
+const KAKAO_BASE_URL = process.env.REACT_APP_KAKAO_BASE_URL;
+const GOOGLE_BASE_URL = process.env.REACT_APP_GOOGLE_BASE_URL;
 
 const initialState = {
   user: null,
   nickname: null,
   token: false,
   nicknameCheck: null,
-}
-
-
+};
 
 // 소셜 로그인
-export const __kakaoLogin = createAsyncThunk('kakao/login', async (payload, thunkAPI) => {
-  try {
-    const { data } = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`)
-    console.log(data);
+export const __kakaoLogin = createAsyncThunk(
+  "kakao/login",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`);
+      console.log(data);
 
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    return thunkAPI.fulfillWithValue(data);
-  } catch (error) {
-    console.log(error);
-    // window.alert('로그인에 실패하였습니다.')
-    return thunkAPI.rejectWithValue(error);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      console.log(error);
+      // window.alert('로그인에 실패하였습니다.')
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-})
+);
 
 export const __googleLogin = createAsyncThunk(
   "google/login",
@@ -51,16 +52,20 @@ export const __googleLogin = createAsyncThunk(
 export const __nicknameCheck = createAsyncThunk(
   "nickname/check",
   async (payload, thunkAPI) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem("accessToken");
     const config = {
       headers: {
-        "Content-type": 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      }
-    }
+        "Content-type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
     console.log("__nicknameCheck payload", payload);
     try {
-      const { data } = await axios.post(`${BASE_URL}/check-nickname`, payload, config);
+      const { data } = await axios.post(
+        `${BASE_URL}/check-nickname`,
+        payload,
+        config
+      );
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -73,13 +78,13 @@ export const __nicknameCheck = createAsyncThunk(
 export const __userInfoRegister = createAsyncThunk(
   "userInfo/register",
   async (payload, thunkAPI) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem("accessToken");
     const config = {
       headers: {
-        "Content-type": 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      }
-    }
+        "Content-type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
     console.log("__userInfoRegister payload", payload);
     try {
       const { data } = await axios.post(`${BASE_URL}/signup`, payload, config);
@@ -93,7 +98,7 @@ export const __userInfoRegister = createAsyncThunk(
 );
 
 export const loginSlice = createSlice({
-  name: 'loginSlice',
+  name: "loginSlice",
   initialState,
   reducers: {},
   extraReducers: {
@@ -103,7 +108,7 @@ export const loginSlice = createSlice({
     },
     [__kakaoLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.nickname = action.payload.nickname
+      state.nickname = action.payload.nickname;
       state.token = true;
     },
     [__kakaoLogin.rejected]: (state, action) => {
@@ -116,7 +121,7 @@ export const loginSlice = createSlice({
     },
     [__googleLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.nickname = action.payload.nickname
+      state.nickname = action.payload.nickname;
       state.token = true;
     },
     [__googleLogin.rejected]: (state, action) => {
@@ -129,7 +134,7 @@ export const loginSlice = createSlice({
     },
     [__nicknameCheck.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.nicknameCheck = action.payload
+      state.nicknameCheck = action.payload;
     },
     [__nicknameCheck.rejected]: (state, action) => {
       state.isLoading = false;
@@ -141,15 +146,15 @@ export const loginSlice = createSlice({
     },
     [__userInfoRegister.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // state.user 
-      // state.nickname 
+      // state.user
+      // state.nickname
     },
     [__userInfoRegister.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-  }
-})
+  },
+});
 
-export const { } = loginSlice.actions;
+export const {} = loginSlice.actions;
 export default loginSlice.reducer;

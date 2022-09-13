@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { __getMainRank } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -14,13 +13,13 @@ const InfiniteScroll = () => {
   const [page, setPage] = useState(1); // 페이지
   let options = {
     root: null,
-    threshold: 0.5,
+    threshold: 0.3,
   };
 
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
-        dispatch(__getMainRank(page)); // size도 payload로 보내기
+        dispatch(__getMainRank(page));
 
         observer.unobserve(entry.target);
         setPage((prev) => prev + 1);
@@ -38,27 +37,34 @@ const InfiniteScroll = () => {
       observer.observe(targetRef.current);
     }
   }, [mainRankList]);
-
+  console.log("mainRankList", mainRankList);
   return (
-    <div>
+    <Stdiv>
       {mainRankList.map((each) => (
         <StRankingBox key={each.id}>
-          <StRankingNumber>100</StRankingNumber>
           <div>
-            <StRankingProfile src={defaultProfile} />
-            <StRankingNickname>{each.nickName}</StRankingNickname>
+            <StRankingNumber>{each.rank}</StRankingNumber>
+            <div>
+              <StRankingProfile src={defaultProfile} />
+              <StRankingNickname>{each.nickname}</StRankingNickname>
+            </div>
           </div>
 
           <StRankingScore>30000</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}>{error}</StRefDiv>
-    </div>
+    </Stdiv>
   );
 };
 
 export default InfiniteScroll;
 
+const Stdiv = styled.div`
+  background-color: #fafafa;
+  height: 50vh;
+  overflow: scroll;
+`;
 const StRefDiv = styled.div`
   height: 50px;
   display: flex;
@@ -72,7 +78,8 @@ const StRankingBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 350px;
+  width: 90%;
+  margin: auto;
   height: 70px;
 
   background: #ffffff;
@@ -89,7 +96,11 @@ const StRankingBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 1.5em;
+
+    & div {
+      gap: 0.6em;
+    }
   }
 `;
 
@@ -97,6 +108,7 @@ const StRankingNumber = styled.div`
   font-weight: 700;
   font-size: 15px;
   color: #ff7b00;
+  margin-left: 1em;
 `;
 
 const StRankingProfile = styled.img`
@@ -112,4 +124,5 @@ const StRankingNickname = styled.div``;
 const StRankingScore = styled.div`
   font-weight: 700;
   color: #9f9e9e;
+  margin-right: 1em;
 `;

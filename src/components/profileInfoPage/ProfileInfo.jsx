@@ -5,7 +5,10 @@ import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
 import regionSvg from "../../assets/img/regionSvg.svg";
 import cancelSvg from "../../assets/img/cancelSvg.svg";
-import { __nicknameCheck, __userInfoRegister } from "../../redux/modules/loginSlice";
+import {
+  __nicknameCheck,
+  __userInfoRegister,
+} from "../../redux/modules/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProfileInfo = () => {
@@ -21,7 +24,6 @@ const ProfileInfo = () => {
   const [highschools, setHighschools] = useState([]);
   const [highschoolInput, setHighschoolInput] = useState("");
   const [highschoolResult, setHighschoolResult] = useState([]);
-
 
   const nicknameRef = useRef(null);
   const oneRef = useRef(null);
@@ -42,19 +44,19 @@ const ProfileInfo = () => {
 
   const onSubmitNicknameCheckHandler = (e) => {
     e.preventDefault();
-    console.log('nickname', nickname);
+    console.log("nickname", nickname);
 
     const newNickname = {
-      nickname: nickname
-    }
-    console.log(nickname.length)
+      nickname: nickname,
+    };
+    console.log(nickname.length);
     if (nickname.length > 1) {
       dispatch(__nicknameCheck(newNickname));
       setIsNicknameCheck(() => true);
     } else {
-      return alert('닉네임은 2글자부터 가능합니다')
+      return alert("닉네임은 2글자부터 가능합니다");
     }
-  }
+  };
 
   const onClickOneRefHandler = (e) => {
     const userGrade = parseInt(e.target.textContent).toString();
@@ -80,7 +82,7 @@ const ProfileInfo = () => {
     threeRef.current.classList.add("active");
   };
 
-  console.log('grade', grade);
+  console.log("grade", grade);
 
   const getHighschool = async () => {
     const { data } = await axios.get(
@@ -158,24 +160,38 @@ const ProfileInfo = () => {
     setHighschoolResult([]);
   };
 
-  console.log('nickname', nickname, 'grade', grade, typeof grade, 'highschoolInput', highschoolInput);
+  console.log(
+    "nickname",
+    nickname,
+    "grade",
+    grade,
+    typeof grade,
+    "highschoolInput",
+    highschoolInput
+  );
 
   const onSubmitRegisterHandler = (e) => {
     e.preventDefault();
     const newUserInfoRegister = {
       nickname: nickname,
       highschool: highschoolInput,
-      grade: grade
-    }
-    dispatch(__userInfoRegister(newUserInfoRegister))
-  }
+      grade: grade,
+    };
+    dispatch(__userInfoRegister(newUserInfoRegister));
+  };
 
   useEffect(() => {
     getHighschool();
   }, []);
 
   return (
-    <div style={{ padding: "1rem 1rem 0.5rem 1rem", height: '100%', background: '#fff' }}>
+    <div
+      style={{
+        padding: "1rem 1rem 0.5rem 1rem",
+        height: "100%",
+        background: "#fff",
+      }}
+    >
       <StInfoTitle>
         <p style={{ margin: 0 }}>회원 정보를 입력해주세요</p>
       </StInfoTitle>
@@ -183,16 +199,15 @@ const ProfileInfo = () => {
         <p>닉네임</p>
 
         <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
-          {isNicknameCheck
-            ?
+          {isNicknameCheck ? (
             <input
               type="text"
               placeholder="2-12자의 영문,한글,숫자 사용 가능"
               value={nickname}
               onChange={onChangeNicknameHandler}
-              className='checkedInput'
+              className="checkedInput"
             />
-            :
+          ) : (
             <>
               <input
                 type="text"
@@ -202,7 +217,7 @@ const ProfileInfo = () => {
               />
               <button>중복 확인</button>
             </>
-          }
+          )}
         </form>
         <span>{isNicknameCheck ? nicknameCheck : null}</span>
       </StInfoNicknameBox>
@@ -240,17 +255,17 @@ const ProfileInfo = () => {
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
           ? highschoolResult &&
-          highschoolResult.map((data, index) => (
-            <div className="content" key={index}>
-              <div className="school" onClick={onClickSelectHandler}>
-                {data.school}
+            highschoolResult.map((data, index) => (
+              <div className="content" key={index}>
+                <div className="school" onClick={onClickSelectHandler}>
+                  {data.school}
+                </div>
+                <div className="region">
+                  <img src={regionSvg} />
+                  {data.adres}
+                </div>
               </div>
-              <div className="region">
-                <img src={regionSvg} />
-                {data.adres}
-              </div>
-            </div>
-          ))
+            ))
           : null}
       </StHighschoolSearchBox>
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
@@ -263,18 +278,18 @@ const ProfileInfo = () => {
 const StInfoTitle = styled.div`
   font-size: 1.4rem;
   padding: 0.5rem 1rem;
-  box-sizing:border-box;
-  height:8%;
+  box-sizing: border-box;
+  height: 8%;
   border-bottom: 1px solid #ffe9d4;
 `;
 
 const StInfoNicknameBox = styled.div`
   padding: 0.5rem 0 1rem 0;
-  height:18%;
-  box-sizing:border-box;
+  height: 18%;
+  box-sizing: border-box;
 
   & p {
-    margin-bottom:5px;
+    margin-bottom: 5px;
   }
 
   & form {
@@ -312,7 +327,7 @@ const StInfoNicknameBox = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     height: 54px;
-    width:25%;
+    width: 25%;
     font-size: 0.9rem;
     background-color: #fff;
     color: #ff7b00;
@@ -329,37 +344,36 @@ const StInfoNicknameBox = styled.div`
     transition: border 0.2s;
   }
 
-
   & form.active button {
     border: 1px solid #ff7b00;
     border-left: none;
     transition: border 0.2s;
-    position:relative;
+    position: relative;
   }
 
   & form.active button::before {
-    content:'';
-    width:1px;
-    height:100%;
-    color:red;
-    background-color:#e8e8e8;
-    position:absolute;
-    left:0;
+    content: "";
+    width: 1px;
+    height: 100%;
+    color: red;
+    background-color: #e8e8e8;
+    position: absolute;
+    left: 0;
     top: 0;
   }
 
   & span {
     display: inline-block;
-    font-size:0.8rem;
-    height:32px;
-    margin:0;
+    font-size: 0.8rem;
+    height: 32px;
+    margin: 0;
   }
 `;
 
 const StHighschoolBox = styled.div`
   padding-top: 0.7rem;
   height: 26%;
-  box-sizing:border-box;
+  box-sizing: border-box;
 
   & p {
     margin-bottom: 0.5rem;
@@ -407,7 +421,7 @@ const StHighschoolBox = styled.div`
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       padding: 0.8rem 0rem;
-      width:10%;
+      width: 10%;
       font-size: 0.9rem;
       background-color: #fff;
       color: #ff7b00;
@@ -420,7 +434,7 @@ const StHighschoolSearchBox = styled.div`
   background-color: #fafafa;
   overflow-y: scroll;
   border-radius: 10px;
-  height:40%;
+  height: 40%;
 
   & .content {
     align-items: center;
@@ -443,14 +457,14 @@ const StBtnBox = styled.form`
   justify-content: center;
   background-color: #fafafa;
   margin: 0 0 0.5rem 0;
-  height:8%;
+  height: 8%;
 
   & button {
     background-color: #ff8f27;
     border: none;
     width: 280px;
-    height:50px;
-    font-size:1rem;
+    height: 50px;
+    font-size: 1rem;
     border-radius: 12px;
     color: white;
     margin: 0;
