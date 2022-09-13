@@ -5,8 +5,14 @@ export const __getTodo = createAsyncThunk(
   "todo/getTodo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/todos");
-      console.log('data', data);
+      const accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+      const data = await axios.get(`http://13.125.241.100/api/todo`, config);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -14,10 +20,29 @@ export const __getTodo = createAsyncThunk(
   }
 );
 
-export const __postTodo = createAsyncThunk("todo/postTodo", async (newTodo) => {
-  const data = await axios.post("http://localhost:3001/todos", newTodo);
-  return data.data;
-});
+export const __postTodo = createAsyncThunk(
+  "todo/postTodo",
+  async (newTodo, thunkAPI) => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+      const data = await axios.post(
+        "http://13.125.241.100/api/todo",
+        newTodo,
+        config
+      );
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __updateTodo = createAsyncThunk(
   "todo/updateTodo",
@@ -25,7 +50,7 @@ export const __updateTodo = createAsyncThunk(
     try {
       console.log("payload", payload);
       const data = await axios.patch(
-        `http://localhost:3001/todos/${payload.id}`,
+        `http://13.125.241.100/api/todo/${payload.id}`,
         payload
       );
 
@@ -40,9 +65,17 @@ export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.delete(`http://localhost:3001/todos/${payload}`);
-      console.log('payload', payload)
-      console.log('data!!!', data)
+      const accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `http://13.125.241.100/api/todo/${payload}`,
+        config
+      );
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -56,7 +89,7 @@ export const __completeTodo = createAsyncThunk(
     try {
       console.log("payload", payload);
       const data = await axios.patch(
-        `http://localhost:3001/todos/${payload.id}`,
+        `http://13.125.241.100/api/${payload.id}`,
         payload
       );
 
@@ -108,8 +141,10 @@ export const plannerSlice = createSlice({
     },
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action', action.payload);
-      state.todos = state.todos.filter((item) => item.id !== Number(action.payload));
+      console.log("action", typeof action.payload);
+      state.todos = state.todos.filter(
+        (item) => item.todoId !== Number(action.payload)
+      );
     },
     [__deleteTodo.rejected]: (state, action) => {
       state.isLoading = false;
@@ -123,7 +158,7 @@ export const plannerSlice = createSlice({
       state.isLoading = false;
       state.todos = state.todos.map((todo) => {
         if (todo.id === action.payload.id) {
-          return { ...todo, isComplete: action.payload.isComplete };
+          return { ...todo, complete: action.payload.complete };
         } else {
           return todo;
         }
