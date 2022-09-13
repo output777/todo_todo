@@ -62,7 +62,7 @@ export const __nicknameCheck = createAsyncThunk(
     console.log("__nicknameCheck payload", payload);
     try {
       const { data } = await axios.post(
-        `http://13.125.241.100/api/check-nickname`,
+        `${BASE_URL}/check-nickname`,
         payload,
         config
       );

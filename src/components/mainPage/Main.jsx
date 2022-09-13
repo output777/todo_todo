@@ -37,30 +37,30 @@ const Main = () => {
           <br /> 오늘 하루도 힘내세요!
         </div>
       </StPhrasesbox>
-      <StAchieveContaniner>
-        <StAchievementsBox>
-          <StAchievementsTopBox>
-            <span>OO님의 업적</span>
-          </StAchievementsTopBox>
-
-          <StGaugebox>
-            <StthisMonthGauge>
-              <StGaugeText>
-                이번달 플래너 달성률<span>80%</span>
-              </StGaugeText>
+      <StAchievementsBox>
+        <StAchievementsTopBox>
+          <div>OO님의 업적</div>
+        </StAchievementsTopBox>
+        <StAchievementsBottomBox>
+          <StthisMonthGauge>
+            <StGaugeText>
+              이번달 플래너 달성률<div>80%</div>
+            </StGaugeText>
+            <div>
               <ProgressBar now={80} />
-            </StthisMonthGauge>
+            </div>
+          </StthisMonthGauge>
 
-            <StTotalGauge>
-              <StGaugeText>
-                플래너 총 달성률<span>15%</span>
-              </StGaugeText>
-              <ProgressBar now={20} variant='danger' />
-            </StTotalGauge>
-          </StGaugebox>
-        </StAchievementsBox>
-      </StAchieveContaniner>
-
+          <StTotalGauge>
+            <StGaugeText>
+              플래너 총 달성률<div>15%</div>
+            </StGaugeText>
+            <div>
+              <ProgressBar now={20} />
+            </div>
+          </StTotalGauge>
+        </StAchievementsBottomBox>
+      </StAchievementsBox>
       <StRankingPhrases>
         <img src={trophy} />
         <span>랭킹</span>
@@ -105,7 +105,6 @@ const Main = () => {
           </Modal>
         )}
       </StRankingPhrases>
-
       <StRankingBtnBox>
         {month ? (
           <StMonthRankingBtn onClick={onClickMonth}>
@@ -126,13 +125,10 @@ const Main = () => {
             <span>주간 랭킹</span>
           </StWeeklyRankingBtn2nd>
         )}
-      </StRankingBtnBox>
-
-      <StRankingBoxContainer>
-        <StScrollDiv>
-          <InfiniteScroll />
-        </StScrollDiv>
-      </StRankingBoxContainer>
+      </StRankingBtnBox>{" "}
+      <StScrollDiv>
+        <InfiniteScroll />
+      </StScrollDiv>
     </StMainContainer>
   );
 };
@@ -141,89 +137,80 @@ export default Main;
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
+  height: 100%;
 `;
 
 const StPhrasesbox = styled.div`
-  position: relative;
-  top: 25px;
-  margin-left: 20px;
-
+  height: 10vh;
+  width: 90%;
+  margin: auto;
+  padding-top: 4%;
   span {
     color: #ff7b00;
-    font-weight: 700;
+    font-weight: bold;
+    font-size: 100%;
   }
   div {
     margin-top: 5px;
     font-weight: bold;
-    font-size: 20px;
-  }
-`;
-
-const StAchieveContaniner = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-`;
-
-const StAchievementsTopBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 350px;
-  height: 49px;
-
-  border-radius: 12px 12px 0 0;
-  background-color: #ffe9d5;
-  span {
-    margin-left: 15px;
-    color: #ff7b00;
+    font-size: 95%;
   }
 `;
 
 const StAchievementsBox = styled.div`
-  box-sizing: border-box;
-
-  width: 350px;
-  height: 220px;
+  width: 90%;
+  margin: 10% auto;
+  height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
   background-color: white;
 `;
 
-const StScrollDiv = styled.div`
-  overflow: scroll;
-  height: 300px;
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 20px;
-    border-radius: 0px;
-    background: rgba(255, 255, 255, 0.4);
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #d1d1d1;
+const StAchievementsTopBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 25%;
+
+  border-radius: 12px 12px 0 0;
+  background-color: #ffe9d5;
+  div {
+    margin-left: 15px;
+    color: #ff7b00;
   }
 `;
 
+const StAchievementsBottomBox = styled.div`
+  height: 75%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15%;
+`;
 const StthisMonthGauge = styled.div`
+  width: 90%;
   .progress-bar {
     background-color: #74e272;
   }
-  margin: 15px 15px 0 15px;
 `;
 const StTotalGauge = styled.div`
-  margin: 30px 15px 0 15px;
+  width: 90%;
+  .progress-bar {
+    background-color: #ffdb80;
+  }
 `;
 
-const StGaugebox = styled.div``;
-
-const StGaugeText = styled.span`
+const StGaugeText = styled.div`
+  margin-bottom: 2%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
 `;
 
 const StRankingPhrases = styled.div`
-  margin: 20px 0 0 20px;
+  margin: 0 0 0 1.5em;
   span {
     margin-left: 7px;
     margin-right: 7px;
@@ -236,7 +223,7 @@ const StRankingPhrases = styled.div`
 `;
 
 const StRankingBtnBox = styled.div`
-  margin-left: 18px;
+  margin-left: 1.5em;
   margin-bottom: 5px;
 `;
 
@@ -307,11 +294,6 @@ const StWeeklyRankingBtn2nd = styled.button`
   }
 `;
 
-const StRankingBoxContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const StModalTop = styled.div`
   display: flex;
   justify-content: center;
@@ -351,4 +333,20 @@ const StModalCloseBtn = styled.button`
   color: #ff8f27;
 
   margin-top: 5%;
+`;
+
+const StScrollDiv = styled.div`
+  background-color: #fafafa;
+  overflow: scroll;
+  height: 50vh;
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 150px;
+    border-radius: 0px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #d1d1d1;
+  }
 `;

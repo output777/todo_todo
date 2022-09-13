@@ -2,6 +2,8 @@ import React from "react";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const initialState = {
   mainRankList: [],
   isLoading: false,
@@ -11,13 +13,23 @@ const initialState = {
 export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
+    const accessToken = localStorage.getItem("accessToken");
+    const config = {
+      headers: {
+        // "Content-type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    console.log("payload", payload);
     try {
-      const data = await axios.get(`http://localhost:3001/test${payload}`);
-      // const data = await axios.get(
-      //   `http://http://13.125.241.100/?/page=${payload}&size=3`
-      // );
-      // console.log("data.data", data.data);
-      return thunkAPI.fulfillWithValue(data.data);
+      // const data = await axios.get(`http://localhost:3001/test${payload}`);
+      const data = await axios.get(
+        `${BASE_URL}/rank/weekly?page=${payload}&size=${3}`,
+        payload,
+        config
+      );
+      console.log("data.data.content", data.data.content);
+      return thunkAPI.fulfillWithValue(data.data.content);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
