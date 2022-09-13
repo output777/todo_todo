@@ -87,7 +87,11 @@ export const __userInfoRegister = createAsyncThunk(
     };
     console.log("__userInfoRegister payload", payload);
     try {
-      const { data } = await axios.post(`${BASE_URL}/signup`, payload, config);
+      const { data } = await axios.post(
+        `http://13.125.241.100/api/signup`,
+        payload,
+        config
+      );
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

@@ -24,13 +24,14 @@ const Planner = () => {
     isComplete: false,
   });
 
+  const { todos } = useSelector((state) => state.planner);
+  console.log("todos", todos);
+
   const [input, setInput] = useState(false);
 
-  const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
 
-  useEffect(() => {
-    dispatch(__getTodo());
-  }, [dispatch]);
+  const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
     const { value } = e.target;
@@ -47,9 +48,9 @@ const Planner = () => {
       ...todo,
       content: "",
       isComplete: false,
+      edit: false,
     });
   };
-
 
   const onInputHadnler = () => {
     if (input == false) {
@@ -69,18 +70,34 @@ const Planner = () => {
       );
     }
   };
+  const onEditHandler = () => {
+    if (edit === false) {
+      setEdit(true);
+    }
+    closeModal();
+  };
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
+    console.log(typeof e.target.id);
     setModalVisible(true);
+    localStorage.setItem("todoId", e.target.id);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  const todos = useSelector((state) => state.planner.todos);
-  console.log(todos);
+  const onDeleteHandler = () => {
+    console.log(localStorage.getItem("todoId"));
+    dispatch(__deleteTodo(localStorage.getItem("todoId")));
+    closeModal();
+  };
+
+  useEffect(() => {
+    dispatch(__getTodo());
+  }, [dispatch]);
+
   return (
     <StDiv>
       <StDateDiv>
@@ -98,11 +115,11 @@ const Planner = () => {
             <div>{(12 / 24) * 100 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant="temp" />
+          <ProgressBar now={50} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
 
-      <div>
+      <StInputContainer>
         {input ? (
           <StInputBox>
             <input onChange={onChangeHandler} />
@@ -115,7 +132,7 @@ const Planner = () => {
             </button>
           </StInputBox>
         ) : null}
-      </div>
+      </StInputContainer>
 
       {todos.length == 0 ? (
         <StNothingTodoNoticeDiv>
@@ -126,26 +143,32 @@ const Planner = () => {
       ) : (
         <StNotDoneTodosDiv>
           {todos?.map((todo) =>
-            todo.isComplete === false ? (
-              <StTodoNotDone key={todo.id}>
+            todo.complete === false ? (
+              <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
                   <img
                     src={notDoneSvg}
                     onClick={() => onCompleteHandler(todo)}
                   />
-                  <span>{todo.content}</span>
+                  {edit ? <input /> : <span>{todo.content}</span>}
                 </StTodoLeft>
-                <StTodoRightImg src={threeDotSvg} onClick={openModal} />
+                <StTodoRightImg
+                  src={threeDotSvg}
+                  onClick={(e) => openModal(e)}
+                  id={todo.todoId}
+                />
                 {modalVisible && (
                   <Modal
                     visible={modalVisible}
                     closable={true}
                     maskClosable={true}
                     onClose={closeModal}
-                    width='100px'
-                    height='50px'
+                    width='150px'
+                    height='100px'
+                    backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
-                    asd
+                    <div onClick={onEditHandler}>수정</div>
+                    <div onClick={onDeleteHandler}>삭제</div>
                   </Modal>
                 )}
               </StTodoNotDone>
@@ -156,8 +179,8 @@ const Planner = () => {
 
       <StDoneTodosDiv>
         {todos?.map((todo) =>
-          todo.isComplete === true ? (
-            <StTodoDone key={todo.id}>
+          todo.complete === true ? (
+            <StTodoDone key={todo.todoId}>
               <StTodoLeft>
                 <img src={doneSvg} />
                 <span>{todo.content}</span>
@@ -318,5 +341,9 @@ const StTodoRightImg = styled.img`
 `;
 
 const StInputBox = styled.div`
-  margin-top: 5%;
+  padding-top: 20px;
+`;
+
+const StInputContainer = styled.div`
+  height: 50px;
 `;

@@ -1,23 +1,5 @@
 {
-  "test1": [
-    { "id": 11, "nickName": "nickName11" },
-    { "id": 12, "nickName": "nickName12" },
-    { "id": 13, "nickName": "nickName13" },
-    { "id": 14, "nickName": "nickName14" }
-  ],
-  "test2": [
-    { "id": 21, "nickName": "nickName21" },
-    { "id": 22, "nickName": "nickName22" },
-    { "id": 23, "nickName": "nickName23" }
-  ],
-  "test3": [
-    { "id": 31, "nickName": "nickName31" },
-    { "id": 32, "nickName": "nickName32" },
-    { "id": 33, "nickName": "nickName33" }
-  ],
-  "test4": [
-    { "id": 41, "nickName": "nickName41" },
-    { "id": 42, "nickName": "nickName42" },
-    { "id": 43, "nickName": "nickName43" }
-  ]
+
+  "todos": []
+
 }
