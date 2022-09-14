@@ -62,7 +62,7 @@ export default InfiniteScroll;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
-  height: 50vh;
+  height: 33vh;
   overflow: scroll;
 `;
 const StRefDiv = styled.div`

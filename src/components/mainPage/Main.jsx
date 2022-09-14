@@ -32,10 +32,7 @@ const Main = () => {
     <StMainContainer>
       <StPhrasesbox>
         <span>투두투두</span>
-        <div>
-          OO님,
-          <br /> 오늘 하루도 힘내세요!
-        </div>
+        <div>OO님, 오늘 하루도 힘내세요!</div>
       </StPhrasesbox>
       <StAchievementsBox>
         <StAchievementsTopBox>
@@ -71,9 +68,9 @@ const Main = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            width='350px'
-            height='330px'
-            radius='48px'
+            width="350px"
+            height="330px"
+            radius="48px"
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
@@ -125,7 +122,7 @@ const Main = () => {
             <span>주간 랭킹</span>
           </StWeeklyRankingBtn2nd>
         )}
-      </StRankingBtnBox>{" "}
+      </StRankingBtnBox>
       <StScrollDiv>
         <InfiniteScroll />
       </StScrollDiv>
@@ -144,7 +141,7 @@ const StPhrasesbox = styled.div`
   height: 10vh;
   width: 90%;
   margin: auto;
-  padding-top: 4%;
+  padding-top: 3%;
   span {
     color: #ff7b00;
     font-weight: bold;
@@ -159,7 +156,7 @@ const StPhrasesbox = styled.div`
 
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 10% auto;
+  margin: 5% auto;
   height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
@@ -224,7 +221,7 @@ const StRankingPhrases = styled.div`
 
 const StRankingBtnBox = styled.div`
   margin-left: 1.5em;
-  margin-bottom: 5px;
+  margin-bottom: 1em;
 `;
 
 const StMonthRankingBtn = styled.button`
@@ -337,9 +334,9 @@ const StModalCloseBtn = styled.button`
 
 const StScrollDiv = styled.div`
   background-color: #fafafa;
-  overflow: scroll;
-  height: 50vh;
-  ::-webkit-scrollbar {
+  height: 20vh;
+  /* overflow: scroll; */
+  /* ::-webkit-scrollbar {
     width: 10px;
     height: 150px;
     border-radius: 0px;
@@ -348,5 +345,5 @@ const StScrollDiv = styled.div`
   ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: #d1d1d1;
-  }
+  } */
 `;
