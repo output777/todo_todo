@@ -87,18 +87,42 @@ export const __completeTodo = createAsyncThunk(
   "todo/completeTodo",
   async (payload, thunkAPI) => {
     try {
-      console.log("payload", payload);
-      const data = await axios.patch(
-        `http://13.125.241.100/api/${payload.id}`,
-        payload
+      const accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+      const { data } = await axios.put(
+        `http://13.125.241.100/api/todo/${payload.todoId}`,
+        payload,
+        config
       );
-
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+// export const __completeTodo = createAsyncThunk(
+//   "todo/completeTodo",
+//   async (payload, thunkAPI) => {
+//     try {
+//       console.log("payload", payload);
+//       const data = await axios.patch(
+//         `http://13.125.241.100/api/${payload.id}`,
+//         payload
+//       );
+
+//       return thunkAPI.fulfillWithValue(data.data);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
 const initialState = {
   todos: [],
   isLoading: false,
@@ -157,8 +181,8 @@ export const plannerSlice = createSlice({
       console.log("action", action);
       state.isLoading = false;
       state.todos = state.todos.map((todo) => {
-        if (todo.id === action.payload.id) {
-          return { ...todo, complete: action.payload.complete };
+        if (todo.todoId === Number(action.payload)) {
+          return { ...todo, isComplete: action.payload.isComplete };
         } else {
           return todo;
         }
