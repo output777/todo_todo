@@ -1,17 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const accessToken = localStorage.getItem("accessToken");
+const config = {
+  headers: {
+    "Content-type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
 export const __getTodo = createAsyncThunk(
   "todo/getTodo",
   async (payload, thunkAPI) => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-      const data = await axios.get(`http://13.125.241.100/api/todo`, config);
+      const data = await axios.get(`${BASE_URL}/todo`, config);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -22,18 +26,11 @@ export const __getTodo = createAsyncThunk(
 
 export const __postTodo = createAsyncThunk(
   "todo/postTodo",
-  async (newTodo, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
       const data = await axios.post(
-        "http://13.125.241.100/api/todo",
-        newTodo,
+        `${BASE_URL}/todo`,
+        payload,
         config
       );
       console.log(data);
@@ -50,10 +47,10 @@ export const __updateTodo = createAsyncThunk(
     try {
       console.log("payload", payload);
       const data = await axios.patch(
-        `http://13.125.241.100/api/todo/${payload.id}`,
-        payload
+        `${BASE_URL}/todo/${payload.id}`,
+        payload,
+        config
       );
-
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -65,14 +62,8 @@ export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
       const { data } = await axios.delete(
-        `http://13.125.241.100/api/todo/${payload}`,
+        `${BASE_URL}/todo/${payload}`,
         config
       );
       console.log("data", data);
@@ -87,20 +78,13 @@ export const __completeTodo = createAsyncThunk(
   "todo/completeTodo",
   async (payload, thunkAPI) => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-      const { data } = await axios.put(
-        `http://13.125.241.100/api/todo/${payload.todoId}`,
+      console.log("payload", payload);
+      const data = await axios.patch(
+        `${BASE_URL}/api/${payload.id}`,
         payload,
         config
       );
-      console.log("data", data);
-      return thunkAPI.fulfillWithValue(payload);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -134,6 +118,7 @@ export const plannerSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // __getTodo
     [__getTodo.pending]: (state) => {
       state.isLoading = true;
     },
@@ -145,27 +130,37 @@ export const plannerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // __postTodo
+    [__postTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
     [__postTodo.fulfilled]: (state, action) => {
       state.todos = [...state.todos, action.payload];
     },
+    [__postTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __updateTodo
     [__updateTodo.pending]: (state) => {
       state.isLoading = true;
     },
     [__updateTodo.fulfilled]: (state, action) => {
       console.log("action", action);
       state.isLoading = false;
+      // worries를 state에 추가할 예정인가요?
       state.worries = [action.payload];
     },
     [__updateTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+    // __deleteTodo
     [__deleteTodo.pending]: (state, action) => {
       state.isLoading = true;
     },
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("action", typeof action.payload);
       state.todos = state.todos.filter(
         (item) => item.todoId !== Number(action.payload)
       );
@@ -174,6 +169,7 @@ export const plannerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // __completeTodo
     [__completeTodo.pending]: (state) => {
       state.isLoading = true;
     },
@@ -181,11 +177,12 @@ export const plannerSlice = createSlice({
       console.log("action", action);
       state.isLoading = false;
       state.todos = state.todos.map((todo) => {
-        if (todo.todoId === Number(action.payload)) {
-          return { ...todo, isComplete: action.payload.isComplete };
-        } else {
-          return todo;
+        // 코드 변경했는데 작동하는지 확인하기
+        if (todo.id === action.payload.id) {
+          todo.complete = action.payload.complete
+          // return { ...todo, complete: action.payload.complete };
         }
+        return todo;
       });
     },
     [__completeTodo.rejected]: (state, action) => {

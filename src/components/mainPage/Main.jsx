@@ -6,9 +6,16 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 
+
+// 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
+// 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
+// 필요 없으면 useRef로 css 변경하려고 함
+
+// 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
   const [month, setMonth] = useState(true);
   const [weekly, setWeekly] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onClickMonth = () => {
     setMonth(true);
@@ -20,14 +27,13 @@ const Main = () => {
     setWeekly(true);
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
-
   const openModal = () => {
     setModalVisible(true);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
+
   return (
     <StMainContainer>
       <StPhrasesbox>
@@ -134,7 +140,7 @@ export default Main;
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
-  height: 100%;
+  height: 90vh;
 `;
 
 const StPhrasesbox = styled.div`

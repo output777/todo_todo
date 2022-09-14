@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __getTodo,
@@ -19,66 +19,65 @@ import PlusButton from "../utils/PlusButton";
 import Modal from "../utils/Modal";
 
 const Planner = () => {
+  const dispatch = useDispatch();
   const [todo, setTodo] = useState({
     content: "",
     isComplete: false,
   });
 
-  const { todos } = useSelector((state) => state.planner);
-  console.log("todos", todos.length);
-
   const [input, setInput] = useState(false);
-
   const [edit, setEdit] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const dispatch = useDispatch();
+  const { todos } = useSelector((state) => state.planner);
+  console.log("todos", todos, todos.length);
 
   const todoInputRef = useRef([]);
-  let todoContentRef = useRef([]);
+  const todoContentRef = useRef([]);
   todoInputRef.current = [];
   todoContentRef.current = [];
 
   console.log("todoInputRef", todoInputRef);
   console.log("todoContentRef", todoContentRef);
 
-  const onChangeHandler = (e) => {
+
+  const onChangeHandler = useCallback((e) => {
     const { value } = e.target;
     setTodo({
       ...todo,
       content: value,
     });
-  };
+  }, []);
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = useCallback(() => {
     dispatch(__postTodo(todo));
 
     setTodo({
       ...todo,
       content: "",
       isComplete: false,
-      edit: false,
+      // setTodo에 edit이 필요한지 확인하기
+      // edit: false,
     });
-  };
+  }, [todo]);
 
-  const onInputHadnler = () => {
-    if (input == false) {
+  const onInputHadnler = useCallback(() => {
+    if (!input) {
       setInput(true);
-    } else if (input == true) {
+    } else {
       setInput(false);
     }
-  };
+  }, [input]);
 
-  const onCompleteHandler = (todo) => {
-    {
-      console.log(todo.complete);
-      dispatch(
-        __completeTodo({
-          ...todo,
-          isComplete: !todo.complete,
-        })
-      );
-    }
-  };
+  const onCompleteHandler = useCallback((todo) => {
+    dispatch(
+      __completeTodo({
+        ...todo,
+        isComplete: true,
+      })
+    );
+  }, [todo]);
+
   const onEditHandler = () => {
     console.log("todoInputRef", todoInputRef, todoInputRef.current);
     console.log("todoContentRef", todoContentRef, todoContentRef.current);
@@ -87,21 +86,21 @@ const Planner = () => {
     todoInputRef.current[index].classList.add("show");
     todoContentRef.current[index].classList.remove("show");
 
-    if (edit === false) {
-      setEdit(true);
-    }
+    // if (edit === false) {
+    //   setEdit(true);
+    // }
     closeModal();
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = (e, index) => {
-    console.log(e, index);
-    console.log(e.target.id);
+    // console.log(e, index);
+    // console.log(e.target.id);
     setModalVisible(true);
     localStorage.setItem("todoId", e.target.id);
     localStorage.setItem("index", index);
   };
+
   const closeModal = () => {
     setModalVisible(false);
   };

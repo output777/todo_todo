@@ -11,10 +11,10 @@ const InfiniteScroll = () => {
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
-  let options = {
-    root: null,
-    threshold: 0.3,
-  };
+  // let options = {
+  //   root: null,
+  //   threshold: 0.3,
+  // };
 
   const checkIntersect = useCallback(
     ([entry], observer) => {
@@ -25,7 +25,7 @@ const InfiniteScroll = () => {
         setPage((prev) => prev + 1);
       }
     },
-    [mainRankList]
+    [dispatch, isLoaded, page]
   );
 
   useEffect(() => {
@@ -37,6 +37,7 @@ const InfiniteScroll = () => {
       observer.observe(targetRef.current);
     }
   }, [mainRankList]);
+
   console.log("mainRankList", mainRankList);
   return (
     <Stdiv>

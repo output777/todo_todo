@@ -26,8 +26,10 @@ const Login = () => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${GOOGLE_REST_API_KEY}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline&flowName=GeneralOAuthFlow`;
   };
 
+
   return (
     <StLoginContainer>
+      {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
       <StPhrases src={Phrases} />
       <StLogobox>
         <StLogo src={logo} />

@@ -1,8 +1,14 @@
-import React from "react";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+const accessToken = localStorage.getItem("accessToken");
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
 
 const initialState = {
   mainRankList: [],
@@ -13,13 +19,6 @@ const initialState = {
 export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
-    const accessToken = localStorage.getItem("accessToken");
-    const config = {
-      headers: {
-        // "Content-type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
     console.log("payload", payload);
     try {
       // const data = await axios.get(`http://localhost:3001/test${payload}`);
@@ -41,6 +40,9 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [__getMainRank.pending]: (state) => {
+      state.isLoading = true;
+    },
     [__getMainRank.fulfilled]: (state, action) => {
       // console.log("action.payload", action.payload);
       state.isLoading = false;
@@ -49,13 +51,9 @@ export const mainSlice = createSlice({
     [__getMainRank.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
-
       state.error = action.payload.message;
-    },
-    [__getMainRank.pending]: (state) => {
-      state.isLoading = true;
-    },
-  },
+    }
+  }
 });
 
 export default mainSlice.reducer;

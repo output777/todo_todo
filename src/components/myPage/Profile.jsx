@@ -7,30 +7,17 @@ const Profile = () => {
     <StProfileContainer>
       <StImgInfoBox>
         <StImg>
-          <div style={{
-            width: '70px',
-            hight: '40px',
-            backgroundColor: '#E2EAFF',
-            color: '#618AF2',
-            fontSize: '0.7rem',
-            borderRadius: '10px',
-            boxSizing: 'border-box',
-            padding: '0.1rem',
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: '-5px',
-            left: '5px',
-          }}>실시간 순위</div>
+          <div>실시간 순위</div>
         </StImg>
         <StInfo>
-          <p style={{ margin: 0, color: '#FF8F27' }}>평균 투두 달성률</p>
-          <p style={{ margin: 0, color: '#FF8F27' }}>82.57%</p>
+          <p>평균 투두 달성률</p>
+          <p>82.57%</p>
           <ProgressBar now={82.57} style={{ backgroundColor: '#fff', color: '#FF8F27', height: '12px', marginTop: '5px' }} />
         </StInfo>
       </StImgInfoBox>
       <StTextBox>
-        <p style={{ margin: 0, color: '#111', fontSize: '1.1rem' }}>닉네임</p>
-        <p style={{ margin: 0, color: '#111', fontSize: '0.9rem' }}>
+        <p>닉네임</p>
+        <p>
           각오 한마디 서울대 가즈아!! 서울대 가즈아!!서울대 가즈아!!서울대 가즈아!!서울대 가즈아!!서울대 가즈아!!
         </p>
       </StTextBox>
@@ -57,6 +44,21 @@ const StImg = styled.div`
   border-radius: 50%;
   background-color: #FF8F27;
   position:relative;
+
+  & div {
+    width: 70px;
+    height: 20px;
+    background-color: #E2EAFF;
+    color: #618AF2;
+    font-size: 0.7rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 0.1rem;
+    text-align: center;
+    position: absolute;
+    bottom: -5px;
+    left: 5px;
+  }
 `
 
 const StInfo = styled.div`
@@ -69,6 +71,11 @@ const StInfo = styled.div`
   box-sizing:border-box;
   text-align:right;
 
+  & p {
+    margin: 0;
+    color:#FF8F27;
+  }
+
   .progress-bar {
     background-color: #FF8F27;
   }
@@ -76,6 +83,16 @@ const StInfo = styled.div`
 
 const StTextBox = styled.div`
   margin-top: 1rem;
+
+  & p {
+    margin: 0;
+    color: #111; 
+    font-size: 1.1rem;
+  }
+
+  & p:last-child {
+    font-size: 0.9rem;
+  }
 `
 
 const StBtn = styled.button`
@@ -85,7 +102,6 @@ const StBtn = styled.button`
   border-radius: 8px;
   border: none;
   margin:1rem auto 0.5rem auto;
-
 `
 
 export default Profile
