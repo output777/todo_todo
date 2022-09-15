@@ -17,10 +17,12 @@ import {
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import doneSvg from "../../assets/img/doneSvg.svg";
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+
 import PlusButton from "../utils/PlusButton";
 import Modal from "../utils/Modal";
 import PlannerCalender from "./PlannerCalender";
@@ -246,6 +248,7 @@ const Planner = () => {
                     onClose={closeModal}
                     width='150px'
                     height='100px'
+                    top='40%'
                     backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
                     <div onClick={onEditHandler}>수정</div>

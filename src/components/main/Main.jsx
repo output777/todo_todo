@@ -6,7 +6,6 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 
-
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -74,9 +73,11 @@ const Main = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            width="350px"
-            height="330px"
-            radius="48px"
+            width='350px'
+            height='330px'
+            radius='48px'
+            top='40%'
+            backgroundcolor='rgba(0, 0, 0, 0.2)'
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
