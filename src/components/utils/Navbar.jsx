@@ -74,7 +74,7 @@ const StNav = styled.div`
   position: fixed;
   z-index: 2;
   width: 100%;
-  height: 10vh;
+  height: 60px;
   bottom: 0;
   border-top: 1px solid #ddd;
   background-color: white;

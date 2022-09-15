@@ -5,9 +5,9 @@ import LoginPage from "../pages/LoginPage";
 import PlannerPage from "../pages/PlannerPage";
 import StatisticsPage from "../pages/StatisticsPage";
 import MyPage from "../pages/MyPage";
-import KakaoLogin from "../components/loginPage/KakaoLogin";
-import GoogleLogin from "../components/loginPage/GoogleLogin";
-import NaverLogin from "../components/loginPage/NaverLogin";
+import KakaoLogin from "../components/login/KakaoLogin";
+import GoogleLogin from '../components/login/GoogleLogin';
+import NaverLogin from "../components/login/NaverLogin";
 import ProfileInfoPage from "../pages/ProfileInfoPage";
 
 const Router = () => {

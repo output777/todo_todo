@@ -43,13 +43,13 @@ const ProfileTabs = () => {
 
 const StTabsTitle = styled.div`
   display: flex;
+  height:45px;
 `
 const StTabPhoto = styled.div`
   flex:1;
   display:felx;
   justify-content:center;
   align-items:center;
-  height: 45px;
   border-top: 2px solid #E8E8E8;
   border-bottom: 2px solid #E8E8E8;
 
@@ -63,7 +63,6 @@ const StTabPlanner = styled.div`
   display:felx;
   justify-content:center;
   align-items:center;
-  height: 45px;
   border-top: 2px solid #E8E8E8;
   border-bottom: 2px solid #E8E8E8;
 

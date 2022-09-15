@@ -1,5 +1,5 @@
 import React from "react";
-import Planner from "../components/plannerPage/Planner";
+import Planner from "../components/planner/Planner";
 import Navbar from "../components/utils/Navbar";
 import styled from "styled-components";
 

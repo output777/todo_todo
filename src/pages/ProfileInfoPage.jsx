@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileInfo from '../components/profileInfoPage/ProfileInfo'
+import ProfileInfo from '../components/profileInfo/ProfileInfo'
 import Navbar from '../components/utils/Navbar'
 
 const ProfileInfoPage = () => {
