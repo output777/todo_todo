@@ -29,25 +29,41 @@ const BarChart = () => {
     xAxis: {
       type: "category",
       data: ["저번주 / 이번주"],
+      show: false,
     },
     yAxis: {
       type: "value",
+      show: false,
     },
     series: [
       {
         type: "bar",
         data: [25],
         color: ["gray"],
+        stack: "Total",
+        label: {
+          show: true,
+          position: "top",
+          color: "gray",
+          fontWeight: "bold",
+        },
       },
       {
         type: "bar",
         data: [50],
         color: ["#ffb671"],
+        label: {
+          show: true,
+          position: "top",
+          color: "#ffb671",
+          fontWeight: "bold",
+        },
       },
     ],
     grid: {
       left: "15%",
-      top: "12%",
+      top: "20em",
+      bottom: "30em",
     },
   });
 
@@ -57,13 +73,13 @@ const BarChart = () => {
       // theme="myTheme"
       opts={{
         renderer: "",
-        height: "130em",
+        height: "110px",
         margin: "auto",
         color: "#91cc75",
       }}
       style={{
-        height: "100px",
-        width: "70%",
+        height: "90px",
+        width: "40%",
         margin: "auto",
         backgroundColor: "transparent",
       }}
