@@ -1,22 +1,29 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __getTodo,
   __postTodo,
   __completeTodo,
   __deleteTodo,
+  __updateTodo,
 } from "../../redux/modules/plannerSlice";
 
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import calendarSvg from "../../assets/img/calendarSvg.svg";
 import doneSvg from "../../assets/img/doneSvg.svg";
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
 import Modal from "../utils/Modal";
+import PlannerCalender from "./PlannerCalender";
 
 const Planner = () => {
   const dispatch = useDispatch();
@@ -26,7 +33,6 @@ const Planner = () => {
   });
 
   const [input, setInput] = useState(false);
-  const [edit, setEdit] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const { todos } = useSelector((state) => state.planner);
@@ -34,12 +40,13 @@ const Planner = () => {
 
   const todoInputRef = useRef([]);
   const todoContentRef = useRef([]);
+  const todoButtonRef = useRef([]);
   todoInputRef.current = [];
   todoContentRef.current = [];
+  todoButtonRef.current = [];
 
   console.log("todoInputRef", todoInputRef);
   console.log("todoContentRef", todoContentRef);
-
 
   const onChangeHandler = useCallback((e) => {
     const { value } = e.target;
@@ -56,12 +63,10 @@ const Planner = () => {
       ...todo,
       content: "",
       isComplete: false,
-      // setTodo에 edit이 필요한지 확인하기
-      // edit: false,
     });
   }, [todo]);
 
-  const onInputHadnler = useCallback(() => {
+  const onInputHandler = useCallback(() => {
     if (!input) {
       setInput(true);
     } else {
@@ -69,14 +74,17 @@ const Planner = () => {
     }
   }, [input]);
 
-  const onCompleteHandler = useCallback((todo) => {
-    dispatch(
-      __completeTodo({
-        ...todo,
-        isComplete: true,
-      })
-    );
-  }, [todo]);
+  const onCompleteHandler = useCallback(
+    (todo) => {
+      dispatch(
+        __completeTodo({
+          ...todo,
+          isComplete: !todo.complete,
+        })
+      );
+    },
+    [todo]
+  );
 
   const onEditHandler = () => {
     console.log("todoInputRef", todoInputRef, todoInputRef.current);
@@ -84,14 +92,35 @@ const Planner = () => {
 
     let index = localStorage.getItem("index");
     todoInputRef.current[index].classList.add("show");
+    todoButtonRef.current[index].classList.add("show");
     todoContentRef.current[index].classList.remove("show");
 
-    // if (edit === false) {
-    //   setEdit(true);
-    // }
     closeModal();
   };
 
+  const onEditSubmitHandler = useCallback(
+    (props) => {
+      dispatch(
+        __updateTodo({
+          ...props,
+          isComplete: props.complete,
+          content: todo.content,
+        })
+      );
+      let index = localStorage.getItem("index");
+      todoInputRef.current[index].classList.remove("show");
+      todoButtonRef.current[index].classList.remove("show");
+      todoContentRef.current[index].classList.add("show");
+    },
+    [todo]
+  );
+
+  const onEditCancleHandler = () => {
+    let index = localStorage.getItem("index");
+    todoInputRef.current[index].classList.remove("show");
+    todoButtonRef.current[index].classList.remove("show");
+    todoContentRef.current[index].classList.add("show");
+  };
 
   const openModal = (e, index) => {
     // console.log(e, index);
@@ -122,6 +151,12 @@ const Planner = () => {
     }
   };
 
+  const addTodoButtonRefs = (el) => {
+    if (el) {
+      todoButtonRef.current.push(el);
+    }
+  };
+
   useEffect(() => {
     dispatch(__getTodo());
     console.log("todos", todos, todos.length);
@@ -129,10 +164,7 @@ const Planner = () => {
 
   return (
     <StDiv>
-      <StDateDiv>
-        <StSpan>9월 3일 목요일</StSpan>
-        <img src={calendarSvg} />
-      </StDateDiv>
+      <PlannerCalender />
       <StAchievementRateDiv>
         {/* <StAMentionDiv>투두를 추가해주세요!</StAMentionDiv> */}
         <StAMentionDiv>거의 다 왔어요!</StAMentionDiv>
@@ -147,7 +179,6 @@ const Planner = () => {
           <ProgressBar now={50} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
-
       <StInputContainer>
         {input ? (
           <StInputBox>
@@ -162,7 +193,6 @@ const Planner = () => {
           </StInputBox>
         ) : null}
       </StInputContainer>
-
       {todos.length == 0 ? (
         <StNothingTodoNoticeDiv>
           <div>추가된 투두리스트가 없습니다!</div>
@@ -180,10 +210,28 @@ const Planner = () => {
                     onClick={() => onCompleteHandler(todo)}
                     id={todo.todoId}
                   />
-                  <input ref={addTodoInputRefs} />
-                  <span className='show' ref={addTodoContentRefs}>
-                    {todo.content}
-                  </span>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      onEditSubmitHandler(todo);
+                    }}
+                  >
+                    <StInput
+                      ref={addTodoInputRefs}
+                      onChange={onChangeHandler}
+                      placeholder='Enter키로 입력'
+                    />
+                    <button
+                      ref={addTodoButtonRefs}
+                      type='button'
+                      onClick={onEditCancleHandler}
+                    >
+                      취소
+                    </button>
+                    <span className='show' ref={addTodoContentRefs}>
+                      {todo.content}
+                    </span>
+                  </form>
                 </StTodoLeft>
                 <StTodoRightImg
                   src={threeDotSvg}
@@ -209,7 +257,6 @@ const Planner = () => {
           )}
         </StNotDoneTodosDiv>
       )}
-
       <StDoneTodosDiv>
         {todos?.map((todo) =>
           todo.complete === true ? (
@@ -227,7 +274,7 @@ const Planner = () => {
           ) : null
         )}
       </StDoneTodosDiv>
-      <PlusButton onClick={onInputHadnler} />
+      <PlusButton onClick={onInputHandler} />
     </StDiv>
   );
 };
@@ -378,7 +425,7 @@ const StTodoLeft = styled.div`
   }
 
   & input.show {
-    display: block;
+    display: inline-block;
   }
 
   & span {
@@ -387,6 +434,14 @@ const StTodoLeft = styled.div`
 
   & span.show {
     display: block;
+  }
+  & button {
+    display: none;
+  }
+
+  & button.show {
+    display: inline-block;
+    margin-left: 10px;
   }
 `;
 const StTodoRightImg = styled.img`
@@ -399,4 +454,9 @@ const StInputBox = styled.div`
 
 const StInputContainer = styled.div`
   height: 50px;
+`;
+
+const StInput = styled.input`
+  /* border: 0;
+  outline: none; */
 `;
