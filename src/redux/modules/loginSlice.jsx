@@ -44,6 +44,7 @@ export const __googleLogin = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
+      console.log('error', `${GOOGLE_BASE_URL}?code=${payload}`);
       return thunkAPI.rejectWithValue(error);
     }
   }

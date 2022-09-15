@@ -24,11 +24,14 @@ const GoogleLogin = () => {
   }, [navigate]);
 
   useEffect(() => {
-    dispatch(__googleLogin(GOOGLE_CODE));
     if (user) {
       nicknameCheck(user)
     }
-  }, [dispatch, user, nicknameCheck]);
+  }, [user])
+
+  useEffect(() => {
+    dispatch(__googleLogin(GOOGLE_CODE));
+  }, [dispatch]);
 
   return <div>Google Login</div>;
 };
