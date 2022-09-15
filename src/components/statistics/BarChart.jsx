@@ -1,9 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import ECharts, { EChartsReactProps } from "echarts-for-react";
 import * as echarts from "echarts";
+import { __getBarChartData } from "../../redux/modules/statisticsSlice";
 
 const BarChart = () => {
+  const { barData } = useSelector((state) => state.statistics);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getBarChartData());
+    // setOptions({
+    //   ...options,
+    // });
+  }, []);
+
   echarts.registerTheme("myTheme", {
     backgroundColor: "#ffffff",
 

@@ -1,9 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import ECharts, { EChartsReactProps } from "echarts-for-react";
 import * as echarts from "echarts";
+import { __getLineChartData } from "../../redux/modules/statisticsSlice";
 
 const LineChart = () => {
+  const { data } = useSelector((state) => state.statistics);
+  const dispatch = useDispatch();
   echarts.registerTheme("myTheme", {
     backgroundColor: "#ffffff",
 
@@ -25,9 +29,12 @@ const LineChart = () => {
     },
   });
   useEffect(() => {
+    // dispatch(__getLineChartData());
+    let a = [22, 33, 15, 45, 34, 78];
+    let b = [24, 43, 45, 78, 45, 56];
     setOptions({
       ...options,
-      series: [{ data: [11, 22, 33, 55, 66, 70] }, { data: [20, 25, 45] }],
+      series: [{ data: a }, { data: b }],
     });
   }, []);
 
