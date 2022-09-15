@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-// import "../../style/Calendar.css";
 import moment from "moment";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { __getTodo } from "../../redux/modules/plannerSlice";
 
 const Calendar = () => {
+  const dispatch = useDispatch();
+
   const marks = [
     { achievementRate: 15, addDate: "2022-09-01" },
     { achievementRate: 25, addDate: "2022-09-02" },
@@ -20,12 +23,21 @@ const Calendar = () => {
     { achievementRate: 100, addDate: "2022-09-11" },
   ];
 
+  const [date, setDate] = useState();
+
+  const selectDate = () => {
+    dispatch(__getTodo(date));
+  };
+
+  console.log(moment(date).format("YYYY-MM-DD"));
   return (
     <StDiv>
       <ReactCalendar
-        // onChange={onChange}
-        // value={value}
-        locale='en-GB'
+        onChange={setDate}
+        onClickDay={selectDate}
+        value={date}
+        locale='Korean'
+        formatDay={(locale, date) => moment(date).format("DD")}
         calendarType='US'
         tileClassName={({ date, view }) => {
           if (
@@ -85,108 +97,121 @@ const Calendar = () => {
 export default Calendar;
 
 const StDiv = styled.div`
-  .highlight1 {
-    background: #b9ffb7;
-  }
-
-  .highlight2 {
-    background: #5eff56;
-  }
-
-  .highlight3 {
-    background: #0ced00;
-  }
-
-  .highlight4 {
-    background: #159f00;
-  }
-
   .react-calendar {
-    width: 400px;
+    width: 350px;
     max-width: 100%;
-    background-color: rgb(255, 255, 255); /*전체 백그라운드 컬러*/
-    color: #222;
-    border-radius: 8px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    background: white;
+    border: 1px solid #a0a096;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
   }
+  .react-calendar--doubleView {
+    width: 700px;
+  }
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+  }
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+  }
+  .react-calendar,
+  .react-calendar *,
+  .react-calendar *:before,
+  .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .react-calendar button {
+    margin: 0;
+    border: 0;
+    outline: none;
+  }
+  .react-calendar button:enabled:hover {
+    cursor: pointer;
+  }
+  .react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 1em;
+  }
   .react-calendar__navigation button {
-    color: #6f48eb;
     min-width: 44px;
     background: none;
-    font-size: 16px;
-    margin-top: 8px;
+  }
+  .react-calendar__navigation button:disabled {
+    background-color: #f0f0f0;
   }
   .react-calendar__navigation button:enabled:hover,
   .react-calendar__navigation button:enabled:focus {
-    background-color: #f8f8fa;
+    background-color: #e6e6e6;
   }
-  .react-calendar__navigation button[disabled] {
-    background-color: #704444;
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75em;
   }
-  abbr[title] {
-    text-decoration: none;
+  .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
   }
-  /* .react-calendar__month-view__days__day--weekend {
-    color: #2e32ff; //주말 날짜 색깔
-  } */
+  .react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
+  .react-calendar__month-view__days__day--weekend {
+    color: #d10000;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: #757575;
+  }
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 2em 0.5em;
+  }
+  .react-calendar__tile {
+    max-width: 100%;
+    padding: 10px 6.6667px;
+    background: none;
+    text-align: center;
+    line-height: 16px;
+  }
+  .react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+  }
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background: #f8faf8; /*호버시 백그라운드*/
-    color: #c4c716; /*호버시 날짜글씨 컬러*/
-    border-radius: 6px;
+    background-color: #e6e6e6;
   }
   .react-calendar__tile--now {
-    background: #be75fa; /*오늘 날짜*/
-    border-radius: 6px;
-    font-weight: bold;
-    color: #6f48eb; /*오늘 날짜*/
+    background: #ffff76;
   }
   .react-calendar__tile--now:enabled:hover,
   .react-calendar__tile--now:enabled:focus {
-    background: #6f48eb33;
-    border-radius: 6px;
-    font-weight: bold;
-    color: #1ddf16;
+    background: #ffffa9;
+  }
+  .react-calendar__tile--hasActive {
+    background: #76baff;
   }
   .react-calendar__tile--hasActive:enabled:hover,
   .react-calendar__tile--hasActive:enabled:focus {
-    background: #f8f8fa;
+    background: #a9d4ff;
   }
   .react-calendar__tile--active {
-    background: #1ddf16;
-    border-radius: 6px;
-    font-weight: bold;
+    background: #006edc;
     color: white;
   }
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
-    background: #1ddf16;
-    color: white;
+    background: #1087ff;
   }
   .react-calendar--selectRange .react-calendar__tile--hover {
-    background-color: #f8f8fa;
-  }
-  .react-calendar__tile--range {
-    background: #f8f8fa;
-    color: #1ddf16;
-    border-radius: 0;
-  }
-  .react-calendar__tile--rangeStart {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-    background: #1ddf16;
-    color: white;
-  }
-  .react-calendar__tile--rangeEnd {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    background: #1ddf16;
-    color: white;
+    background-color: #e6e6e6;
   }
 `;

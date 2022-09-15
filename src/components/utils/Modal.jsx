@@ -13,6 +13,7 @@ const Modal = ({
   height,
   radius,
   backgroundcolor,
+  top,
 }) => {
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -40,6 +41,7 @@ const Modal = ({
           width={width}
           height={height}
           radius={radius}
+          top={top}
         >
           {closable}
           {children}
@@ -88,7 +90,7 @@ const ModalInner = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   max-width: 480px;
-  top: 40%;
+  top: ${(props) => props.top};
   transform: translateY(-50%);
   margin: 0 auto;
 `;

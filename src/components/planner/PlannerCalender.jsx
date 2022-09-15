@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../utils/Modal";
+import Calendar from "../utils/Calendar";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
 
 const PlannerCalender = () => {
@@ -10,21 +11,28 @@ const PlannerCalender = () => {
     setModalVisible(true);
   };
 
-  const openModal = (e, index) => {
-    // console.log(e, index);
-    // console.log(e.target.id);
+  const openModal = () => {
     setModalVisible(true);
-    localStorage.setItem("todoId", e.target.id);
-    localStorage.setItem("index", index);
   };
-
   const closeModal = () => {
     setModalVisible(false);
   };
   return (
     <StDateDiv>
       <StSpan>9월 3일 목요일</StSpan>
-      <img src={calendarSvg} onClick={openCalender} />
+      <img src={calendarSvg} onClick={openModal} />
+      {modalVisible && (
+        <Modal
+          visible={modalVisible}
+          closable={true}
+          maskClosable={true}
+          onClose={closeModal}
+          width='350px'
+          top='30%'
+        >
+          <Calendar />
+        </Modal>
+      )}
     </StDateDiv>
   );
 };

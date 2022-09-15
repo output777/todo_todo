@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import moment from "moment";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const accessToken = localStorage.getItem("accessToken");
@@ -14,14 +15,29 @@ export const __getTodo = createAsyncThunk(
   "todo/getTodo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${BASE_URL}/todo`, config);
-      console.log("data", data);
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get(
+        `${BASE_URL}/todo/?date=${moment(payload).format("YYYY-MM-DD")}`,
+        config
+      );
+      console.log("data", moment(payload).format("YYYY-MM-DD"));
+      return thunkAPI.fulfillWithValue(
+        moment(payload).format("YYYY-MM-DD") === data.addDate
+      );
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+// const getDate = async () => {
+//   const { data } = await axios.get(
+//     `http://13.125.241.100/api/todo/planner/?date=${moment(date).format(
+//       "YYYY-MM-DD"
+//     )}`
+//   );
+//   setDate([...data, data]);
+//   console.log(data);
+// };
 
 export const __postTodo = createAsyncThunk(
   "todo/postTodo",

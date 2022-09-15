@@ -17,10 +17,10 @@ import {
 import styled from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import doneSvg from "./../../assets/img/doneSvg.svg";
-// import notDoneSvg from "./../../assets/img/notDoneSvg.svg";
-// import threeDotDoneSvg from "./../../assets/img/threeDotDoneSvg.svg";
-// import threeDotSvg from "./../../assets/img/threeDotSvg.svg";
+import doneSvg from "./../../assets/img/doneSvg.svg";
+import notDoneSvg from "./../../assets/img/notDoneSvg.svg";
+import threeDotDoneSvg from "./../../assets/img/threeDotDoneSvg.svg";
+import threeDotSvg from "./../../assets/img/threeDotSvg.svg";
 import PlusButton from "../utils/PlusButton";
 import Modal from "../utils/Modal";
 import PlannerCalender from "./PlannerCalender";
@@ -205,11 +205,11 @@ const Planner = () => {
             todo.complete === false ? (
               <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
-                  {/* <img
+                  <img
                     src={notDoneSvg}
                     onClick={() => onCompleteHandler(todo)}
                     id={todo.todoId}
-                  /> */}
+                  />
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -233,11 +233,11 @@ const Planner = () => {
                     </span>
                   </form>
                 </StTodoLeft>
-                {/* <StTodoRightImg
+                <StTodoRightImg
                   src={threeDotSvg}
                   onClick={(e) => openModal(e, index)}
                   id={todo.todoId}
-                /> */}
+                />
                 {modalVisible && (
                   <Modal
                     visible={modalVisible}
@@ -246,6 +246,7 @@ const Planner = () => {
                     onClose={closeModal}
                     width='150px'
                     height='100px'
+                    top='40%'
                     backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
                     <div onClick={onEditHandler}>수정</div>
@@ -262,14 +263,14 @@ const Planner = () => {
           todo.complete === true ? (
             <StTodoDone key={todo.todoId}>
               <StTodoLeft>
-                {/* <img
+                <img
                   src={doneSvg}
                   onClick={() => onCompleteHandler(todo)}
                   id={todo.todoId}
-                /> */}
+                />
                 <span className='show'>{todo.content}</span>
               </StTodoLeft>
-              {/* <StTodoRightImg src={threeDotDoneSvg} /> */}
+              <StTodoRightImg src={threeDotDoneSvg} />
             </StTodoDone>
           ) : null
         )}
