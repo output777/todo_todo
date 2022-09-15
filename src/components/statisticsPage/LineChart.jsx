@@ -24,6 +24,12 @@ const LineChart = () => {
       borderColor: "#b9beed",
     },
   });
+  useEffect(() => {
+    setOptions({
+      ...options,
+      series: [{ data: [11, 22, 33, 55, 66, 70] }, { data: [20, 25, 45] }],
+    });
+  }, []);
 
   const [options, setOptions] = useState({
     xAxis: {
@@ -32,6 +38,8 @@ const LineChart = () => {
     },
     yAxis: {
       type: "value",
+      // interval: 10,
+      splitNumber: 3,
     },
     series: [
       {
@@ -55,14 +63,14 @@ const LineChart = () => {
       // theme="myTheme"
       opts={{
         renderer: "",
-        height: "230em",
+        height: "220em",
         margin: "auto",
         color: "#91cc75",
       }}
       style={{
-        height: "200px",
+        height: "11em",
         width: "90%",
-        margin: "auto",
+        margin: "0px auto",
         backgroundColor: "white",
       }}
     />
