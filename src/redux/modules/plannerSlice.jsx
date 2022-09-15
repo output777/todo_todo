@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const accessToken = localStorage.getItem("accessToken");
 const config = {
@@ -28,11 +27,7 @@ export const __postTodo = createAsyncThunk(
   "todo/postTodo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(
-        `${BASE_URL}/todo`,
-        payload,
-        config
-      );
+      const data = await axios.post(`${BASE_URL}/todo`, payload, config);
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -46,11 +41,12 @@ export const __updateTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("payload", payload);
-      const data = await axios.patch(
-        `${BASE_URL}/todo/${payload.id}`,
+      const data = await axios.put(
+        `${BASE_URL}/todo/${payload.todoId}`,
         payload,
         config
       );
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -79,8 +75,8 @@ export const __completeTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log("payload", payload);
-      const data = await axios.patch(
-        `${BASE_URL}/api/${payload.id}`,
+      const data = await axios.put(
+        `${BASE_URL}/todo/${payload.todoId}`,
         payload,
         config
       );
@@ -91,22 +87,6 @@ export const __completeTodo = createAsyncThunk(
   }
 );
 
-// export const __completeTodo = createAsyncThunk(
-//   "todo/completeTodo",
-//   async (payload, thunkAPI) => {
-//     try {
-//       console.log("payload", payload);
-//       const data = await axios.patch(
-//         `http://13.125.241.100/api/${payload.id}`,
-//         payload
-//       );
-
-//       return thunkAPI.fulfillWithValue(data.data);
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
 const initialState = {
   todos: [],
   isLoading: false,
@@ -148,12 +128,20 @@ export const plannerSlice = createSlice({
     [__updateTodo.fulfilled]: (state, action) => {
       console.log("action", action);
       state.isLoading = false;
-      // worries를 state에 추가할 예정인가요?
-      state.worries = [action.payload];
+      state.todos = state.todos.map((todo) => {
+        // 코드 변경했는데 작동하는지 확인하기
+        if (todo.todoId === action.meta.arg.todoId) {
+          todo.content = action.meta.arg.content;
+          console.log(todo.todoId);
+          // return { ...todo, complete: action.payload.complete };
+        }
+        return todo;
+      });
     },
     [__updateTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log(state);
     },
     // __deleteTodo
     [__deleteTodo.pending]: (state, action) => {
@@ -174,12 +162,13 @@ export const plannerSlice = createSlice({
       state.isLoading = true;
     },
     [__completeTodo.fulfilled]: (state, action) => {
-      console.log("action", action);
+      console.log(typeof action.meta.arg.todoId, action.meta.arg);
       state.isLoading = false;
       state.todos = state.todos.map((todo) => {
         // 코드 변경했는데 작동하는지 확인하기
-        if (todo.id === action.payload.id) {
-          todo.complete = action.payload.complete
+        if (todo.todoId === action.meta.arg.todoId) {
+          todo.complete = action.meta.arg.isComplete;
+          console.log(todo.complete);
           // return { ...todo, complete: action.payload.complete };
         }
         return todo;

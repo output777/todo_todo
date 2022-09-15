@@ -37,7 +37,7 @@ export const __googleLogin = createAsyncThunk(
     console.log("payload", payload);
     try {
       const { data } = await axios.get(`${GOOGLE_BASE_URL}?code=${payload}`);
-      console.log(data);
+      console.log('data', data);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem('nickname', data.nickname)
