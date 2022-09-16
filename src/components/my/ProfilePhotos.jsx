@@ -7,15 +7,15 @@ import { __getImages } from "../../redux/modules/mySlice";
 import cancelSvg from '../../assets/img/cancelSvg.svg';
 import threeDotSvg from '../../assets/img/threeDotSvg.svg';
 import Slider from "react-slick";
+import Modal from "../utils/Modal";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useRef } from "react";
-
 
 const ProfilePhotos = () => {
   const dispatch = useDispatch();
   const [fullScreen, setFullScreen] = useState(false);
   const [imgCount, setImgCount] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { images, userInfo } = useSelector((state) => state.my);
   console.log("state", images, userInfo);
@@ -32,6 +32,14 @@ const ProfilePhotos = () => {
     const { className } = e.target;
     setImgCount(Number(className));
   }
+
+  const onClicOptionModalOpenHandler = () => {
+    setModalVisible(true);
+  }
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const settings = {
     dots: false,
@@ -67,7 +75,7 @@ const ProfilePhotos = () => {
               {userInfo && <span>{imgCount + 1}/{userInfo.imgList.length}</span>}
             </div>
             <div className="optionBox">
-              <img src={threeDotSvg} alt="optionBtn" />
+              <img src={threeDotSvg} alt="optionBtn" onClick={onClicOptionModalOpenHandler} />
             </div>
           </div>
           <StSliderBox>
@@ -85,6 +93,26 @@ const ProfilePhotos = () => {
         :
         null
       }
+      <StModalBox>
+        {modalVisible && (
+          <Modal
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={closeModal}
+            width="250px"
+            height="150px"
+            radius="20px"
+            top="40%"
+            backgroundcolor="rgba(0, 0, 0, 0.2)"
+          >
+            <div className="btnBox">
+              <StModalBtn onClick={closeModal}>삭제</StModalBtn>
+              <StModalBtn onClick={closeModal}>취소</StModalBtn>
+            </div>
+          </Modal>
+        )}
+      </StModalBox>
     </>
   );
 };
@@ -123,14 +151,15 @@ const StyledSlider = styled(Slider)`
 
 const StSliderBox = styled.div`
   width:100%;
-  height:600px;
-  z-index:1000;
+  height:500px;
+  z-index:15;
   padding-top:50px;
+  border:2px solid red;
   box-sizing:border-box;
   
   & div.imgBox {
     width:100%;
-    height:550px;
+    height:450px;
 
     img {
       width:100%;
@@ -145,7 +174,7 @@ const StFullScreen = styled.div`
   width:100%;
   height:100vh;
   background-color: #111;
-  z-index:999;
+  z-index:10;
   position:fixed;
   top: 0;
   bottom: 0;
@@ -179,6 +208,34 @@ const StFullScreen = styled.div`
     }
 `;
 
+const StModalBox = styled.div`
 
+  & .btnBox {
+      width:100%;
+      height:100%;
+      display: flex;
+      padding:1rem 0.5rem;
+      box-sizing:border-box;
+      flex-direction:column;
+    }
+`
+const StModalBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  width: 100%;
+  height:50%;
+  outline:none;
+  border: none;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  color: #ff8f27;
+
+  margin-top: 5%;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
 
 export default ProfilePhotos;
