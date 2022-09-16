@@ -11,11 +11,15 @@ import { useRef } from "react";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [edit, setEdit] = useState(false);
-
-  const uploadProfileRef = useRef(null);
   const { userInfo } = useSelector((state) => state.my);
   console.log("userInfo", userInfo);
+
+  const [edit, setEdit] = useState(false);
+  const [motoEdit, setMotoEdit] = useState(false);
+  const [motoInput, setMotoInput] = useState(userInfo?.myMotto)
+
+  const uploadProfileRef = useRef(null);
+
 
   const onClickEditHandler = () => {
     setEdit(true);
@@ -43,7 +47,16 @@ const Profile = () => {
     uploadProfileRef.current.click();
   };
 
-  const onClickEditTextHandler = () => {};
+  const onClickEditTextHandler = () => {
+    setMotoEdit(true);
+    console.log('aaa');
+  };
+
+  const onChangeMotoInputHandler = (e) => {
+    const { value } = e.target;
+    console.log('value', value)
+    setMotoInput(value);
+  }
 
   useEffect(() => {
     dispatch(__getMyInfo());
@@ -88,18 +101,23 @@ const Profile = () => {
         </StInfo>
       </StImgInfoBox>
       <StTextBox>
-        <p>닉네임</p>
+        <p>{userInfo?.nickname}</p>
         {!edit ? (
           <p className="text">
-            각오 한마디 서울대 가즈아!! 서울대 가즈아!!서울대 가즈아!!서울대
-            가즈아!!서울대 가즈아!!
+            {userInfo?.myMotto}
           </p>
         ) : (
           <div className="editText" onClick={onClickEditTextHandler}>
-            <p className="text">
-              각오 한마디 서울대 가즈아!! 서울대 가즈아!!서울대 가즈아!!서울대
-              가즈아!!서울대 가즈아!!
-            </p>
+            {motoEdit
+              ?
+              <form>
+                <input type='text' value={motoInput} onChange={onChangeMotoInputHandler} />
+              </form>
+              :
+              <p className="text">
+                sss{userInfo?.myMotto}
+              </p>
+            }
             <img src={logoPencil} alt="editText" />
           </div>
         )}
@@ -212,12 +230,18 @@ const StTextBox = styled.div`
   & div.editText {
     margin-top: 5px;
     position: relative;
-    border-bottom: 1px solid #ececec;
+    border:2px solid red;
+    /* border-bottom: 1px solid #ececec; */
+    display: flex;
+
+    input {
+      border:1px solid red;
+    }
 
     img {
       width: 20px;
       height: 20px;
-      position: absolute;
+      /* position: absolute; */
       right: 0;
       top: 20px;
     }

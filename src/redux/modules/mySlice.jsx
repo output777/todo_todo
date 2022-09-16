@@ -57,7 +57,7 @@ export const __getImages = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
-      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -70,6 +70,20 @@ export const __postImages = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/image/boast`, payload, config);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __deleteImages = createAsyncThunk(
+  "deleteImages",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
+      const data = await axios.delete(`${BASE_URL}/image/boast/${payload}`, config);
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -124,6 +138,19 @@ export const mySlice = createSlice({
       state.isLoading = false;
     },
     [__postImages.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__deleteImages
+    [__deleteImages.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteImages.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
+      state.userInfo.imgList = state.userInfo.imgList.filter((data) => data.id !== action.payload);
+    },
+    [__deleteImages.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     }

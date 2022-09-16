@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __getImages } from "../../redux/modules/mySlice";
+import { __getImages, __deleteImages } from "../../redux/modules/mySlice";
 import cancelSvg from '../../assets/img/cancelSvg.svg';
 import threeDotSvg from '../../assets/img/threeDotSvg.svg';
 import Slider from "react-slick";
@@ -35,6 +35,12 @@ const ProfilePhotos = () => {
 
   const onClicOptionModalOpenHandler = () => {
     setModalVisible(true);
+  }
+
+  const onClickDeleteImgHandler = (e) => {
+    dispatch(__deleteImages(userInfo.imgList[imgCount].id))
+    setFullScreen(false)
+    setModalVisible(false);
   }
 
   const closeModal = () => {
@@ -107,7 +113,7 @@ const ProfilePhotos = () => {
             backgroundcolor="rgba(0, 0, 0, 0.2)"
           >
             <div className="btnBox">
-              <StModalBtn onClick={closeModal}>삭제</StModalBtn>
+              <StModalBtn onClick={onClickDeleteImgHandler}>삭제</StModalBtn>
               <StModalBtn onClick={closeModal}>취소</StModalBtn>
             </div>
           </Modal>
@@ -154,7 +160,6 @@ const StSliderBox = styled.div`
   height:500px;
   z-index:15;
   padding-top:50px;
-  border:2px solid red;
   box-sizing:border-box;
   
   & div.imgBox {
