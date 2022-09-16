@@ -7,10 +7,6 @@ import calendarSvg from "../../assets/img/calendarSvg.svg";
 const PlannerCalender = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openCalender = () => {
-    setModalVisible(true);
-  };
-
   const openModal = () => {
     setModalVisible(true);
   };

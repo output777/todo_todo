@@ -25,7 +25,7 @@ const Calendar = () => {
 
   const [date, setDate] = useState();
 
-  const selectDate = () => {
+  const selectDate = (date) => {
     dispatch(__getTodo(date));
   };
 
