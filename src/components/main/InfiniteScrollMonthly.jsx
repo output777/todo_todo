@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { __getMainRank } from "../../redux/modules/mainSlice";
+import { __getMainRankMonthly } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 
-const InfiniteScroll = () => {
-  const { mainRankList } = useSelector((state) => state.main);
+const InfiniteScrollMonthly = () => {
+  const { mainRankListMonthly } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
   const targetRef = useRef(null);
@@ -15,7 +15,7 @@ const InfiniteScroll = () => {
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
-        dispatch(__getMainRank(page));
+        dispatch(__getMainRankMonthly(page));
 
         observer.unobserve(entry.target);
         setPage((prev) => prev + 1);
@@ -32,14 +32,12 @@ const InfiniteScroll = () => {
       });
       observer.observe(targetRef.current);
     }
-  }, [mainRankList]);
+  }, [mainRankListMonthly]);
 
-  console.log("page", page);
-  console.log("mainRankList", mainRankList);
-
+  console.log("mainRankListMonthly", mainRankListMonthly);
   return (
     <Stdiv>
-      {mainRankList.map((each) => (
+      {mainRankListMonthly.map((each) => (
         <StRankingBox key={each.id}>
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
@@ -57,11 +55,12 @@ const InfiniteScroll = () => {
   );
 };
 
-export default InfiniteScroll;
+export default InfiniteScrollMonthly;
 
 const Stdiv = styled.div`
   /* background-color: gray; */
   background-color: #fafafa;
+  padding-top: 0.5em;
   height: 35vh;
   overflow: scroll;
 `;
@@ -80,8 +79,7 @@ const StRankingBox = styled.div`
 
   width: 90%;
   margin: auto;
-  /* height: 70px; */
-  height: 4.5em;
+  height: 70px;
 
   background: #ffffff;
 

@@ -19,25 +19,13 @@ export const __getTodo = createAsyncThunk(
         `${BASE_URL}/todo/?date=${moment(payload).format("YYYY-MM-DD")}`,
         config
       );
-      console.log("data", moment(payload).format("YYYY-MM-DD"));
-      return thunkAPI.fulfillWithValue(
-        moment(payload).format("YYYY-MM-DD") === data.addDate
-      );
+      console.log("data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-// const getDate = async () => {
-//   const { data } = await axios.get(
-//     `http://13.125.241.100/api/todo/planner/?date=${moment(date).format(
-//       "YYYY-MM-DD"
-//     )}`
-//   );
-//   setDate([...data, data]);
-//   console.log(data);
-// };
 
 export const __postTodo = createAsyncThunk(
   "todo/postTodo",
