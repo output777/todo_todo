@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import cameraSvg from '../../assets/img/cameraSvg.svg'
-import { __getImages, __postImages } from '../../redux/modules/mySlice'
+import { __getImages, __postImages, __getMyInfo } from '../../redux/modules/mySlice'
 
 const UploadPhoto = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,12 @@ const UploadPhoto = () => {
     const formData = new FormData();
     formData.append('multipartFile', e.target.files[0])
 
+
+    // 사진 업로드 했을 때 유저 정보에 사진 이미지가 바로 입력안됨
+    // 그래서 id값을 바로 가질 수 없어서 해결해야 함
     await dispatch(__postImages(formData));
     await dispatch(__getImages());
+    await dispatch(__getMyInfo());
 
     console.log(e.target.files);
     console.log(e.target.files[0].name);
