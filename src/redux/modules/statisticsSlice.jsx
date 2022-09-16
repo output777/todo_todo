@@ -4,6 +4,7 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const accessToken = localStorage.getItem("accessToken");
+console.log(accessToken);
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
@@ -11,26 +12,40 @@ const config = {
 };
 
 const initialState = {
-  barData: [],
+  rankScoreData: [{}, {}, {}],
+  barData: [{}, {}],
   lineData: [],
   heatmapData: [],
   isLoading: false,
   error: null,
 };
 
-export const __getBarChartData = createAsyncThunk(
-  "getBarChartData",
+export const __getRankScoreData = createAsyncThunk(
+  "__getRankScoreData",
   async (payload, thunkAPI) => {
-    // console.log("payload", payload);
     try {
-      const data = await axios.get(
+      const lastWeekData = await axios.get(
         `${BASE_URL}/rank/lastweek/member`,
-        payload,
         config
       );
-      console.log("data", data);
-      return thunkAPI.fulfillWithValue(data.data.content);
+      const weeklyData = await axios.get(
+        `${BASE_URL}/rank/weekly/member`,
+        config
+      );
+      const monthlyData = await axios.get(
+        `${BASE_URL}/rank/monthly/member`,
+        config
+      );
+      console.log("lastWeekData.data", lastWeekData.data);
+      console.log("thisWeekData.data", weeklyData.data);
+      console.log("monthlyData.data", monthlyData.data);
+      return thunkAPI.fulfillWithValue([
+        lastWeekData.data,
+        weeklyData.data,
+        monthlyData.data,
+      ]);
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -59,19 +74,20 @@ export const statisticsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [__getBarChartData.pending]: (state) => {
+    [__getRankScoreData.pending]: (state) => {
       state.isLoading = true;
     },
-    [__getBarChartData.fulfilled]: (state, action) => {
-      // console.log("action.payload", action.payload);
+    [__getRankScoreData.fulfilled]: (state, action) => {
+      console.log("extraReducers action.payload", action.payload);
       state.isLoading = false;
-      state.barData.push(...action.payload);
+      state.rankScoreData = action.payload;
     },
-    [__getBarChartData.rejected]: (state, action) => {
+    [__getRankScoreData.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
       state.error = action.payload.message;
     },
+
     [__getLineChartData.pending]: (state) => {
       state.isLoading = true;
     },

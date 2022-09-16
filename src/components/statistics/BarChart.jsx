@@ -3,18 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import ECharts, { EChartsReactProps } from "echarts-for-react";
 import * as echarts from "echarts";
-import { __getBarChartData } from "../../redux/modules/statisticsSlice";
 
 const BarChart = () => {
-  const { barData } = useSelector((state) => state.statistics);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__getBarChartData());
-    // setOptions({
-    //   ...options,
-    // });
-  }, []);
+  const { rankScoreData } = useSelector((state) => state.statistics);
 
   echarts.registerTheme("myTheme", {
     backgroundColor: "#ffffff",
@@ -37,7 +28,8 @@ const BarChart = () => {
     },
   });
 
-  const [options, setOptions] = useState({
+  const options = {
+    //State 일때는 왜 안되는지 파악하기
     xAxis: {
       type: "category",
       data: ["저번주 / 이번주"],
@@ -50,8 +42,8 @@ const BarChart = () => {
     series: [
       {
         type: "bar",
-        data: [25],
-        color: ["gray"],
+        data: [rankScoreData[0].score],
+        color: ["lightgray"],
         stack: "Total",
         label: {
           show: true,
@@ -62,7 +54,7 @@ const BarChart = () => {
       },
       {
         type: "bar",
-        data: [50],
+        data: [rankScoreData[1].score],
         color: ["#ffb671"],
         label: {
           show: true,
@@ -77,7 +69,7 @@ const BarChart = () => {
       top: "20em",
       bottom: "30em",
     },
-  });
+  };
 
   return (
     <ECharts

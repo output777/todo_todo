@@ -8,23 +8,28 @@ import clickHomeSvg from "../../assets/img/clickHomeSvg.svg";
 import clickStatisticsSvg from "../../assets/img/clickStatisticsSvg.svg";
 import clickPlannerSvg from "../../assets/img/clickPlannerSvg.svg";
 import clickMypageSvg from "../../assets/img/clickMypageSvg.svg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [home, setHome] = useState(false);
   const [statistics, setStatistics] = useState(false);
   const [planner, setPlanner] = useState(false);
   const [mypage, setMypage] = useState(false);
+  const navigate = useNavigate();
+
   const onClickHomeMenu = () => {
     setHome(true);
     setStatistics(false);
     setPlanner(false);
     setMypage(false);
+    navigate("/main");
   };
   const onClickStatisticsMenu = () => {
     setHome(false);
     setStatistics(true);
     setPlanner(false);
     setMypage(false);
+    navigate("/statistics");
   };
 
   const onClickPlannerMenu = () => {
@@ -32,12 +37,14 @@ const Navbar = () => {
     setStatistics(false);
     setPlanner(true);
     setMypage(false);
+    navigate("/planner");
   };
   const onClickMypageMenu = () => {
     setHome(false);
     setStatistics(false);
     setPlanner(false);
     setMypage(true);
+    navigate("/my");
   };
   return (
     <StNav>

@@ -5,6 +5,7 @@ import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
+import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
@@ -12,8 +13,8 @@ import InfiniteScroll from "./InfiniteScroll";
 
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
-  const [month, setMonth] = useState(true);
-  const [weekly, setWeekly] = useState(false);
+  const [month, setMonth] = useState(false);
+  const [weekly, setWeekly] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClickMonth = () => {
@@ -73,11 +74,11 @@ const Main = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            width='350px'
-            height='330px'
-            radius='48px'
-            top='40%'
-            backgroundcolor='rgba(0, 0, 0, 0.2)'
+            width="350px"
+            height="330px"
+            radius="48px"
+            top="40%"
+            backgroundcolor="rgba(0, 0, 0, 0.2)"
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
@@ -110,16 +111,6 @@ const Main = () => {
         )}
       </StRankingPhrases>
       <StRankingBtnBox>
-        {month ? (
-          <StMonthRankingBtn onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn>
-        ) : (
-          <StMonthRankingBtn2nd onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn2nd>
-        )}
-
         {weekly ? (
           <StWeeklyRankingBtn onClick={onClickWeekly}>
             <span>주간 랭킹</span>
@@ -129,9 +120,18 @@ const Main = () => {
             <span>주간 랭킹</span>
           </StWeeklyRankingBtn2nd>
         )}
+        {month ? (
+          <StMonthRankingBtn onClick={onClickMonth}>
+            <span>월간 랭킹</span>
+          </StMonthRankingBtn>
+        ) : (
+          <StMonthRankingBtn2nd onClick={onClickMonth}>
+            <span>월간 랭킹</span>
+          </StMonthRankingBtn2nd>
+        )}
       </StRankingBtnBox>
       <StScrollDiv>
-        <InfiniteScroll />
+        {weekly ? <InfiniteScroll /> : <InfiniteScrollMonthly />}
       </StScrollDiv>
     </StMainContainer>
   );
@@ -141,7 +141,7 @@ export default Main;
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
-  height: 90vh;
+  height: 95vh;
 `;
 
 const StPhrasesbox = styled.div`
@@ -227,16 +227,13 @@ const StRankingPhrases = styled.div`
 `;
 
 const StRankingBtnBox = styled.div`
-  margin-left: 1.5em;
-  margin-bottom: 1em;
+  margin: 0 0 1em 1.5em;
 `;
 
 const StMonthRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-
-  margin-top: 10px;
-
+  margin: 10px 0 0 2%;
   background: #ffe9d5;
 
   border: 1px solid #ff8f27;
@@ -251,8 +248,7 @@ const StMonthRankingBtn = styled.button`
 const StMonthRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
-  margin-top: 10px;
-
+  margin: 10px 0 0 2%;
   background: #ffffff;
 
   border: 1px solid #d7d5d5;
@@ -268,8 +264,6 @@ const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
 
-  margin-left: 10px;
-
   background: #ffe9d5;
 
   border: 1px solid #ff8f27;
@@ -284,8 +278,6 @@ const StWeeklyRankingBtn = styled.button`
 const StWeeklyRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
-
-  margin-left: 10px;
 
   background: #ffffff;
 
@@ -341,7 +333,7 @@ const StModalCloseBtn = styled.button`
 
 const StScrollDiv = styled.div`
   background-color: #fafafa;
-  height: 20vh;
+  /* height: 40%; */
   /* overflow: scroll; */
   /* ::-webkit-scrollbar {
     width: 10px;

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Row } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import info from "../../assets/img/mainpage/info.svg";
 import BarChart from "./BarChart";
@@ -7,15 +7,23 @@ import HeatmapSample from "./HeatmapSample";
 import LineChart from "./LineChart";
 import Modal from "../utils/Modal";
 import trophy from "../../assets/img/mainpage/trophy.svg";
+import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
 
 const Statistics = () => {
   const [modalView, setModalView] = useState(false);
   const [modal, setModal] = useState(null);
-
+  const dispatch = useDispatch();
+  const { rankScoreData } = useSelector((state) => state.statistics);
+  console.log("rankScoreData", rankScoreData);
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
     setModal(parameter);
   };
+
+  useEffect(() => {
+    dispatch(__getRankScoreData());
+  }, []);
+
   return (
     <>
       <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
@@ -41,13 +49,15 @@ const Statistics = () => {
           <StScoreBoxDiv>
             <div>주간점수</div>
             <div>
-              100점 / <span>153위</span>
+              {rankScoreData[1].score}점 /{" "}
+              <span>{rankScoreData[1].ranking}위</span>
             </div>
           </StScoreBoxDiv>
           <StScoreBoxDiv>
             <div>월간점수</div>
             <div>
-              100점 / <span>153위</span>
+              {rankScoreData[2].score}점 /{" "}
+              <span>{rankScoreData[2].ranking}위</span>
             </div>
           </StScoreBoxDiv>
         </div>
@@ -82,6 +92,7 @@ const Statistics = () => {
           height={modal === "score" ? "22em" : "19em"}
           radius='48px'
           top='40%'
+
         >
           <StModalTop>
             {modal === "score" ? (
@@ -184,7 +195,7 @@ const StScoreBoxDiv = styled.div`
   justify-content: center;
   div {
     margin: 1% 15%;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: bold;
     & span {
       color: #ff7b00;

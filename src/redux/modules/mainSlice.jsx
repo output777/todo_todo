@@ -12,6 +12,7 @@ const config = {
 
 const initialState = {
   mainRankList: [],
+  mainRankListMonthly: [],
   isLoading: false,
   error: null,
 };
@@ -35,6 +36,25 @@ export const __getMainRank = createAsyncThunk(
   }
 );
 
+export const __getMainRankMonthly = createAsyncThunk(
+  "getMainRankMonthly",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
+      // const data = await axios.get(`http://localhost:3001/test${payload}`);
+      const data = await axios.get(
+        `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
+        payload,
+        config
+      );
+      console.log("data.data.content", data.data.content);
+      return thunkAPI.fulfillWithValue(data.data.content);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const mainSlice = createSlice({
   name: "mainSlice",
   initialState,
@@ -47,13 +67,28 @@ export const mainSlice = createSlice({
       // console.log("action.payload", action.payload);
       state.isLoading = false;
       state.mainRankList.push(...action.payload);
+      state.mainRankListMonthly = [];
     },
     [__getMainRank.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
       state.error = action.payload.message;
-    }
-  }
+    },
+    [__getMainRankMonthly.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getMainRankMonthly.fulfilled]: (state, action) => {
+      // console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.mainRankListMonthly.push(...action.payload);
+      state.mainRankList = [];
+    },
+    [__getMainRankMonthly.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log("rejected action", action);
+      state.error = action.payload.message;
+    },
+  },
 });
 
 export default mainSlice.reducer;

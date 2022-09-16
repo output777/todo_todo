@@ -46,8 +46,8 @@ export default function () {
               : value > 70
               ? "rgb(0, 213, 0)"
               : null,
+          color: "transparent",
           fontSize: "1px",
-          color: "gray",
           // height: "20em",
           // width: "30em",
           // margin: "0px",
