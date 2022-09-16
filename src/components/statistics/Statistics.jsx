@@ -88,10 +88,11 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width="350px"
+          width='350px'
           height={modal === "score" ? "22em" : "19em"}
-          radius="48px"
-          top="40%"
+          radius='48px'
+          top='40%'
+
         >
           <StModalTop>
             {modal === "score" ? (

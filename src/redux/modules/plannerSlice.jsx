@@ -16,7 +16,7 @@ export const __getTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `${BASE_URL}/todo/?date=${moment(payload).format("YYYY-MM-DD")}`,
+        `${BASE_URL}/todo?date=${moment(payload).format("YYYY-MM-DD")}`,
         config
       );
       console.log("data", data.data);
