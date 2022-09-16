@@ -11,6 +11,7 @@ const GoogleLogin = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log('location.search', location.search)
   const GOOGLE_CODE = location.search.split("=")[1].split("&")[0];
   const { user } = useSelector((state) => state.login)
 
