@@ -184,14 +184,24 @@ const Planner = () => {
       <StInputContainer>
         {input ? (
           <StInputBox>
-            <input onChange={onChangeHandler} />
-            <button
-              onClick={() => {
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
                 onSubmitHandler(todo);
               }}
             >
-              작성
-            </button>
+              <input
+                onChange={onChangeHandler}
+                placeholder='2-15자 이내로 입력해주세요.'
+              />
+              <button
+                onClick={() => {
+                  onSubmitHandler(todo);
+                }}
+              >
+                작성
+              </button>
+            </form>
           </StInputBox>
         ) : null}
       </StInputContainer>
@@ -246,13 +256,15 @@ const Planner = () => {
                     closable={true}
                     maskClosable={true}
                     onClose={closeModal}
-                    width='150px'
+                    width='300px'
                     height='100px'
-                    top='40%'
+                    top='45%'
                     backgroundcolor='rgba(0, 0, 0, 0.2)'
                   >
-                    <div onClick={onEditHandler}>수정</div>
-                    <div onClick={onDeleteHandler}>삭제</div>
+                    <StModalEdit onClick={onEditHandler}>수정</StModalEdit>
+                    <StModalDelete onClick={onDeleteHandler}>
+                      삭제
+                    </StModalDelete>
                   </Modal>
                 )}
               </StTodoNotDone>
@@ -429,6 +441,7 @@ const StTodoLeft = styled.div`
 
   & input.show {
     display: inline-block;
+    width: 150px;
   }
 
   & span {
@@ -444,7 +457,14 @@ const StTodoLeft = styled.div`
 
   & button.show {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 40px;
+    border: 1px solid #ff7b00;
+
+    width: 52px;
+    height: 32px;
+
+    background-color: #fff;
+    color: #ff7b00;
   }
 `;
 const StTodoRightImg = styled.img`
@@ -452,14 +472,63 @@ const StTodoRightImg = styled.img`
 `;
 
 const StInputBox = styled.div`
-  padding-top: 20px;
+  padding-top: 15px;
+  width: 90%;
+  height: 52px;
+  margin: auto;
+
+  & form input {
+    border: 1px solid #e8e8e8;
+    height: 52px;
+    padding: 0 0.5rem;
+    width: 75%;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    box-shadow: 0px 0px 0px 1px lightgray;
+    outline: none;
+  }
+
+  & form input::placeholder {
+    //font-size: 0.9rem;
+  }
+
+  & form button {
+    border: 1px solid #ff7b00;
+    box-shadow: 0px 0px 0px 1px lightgray;
+    //border-left: none;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+
+    height: 52px;
+    width: 25%;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #ff7b00;
+  }
 `;
 
 const StInputContainer = styled.div`
-  height: 50px;
+  height: 57px;
 `;
 
 const StInput = styled.input`
-  /* border: 0;
-  outline: none; */
+  border: 0;
+  outline: none;
+`;
+
+const StModalEdit = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-bottom: none;
+  height: 50px;
+`;
+
+const StModalDelete = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 50px;
 `;
