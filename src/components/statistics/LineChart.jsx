@@ -88,6 +88,8 @@ const LineChart = () => {
         width: "90%",
         margin: "0px auto",
         backgroundColor: "white",
+        boxShadow: "0px 4px 15px rgba(17, 17, 17, 0.05)",
+        borderRadius: "12px",
       }}
     />
   );
