@@ -12,6 +12,7 @@ import {
   __completeTodo,
   __deleteTodo,
   __updateTodo,
+  __getTodoCount,
 } from "../../redux/modules/plannerSlice";
 
 import styled from "styled-components";
@@ -29,13 +30,13 @@ import Modal from "../utils/Modal";
 import PlannerCalender from "./PlannerCalender";
 
 const Planner = () => {
-  const { rankScoreData } = useSelector((state) => state.statistics);
-  let weeklyScore = Math.round(rankScoreData[1].score);
-  let weeklyScore2 = isNaN(weeklyScore)
-    ? 0
-    : Math.round(rankScoreData[1].score);
-
   const dispatch = useDispatch();
+  const { todoCount } = useSelector((state) => state.planner);
+
+  useEffect(() => {
+    dispatch(__getTodoCount());
+  }, []);
+
   const [todo, setTodo] = useState({
     content: "",
     isComplete: false,
@@ -197,10 +198,10 @@ const Planner = () => {
           <StDivInBox>오늘의 투두 달성률</StDivInBox>
           <StNumberDiv>
             <div></div>
-            <div>{weeklyScore2 + "%"}</div>
+            <div>{0 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={weeklyScore2} variant="temp" />
+          <ProgressBar now={0} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StInputContainer>
@@ -324,7 +325,7 @@ export default Planner;
 const StDiv = styled.div`
   background-color: #fafafa;
   height: 100vh;
-  font-family: 'SUIT-Regular', sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
 `;
 const StDateDiv = styled.div`
   display: flex;
