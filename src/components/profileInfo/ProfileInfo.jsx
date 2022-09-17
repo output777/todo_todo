@@ -180,7 +180,7 @@ const ProfileInfo = () => {
       grade: grade
     }
     dispatch(__userInfoRegister(newUserInfoRegister))
-    navigate("/main");
+    navigate("/");
   }
 
 

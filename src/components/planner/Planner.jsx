@@ -217,7 +217,7 @@ const Planner = () => {
                   onSubmitHandler(todo);
                 }}
               >
-                <img src={logopencil} />
+                <img src={logopencil} alt='img' />
               </button>
             </form>
           </StInputBox>

@@ -69,15 +69,16 @@ export const __updateTodo = createAsyncThunk(
   "todo/updateTodo",
   async (payload, thunkAPI) => {
     try {
-      console.log("payload", payload);
+      console.log("payload", payload, payload.todoId, typeof payload.todoId);
       const data = await axios.put(
         `${BASE_URL}/todo/${payload.todoId}`,
-        payload,
+        payload.edit,
         config
       );
-
+      console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      console.log('error', error)
       return thunkAPI.rejectWithValue(error);
     }
   }

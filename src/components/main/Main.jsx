@@ -8,13 +8,14 @@ import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 import { __getAchievementRate } from "../../redux/modules/mainSlice";
-
+import { __getMyInfo } from "../../redux/modules/mySlice";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
 
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
+  const dispatch = useDispatch();
   const { achievementRate } = useSelector((state) => state.main);
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
@@ -50,11 +51,11 @@ const Main = () => {
     setModalVisible(false);
   };
 
-  const dispatch = useDispatch();
 
   useEffect(() => {
+    // dispatch(__getMyInfo());
     dispatch(__getAchievementRate());
-  }, []);
+  }, [dispatch]);
 
   return (
     <StMainContainer>

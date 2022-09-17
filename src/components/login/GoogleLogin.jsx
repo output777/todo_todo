@@ -16,10 +16,11 @@ const GoogleLogin = () => {
   const GOOGLE_CODE = location.search.split("=")[1].split("&")[0];
   const { user } = useSelector((state) => state.login)
 
+  console.log(user);
   // 회원가입해서 nickname 없을 때 회원정보 등록하면 작업해줘야 유저정보 없다는 에러가 안나옴
   const nicknameCheck = useCallback((user) => {
     if (user.nickname) {
-      navigate('/main')
+      navigate('/')
     } else {
       navigate("/profileinfo");
     }

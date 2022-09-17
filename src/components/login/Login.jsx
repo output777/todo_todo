@@ -57,6 +57,7 @@ const StLoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'SUIT-Regular', sans-serif;
 `;
 
 const StLogobox = styled.div``;
