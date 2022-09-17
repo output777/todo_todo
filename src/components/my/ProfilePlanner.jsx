@@ -57,6 +57,7 @@ export default ProfilePlanner;
 
 const StDiv = styled.div`
   background-color: #f8f8f8;
+  height: 50vh;
 `;
 
 const StNothingTodoNoticeDiv = styled.div`
