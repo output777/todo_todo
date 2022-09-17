@@ -194,6 +194,7 @@ const ProfileInfo = () => {
         padding: "1rem 1rem 0.5rem 1rem",
         height: "100%",
         background: "#fff",
+        fontFamily: 'SUIT-Regular, sans-serif'
       }}
     >
       <StInfoTitle>
@@ -275,7 +276,7 @@ const ProfileInfo = () => {
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
         <button>투두투두 시작하기!</button>
       </StBtnBox>
-    </div>
+    </div >
   );
 };
 

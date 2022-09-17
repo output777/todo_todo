@@ -324,6 +324,7 @@ export default Planner;
 const StDiv = styled.div`
   background-color: #fafafa;
   height: 100vh;
+  font-family: 'SUIT-Regular', sans-serif;
 `;
 const StDateDiv = styled.div`
   display: flex;

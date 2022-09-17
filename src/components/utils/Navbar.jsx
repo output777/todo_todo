@@ -18,7 +18,7 @@ const Navbar = (props) => {
   const navigate = useNavigate();
 
   const onClickHomeMenu = () => {
-    navigate("/main");
+    navigate("/");
     setHome(true);
     setStatistics(false);
     setPlanner(false);

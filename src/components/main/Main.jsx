@@ -168,6 +168,7 @@ export default Main;
 const StMainContainer = styled.div`
   background-color: #fafafa;
   height: 95vh;
+  font-family: 'SUIT-Regular', sans-serif;
 `;
 
 const StPhrasesbox = styled.div`
@@ -178,12 +179,12 @@ const StPhrasesbox = styled.div`
   span {
     color: #ff7b00;
     font-weight: bold;
-    font-size: 100%;
+    font-size: 1rem;
   }
   div {
     margin-top: 5px;
     font-weight: bold;
-    font-size: 95%;
+    font-size: 1.2rem;
   }
 `;
 
@@ -201,7 +202,7 @@ const StAchievementsTopBox = styled.div`
   align-items: center;
   width: 100%;
   height: 25%;
-
+  font-weight:700;
   border-radius: 12px 12px 0 0;
   background-color: #ffe9d5;
   div {
@@ -213,7 +214,7 @@ const StAchievementsTopBox = styled.div`
 const StAchievementsBottomBox = styled.div`
   height: 75%;
   width: 100%;
-
+  font-weight:600;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,44 +225,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 
@@ -286,6 +287,7 @@ const StRankingPhrases = styled.div`
 
 const StRankingBtnBox = styled.div`
   margin: 0 0 1em 1.5em;
+  font-weight: 600;
 `;
 
 const StMonthRankingBtn = styled.button`
@@ -356,14 +358,17 @@ const StModalTop = styled.div`
   height: 85px;
 
   border-radius: 48px 48px 0 0;
-  background-color: #f8f8f8;
+  background-color: #ffe9d5;
+  color: #ff7b00;
+  font-weight: bold;
+  font-size: 1.2em;
 `;
 
 const StModalBottom = styled.div`
   width: 90%;
   margin: 5% 0 0 5%;
   span {
-    color: #ff7b00;
+    font-size:1rem;
   }
 `;
 const StModalExplainTop = styled.div``;

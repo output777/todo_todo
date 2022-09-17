@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { __getMainRankMonthly } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
+import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const InfiniteScrollMonthly = () => {
   const { mainRankListMonthly } = useSelector((state) => state.main);
@@ -42,7 +43,7 @@ const InfiniteScrollMonthly = () => {
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>
-              <StRankingProfile src={defaultProfile} />
+              <StRankingProfile src={profileImgSvg} />
               <StRankingNickname>{each.nickname}</StRankingNickname>
             </div>
           </div>

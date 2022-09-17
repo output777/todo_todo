@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { __kakaoLogin } from '../../redux/modules/loginSlice';
+import Loading from './Loading';
 
 
 const KakaoLogin = () => {
@@ -18,7 +19,7 @@ const KakaoLogin = () => {
 
 
   return (
-    <div>로딩중...</div>
+    <Loading />
   )
 }
 

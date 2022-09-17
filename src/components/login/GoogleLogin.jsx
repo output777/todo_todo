@@ -3,6 +3,8 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { __googleLogin } from "../../redux/modules/loginSlice";
+import Loading from "./Loading";
+import styled from "styled-components";
 
 
 // 구글 로그인만 렌더링 최적화 - useCallback, useEffect 적용
@@ -33,7 +35,19 @@ const GoogleLogin = () => {
     dispatch(__googleLogin(GOOGLE_CODE));
   }, [dispatch]);
 
-  return <div>Google Login</div>;
+  return (
+    <StLoadingContainer>
+      <Loading />
+    </StLoadingContainer>
+  )
 };
+
+const StLoadingContainer = styled.div`
+  width:100%;
+  height:100%;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+`
 
 export default GoogleLogin;

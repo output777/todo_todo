@@ -47,7 +47,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ fontFamily: 'SUIT-Regular, sans-serif' }}>
       <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
         통계
       </h3>
@@ -218,7 +218,7 @@ const Statistics = () => {
           </StModalBottom>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 export default Statistics;

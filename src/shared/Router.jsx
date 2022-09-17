@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainPage from "../pages/MainPage";
 import LoginPage from "../pages/LoginPage";
 import PlannerPage from "../pages/PlannerPage";
@@ -11,15 +11,20 @@ import NaverLogin from "../components/login/NaverLogin";
 import ProfileInfoPage from "../pages/ProfileInfoPage";
 
 const Router = () => {
+
+  let token = localStorage.getItem('accessToken');
+  let nickname = localStorage.getItem('nickname');
+  console.log(token);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/main' element={<MainPage />} />
+        <Route path='/login' element={token !== null ? <Navigate replace to='/' /> : <LoginPage />} />
+        <Route path='/' element={<MainPage />} />
         <Route path='/my' element={<MyPage />} />
         <Route path='/planner' element={<PlannerPage />} />
         <Route path='/statistics' element={<StatisticsPage />} />
-        <Route path='/profileinfo' element={<ProfileInfoPage />} />
+        <Route path='/profileinfo' element={nickname !== null ? <Navigate replace to='/' /> : <ProfileInfoPage />} />
         <Route path='/user/kakao/callback' element={<KakaoLogin />} />
         <Route path='/user/google/callback' element={<GoogleLogin />} />
         <Route path='/user/naver/callback' element={<NaverLogin />} />
