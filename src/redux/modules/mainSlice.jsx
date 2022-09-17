@@ -11,18 +11,38 @@ const config = {
 };
 
 const initialState = {
+  achievementRate: [{}, {}],
   mainRankList: [],
   mainRankListMonthly: [],
   isLoading: false,
   error: null,
 };
 
+export const __getAchievementRate = createAsyncThunk(
+  "getAchievementRate",
+  async (payload, thunkAPI) => {
+    try {
+      const thisMonthData = await axios.get(
+        `${BASE_URL}/todo/achievement/thismonth`,
+        config
+      );
+      const totalData = await axios.get(
+        `${BASE_URL}/todo/achievement/total`,
+        config
+      );
+      console.log("temp", [thisMonthData.data, totalData.data]);
+      return thunkAPI.fulfillWithValue([thisMonthData.data, totalData.data]);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-      // const data = await axios.get(`http://localhost:3001/test${payload}`);
       const data = await axios.get(
         `${BASE_URL}/rank/weekly?page=${payload}&size=${3}`,
         payload,
@@ -60,6 +80,19 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [__getAchievementRate.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getAchievementRate.fulfilled]: (state, action) => {
+      // console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.achievementRate = action.payload;
+    },
+    [__getAchievementRate.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log("rejected action", action);
+      state.error = action.payload.message;
+    },
     [__getMainRank.pending]: (state) => {
       state.isLoading = true;
     },

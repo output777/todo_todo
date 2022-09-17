@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import styled, { css } from "styled-components";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
+import { __getAchievementRate } from "../../redux/modules/mainSlice";
 
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
@@ -13,9 +15,16 @@ import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
+  const { achievementRate } = useSelector((state) => state.main);
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+  // -------------------- 소수점 반올림 ---------------------
+  let thisMonthRate = Math.round(achievementRate[0].achievementRate);
+  let totalRate = Math.round(achievementRate[1].achievementRate);
+
+  const nickname = localStorage.getItem("nickname");
 
   const onClickMonth = () => {
     setMonth(true);
@@ -34,32 +43,40 @@ const Main = () => {
     setModalVisible(false);
   };
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getAchievementRate());
+  }, []);
+
   return (
     <StMainContainer>
       <StPhrasesbox>
         <span>투두투두</span>
-        <div>OO님, 오늘 하루도 힘내세요!</div>
+        <div>{nickname}님, 오늘 하루도 힘내세요!</div>
       </StPhrasesbox>
       <StAchievementsBox>
         <StAchievementsTopBox>
-          <div>OO님의 업적</div>
+          <div>{nickname}님의 업적</div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
-          <StthisMonthGauge>
+          <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
-              이번달 플래너 달성률<div>80%</div>
+              이번달 플래너 달성률
+              <div>{thisMonthRate}%</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={80} />
+              <ProgressBar now={thisMonthRate} />
             </div>
           </StthisMonthGauge>
 
-          <StTotalGauge>
+          <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
-              플래너 총 달성률<div>15%</div>
+              플래너 총 달성률
+              <div>{totalRate}%</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={20} />
+              <ProgressBar now={totalRate} />
             </div>
           </StTotalGauge>
         </StAchievementsBottomBox>
@@ -68,6 +85,8 @@ const Main = () => {
         <img src={trophy} />
         <span>랭킹</span>
         <img src={info} onClick={openModal} />
+
+        {/* -------------- 모달창 ---------------*/}
         {modalVisible && (
           <Modal
             visible={modalVisible}
@@ -78,7 +97,7 @@ const Main = () => {
             height="330px"
             radius="48px"
             top="40%"
-            backgroundcolor="rgba(0, 0, 0, 0.2)"
+            backgroundcolor="rgba(31, 31, 31, 0.116)"
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
@@ -197,13 +216,45 @@ const StAchievementsBottomBox = styled.div`
 const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
-    background-color: #74e272;
+    ${({ thisMonthRate }) => {
+      if (thisMonthRate < 30) {
+        return css`
+          background-color: #d34c4c;
+        `;
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
+          background-color: #ffdb80;
+        `;
+      }
+      if (thisMonthRate >= 70) {
+        return css`
+          background-color: #74e272;
+        `;
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
-    background-color: #ffdb80;
+    ${({ totalRate }) => {
+      if (totalRate < 30) {
+        return css`
+          background-color: #d34c4c;
+        `;
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
+          background-color: #ffdb80;
+        `;
+      }
+      if (totalRate >= 70) {
+        return css`
+          background-color: #74e272;
+        `;
+      }
+    }}
   }
 `;
 

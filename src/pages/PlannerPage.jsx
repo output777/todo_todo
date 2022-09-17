@@ -7,7 +7,7 @@ const PlannerPage = () => {
   return (
     <>
       <Planner />
-      <Navbar />
+      <Navbar planner={true} />
     </>
   );
 };

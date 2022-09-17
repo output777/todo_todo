@@ -56,13 +56,9 @@ export const __getLineChartData = createAsyncThunk(
   async (payload, thunkAPI) => {
     // console.log("payload", payload);
     try {
-      const data = await axios.get(
-        `${BASE_URL}/rank/lastweek/member`,
-        payload,
-        config
-      );
-      console.log("data", data);
-      return thunkAPI.fulfillWithValue(data.data.content);
+      const data = await axios.get(`${BASE_URL}/rank/lastweek/member`, config);
+      console.log("data.data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -92,9 +88,9 @@ export const statisticsSlice = createSlice({
       state.isLoading = true;
     },
     [__getLineChartData.fulfilled]: (state, action) => {
-      // console.log("action.payload", action.payload);
+      console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.lineData.push(...action.payload);
+      state.lineData = action.payload;
     },
     [__getLineChartData.rejected]: (state, action) => {
       state.isLoading = false;

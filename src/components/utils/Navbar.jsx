@@ -10,26 +10,26 @@ import clickPlannerSvg from "../../assets/img/clickPlannerSvg.svg";
 import clickMypageSvg from "../../assets/img/clickMypageSvg.svg";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-  const [home, setHome] = useState(false);
-  const [statistics, setStatistics] = useState(false);
-  const [planner, setPlanner] = useState(false);
-  const [mypage, setMypage] = useState(false);
+const Navbar = (props) => {
+  const [home, setHome] = useState(props.home);
+  const [statistics, setStatistics] = useState(props.statistics);
+  const [planner, setPlanner] = useState(props.planner);
+  const [mypage, setMypage] = useState(props.myPage);
   const navigate = useNavigate();
 
   const onClickHomeMenu = () => {
+    navigate("/main");
     setHome(true);
     setStatistics(false);
     setPlanner(false);
     setMypage(false);
-    navigate("/main");
   };
   const onClickStatisticsMenu = () => {
+    navigate("/statistics");
     setHome(false);
     setStatistics(true);
     setPlanner(false);
     setMypage(false);
-    navigate("/statistics");
   };
 
   const onClickPlannerMenu = () => {

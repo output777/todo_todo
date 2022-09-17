@@ -6,7 +6,7 @@ const StatisticsPage = () => {
   return (
     <div>
       <Statistics />
-      <Navbar />
+      <Navbar statistics={true} />
     </div>
   );
 };

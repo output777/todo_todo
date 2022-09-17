@@ -7,29 +7,16 @@ import * as echarts from "echarts";
 const BarChart = () => {
   const { rankScoreData } = useSelector((state) => state.statistics);
 
-  echarts.registerTheme("myTheme", {
-    backgroundColor: "#ffffff",
-
-    title: {
-      textStyle: {
-        color: "#ffffff",
-      },
-    },
-    legend: {
-      textStyle: {
-        color: "#ffffff",
-      },
-    },
-    dataZoom: {
-      textStyle: {
-        color: "#ffffff",
-      },
-      borderColor: "#b9beed",
-    },
-  });
+  // ---------------- 점수 소수점 반올림 ----------------
+  let lastweekScore = Math.round(rankScoreData[0].score);
+  let weeklyScore = Math.round(rankScoreData[1].score);
+  let monthlyScore = Math.round(rankScoreData[2].score);
 
   const options = {
     //State 일때는 왜 안되는지 파악하기
+    // legend: {
+    //   data: ["저번주", "이번주"],
+    // },
     xAxis: {
       type: "category",
       data: ["저번주 / 이번주"],
@@ -41,25 +28,27 @@ const BarChart = () => {
     },
     series: [
       {
+        name: "저번주",
         type: "bar",
-        data: [rankScoreData[0].score],
-        color: ["lightgray"],
+        data: [lastweekScore],
+        color: ["#D7D5D5"],
         stack: "Total",
         label: {
           show: true,
           position: "top",
-          color: "gray",
+          color: "#D7D5D5",
           fontWeight: "bold",
         },
       },
       {
+        name: "이번주",
         type: "bar",
-        data: [rankScoreData[1].score],
-        color: ["#ffb671"],
+        data: [weeklyScore],
+        color: ["#FF7B00"],
         label: {
           show: true,
           position: "top",
-          color: "#ffb671",
+          color: "#FF7B00",
           fontWeight: "bold",
         },
       },
