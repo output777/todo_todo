@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <>
       <Main />
-      <Navbar />
+      <Navbar home={true} />
     </>
   );
 };

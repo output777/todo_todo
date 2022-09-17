@@ -11,7 +11,7 @@ const MyPage = () => {
       {/* <ProfileCalender /> */}
       <Profile />
       <ProfileTabs />
-      <Navbar />
+      <Navbar myPage={true} />
       <UploadPhoto />
     </StContainer>
   );

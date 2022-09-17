@@ -60,7 +60,6 @@ export default InfiniteScrollMonthly;
 const Stdiv = styled.div`
   /* background-color: gray; */
   background-color: #fafafa;
-  padding-top: 0.5em;
   height: 35vh;
   overflow: scroll;
 `;

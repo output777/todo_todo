@@ -29,16 +29,20 @@ const LineChart = () => {
     },
   });
   useEffect(() => {
-    // dispatch(__getLineChartData());
-    let a = [22, 33, 15, 45, 34, 78];
+    dispatch(__getLineChartData());
+    let a = [30, 33, 15, 45, 34, 78];
     let b = [24, 43, 45, 78, 45, 56];
-    setOptions({
-      ...options,
-      series: [{ data: a }, { data: b }],
-    });
+    // setOptions({
+    //   ...options,
+    //   series: [{ data: a }, { data: b }],
+    // });
   }, []);
 
   const [options, setOptions] = useState({
+    legend: {
+      data: ["상위랭커", "이번주"],
+    },
+
     xAxis: {
       type: "category",
       data: ["월", "화", "수", "목", "금", "토", "일"],
@@ -50,14 +54,19 @@ const LineChart = () => {
     },
     series: [
       {
-        data: [10, 20, 23, 30, 50, 60, 63],
+        name: "상위랭커",
+        data: [100, 200, 300, 300, 370, 550, 620],
         type: "line",
+        color: "#D34C4C",
       },
       {
-        data: [20, 21, 25, 33, 51, 65, 70],
+        name: "이번주",
+        data: [70, 120, 260, 270, 300, 370, 400],
         type: "line",
+        color: "#618AF2",
       },
     ],
+
     grid: {
       left: "15%",
       top: "12%",
@@ -70,7 +79,7 @@ const LineChart = () => {
       // theme="myTheme"
       opts={{
         renderer: "",
-        height: "220em",
+        height: "210em",
         margin: "auto",
         color: "#91cc75",
       }}

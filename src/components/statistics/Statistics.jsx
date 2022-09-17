@@ -20,6 +20,11 @@ const Statistics = () => {
     setModal(parameter);
   };
 
+  // ----------------- 점수 소수점 반올림 -------------------
+  let lastweekScore = Math.round(rankScoreData[0].score);
+  let weeklyScore = Math.round(rankScoreData[1].score);
+  let monthlyScore = Math.round(rankScoreData[2].score);
+
   useEffect(() => {
     dispatch(__getRankScoreData());
   }, []);
@@ -49,21 +54,20 @@ const Statistics = () => {
           <StScoreBoxDiv>
             <div>주간점수</div>
             <div>
-              {rankScoreData[1].score}점 /{" "}
-              <span>{rankScoreData[1].ranking}위</span>
+              {weeklyScore}점 / <span>{rankScoreData[1].ranking}위</span>
             </div>
           </StScoreBoxDiv>
           <StScoreBoxDiv>
             <div>월간점수</div>
             <div>
-              {rankScoreData[2].score}점 /{" "}
-              <span>{rankScoreData[2].ranking}위</span>
+              {monthlyScore}점 / <span>{rankScoreData[2].ranking}위</span>
             </div>
           </StScoreBoxDiv>
         </div>
         <StScoreChangeBoxDiv>
           <div>
-            저번주 이번주 <br />
+            <span className="lastweek">저번주 </span>
+            <span className="thisweek"> 이번주</span> <br />
             주간 랭킹 점수 변화
           </div>
 
@@ -88,11 +92,13 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width='350px'
-          height={modal === "score" ? "22em" : "19em"}
+          width="350px"
+          height={
+            modal === "score" ? "22em" : modal === "rank" ? "20em" : "21em"
+          }
           radius="48px"
-          top='40%'
-
+          top="40%"
+          backgroundcolor="#46464624"
         >
           <StModalTop>
             {modal === "score" ? (
@@ -108,7 +114,16 @@ const Statistics = () => {
             {modal === "score" ? (
               <>
                 <StModalExplainTop>
-                  <span>
+                  <span
+                    style={{
+                      margin: "8% 0 5% 0",
+                      fontWeight: "bold",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: "3%",
+                    }}
+                  >
                     <img src={trophy} /> 주간점수
                   </span>
                   <div>
@@ -130,22 +145,56 @@ const Statistics = () => {
               </>
             ) : modal === "rank" ? (
               <StModalExplainTop>
-                <span>
+                <span
+                  style={{
+                    marginTop: "8%",
+                    fontWeight: "bold",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: "3%",
+                  }}
+                >
                   <img src={trophy} />
                   주간 랭킹 점수란?
                 </span>
-                <div>아래 그래프는 이번 주 요일별 점수 추이를 보여줍니다.</div>
+                <div style={{ marginTop: "3%" }}>
+                  아래 그래프는 매주 요일별 누적 점수 추이를 보여줍니다.
+                  <span style={{ color: "#D34C4C", fontWeight: "bold" }}>
+                    {" "}
+                    붉은색
+                  </span>
+                  은 상위랭커,
+                  <span style={{ color: "#618AF2", fontWeight: "bold" }}>
+                    파란색
+                  </span>
+                  은 유저님의 이번주 점수 추이입니다.
+                </div>
               </StModalExplainTop>
             ) : (
               <StModalExplainTop>
-                <span>
+                <span
+                  style={{
+                    margin: "3% 0 3% 0",
+                    fontWeight: "bold",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: "3%",
+                  }}
+                >
                   <img src={trophy} />
                   히트맵 이란?
                 </span>
                 <div>
                   히트맵은 주차별(가로축), 요일별(세로축) 달성률에 따라 색깔의
-                  옅고 진함을 표시합니다.
+                  옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이 진해집니다.
                 </div>
+                <StTemp>
+                  <div style={{ backgroundColor: "#c2ffbe" }}></div>
+                  <div style={{ backgroundColor: "#4cff3f" }}></div>
+                  <div style={{ backgroundColor: "rgb(0, 213, 0)" }}></div>
+                </StTemp>
               </StModalExplainTop>
             )}
             <StModalCloseDiv onClick={modalToggleHandler}>닫기</StModalCloseDiv>
@@ -157,6 +206,23 @@ const Statistics = () => {
 };
 export default Statistics;
 
+const StTemp = styled.div`
+  width: 100%;
+  height: 30%;
+  margin: 1% auto;
+  /* background-color: gray; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+  gap: 2%;
+  div {
+    width: 10%;
+    height: 70%;
+    /* background-color: #c2ffbe; */
+    margin: 0;
+  }
+`;
 const StLine = styled.div`
   width: 100%;
   height: 1.5px;
@@ -195,7 +261,7 @@ const StScoreBoxDiv = styled.div`
   justify-content: center;
   div {
     margin: 1% 15%;
-    font-size: 0.8em;
+    font-size: 0.85em;
     font-weight: bold;
     & span {
       color: #ff7b00;
@@ -217,9 +283,16 @@ const StScoreChangeBoxDiv = styled.div`
   border-radius: 12px;
   div {
     width: 50%;
-    font-size: 0.8em;
+    font-size: 0.85em;
     font-weight: bold;
     margin-left: 7%;
+  }
+
+  .lastweek {
+    color: #9f9e9e;
+  }
+  .thisweek {
+    color: #9f9e9e;
   }
 `;
 
@@ -251,19 +324,7 @@ const StModalBottom = styled.div`
   div {
   }
 `;
-const StModalExplainTop = styled.div`
-  span {
-    margin-top: 8%;
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 3%;
-  }
-  div {
-    margin-top: 3%;
-  }
-`;
+const StModalExplainTop = styled.div``;
 
 const StModalExplainBottom = styled.div`
   span {
