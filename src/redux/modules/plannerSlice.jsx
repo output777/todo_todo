@@ -11,6 +11,31 @@ const config = {
   },
 };
 
+const initialState = {
+  todoCount: [],
+  todos: [],
+  isLoading: false,
+  error: null,
+};
+
+export const __getTodoCount = createAsyncThunk(
+  "getTodoCount",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(
+        `${BASE_URL}/todo/achievement?date=${moment(payload).format(
+          "YYYY-MM-DD"
+        )}`,
+        config
+      );
+      console.log("data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getTodo = createAsyncThunk(
   "todo/getTodo",
   async (payload, thunkAPI) => {
@@ -91,17 +116,23 @@ export const __completeTodo = createAsyncThunk(
   }
 );
 
-const initialState = {
-  todos: [],
-  isLoading: false,
-  error: null,
-};
-
 export const plannerSlice = createSlice({
   name: "planner",
   initialState,
   reducers: {},
   extraReducers: {
+    // __getTodoCount
+    [__getTodoCount.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getTodoCount.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todoCount = action.payload;
+    },
+    [__getTodoCount.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // __getTodo
     [__getTodo.pending]: (state) => {
       state.isLoading = true;

@@ -12,11 +12,20 @@ import {
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
+import { __getAchievementRate } from "../../redux/modules/mainSlice";
 
 const Profile = () => {
-  const { rankScoreData } = useSelector((state) => state.statistics);
-
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(__getAchievementRate());
+  }, []);
+
+  const { achievementRate } = useSelector((state) => state.main);
+  let totalRate = Math.round(achievementRate[1].achievementRate);
+  let totalRate2 = isNaN(totalRate)
+    ? 0
+    : Math.round(achievementRate[1].achievementRate);
+
   const { userInfo, motto } = useSelector((state) => state.my);
   console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
 
@@ -119,9 +128,9 @@ const Profile = () => {
         </StImg>
         <StInfo>
           <p>평균 투두 달성률</p>
-          <p>82.57%</p>
+          <p>{totalRate2} %</p>
           <ProgressBar
-            now={82.57}
+            now={totalRate2}
             style={{
               backgroundColor: "#fff",
               color: "#FF8F27",
