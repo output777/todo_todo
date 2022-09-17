@@ -19,11 +19,16 @@ export default function () {
     <div
       style={{
         fontSize: "10px",
-        margin: "0px auto",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: "12px",
+        width: "90%",
+        height: "25em",
+        margin: "0px auto",
+        backgroundColor: "white",
+        boxShadow: "0px 4px 15px rgba(17, 17, 17, 0.05)",
       }}
     >
       <HeatMap

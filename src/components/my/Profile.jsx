@@ -5,24 +5,29 @@ import { useState } from "react";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getMyInfo, __postProfileImg, __postProfileMoto } from "../../redux/modules/mySlice";
+import {
+  __getMyInfo,
+  __postProfileImg,
+  __postProfileMoto,
+} from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
 
 const Profile = () => {
+  const { rankScoreData } = useSelector((state) => state.statistics);
+
   const dispatch = useDispatch();
   const { userInfo, motto } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo, userInfo?.myMotto, 'motto', motto);
+  console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
 
   const [edit, setEdit] = useState(false);
-  const [motoInput, setMotoInput] = useState('');
+  const [motoInput, setMotoInput] = useState("");
 
   const uploadProfileRef = useRef(null);
   const motoFormRef = useRef(null);
   const motoInputRef = useRef(null);
   const motoRef = useRef(null);
   const motoImgRef = useRef(null);
-
 
   const onClickEditHandler = () => {
     setEdit(true);
@@ -49,40 +54,40 @@ const Profile = () => {
   };
 
   const onClickEditTextHandler = () => {
-    motoFormRef.current.classList.add('show')
+    motoFormRef.current.classList.add("show");
     motoInputRef.current.focus();
-    motoRef.current.classList.remove('show')
-    motoImgRef.current.classList.remove('show')
+    motoRef.current.classList.remove("show");
+    motoImgRef.current.classList.remove("show");
   };
 
   const onChangeMotoInputHandler = (e) => {
     const { value } = e.target;
     setMotoInput(value);
-  }
+  };
 
   const onClickEditTextCancelHandler = (e) => {
     e.stopPropagation();
-    motoFormRef.current.classList.remove('show')
-    motoRef.current.classList.add('show')
-    motoImgRef.current.classList.add('show')
-  }
+    motoFormRef.current.classList.remove("show");
+    motoRef.current.classList.add("show");
+    motoImgRef.current.classList.add("show");
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const newMoto = {
-      myMotto: motoInput
-    }
-    await dispatch(__postProfileMoto(newMoto))
+      myMotto: motoInput,
+    };
+    await dispatch(__postProfileMoto(newMoto));
     await dispatch(__getMyInfo());
-    setMotoInput('');
-    motoFormRef.current.classList.remove('show')
-    motoRef.current.classList.add('show')
-    motoImgRef.current.classList.add('show')
-  }
+    setMotoInput("");
+    motoFormRef.current.classList.remove("show");
+    motoRef.current.classList.add("show");
+    motoImgRef.current.classList.add("show");
+  };
 
   useEffect(() => {
-    setMotoInput(motto)
-  }, [setMotoInput, motto])
+    setMotoInput(motto);
+  }, [setMotoInput, motto]);
 
   useEffect(() => {
     dispatch(__getMyInfo());
@@ -129,20 +134,30 @@ const Profile = () => {
       <StTextBox>
         <p>{userInfo?.nickname}</p>
         {!edit ? (
-          <p className="text show">
-            {motto && motto}
-          </p>
+          <p className="text show">{motto && motto}</p>
         ) : (
           <div className="editText" onClick={onClickEditTextHandler}>
             <form ref={motoFormRef} onSubmit={onSubmitHandler}>
-              <input type='text' ref={motoInputRef} value={motoInput} onChange={onChangeMotoInputHandler} />
-              <button type="button" onClick={onClickEditTextCancelHandler}>✖</button>
-              <button type='submit'>✔</button>
+              <input
+                type="text"
+                ref={motoInputRef}
+                value={motoInput}
+                onChange={onChangeMotoInputHandler}
+              />
+              <button type="button" onClick={onClickEditTextCancelHandler}>
+                ✖
+              </button>
+              <button type="submit">✔</button>
             </form>
             <p className="text show" ref={motoRef}>
               {motto && motto}
             </p>
-            <img className="show" src={logoPencil} alt="editTextImg" ref={motoImgRef} />
+            <img
+              className="show"
+              src={logoPencil}
+              alt="editTextImg"
+              ref={motoImgRef}
+            />
           </div>
         )}
       </StTextBox>
@@ -220,11 +235,14 @@ const StInfo = styled.div`
   width: 168px;
   height: 80px;
   background-color: #ffe9d4;
+
   border-radius: 10px;
   font-size: 0.9rem;
   padding: 0.5rem 0.8rem;
   box-sizing: border-box;
   text-align: right;
+  /* box-shadow: 0px 4px 15px 1px rgba(17, 17, 17, 0.05);*/
+  box-shadow: 0px 4px 15px 0px lightgray;
 
   & p {
     margin: 0;
@@ -248,27 +266,27 @@ const StTextBox = styled.div`
 
   & p.text {
     margin-top: 5px;
-    width:90%;
+    width: 90%;
     font-size: 0.9rem;
     display: none;
   }
 
   & p.text.show {
     margin-top: 5px;
-    width:90%;
+    width: 90%;
     font-size: 0.9rem;
-    display:block;
+    display: block;
   }
 
   & div.editText {
     margin-top: 5px;
     position: relative;
-    height:30px;
+    height: 30px;
     border-bottom: 1px solid #ececec;
     display: flex;
 
     form {
-      width:100%;
+      width: 100%;
       display: none;
     }
 
@@ -276,18 +294,17 @@ const StTextBox = styled.div`
       display: block;
 
       input {
-      border:1px solid red;
-      width:80%;
-      border:none;
-      outline:none;
+        border: 1px solid red;
+        width: 80%;
+        border: none;
+        outline: none;
+      }
     }
-    }
-
 
     button {
-      width:10%;
-      font-size:1rem;
-      border:none;
+      width: 10%;
+      font-size: 1rem;
+      border: none;
       background-color: #fff;
     }
 
@@ -300,7 +317,7 @@ const StTextBox = styled.div`
     img.show {
       width: 20px;
       height: 20px;
-      display:block;
+      display: block;
     }
   }
 `;
@@ -312,6 +329,8 @@ const StBtn = styled.button`
   border-radius: 8px;
   border: none;
   margin: 15px auto 0rem auto;
+  /* box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05); */
+  box-shadow: 0px 4px 15px 0px lightgray;
 `;
 
 export default Profile;

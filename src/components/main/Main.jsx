@@ -22,7 +22,14 @@ const Main = () => {
 
   // -------------------- 소수점 반올림 ---------------------
   let thisMonthRate = Math.round(achievementRate[0].achievementRate);
+  let thisMonthRate2 = isNaN(thisMonthRate)
+    ? 0
+    : Math.round(achievementRate[0].achievementRate);
+
   let totalRate = Math.round(achievementRate[1].achievementRate);
+  let totalRate2 = isNaN(totalRate)
+    ? 0
+    : Math.round(achievementRate[1].achievementRate);
 
   const nickname = localStorage.getItem("nickname");
 
@@ -63,20 +70,20 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate}%</div>
+              <div>{thisMonthRate2} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={thisMonthRate} />
+              <ProgressBar now={thisMonthRate2} />
             </div>
           </StthisMonthGauge>
 
           <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate}%</div>
+              <div>{totalRate2} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={totalRate} />
+              <ProgressBar now={totalRate2} />
             </div>
           </StTotalGauge>
         </StAchievementsBottomBox>

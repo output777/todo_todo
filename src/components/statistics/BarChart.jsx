@@ -9,7 +9,13 @@ const BarChart = () => {
 
   // ---------------- 점수 소수점 반올림 ----------------
   let lastweekScore = Math.round(rankScoreData[0].score);
+  let lastweekScore2 = isNaN(lastweekScore)
+    ? 0
+    : Math.round(rankScoreData[0].score);
   let weeklyScore = Math.round(rankScoreData[1].score);
+  let weeklyScore2 = isNaN(weeklyScore)
+    ? 0
+    : Math.round(rankScoreData[1].score);
   let monthlyScore = Math.round(rankScoreData[2].score);
 
   const options = {
@@ -30,7 +36,7 @@ const BarChart = () => {
       {
         name: "저번주",
         type: "bar",
-        data: [lastweekScore],
+        data: [lastweekScore2],
         color: ["#D7D5D5"],
         stack: "Total",
         label: {
@@ -43,7 +49,7 @@ const BarChart = () => {
       {
         name: "이번주",
         type: "bar",
-        data: [weeklyScore],
+        data: [weeklyScore2],
         color: ["#FF7B00"],
         label: {
           show: true,

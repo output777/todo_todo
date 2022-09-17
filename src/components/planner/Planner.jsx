@@ -28,6 +28,12 @@ import Modal from "../utils/Modal";
 import PlannerCalender from "./PlannerCalender";
 
 const Planner = () => {
+  const { rankScoreData } = useSelector((state) => state.statistics);
+  let weeklyScore = Math.round(rankScoreData[1].score);
+  let weeklyScore2 = isNaN(weeklyScore)
+    ? 0
+    : Math.round(rankScoreData[1].score);
+
   const dispatch = useDispatch();
   const [todo, setTodo] = useState({
     content: "",
@@ -189,11 +195,11 @@ const Planner = () => {
         <StProgressBarDiv>
           <StDivInBox>오늘의 투두 달성률</StDivInBox>
           <StNumberDiv>
-            <div>12/24</div>
-            <div>{(12 / 24) * 100 + "%"}</div>
+            <div></div>
+            <div>{weeklyScore2 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={50} variant='temp' />
+          <ProgressBar now={weeklyScore2} variant="temp" />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StInputContainer>
@@ -207,7 +213,7 @@ const Planner = () => {
             >
               <input
                 onChange={onChangeHandler}
-                placeholder='2-15자 이내로 입력해주세요.'
+                placeholder="2-15자 이내로 입력해주세요."
                 value={todo.content}
               />
               <button
@@ -247,17 +253,17 @@ const Planner = () => {
                     <StInput
                       ref={addTodoInputRefs}
                       onChange={onChangeEditHandler}
-                      placeholder='Enter키로 입력'
+                      placeholder="Enter키로 입력"
                       value={edit.content}
                     />
                     <button
                       ref={addTodoButtonRefs}
-                      type='button'
+                      type="button"
                       onClick={onEditCancleHandler}
                     >
                       취소
                     </button>
-                    <span className='show' ref={addTodoContentRefs}>
+                    <span className="show" ref={addTodoContentRefs}>
                       {todo.content}
                     </span>
                   </form>
@@ -273,10 +279,10 @@ const Planner = () => {
                     closable={true}
                     maskClosable={true}
                     onClose={closeModal}
-                    width='300px'
-                    height='100px'
-                    top='45%'
-                    backgroundcolor='rgba(0, 0, 0, 0.1)'
+                    width="300px"
+                    height="100px"
+                    top="45%"
+                    backgroundcolor="rgba(0, 0, 0, 0.1)"
                   >
                     <StModalEdit onClick={onEditHandler}>수정</StModalEdit>
                     <StModalDelete onClick={onDeleteHandler}>
@@ -299,7 +305,7 @@ const Planner = () => {
                   onClick={() => onCompleteHandler(todo)}
                   id={todo.todoId}
                 />
-                <span className='show'>{todo.content}</span>
+                <span className="show">{todo.content}</span>
               </StTodoLeft>
               <StTodoRightImg src={threeDotDoneSvg} />
             </StTodoDone>
