@@ -22,6 +22,7 @@ import doneSvg from "../../assets/img/doneSvg.svg";
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import threeDotDoneSvg from "../../assets/img/threeDotDoneSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+import logopencil from "../../assets/img/./loginPage/logoPencil.svg";
 
 import PlusButton from "../utils/PlusButton";
 import Modal from "../utils/Modal";
@@ -215,7 +216,7 @@ const Planner = () => {
                   onSubmitHandler(todo);
                 }}
               >
-                작성
+                <img src={logopencil} />
               </button>
             </form>
           </StInputBox>
@@ -306,6 +307,7 @@ const Planner = () => {
           ) : null
         )}
       </StDoneTodosDiv>
+
       <PlusButton onClick={onInputHandler} />
     </StDiv>
   );
@@ -357,7 +359,7 @@ const StAMentionDiv = styled.div`
 `;
 
 const StNothingTodoNoticeDiv = styled.div`
-  width: 60%;
+  width: 70%;
   margin: 10% auto;
   text-align: center;
   color: #9f9e9e;
@@ -494,31 +496,32 @@ const StInputBox = styled.div`
 
   & form input {
     border: 1px solid #e8e8e8;
-    height: 52px;
-    padding: 0 0.5rem;
-    width: 75%;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    box-shadow: 0px 0px 0px 1px lightgray;
+    border-right: none;
+    padding: 0.8rem;
+    width: 90%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     outline: none;
   }
 
   & form input::placeholder {
-    //font-size: 0.9rem;
+    font-size: 0.9rem;
   }
 
   & form button {
-    border: 1px solid #ff7b00;
-    box-shadow: 0px 0px 0px 1px lightgray;
-    //border-left: none;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-
-    height: 52px;
-    width: 25%;
+    border: 1px solid #e8e8e8;
+    border-left: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.8rem 0rem;
+    width: 10%;
     font-size: 0.9rem;
     background-color: #fff;
     color: #ff7b00;
+  }
+  & button img {
+    width: 25px;
+    height: 25px;
   }
 `;
 
@@ -535,15 +538,24 @@ const StModalEdit = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  border-bottom: none;
-  height: 50px;
+  width: 100%;
+  height: 50%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  color: #ff8f27;
 `;
 
 const StModalDelete = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  height: 50px;
+  width: 100%;
+  height: 50%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  color: #ff8f27;
 `;

@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../utils/Modal";
 import Calendar from "../utils/Calendar";
+import moment from "moment";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
 
 const PlannerCalender = () => {
@@ -15,7 +16,7 @@ const PlannerCalender = () => {
   };
   return (
     <StDateDiv>
-      <StSpan>9월 3일 목요일</StSpan>
+      <StSpan>{moment(Date.now()).format("YYYY-MM-DD")}</StSpan>
       <img src={calendarSvg} onClick={openModal} />
       {modalVisible && (
         <Modal
