@@ -34,6 +34,8 @@ const Planner = () => {
     isComplete: false,
   });
 
+  const [edit, setEdit] = useState({ content: "", isComplete: false });
+
   const [input, setInput] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -47,13 +49,21 @@ const Planner = () => {
   todoContentRef.current = [];
   todoButtonRef.current = [];
 
-  console.log("todoInputRef", todoInputRef);
-  console.log("todoContentRef", todoContentRef);
+  // console.log("todoInputRef", todoInputRef);
+  // console.log("todoContentRef", todoContentRef);
 
   const onChangeHandler = useCallback((e) => {
     const { value } = e.target;
     setTodo({
       ...todo,
+      content: value,
+    });
+  }, []);
+
+  const onChangeEditHandler = useCallback((e) => {
+    const { value } = e.target;
+    setEdit({
+      ...edit,
       content: value,
     });
   }, []);
@@ -64,7 +74,6 @@ const Planner = () => {
     setTodo({
       ...todo,
       content: "",
-      isComplete: false,
     });
   }, [todo]);
 
@@ -96,26 +105,9 @@ const Planner = () => {
     todoInputRef.current[index].classList.add("show");
     todoButtonRef.current[index].classList.add("show");
     todoContentRef.current[index].classList.remove("show");
-
+    console.log(index);
     closeModal();
   };
-
-  const onEditSubmitHandler = useCallback(
-    (props) => {
-      dispatch(
-        __updateTodo({
-          ...props,
-          isComplete: props.complete,
-          content: todo.content,
-        })
-      );
-      let index = localStorage.getItem("index");
-      todoInputRef.current[index].classList.remove("show");
-      todoButtonRef.current[index].classList.remove("show");
-      todoContentRef.current[index].classList.add("show");
-    },
-    [todo]
-  );
 
   const onEditCancleHandler = () => {
     let index = localStorage.getItem("index");
@@ -123,6 +115,29 @@ const Planner = () => {
     todoButtonRef.current[index].classList.remove("show");
     todoContentRef.current[index].classList.add("show");
   };
+
+  const onEditSubmitHandler = useCallback(
+    (props) => {
+      const test = {
+        ...props,
+        isComplete: props.complete,
+        content: edit.content,
+      };
+      console.log("test", test);
+      dispatch(__updateTodo(edit));
+      setEdit({
+        ...edit,
+        content: "",
+      });
+      let index = localStorage.getItem("index");
+      todoInputRef.current[index].classList.remove("show");
+      todoButtonRef.current[index].classList.remove("show");
+      todoContentRef.current[index].classList.add("show");
+      console.log(edit.content);
+    },
+
+    [todo]
+  );
 
   const openModal = (e, index) => {
     // console.log(e, index);
@@ -193,6 +208,7 @@ const Planner = () => {
               <input
                 onChange={onChangeHandler}
                 placeholder='2-15자 이내로 입력해주세요.'
+                value={todo.content}
               />
               <button
                 onClick={() => {
@@ -213,7 +229,7 @@ const Planner = () => {
         </StNothingTodoNoticeDiv>
       ) : (
         <StNotDoneTodosDiv>
-          {todos?.map((todo, index) =>
+          {todos?.map((todo, index, edit) =>
             todo.complete === false ? (
               <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
@@ -230,8 +246,9 @@ const Planner = () => {
                   >
                     <StInput
                       ref={addTodoInputRefs}
-                      onChange={onChangeHandler}
+                      onChange={onChangeEditHandler}
                       placeholder='Enter키로 입력'
+                      value={edit.content}
                     />
                     <button
                       ref={addTodoButtonRefs}
@@ -259,7 +276,7 @@ const Planner = () => {
                     width='300px'
                     height='100px'
                     top='45%'
-                    backgroundcolor='rgba(0, 0, 0, 0.2)'
+                    backgroundcolor='rgba(0, 0, 0, 0.1)'
                   >
                     <StModalEdit onClick={onEditHandler}>수정</StModalEdit>
                     <StModalDelete onClick={onDeleteHandler}>
@@ -297,10 +314,8 @@ const Planner = () => {
 export default Planner;
 
 const StDiv = styled.div`
-  position: static;
-  z-index: -1;
   background-color: #fafafa;
-  padding-bottom: 100%;
+  height: 100vh;
 `;
 const StDateDiv = styled.div`
   display: flex;

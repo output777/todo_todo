@@ -99,6 +99,7 @@ export default Calendar;
 const StDiv = styled.div`
   .react-calendar {
     width: 350px;
+
     max-width: 100%;
     background: white;
     border: 1px solid #a0a096;
