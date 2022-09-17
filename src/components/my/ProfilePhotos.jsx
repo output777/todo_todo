@@ -17,8 +17,7 @@ const ProfilePhotos = () => {
   const [imgCount, setImgCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { images, userInfo } = useSelector((state) => state.my);
-  console.log("state", images, userInfo);
+  const { userInfo } = useSelector((state) => state.my);
 
   const onClickFullScreenImgsHandler = () => {
     setFullScreen(true)
@@ -37,7 +36,7 @@ const ProfilePhotos = () => {
     setModalVisible(true);
   }
 
-  const onClickDeleteImgHandler = (e) => {
+  const onClickDeleteImgHandler = () => {
     dispatch(__deleteImages(userInfo.imgList[imgCount].id))
     setFullScreen(false)
     setModalVisible(false);

@@ -12,11 +12,19 @@ const config = {
   },
 };
 
+const configStr = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
+
 const initialState = {
   userInfo: null,
   images: [],
   isLoading: false,
   error: null,
+  motto: null,
 };
 
 export const __getMyInfo = createAsyncThunk(
@@ -38,6 +46,21 @@ export const __postProfileImg = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.post(`${BASE_URL}/image/profile`, payload, config);
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __postProfileMoto = createAsyncThunk(
+  "postProfileMoto",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
+      const data = await axios.post(`${BASE_URL}/motto`, payload, configStr);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -102,6 +125,7 @@ export const mySlice = createSlice({
     [__getMyInfo.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.userInfo = action.payload;
+      state.motto = action.payload.myMotto;
     },
     [__getMyInfo.rejected]: (state, action) => {
       state.isLoading = false;
@@ -119,6 +143,20 @@ export const mySlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    //__postProfileMoto
+    [__postProfileMoto.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__postProfileMoto.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
+      state.motto = state.userInfo.myMotto;
+    },
+    [__postProfileMoto.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__getImages
     [__getImages.pending]: (state) => {
       state.isLoading = true;
     },

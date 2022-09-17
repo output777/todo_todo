@@ -5,24 +5,28 @@ import { useState } from "react";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getMyInfo, __postProfileImg } from "../../redux/modules/mySlice";
+import { __getMyInfo, __postProfileImg, __postProfileMoto } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo);
+  const { userInfo, motto } = useSelector((state) => state.my);
+  console.log("userInfo", userInfo, userInfo?.myMotto, 'motto', motto);
 
   const [edit, setEdit] = useState(false);
-  const [motoEdit, setMotoEdit] = useState(false);
-  const [motoInput, setMotoInput] = useState(userInfo?.myMotto)
+  const [motoInput, setMotoInput] = useState('');
 
   const uploadProfileRef = useRef(null);
+  const motoFormRef = useRef(null);
+  const motoInputRef = useRef(null);
+  const motoRef = useRef(null);
+  const motoImgRef = useRef(null);
 
 
   const onClickEditHandler = () => {
     setEdit(true);
+    setMotoInput(motto);
   };
 
   const onClickCompleteHandler = () => {
@@ -38,9 +42,6 @@ const Profile = () => {
     formData.append("multipartFile", e.target.files[0]);
 
     dispatch(__postProfileImg(formData));
-
-    console.log(e.target.files);
-    console.log(e.target.files[0].name);
   };
 
   const onClickEditProfileImgHandler = () => {
@@ -48,15 +49,40 @@ const Profile = () => {
   };
 
   const onClickEditTextHandler = () => {
-    setMotoEdit(true);
-    console.log('aaa');
+    motoFormRef.current.classList.add('show')
+    motoInputRef.current.focus();
+    motoRef.current.classList.remove('show')
+    motoImgRef.current.classList.remove('show')
   };
 
   const onChangeMotoInputHandler = (e) => {
     const { value } = e.target;
-    console.log('value', value)
     setMotoInput(value);
   }
+
+  const onClickEditTextCancelHandler = (e) => {
+    e.stopPropagation();
+    motoFormRef.current.classList.remove('show')
+    motoRef.current.classList.add('show')
+    motoImgRef.current.classList.add('show')
+  }
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const newMoto = {
+      myMotto: motoInput
+    }
+    await dispatch(__postProfileMoto(newMoto))
+    await dispatch(__getMyInfo());
+    setMotoInput('');
+    motoFormRef.current.classList.remove('show')
+    motoRef.current.classList.add('show')
+    motoImgRef.current.classList.add('show')
+  }
+
+  useEffect(() => {
+    setMotoInput(motto)
+  }, [setMotoInput, motto])
 
   useEffect(() => {
     dispatch(__getMyInfo());
@@ -103,22 +129,20 @@ const Profile = () => {
       <StTextBox>
         <p>{userInfo?.nickname}</p>
         {!edit ? (
-          <p className="text">
-            {userInfo?.myMotto}
+          <p className="text show">
+            {motto && motto}
           </p>
         ) : (
           <div className="editText" onClick={onClickEditTextHandler}>
-            {motoEdit
-              ?
-              <form>
-                <input type='text' value={motoInput} onChange={onChangeMotoInputHandler} />
-              </form>
-              :
-              <p className="text">
-                sss{userInfo?.myMotto}
-              </p>
-            }
-            <img src={logoPencil} alt="editText" />
+            <form ref={motoFormRef} onSubmit={onSubmitHandler}>
+              <input type='text' ref={motoInputRef} value={motoInput} onChange={onChangeMotoInputHandler} />
+              <button type="button" onClick={onClickEditTextCancelHandler}>✖</button>
+              <button type='submit'>✔</button>
+            </form>
+            <p className="text show" ref={motoRef}>
+              {motto && motto}
+            </p>
+            <img className="show" src={logoPencil} alt="editTextImg" ref={motoImgRef} />
           </div>
         )}
       </StTextBox>
@@ -224,26 +248,59 @@ const StTextBox = styled.div`
 
   & p.text {
     margin-top: 5px;
+    width:90%;
     font-size: 0.9rem;
+    display: none;
+  }
+
+  & p.text.show {
+    margin-top: 5px;
+    width:90%;
+    font-size: 0.9rem;
+    display:block;
   }
 
   & div.editText {
     margin-top: 5px;
     position: relative;
-    border:2px solid red;
-    /* border-bottom: 1px solid #ececec; */
+    height:30px;
+    border-bottom: 1px solid #ececec;
     display: flex;
 
-    input {
+    form {
+      width:100%;
+      display: none;
+    }
+
+    form.show {
+      display: block;
+
+      input {
       border:1px solid red;
+      width:80%;
+      border:none;
+      outline:none;
+    }
+    }
+
+
+    button {
+      width:10%;
+      font-size:1rem;
+      border:none;
+      background-color: #fff;
     }
 
     img {
       width: 20px;
       height: 20px;
-      /* position: absolute; */
-      right: 0;
-      top: 20px;
+      display: none;
+    }
+
+    img.show {
+      width: 20px;
+      height: 20px;
+      display:block;
     }
   }
 `;

@@ -4,7 +4,6 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const accessToken = localStorage.getItem("accessToken");
-console.log(accessToken);
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
