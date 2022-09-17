@@ -125,24 +125,18 @@ const Planner = () => {
 
   const onEditSubmitHandler = useCallback(
     (props) => {
-      const test = {
-        ...props,
-        isComplete: props.complete,
-        content: edit.content,
-      };
-      console.log("test", test);
-      dispatch(__updateTodo(edit));
-      setEdit({
-        ...edit,
-        content: "",
-      });
+      dispatch(
+        __updateTodo({
+          ...props,
+          isComplete: props.complete,
+          content: todo.content,
+        })
+      );
       let index = localStorage.getItem("index");
       todoInputRef.current[index].classList.remove("show");
       todoButtonRef.current[index].classList.remove("show");
       todoContentRef.current[index].classList.add("show");
-      console.log(edit.content);
     },
-
     [todo]
   );
 
@@ -200,7 +194,7 @@ const Planner = () => {
             <div>{weeklyScore2 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={weeklyScore2} variant="temp" />
+          <ProgressBar now={weeklyScore2} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StInputContainer>
@@ -214,7 +208,7 @@ const Planner = () => {
             >
               <input
                 onChange={onChangeHandler}
-                placeholder="2-15자 이내로 입력해주세요."
+                placeholder='2-15자 이내로 입력해주세요.'
                 value={todo.content}
               />
               <button
@@ -236,7 +230,7 @@ const Planner = () => {
         </StNothingTodoNoticeDiv>
       ) : (
         <StNotDoneTodosDiv>
-          {todos?.map((todo, index, edit) =>
+          {todos?.map((todo, index) =>
             todo.complete === false ? (
               <StTodoNotDone key={todo.todoId}>
                 <StTodoLeft>
@@ -253,18 +247,17 @@ const Planner = () => {
                   >
                     <StInput
                       ref={addTodoInputRefs}
-                      onChange={onChangeEditHandler}
-                      placeholder="Enter키로 입력"
-                      value={edit.content}
+                      onChange={onChangeHandler}
+                      placeholder='Enter키로 입력'
                     />
                     <button
                       ref={addTodoButtonRefs}
-                      type="button"
+                      type='button'
                       onClick={onEditCancleHandler}
                     >
                       취소
                     </button>
-                    <span className="show" ref={addTodoContentRefs}>
+                    <span className='show' ref={addTodoContentRefs}>
                       {todo.content}
                     </span>
                   </form>
@@ -280,10 +273,10 @@ const Planner = () => {
                     closable={true}
                     maskClosable={true}
                     onClose={closeModal}
-                    width="300px"
-                    height="100px"
-                    top="45%"
-                    backgroundcolor="rgba(0, 0, 0, 0.1)"
+                    width='300px'
+                    height='100px'
+                    top='45%'
+                    backgroundcolor='rgba(0, 0, 0, 0.1)'
                   >
                     <StModalEdit onClick={onEditHandler}>수정</StModalEdit>
                     <StModalDelete onClick={onDeleteHandler}>
@@ -306,7 +299,7 @@ const Planner = () => {
                   onClick={() => onCompleteHandler(todo)}
                   id={todo.todoId}
                 />
-                <span className="show">{todo.content}</span>
+                <span className='show'>{todo.content}</span>
               </StTodoLeft>
               <StTodoRightImg src={threeDotDoneSvg} />
             </StTodoDone>
@@ -324,7 +317,7 @@ export default Planner;
 const StDiv = styled.div`
   background-color: #fafafa;
   height: 100vh;
-  font-family: 'SUIT-Regular', sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
 `;
 const StDateDiv = styled.div`
   display: flex;
