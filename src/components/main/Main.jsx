@@ -60,11 +60,18 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <span>투두투두</span>
-        <div>
-          {nickname == null || nickname == "null"
-            ? "닉네임을 설정해주세요^^"
-            : `${nickname}님, 오늘 하루도 힘내세요!`}
+        <div className="temp0">
+          <span>투두투두</span>
+          <div className="temp1">
+            {nickname == null || nickname == "null"
+              ? "닉네임을 설정해주세요^^"
+              : `${nickname}님, 오늘 하루도 힘내세요!`}
+          </div>
+        </div>
+
+        <div className="temp2">
+          수능 <br />
+          D-100
         </div>
       </StPhrasesbox>
       <StAchievementsBox>
@@ -192,11 +199,34 @@ const StPhrasesbox = styled.div`
     font-weight: bold;
     font-size: 1rem;
   }
-  div {
-    margin-top: 5px;
+
+  .temp0 {
+    margin-top: 0.7em;
+  }
+  .temp1 {
+    margin-top: 0.3em;
     font-weight: bold;
     font-size: 1.2rem;
   }
+
+  .temp2 {
+    margin-top: 0.7em;
+    height: 80%;
+    width: 25%;
+    box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
+    border-radius: 20px;
+    font-weight: bold;
+    color: #ff7b00;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const StAchievementsBox = styled.div`
