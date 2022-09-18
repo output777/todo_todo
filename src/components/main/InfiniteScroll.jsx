@@ -50,7 +50,7 @@ const InfiniteScroll = () => {
             </div>
           </div>
 
-          <StRankingScore>30000</StRankingScore>
+          <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}>{error}</StRefDiv>
@@ -61,10 +61,10 @@ const InfiniteScroll = () => {
 export default InfiniteScroll;
 
 const Stdiv = styled.div`
-  /* background-color: gray; */
   background-color: #fafafa;
-  height: 35vh;
-  overflow: scroll;
+  /* background-color: gray; */
+  /* height: 35vh; */
+  /* overflow: scroll; */
 `;
 const StRefDiv = styled.div`
   height: 50px;
