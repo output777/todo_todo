@@ -9,17 +9,19 @@ import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const InfiniteScrollSchoolRank = () => {
-  const { mainRankListMonthly } = useSelector((state) => state.main);
+  const { mainRankListSchool } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
 
+  console.log("mainRankListSchool", mainRankListSchool);
+
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
-        // dispatch(__getMainRankSchool(page));
+        dispatch(__getMainRankSchool(page));
 
         observer.unobserve(entry.target);
         setPage((prev) => prev + 1);
@@ -36,11 +38,11 @@ const InfiniteScrollSchoolRank = () => {
       });
       observer.observe(targetRef.current);
     }
-  }, [mainRankListMonthly]);
+  }, [mainRankListSchool]);
 
   return (
     <Stdiv>
-      {mainRankListMonthly.map((each) => (
+      {mainRankListSchool.map((each) => (
         <StRankingBox key={each.id}>
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>

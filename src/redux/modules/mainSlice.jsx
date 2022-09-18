@@ -62,7 +62,24 @@ export const __getMainRankMonthly = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-      // const data = await axios.get(`http://localhost:3001/test${payload}`);
+      const data = await axios.get(
+        `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
+        payload,
+        config
+      );
+      console.log("data.data.content", data.data.content);
+      return thunkAPI.fulfillWithValue(data.data.content);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getMainRankSchool = createAsyncThunk(
+  "getMainRankSchool",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
       const data = await axios.get(
         `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
         payload,
@@ -102,6 +119,7 @@ export const mainSlice = createSlice({
       state.isLoading = false;
       state.mainRankList.push(...action.payload);
       state.mainRankListMonthly = [];
+      state.mainRankListSchool = [];
     },
     [__getMainRank.rejected]: (state, action) => {
       state.isLoading = false;
@@ -116,8 +134,25 @@ export const mainSlice = createSlice({
       state.isLoading = false;
       state.mainRankListMonthly.push(...action.payload);
       state.mainRankList = [];
+      state.mainRankListSchool = [];
     },
     [__getMainRankMonthly.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log("rejected action", action);
+      state.error = action.payload.message;
+    },
+
+    [__getMainRankSchool.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getMainRankSchool.fulfilled]: (state, action) => {
+      console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.mainRankListSchool.push(...action.payload);
+      state.mainRankList = [];
+      state.mainRankListMonthly = [];
+    },
+    [__getMainRankSchool.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
       state.error = action.payload.message;

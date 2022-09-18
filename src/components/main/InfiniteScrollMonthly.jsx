@@ -13,6 +13,8 @@ const InfiniteScrollMonthly = () => {
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
 
+  console.log("mainRankListMonthly", mainRankListMonthly);
+
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
@@ -35,7 +37,6 @@ const InfiniteScrollMonthly = () => {
     }
   }, [mainRankListMonthly]);
 
-  console.log("mainRankListMonthly", mainRankListMonthly);
   return (
     <Stdiv>
       {mainRankListMonthly.map((each) => (
