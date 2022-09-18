@@ -177,12 +177,11 @@ const ProfileInfo = () => {
     const newUserInfoRegister = {
       nickname: nickname,
       highschool: highschoolInput,
-      grade: grade
-    }
-    dispatch(__userInfoRegister(newUserInfoRegister))
+      grade: grade,
+    };
+    dispatch(__userInfoRegister(newUserInfoRegister));
     navigate("/");
-  }
-
+  };
 
   useEffect(() => {
     getHighschool();
@@ -194,7 +193,7 @@ const ProfileInfo = () => {
         padding: "1rem 1rem 0.5rem 1rem",
         height: "100%",
         background: "#fff",
-        fontFamily: 'SUIT-Regular, sans-serif'
+        fontFamily: "SUIT-Regular, sans-serif",
       }}
     >
       <StInfoTitle>
@@ -260,23 +259,23 @@ const ProfileInfo = () => {
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
           ? highschoolResult &&
-          highschoolResult.map((data, index) => (
-            <div className="content" key={index}>
-              <div className="school" onClick={onClickSelectHandler}>
-                {data.school}
+            highschoolResult.map((data, index) => (
+              <div className="content" key={index}>
+                <div className="school" onClick={onClickSelectHandler}>
+                  {data.school}
+                </div>
+                <div className="region">
+                  <img src={regionSvg} />
+                  {data.adres}
+                </div>
               </div>
-              <div className="region">
-                <img src={regionSvg} />
-                {data.adres}
-              </div>
-            </div>
-          ))
+            ))
           : null}
       </StHighschoolSearchBox>
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
         <button>투두투두 시작하기!</button>
       </StBtnBox>
-    </div >
+    </div>
   );
 };
 

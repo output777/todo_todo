@@ -157,54 +157,58 @@ const Main = () => {
         </Modal>
       )}
 
-      <StRankingPhrases>
-        <img src={trophy} />
-        <span>랭킹</span>
-        <img src={info} onClick={openModal} />
-      </StRankingPhrases>
+      {/* -------------------- 랭킹 --------------------*/}
+      <div className="rank">
+        <StRankingPhrases>
+          <img src={trophy} />
+          <span>랭킹</span>
+          <img src={info} onClick={openModal} />
+        </StRankingPhrases>
 
-      <StRankingBtnBox>
+        <StRankingBtnBox>
+          {weekly ? (
+            <StWeeklyRankingBtn onClick={onClickWeekly}>
+              <span>주간 랭킹</span>
+            </StWeeklyRankingBtn>
+          ) : (
+            <StWeeklyRankingBtn2nd onClick={onClickWeekly}>
+              <span>주간 랭킹</span>
+            </StWeeklyRankingBtn2nd>
+          )}
+          {month ? (
+            <StMonthRankingBtn onClick={onClickMonth}>
+              <span>월간 랭킹</span>
+            </StMonthRankingBtn>
+          ) : (
+            <StMonthRankingBtn2nd onClick={onClickMonth}>
+              <span>월간 랭킹</span>
+            </StMonthRankingBtn2nd>
+          )}
+          {school ? (
+            <StMonthRankingBtn onClick={onClickSchoolRank}>
+              <span>학교 랭킹</span>
+            </StMonthRankingBtn>
+          ) : (
+            <StMonthRankingBtn2nd onClick={onClickSchoolRank}>
+              <span>학교 랭킹</span>
+            </StMonthRankingBtn2nd>
+          )}
+        </StRankingBtnBox>
+
         {weekly ? (
-          <StWeeklyRankingBtn onClick={onClickWeekly}>
-            <span>주간 랭킹</span>
-          </StWeeklyRankingBtn>
+          <>
+            <InfiniteScroll />
+          </>
+        ) : month ? (
+          <>
+            <InfiniteScrollMonthly />
+          </>
         ) : (
-          <StWeeklyRankingBtn2nd onClick={onClickWeekly}>
-            <span>주간 랭킹</span>
-          </StWeeklyRankingBtn2nd>
+          <>
+            <InfiniteScrollSchoolRank />
+          </>
         )}
-        {month ? (
-          <StMonthRankingBtn onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn>
-        ) : (
-          <StMonthRankingBtn2nd onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn2nd>
-        )}
-        {school ? (
-          <StMonthRankingBtn onClick={onClickSchoolRank}>
-            <span>학교 랭킹</span>
-          </StMonthRankingBtn>
-        ) : (
-          <StMonthRankingBtn2nd onClick={onClickSchoolRank}>
-            <span>학교 랭킹</span>
-          </StMonthRankingBtn2nd>
-        )}
-      </StRankingBtnBox>
-      {weekly ? (
-        <>
-          <InfiniteScroll />
-        </>
-      ) : month ? (
-        <>
-          <InfiniteScrollMonthly />
-        </>
-      ) : (
-        <>
-          <InfiniteScrollSchoolRank />
-        </>
-      )}
+      </div>
     </StMainContainer>
   );
 };
@@ -215,6 +219,9 @@ const StMainContainer = styled.div`
   background-color: #fafafa;
   height: 95vh;
   font-family: "SUIT-Regular", sans-serif;
+  .rank {
+    position: sticky;
+  }
 `;
 
 const StPhrasesbox = styled.div`
@@ -343,21 +350,30 @@ const StGaugeText = styled.div`
 `;
 
 const StRankingPhrases = styled.div`
-  margin: 0 0 0 1.5em;
   span {
     margin-left: 7px;
     margin-right: 7px;
     font-weight: 600;
     font-size: 20px;
+    background-color: #fafafa;
   }
   img {
     margin-bottom: 7px;
+    background-color: #fafafa;
   }
+  position: sticky;
+  top: 0;
+  background-color: #fafafa;
+  padding: 1em 0 0 1.5em;
 `;
 
 const StRankingBtnBox = styled.div`
-  margin: 0 0 1em 1.5em;
   font-weight: 600;
+
+  background-color: #fafafa;
+  padding: 0.1em 0em 1em 1.5em;
+  position: sticky;
+  top: 2.6em;
 `;
 
 const StWeeklyRankingBtn = styled.button`
