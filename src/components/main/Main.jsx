@@ -241,6 +241,7 @@ const StPhrasesbox = styled.div`
     margin-top: 0.7em;
     height: 80%;
     width: 25%;
+    background-color: white;
     box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
     border-radius: 20px;
     font-weight: bold;
