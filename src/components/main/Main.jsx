@@ -69,16 +69,16 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="temp0">
+        <div className="mainTopSentenceBox">
           <span>투두투두</span>
-          <div className="temp1">
+          <div className="mainTopSentence">
             {nickname == null || nickname == "null"
               ? "닉네임을 설정해주세요^^"
               : `${nickname}님, 오늘 하루도 힘내세요!`}
           </div>
         </div>
 
-        <div className="temp2">
+        <div className="DdayBox">
           수능 <br />
           D-100
         </div>
@@ -228,16 +228,16 @@ const StPhrasesbox = styled.div`
     font-size: 1rem;
   }
 
-  .temp0 {
+  .mainTopSentenceBox {
     margin-top: 0.7em;
   }
-  .temp1 {
+  .mainTopSentence {
     margin-top: 0.3em;
     font-weight: bold;
     font-size: 1.2rem;
   }
 
-  .temp2 {
+  .DdayBox {
     margin-top: 0.7em;
     height: 80%;
     width: 25%;
