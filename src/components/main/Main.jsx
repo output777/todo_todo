@@ -360,17 +360,17 @@ const StRankingBtnBox = styled.div`
   font-weight: 600;
 `;
 
-const StMonthRankingBtn = styled.button`
+const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-  margin: 10px 0 0 2%;
-  background: #ffe9d5;
+
+  background: #ff8f27;
 
   border: 1px solid #ff8f27;
   border-radius: 44px;
 
   span {
-    color: #ff7b00;
+    color: white;
     font-size: 14px;
   }
 `;
@@ -389,18 +389,17 @@ const StMonthRankingBtn2nd = styled.button`
     font-size: 14px;
   }
 `;
-
-const StWeeklyRankingBtn = styled.button`
+const StMonthRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-
-  background: #ffe9d5;
+  margin: 10px 0 0 2%;
+  background: #ff8f27;
 
   border: 1px solid #ff8f27;
   border-radius: 44px;
 
   span {
-    color: #ff7b00;
+    color: white;
     font-size: 14px;
   }
 `;
