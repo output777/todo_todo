@@ -9,6 +9,7 @@ import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 import { __getAchievementRate } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
+import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -17,8 +18,8 @@ import { __getMyInfo } from "../../redux/modules/mySlice";
 const Main = () => {
   const dispatch = useDispatch();
   const { achievementRate } = useSelector((state) => state.main);
-  const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
+  const [month, setMonth] = useState(false);
   const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -35,14 +36,22 @@ const Main = () => {
 
   const nickname = localStorage.getItem("nickname");
 
-  const onClickMonth = () => {
-    setMonth(true);
-    setWeekly(false);
+  const onClickWeekly = () => {
+    setWeekly(true);
+    setMonth(false);
+    setSchool(false);
   };
 
-  const onClickWeekly = () => {
+  const onClickMonth = () => {
+    setWeekly(false);
+    setMonth(true);
+    setSchool(false);
+  };
+
+  const onClickSchoolRank = () => {
+    setWeekly(false);
     setMonth(false);
-    setWeekly(true);
+    setSchool(true);
   };
 
   const openModal = () => {
@@ -173,10 +182,29 @@ const Main = () => {
             <span>월간 랭킹</span>
           </StMonthRankingBtn2nd>
         )}
+        {school ? (
+          <StMonthRankingBtn onClick={onClickSchoolRank}>
+            <span>학교 랭킹</span>
+          </StMonthRankingBtn>
+        ) : (
+          <StMonthRankingBtn2nd onClick={onClickSchoolRank}>
+            <span>학교 랭킹</span>
+          </StMonthRankingBtn2nd>
+        )}
       </StRankingBtnBox>
-      {weekly ? <InfiniteScroll /> : <InfiniteScrollMonthly />}
-      {/* <StScrollDiv>
-      </StScrollDiv> */}
+      {weekly ? (
+        <>
+          <InfiniteScroll />
+        </>
+      ) : month ? (
+        <>
+          <InfiniteScrollMonthly />
+        </>
+      ) : (
+        <>
+          <InfiniteScrollSchoolRank />
+        </>
+      )}
     </StMainContainer>
   );
 };

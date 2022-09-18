@@ -14,6 +14,7 @@ const initialState = {
   achievementRate: [{}, {}],
   mainRankList: [],
   mainRankListMonthly: [],
+  mainRankListSchool: [],
   isLoading: false,
   error: null,
 };
@@ -97,7 +98,7 @@ export const mainSlice = createSlice({
       state.isLoading = true;
     },
     [__getMainRank.fulfilled]: (state, action) => {
-      // console.log("action.payload", action.payload);
+      console.log("action.payload", action.payload);
       state.isLoading = false;
       state.mainRankList.push(...action.payload);
       state.mainRankListMonthly = [];
@@ -111,7 +112,7 @@ export const mainSlice = createSlice({
       state.isLoading = true;
     },
     [__getMainRankMonthly.fulfilled]: (state, action) => {
-      // console.log("action.payload", action.payload);
+      console.log("action.payload", action.payload);
       state.isLoading = false;
       state.mainRankListMonthly.push(...action.payload);
       state.mainRankList = [];
