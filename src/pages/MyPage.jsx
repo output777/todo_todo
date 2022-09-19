@@ -20,7 +20,7 @@ const MyPage = () => {
 const StContainer = styled.div`
   height: 90vh;
   position: relative;
-  font-family: 'SUIT-Regular', sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
 `;
 
 export default MyPage;

@@ -72,9 +72,11 @@ const Main = () => {
         <div className="mainTopSentenceBox">
           <span>투두투두</span>
           <div className="mainTopSentence">
-            {nickname == null || nickname == "null"
-              ? "닉네임을 설정해주세요^^"
-              : `${nickname}님, 오늘 하루도 힘내세요!`}
+            {nickname == null || nickname == "null" ? (
+              "닉네임을 설정해주세요^^"
+            ) : (
+              <>{nickname}님, 오늘 하루도 힘내세요!</>
+            )}
           </div>
         </div>
 
@@ -219,9 +221,6 @@ const StMainContainer = styled.div`
   background-color: #fafafa;
   height: 95vh;
   font-family: "SUIT-Regular", sans-serif;
-  .rank {
-    position: sticky;
-  }
 `;
 
 const StPhrasesbox = styled.div`
@@ -241,7 +240,7 @@ const StPhrasesbox = styled.div`
   .mainTopSentence {
     margin-top: 0.3em;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .DdayBox {
