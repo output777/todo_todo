@@ -1,5 +1,5 @@
 import axios from "axios";
-import { debounce, escapeRegExp } from "lodash";
+import { debounce, escapeRegExp, set } from "lodash";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
@@ -17,7 +17,7 @@ import InfiniteScrollSearch from "./InfiniteScrollSearch";
 const ProfileInfoCopy = () => {
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(1); // 페이지
+  const [page, setPage] = useState(0); // 페이지
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,26 +100,33 @@ const ProfileInfoCopy = () => {
 
   const checkIntersect = useCallback(
     async ([entry], observer) => {
-      if (entry.isIntersecting) {
+      if (true) {
+        console.log("highschoolInput2", highschoolInput);
         const data = await axios.get(
-          `${BASE_URL}/school?search=${highschoolInput}&page=${page}&size=${5}`,
-          config
+          `${BASE_URL}/school?search=${highschoolInput}&page=${page}&size=${5}`
         );
-        console.log(data.dataSearch.content);
-        setHighschools([...data.dataSearch.content]);
 
-        observer.unobserve(entry.target);
-        setPage((prev) => prev + 1);
+        setHighschools([...data.data.content]);
+        setHighschoolResult([...data.data.content]);
+        setPage(0);
+        if (entry.isIntersecting) {
+          // setPage((prev) => prev + 1);
+          observer.unobserve(entry.target);
+        }
+        console.log(page);
       }
     },
-    [dispatch, page]
+    [dispatch, highschoolInput]
   );
+
+  console.log("highschools", highschools);
+  console.log("highschoolResult", highschoolResult);
 
   useEffect(() => {
     let observer;
     if (targetRef) {
       observer = new IntersectionObserver(checkIntersect, {
-        threshold: 0.5,
+        threshold: 0.7,
       });
       observer.observe(targetRef.current);
     }
@@ -142,24 +149,24 @@ const ProfileInfoCopy = () => {
       return `[\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     }
 
-    if (/[ㄱ-ㅎ]/.test(ch)) {
-      const con2syl = {
-        ㄱ: "가".charCodeAt(0),
-        ㄲ: "까".charCodeAt(0),
-        ㄴ: "나".charCodeAt(0),
-        ㄷ: "다".charCodeAt(0),
-        ㄸ: "따".charCodeAt(0),
-        ㄹ: "라".charCodeAt(0),
-        ㅁ: "마".charCodeAt(0),
-        ㅂ: "바".charCodeAt(0),
-        ㅃ: "빠".charCodeAt(0),
-        ㅅ: "사".charCodeAt(0),
-      };
-      const begin =
-        con2syl[ch] || (ch.charCodeAt(0) - 12613) * 588 + con2syl["ㅅ"];
-      const end = begin + 587;
-      return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
-    }
+    // if (/[ㄱ-ㅎ]/.test(ch)) {
+    //   const con2syl = {
+    //     ㄱ: "가".charCodeAt(0),
+    //     ㄲ: "까".charCodeAt(0),
+    //     ㄴ: "나".charCodeAt(0),
+    //     ㄷ: "다".charCodeAt(0),
+    //     ㄸ: "따".charCodeAt(0),
+    //     ㄹ: "라".charCodeAt(0),
+    //     ㅁ: "마".charCodeAt(0),
+    //     ㅂ: "바".charCodeAt(0),
+    //     ㅃ: "빠".charCodeAt(0),
+    //     ㅅ: "사".charCodeAt(0),
+    //   };
+    //   const begin =
+    //     con2syl[ch] || (ch.charCodeAt(0) - 12613) * 588 + con2syl["ㅅ"];
+    //   const end = begin + 587;
+    // return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
+    // }
     return escapeRegExp(ch);
   };
 
@@ -275,13 +282,13 @@ const ProfileInfoCopy = () => {
           )}
         </div>
       </StHighschoolBox>
-      <StHighschoolSearchBox>
+      <StHighschoolSearchBox className="scroll">
         {highschoolInput.length > 0
           ? highschoolResult &&
             highschoolResult.map((data, index) => (
               <div className="content" key={index}>
                 <div className="school" onClick={onClickSelectHandler}>
-                  {data.school}
+                  {data.schoolName}
                 </div>
                 <div className="region">
                   <img src={regionSvg} />
@@ -292,6 +299,7 @@ const ProfileInfoCopy = () => {
           : null}
         <StRefDiv ref={targetRef}>temp</StRefDiv>
       </StHighschoolSearchBox>
+
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
         <button>투두투두 시작하기!</button>
       </StBtnBox>
@@ -305,6 +313,7 @@ const StRefDiv = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background-color: red;
 `;
 
 const StInfoTitle = styled.div`
@@ -466,11 +475,12 @@ const StHighschoolSearchBox = styled.div`
   background-color: #fafafa;
   overflow-y: scroll;
   border-radius: 10px;
-  height: 40%;
+  height: 50%;
 
   & .content {
     align-items: center;
     padding: 0.5rem 1rem;
+    margin-bottom: 20px;
 
     .school {
       font-size: 1rem;
