@@ -102,7 +102,7 @@ export const __postImages = createAsyncThunk(
 export const __deleteImages = createAsyncThunk(
   "deleteImages",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
+    console.log("payload", payload, typeof payload);
     try {
       const data = await axios.delete(`${BASE_URL}/image/boast/${payload}`, config);
       console.log("data", data);
@@ -186,7 +186,7 @@ export const mySlice = createSlice({
     [__deleteImages.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log(action.payload);
-      state.userInfo.imgList = state.userInfo.imgList.filter((data) => data.id !== action.payload);
+      state.userInfo.imgList = state.userInfo.imgList.filter((data) => data.id !== Number(action.payload));
     },
     [__deleteImages.rejected]: (state, action) => {
       state.isLoading = false;

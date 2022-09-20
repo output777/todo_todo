@@ -6,9 +6,9 @@ import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const InfiniteScroll = () => {
+  const dispatch = useDispatch();
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-  const dispatch = useDispatch();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
@@ -25,8 +25,11 @@ const InfiniteScroll = () => {
     [dispatch, isLoaded, page]
   );
 
+
   useEffect(() => {
     let observer;
+    console.log('observer', observer)
+    console.log('targetRef', targetRef, Boolean(targetRef))
     if (targetRef) {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,

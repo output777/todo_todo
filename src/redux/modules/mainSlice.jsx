@@ -42,12 +42,15 @@ export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
+
     try {
       const data = await axios.get(
         `${BASE_URL}/rank/weekly?page=${payload}&size=${3}`,
-        payload,
+        // payload,
         config
       );
+
+      console.log("data.data", data.data);
       console.log("data.data.content", data.data.content);
       return thunkAPI.fulfillWithValue(data.data.content);
     } catch (error) {
@@ -64,7 +67,7 @@ export const __getMainRankMonthly = createAsyncThunk(
       // const data = await axios.get(`http://localhost:3001/test${payload}`);
       const data = await axios.get(
         `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
-        payload,
+        // payload,
         config
       );
       console.log("data.data.content", data.data.content);
@@ -99,7 +102,7 @@ export const mainSlice = createSlice({
     [__getMainRank.fulfilled]: (state, action) => {
       // console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.mainRankList.push(...action.payload);
+      state.mainRankList.push(...action.payload)
       state.mainRankListMonthly = [];
     },
     [__getMainRank.rejected]: (state, action) => {
