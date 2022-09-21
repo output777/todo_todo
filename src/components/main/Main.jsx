@@ -7,6 +7,7 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
+import Dday from "./Dday";
 import { __getAchievementRate } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
@@ -17,6 +18,7 @@ import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
   const dispatch = useDispatch();
+
   const { thisMonthRate, totalRate } = useSelector((state) => state.main);
   console.log("thisMonthRate", thisMonthRate, "totalRate", totalRate);
   const [month, setMonth] = useState(false);
@@ -63,29 +65,19 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // dispatch(__getMyInfo());
     dispatch(__getAchievementRate());
   }, []);
 
   return (
     <StMainContainer>
-      <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+      <StPhrasesBox>
+        <StLogoDdayBox>
           <span>투두투두</span>
-          <div className="mainTopSentence">
-            {nickname == null || nickname == "null" ? (
-              "닉네임을 설정해주세요^^"
-            ) : (
-              <>{nickname}님, 오늘 하루도 힘내세요!</>
-            )}
-          </div>
-        </div>
-
-        <div className="DdayBox">
-          수능 <br />
-          D-100
-        </div>
-      </StPhrasesbox>
+          <Dday />
+        </StLogoDdayBox>
+        <div>{nickname}님, </div>
+        <div>오늘 하루도 힘내세요!</div>
+      </StPhrasesBox>
       <StAchievementsBox>
         <StAchievementsTopBox>
           <div>
@@ -116,28 +108,42 @@ const Main = () => {
           </StTotalGauge>
         </StAchievementsBottomBox>
       </StAchievementsBox>
+      <StRankingPhrases>
+        <img src={trophy} />
+        <span>랭킹</span>
+        <img src={info} onClick={openModal} />
 
-      {/* -------------- 모달창 ---------------*/}
-      {modalVisible && (
-        <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width="350px"
-          height="330px"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(31, 31, 31, 0.116)"
-        >
-          <StModalTop>
-            <span>랭킹 시스템이란?</span>
-          </StModalTop>
+        {/* -------------- 모달창 ---------------*/}
+        {modalVisible && (
+          <Modal
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={closeModal}
+            width='350px'
+            height='330px'
+            radius='48px'
+            top='45%'
+            backgroundcolor='rgba(31, 31, 31, 0.116)'
+          >
+            <StModalTop>
+              <span>랭킹 시스템이란?</span>
+            </StModalTop>
 
-          <StModalBottom>
-            <StModalExplainTop>
-              <img src={trophy} />
-              <span>실시간 랭킹</span>
+            <StModalBottom>
+              <StModalExplainTop>
+                <img src={trophy} />
+                <span>실시간 랭킹</span>
+                <div>
+                  실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                  랭킹은 매달 며칠에
+                </div>
+              </StModalExplainTop>
+
+              <StModalExplainBottom>
+                <img src={trophy} />
+                <span>주간 랭킹</span>
+              </StModalExplainBottom>
               <div>
                 실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
                 랭킹은 매달 며칠에
@@ -224,7 +230,7 @@ const StMainContainer = styled.div`
   font-family: "SUIT-Regular", sans-serif;
 `;
 
-const StPhrasesbox = styled.div`
+const StPhrasesBox = styled.div`
   height: 10vh;
   width: 90%;
   margin: auto;
@@ -265,9 +271,14 @@ const StPhrasesbox = styled.div`
   justify-content: space-between;
 `;
 
+const StLogoDdayBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 5% auto;
+  margin: 50px 5% 20px 5%;
   height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
@@ -350,6 +361,11 @@ const StGaugeText = styled.div`
 `;
 
 const StRankingPhrases = styled.div`
+
+  /* margin: 0 0 0 1.5em; */
+  width: 90%;
+  margin: auto;
+  
   span {
     margin-left: 7px;
     margin-right: 7px;
@@ -368,6 +384,11 @@ const StRankingPhrases = styled.div`
 `;
 
 const StRankingBtnBox = styled.div`
+
+  /* margin: 0 0 1em 1.5em; */
+  width: 90%;
+  margin: auto;
+
   font-weight: 600;
 
   background-color: #fafafa;

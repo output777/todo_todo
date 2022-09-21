@@ -3,9 +3,13 @@ import styled from "styled-components";
 import Modal from "../utils/Modal";
 import Calendar from "../utils/Calendar";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
+import dayjs from "dayjs";
 
 const MypageCalender = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [calenderdate, setCalenderdate] = useState(
+    dayjs(Date.now()).format("YYYY-MM-DD")
+  );
 
   const openModal = () => {
     setModalVisible(true);
@@ -15,7 +19,7 @@ const MypageCalender = () => {
   };
   return (
     <StDateDiv>
-      <StSpan>9월 3일 목요일</StSpan>
+      <StSpan>{dayjs(calenderdate).format("YYYY-MM-DD")}</StSpan>
       <img src={calendarSvg} onClick={openModal} />
       {modalVisible && (
         <Modal
@@ -24,9 +28,9 @@ const MypageCalender = () => {
           maskClosable={true}
           onClose={closeModal}
           width='350px'
-          top='30%'
+          top='20%'
         >
-          <Calendar />
+          <Calendar setCalenderdate={setCalenderdate} />
         </Modal>
       )}
     </StDateDiv>
