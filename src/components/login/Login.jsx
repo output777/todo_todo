@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import logo from "../../assets/img/loginPage/logo.svg";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
-import Phrases from "../../assets/img/loginPage/Phrases.svg";
 import Naver from "./Naver";
 import "bootstrap/dist/css/bootstrap.min.css";
 import kakaoUnion from "../../assets/img/loginPage/kakaoUnion.svg";
@@ -26,11 +25,10 @@ const Login = () => {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${GOOGLE_REST_API_KEY}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile%20openid&access_type=offline&flowName=GeneralOAuthFlow`;
   };
 
-
   return (
     <StLoginContainer>
       {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
-      <StPhrases src={Phrases} />
+      <StPhrases>고등학생을 위한 투두리스트,</StPhrases>
       <StLogobox>
         <StLogo src={logo} />
         <StLogoPencil src={logoPencil} />
@@ -57,7 +55,7 @@ const StLoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'SUIT-Regular', sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
 `;
 
 const StLogobox = styled.div``;
@@ -77,11 +75,13 @@ const StLogoPencil = styled.img`
   left: 20px;
   bottom: 10px;
 `;
-const StPhrases = styled.img`
-  width: 175px;
-  height: 175px;
-  position: relative;
-  top: 50px;
+const StPhrases = styled.div`
+  width: 180px;
+  height: 20px;
+  margin-top: 180px;
+  margin-bottom: 16px;
+  /* position: relative;
+  top: 150px; */
 `;
 const StLoginBtnbox = styled.div`
   margin-top: 100px;

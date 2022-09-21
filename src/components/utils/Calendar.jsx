@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import moment from "moment";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
 
-const Calendar = () => {
+const Calendar = (props) => {
   const dispatch = useDispatch();
 
   const marks = [
@@ -29,7 +29,9 @@ const Calendar = () => {
     dispatch(__getTodo(date));
   };
 
-  console.log(moment(date).format("YYYY-MM-DD"));
+  console.log(dayjs(date).format("YYYY-MM-DD"));
+
+  props.setCalenderdate(date);
   return (
     <StDiv>
       <ReactCalendar
@@ -37,13 +39,13 @@ const Calendar = () => {
         onClickDay={selectDate}
         value={date}
         locale='Korean'
-        formatDay={(locale, date) => moment(date).format("DD")}
+        formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'
         tileClassName={({ date, view }) => {
           if (
             marks.find((x) => {
               if (
-                x.addDate === moment(date).format("YYYY-MM-DD") &&
+                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
                 x.achievementRate < 25
               ) {
                 return x;
@@ -55,7 +57,7 @@ const Calendar = () => {
           if (
             marks.find((x) => {
               if (
-                x.addDate === moment(date).format("YYYY-MM-DD") &&
+                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
                 x.achievementRate >= 25 &&
                 x.achievementRate < 50
               ) {
@@ -68,7 +70,7 @@ const Calendar = () => {
           if (
             marks.find((x) => {
               if (
-                x.addDate === moment(date).format("YYYY-MM-DD") &&
+                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
                 x.achievementRate >= 50 &&
                 x.achievementRate < 75
               )
@@ -80,7 +82,7 @@ const Calendar = () => {
           if (
             marks.find((x) => {
               if (
-                x.addDate === moment(date).format("YYYY-MM-DD") &&
+                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
                 x.achievementRate >= 75
               )
                 return x;

@@ -7,6 +7,7 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
+import Dday from "./Dday";
 import { __getAchievementRate } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
@@ -17,6 +18,7 @@ import { __getMyInfo } from "../../redux/modules/mySlice";
 const Main = () => {
   const dispatch = useDispatch();
   const { achievementRate } = useSelector((state) => state.main);
+
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,18 +53,20 @@ const Main = () => {
     setModalVisible(false);
   };
 
-
   useEffect(() => {
-    // dispatch(__getMyInfo());
     dispatch(__getAchievementRate());
   }, [dispatch]);
 
   return (
     <StMainContainer>
-      <StPhrasesbox>
-        <span>투두투두</span>
-        <div>{nickname}님, 오늘 하루도 힘내세요!</div>
-      </StPhrasesbox>
+      <StPhrasesBox>
+        <StLogoDdayBox>
+          <span>투두투두</span>
+          <Dday />
+        </StLogoDdayBox>
+        <div>{nickname}님, </div>
+        <div>오늘 하루도 힘내세요!</div>
+      </StPhrasesBox>
       <StAchievementsBox>
         <StAchievementsTopBox>
           <div>{nickname}님의 업적</div>
@@ -101,11 +105,11 @@ const Main = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            width="350px"
-            height="330px"
-            radius="48px"
-            top="40%"
-            backgroundcolor="rgba(31, 31, 31, 0.116)"
+            width='350px'
+            height='330px'
+            radius='48px'
+            top='45%'
+            backgroundcolor='rgba(31, 31, 31, 0.116)'
           >
             <StModalTop>
               <span>랭킹 시스템이란?</span>
@@ -169,10 +173,10 @@ export default Main;
 const StMainContainer = styled.div`
   background-color: #fafafa;
   height: 95vh;
-  font-family: 'SUIT-Regular', sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
 `;
 
-const StPhrasesbox = styled.div`
+const StPhrasesBox = styled.div`
   height: 10vh;
   width: 90%;
   margin: auto;
@@ -189,9 +193,14 @@ const StPhrasesbox = styled.div`
   }
 `;
 
+const StLogoDdayBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 5% auto;
+  margin: 50px 5% 20px 5%;
   height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
@@ -203,7 +212,7 @@ const StAchievementsTopBox = styled.div`
   align-items: center;
   width: 100%;
   height: 25%;
-  font-weight:700;
+  font-weight: 700;
   border-radius: 12px 12px 0 0;
   background-color: #ffe9d5;
   div {
@@ -215,7 +224,7 @@ const StAchievementsTopBox = styled.div`
 const StAchievementsBottomBox = styled.div`
   height: 75%;
   width: 100%;
-  font-weight:600;
+  font-weight: 600;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,44 +235,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 
@@ -274,7 +283,9 @@ const StGaugeText = styled.div`
 `;
 
 const StRankingPhrases = styled.div`
-  margin: 0 0 0 1.5em;
+  /* margin: 0 0 0 1.5em; */
+  width: 90%;
+  margin: auto;
   span {
     margin-left: 7px;
     margin-right: 7px;
@@ -287,7 +298,9 @@ const StRankingPhrases = styled.div`
 `;
 
 const StRankingBtnBox = styled.div`
-  margin: 0 0 1em 1.5em;
+  /* margin: 0 0 1em 1.5em; */
+  width: 90%;
+  margin: auto;
   font-weight: 600;
 `;
 
@@ -369,7 +382,7 @@ const StModalBottom = styled.div`
   width: 90%;
   margin: 5% 0 0 5%;
   span {
-    font-size:1rem;
+    font-size: 1rem;
   }
 `;
 const StModalExplainTop = styled.div``;
