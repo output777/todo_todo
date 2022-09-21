@@ -1,5 +1,4 @@
 import axios from "axios";
-import { debounce, escapeRegExp, set } from "lodash";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
@@ -11,10 +10,16 @@ import {
 } from "../../redux/modules/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import InfiniteScroll from "../main/InfiniteScroll";
-import InfiniteScrollSearch from "./InfiniteScrollSearch";
+import { useInView } from "react-intersection-observer";
+import { __getSearch } from "../../redux/modules/profileinfoSlice";
+import { throttle, debounce, escapeRegExp, set } from "lodash";
 
 const ProfileInfoCopy = () => {
+  const { searchList } = useSelector((state) => state.profileinfo);
+  console.log(searchList);
+  // const [ref, inView] = useInView();
+  // console.log("inView", inView);
+
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(0); // 페이지
@@ -98,39 +103,36 @@ const ProfileInfoCopy = () => {
   };
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const checkIntersect = useCallback(
-    async ([entry], observer) => {
-      if (true) {
-        console.log("highschoolInput2", highschoolInput);
-        const data = await axios.get(
-          `${BASE_URL}/school?search=${highschoolInput}&page=${page}&size=${5}`
-        );
+  const checkIntersect = useCallback(async ([entry], observer) => {
+    observer.unobserve(entry.target);
+    // setPage((prev) => prev + 1);
+    console.log(page);
 
-        setHighschools([...data.data.content]);
-        setHighschoolResult([...data.data.content]);
-        setPage(0);
-        if (entry.isIntersecting) {
-          // setPage((prev) => prev + 1);
-          observer.unobserve(entry.target);
-        }
-        console.log(page);
-      }
-    },
-    [dispatch, highschoolInput]
-  );
+    // const _ = require("lodash");
+    // let throt_fun = _.throttle(function () {
+    //   console.log("Function throttled after 1000ms!");
+    // }, 2000);
+    // throt_fun();
+    // setHighschools([...data.data.content]);
+    // setHighschoolResult([...data.data.content]);
+    // observer.unobserve(entry.target);
+    // setPage((prev) => prev + 1); // 인풋값 입력할때마다 page가 바뀌면 안됨
+  }, []);
 
-  console.log("highschools", highschools);
-  console.log("highschoolResult", highschoolResult);
+  // console.log("highschools", highschools);
+  console.log("page", page);
+
+  // 무한 루프 발생으로 분리
+  useEffect(() => {
+    dispatch(__getSearch({ search: highschoolInput, page: page }));
+  }, [page]);
 
   useEffect(() => {
-    let observer;
-    if (targetRef) {
-      observer = new IntersectionObserver(checkIntersect, {
-        threshold: 0.7,
-      });
-      observer.observe(targetRef.current);
-    }
-  }, [highschoolInput]);
+    let observer = new IntersectionObserver(checkIntersect, {
+      threshold: 0.5,
+    });
+    observer.observe(targetRef.current);
+  }, [searchList]);
 
   // ------------------------------------------------------
 
@@ -284,8 +286,8 @@ const ProfileInfoCopy = () => {
       </StHighschoolBox>
       <StHighschoolSearchBox className="scroll">
         {highschoolInput.length > 0
-          ? highschoolResult &&
-            highschoolResult.map((data, index) => (
+          ? searchList &&
+            searchList.map((data, index) => (
               <div className="content" key={index}>
                 <div className="school" onClick={onClickSelectHandler}>
                   {data.schoolName}
@@ -297,7 +299,9 @@ const ProfileInfoCopy = () => {
               </div>
             ))
           : null}
-        <StRefDiv ref={targetRef}>temp</StRefDiv>
+        <StRefDiv ref={targetRef} style={{ backgroundColor: "red" }}>
+          temp
+        </StRefDiv>
       </StHighschoolSearchBox>
 
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
@@ -313,7 +317,6 @@ const StRefDiv = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: red;
 `;
 
 const StInfoTitle = styled.div`
@@ -473,7 +476,7 @@ const StHighschoolBox = styled.div`
 const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   border-radius: 10px;
   height: 50%;
 
