@@ -23,8 +23,8 @@ const Statistics = () => {
   // ----------------- 점수 소수점 반올림 -------------------
   let lastweekScore = Math.round(rankScoreData[0].score);
   let lastweekScore2 = isNaN(lastweekScore)
-    ? Math.round(rankScoreData[0].score)
-    : 0;
+    ? 0
+    : Math.round(rankScoreData[0].score);
 
   let weeklyScore = Math.round(rankScoreData[1].score);
   let weeklyScore2 = isNaN(weeklyScore)
@@ -47,7 +47,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'SUIT-Regular, sans-serif' }}>
+    <div style={{ fontFamily: "SUIT-Regular, sans-serif" }}>
       <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
         통계
       </h3>

@@ -1,14 +1,14 @@
-import React from 'react'
-import ProfileInfo from '../components/profileInfo/ProfileInfo'
-import Navbar from '../components/utils/Navbar'
+import React from "react";
+import ProfileInfo from "../components/profileInfo/ProfileInfo";
+import ProfileInfoCopy from "../components/profileInfo/ProfileInfoCopy";
+import Navbar from "../components/utils/Navbar";
 
 const ProfileInfoPage = () => {
   return (
     <>
-      <ProfileInfo />
-      <Navbar />
+      <ProfileInfoCopy />
     </>
-  )
-}
+  );
+};
 
-export default ProfileInfoPage
+export default ProfileInfoPage;

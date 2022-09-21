@@ -13,6 +13,8 @@ const InfiniteScrollMonthly = () => {
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
 
+  console.log("mainRankListMonthly", mainRankListMonthly);
+
   const checkIntersect = useCallback(
     ([entry], observer) => {
       if (entry.isIntersecting && !isLoaded) {
@@ -35,7 +37,6 @@ const InfiniteScrollMonthly = () => {
     }
   }, [mainRankListMonthly]);
 
-  console.log("mainRankListMonthly", mainRankListMonthly);
   return (
     <Stdiv>
       {mainRankListMonthly.map((each) => (
@@ -48,7 +49,7 @@ const InfiniteScrollMonthly = () => {
             </div>
           </div>
 
-          <StRankingScore>30000</StRankingScore>
+          <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}>{error}</StRefDiv>
@@ -59,10 +60,10 @@ const InfiniteScrollMonthly = () => {
 export default InfiniteScrollMonthly;
 
 const Stdiv = styled.div`
-  /* background-color: gray; */
   background-color: #fafafa;
-  height: 35vh;
-  overflow: scroll;
+  /* background-color: gray; */
+  /* height: 35vh; */
+  /* overflow: scroll; */
 `;
 const StRefDiv = styled.div`
   height: 50px;
