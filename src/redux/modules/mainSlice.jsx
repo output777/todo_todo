@@ -11,7 +11,8 @@ const config = {
 };
 
 const initialState = {
-  achievementRate: [{}, {}],
+  thisMonthRate: [],
+  totalRate: [],
   mainRankList: [],
   mainRankListMonthly: [],
   isLoading: false,
@@ -22,17 +23,15 @@ export const __getAchievementRate = createAsyncThunk(
   "getAchievementRate",
   async (payload, thunkAPI) => {
     try {
-      const thisMonthData = await axios.get(
-        `${BASE_URL}/todo/achievement/thismonth`,
-        config
-      );
-      const totalData = await axios.get(
-        `${BASE_URL}/todo/achievement/total`,
-        config
-      );
-      console.log("temp", [thisMonthData.data, totalData.data]);
-      return thunkAPI.fulfillWithValue([thisMonthData.data, totalData.data]);
+      const { data } = await axios.get(`${BASE_URL}/todo/achievement/thismonth`, config);
+      // const totalData = await axios.get(
+      //   `${BASE_URL}/todo/achievement/total`,
+      //   config
+      // );
+      console.log("temp", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log('error', error)
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -90,6 +89,8 @@ export const mainSlice = createSlice({
       // console.log("action.payload", action.payload);
       state.isLoading = false;
       state.achievementRate = action.payload;
+      state.mainRankList = [];
+      state.mainRankListMonthly = [];
     },
     [__getAchievementRate.rejected]: (state, action) => {
       state.isLoading = false;

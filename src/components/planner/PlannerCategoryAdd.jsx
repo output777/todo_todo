@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import leftArrowSvg from '../../assets/img/leftArrowSvg.svg'
@@ -6,8 +6,7 @@ import plusSvg from '../../assets/img/plusSvg.svg';
 import threeDotSvg from '../../assets/img/threeDotSvg.svg';
 import Modal from '../utils/Modal';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
-import { __getCategory, __postCategory } from '../../redux/modules/plannerSlice';
+import { __deleteCategory, __getCategory, __postCategory, __updateCategory } from '../../redux/modules/plannerSlice';
 
 const PlannerCategoryAdd = () => {
   const dispatch = useDispatch();
@@ -18,10 +17,15 @@ const PlannerCategoryAdd = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const [selectCategory, setSelectCategory] = useState();
+  const [editCategoryName, setEditCategoryName] = useState(false);
+  const [deleteCategoryCheckModalVisible, setEeleteCategoryCheckModalVisible] = useState(false);
 
   const closeModal = () => {
     setModalVisible(false);
     setEditModalVisible(false);
+    setEditCategoryName(false);
+    setEeleteCategoryCheckModalVisible(false);
   };
 
   const onChangeInputHandler = (e) => {
@@ -49,11 +53,54 @@ const PlannerCategoryAdd = () => {
   }
 
   const onClickModalEditHandler = (e) => {
-    console.log(e.target.parentElement.id);
-    setCategoryId(e.target.parentElement.id);
+    const { id } = e.target.parentElement;
+    console.log(id, typeof id);
+    if (category.length > 0) {
+      const data = category.filter((data) => (data.id === Number(id)));
+      console.log('data', data);
+      setSelectCategory(...data);
+    }
+    setCategoryId(id);
     setEditModalVisible(true);
   }
   console.log('categoryId', categoryId);
+  console.log('selectCategory', selectCategory);
+
+  const onClickEditCategoryName = () => {
+    setEditCategoryName(true);
+  }
+
+  const onClickEditCategoryNameCancel = () => {
+    setEditCategoryName(false);
+  }
+
+  const onClickCategoryDeleteHandler = () => {
+    console.log('categoryId', categoryId);
+    setEeleteCategoryCheckModalVisible(true);
+    setEditModalVisible(false);
+  }
+
+  const onClickEditCategoryNameDeleteCancel = () => {
+    setEeleteCategoryCheckModalVisible(false);
+    setEditModalVisible(true);
+  }
+
+  const onClickEditCategoryNameDeleteCheck = () => {
+    dispatch(__deleteCategory(categoryId));
+    setEeleteCategoryCheckModalVisible(false);
+  }
+
+  const onClickEditCategoryNameHandler = async () => {
+    const editCategoryName = {
+      title: categoryName
+    }
+    await dispatch(__updateCategory({ id: categoryId, title: editCategoryName }))
+    await dispatch(__getCategory())
+    setEeleteCategoryCheckModalVisible(false);;
+    setEditModalVisible(false);
+    setEditCategoryName(false);
+    setCategoryName('');
+  }
 
   useEffect(() => {
     dispatch(__getCategory())
@@ -90,20 +137,31 @@ const PlannerCategoryAdd = () => {
           backgroundcolor="rgba(0, 0, 0, 0.2)"
         >
           <StModalBtnBox>
-            <p>{category.length > 0 && category[categoryId].title}</p>
-            {/* props로 입력할 때 마다 border 색 변경하기 */}
-            <StCategoryInput type='text' value={categoryName} onChange={onChangeInputHandler} />
-            <div className='btnBox'>
-              <StModalBtn onClick={closeModal}>취소</StModalBtn>
-              <StModalBtn onClick={onClickCategoryAddHandler}>추가</StModalBtn>
-            </div>
+            <p className='title'>{selectCategory.title}</p>
+            {!editCategoryName
+              ?
+              <>
+                <p onClick={onClickEditCategoryName}>이름 변경</p>
+                <div className='btnBox'>
+                  <StModalBtn onClick={onClickCategoryDeleteHandler}>삭제</StModalBtn>
+                </div>
+              </>
+              :
+              <>
+                <StCategoryInput type='text' value={categoryName} onChange={onChangeInputHandler} />
+                <div className='btnBox'>
+                  <StModalBtn onClick={onClickEditCategoryNameCancel}>취소</StModalBtn>
+                  <StModalBtn onClick={onClickEditCategoryNameHandler}>확인</StModalBtn>
+                </div>
+              </>
+            }
           </StModalBtnBox>
         </Modal>
       )}
 
-      {modalVisible && (
+      {deleteCategoryCheckModalVisible && (
         <Modal
-          visible={modalVisible}
+          visible={deleteCategoryCheckModalVisible}
           closable={true}
           maskClosable={true}
           onClose={closeModal}
@@ -114,17 +172,44 @@ const PlannerCategoryAdd = () => {
           backgroundcolor="rgba(0, 0, 0, 0.2)"
         >
           <StModalBtnBox>
-            <p>추가할 과목 이름을 입력해주세요</p>
-            {/* props로 입력할 때 마다 border 색 변경하기 */}
-            <StCategoryInput type='text' value={categoryName} onChange={onChangeInputHandler} />
+            <p className='title'>'{selectCategory.title}'을 삭제하겠습니까?</p>
+            <p>삭제하면 연결돼있는 투두가</p>
+            <p>모두 사라집니다.</p>
             <div className='btnBox'>
-              <StModalBtn onClick={closeModal}>취소</StModalBtn>
-              <StModalBtn onClick={onClickCategoryAddHandler}>추가</StModalBtn>
+              <StModalBtn onClick={onClickEditCategoryNameDeleteCancel}>취소</StModalBtn>
+              <StModalBtn onClick={onClickEditCategoryNameDeleteCheck}>확인</StModalBtn>
             </div>
           </StModalBtnBox>
         </Modal>
-      )}
-    </StDiv>
+      )
+      }
+
+      {
+        modalVisible && (
+          <Modal
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={closeModal}
+            width="250px"
+            height="150px"
+            radius="20px"
+            top="40%"
+            backgroundcolor="rgba(0, 0, 0, 0.2)"
+          >
+            <StModalBtnBox>
+              <p>추가할 과목 이름을 입력해주세요</p>
+              {/* props로 입력할 때 마다 border 색 변경하기 */}
+              <StCategoryInput type='text' value={categoryName} onChange={onChangeInputHandler} />
+              <div className='btnBox'>
+                <StModalBtn onClick={closeModal}>취소</StModalBtn>
+                <StModalBtn onClick={onClickCategoryAddHandler}>추가</StModalBtn>
+              </div>
+            </StModalBtnBox>
+          </Modal>
+        )
+      }
+    </StDiv >
   )
 }
 
@@ -155,8 +240,6 @@ const StDiv = styled.div`
       padding:10px;
     }
   }
-
-
 `;
 
 const StModalBtnBox = styled.div`
@@ -166,7 +249,20 @@ const StModalBtnBox = styled.div`
   padding: 1rem;
   box-sizing:border-box;
   flex-direction:column;
+  justify-content:center;
+  align-items:center;
   border-radius:40px;
+
+  & p {
+    width:100%;
+    margin:0;
+    text-align: center;
+    padding:5px;
+  }
+  
+  & p.title {
+    font-weight:600;
+  }
 
   & .btnBox {
     display: flex;
@@ -187,7 +283,7 @@ const StModalBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items:center;
-  width: 100%;
+  width: 100px;
   height:50%;
   outline:none;
   border: none;

@@ -32,7 +32,7 @@ export const __getCategory = createAsyncThunk(
 );
 
 export const __postCategory = createAsyncThunk(
-  "postCategory/postTodo",
+  "postCategory",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(`${BASE_URL}/todo/category`, payload, config);
@@ -42,6 +42,41 @@ export const __postCategory = createAsyncThunk(
     }
   }
 );
+
+export const __deleteCategory = createAsyncThunk(
+  "__deleteCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `${BASE_URL}/todo/category/${payload}`,
+        config
+      );
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
+export const __updateCategory = createAsyncThunk(
+  "__updateCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.put(
+        `${BASE_URL}/todo/category/${payload.id}`,
+        payload.title,
+        config
+      );
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 export const __getTodoCount = createAsyncThunk(
   "getTodoCount",
@@ -167,6 +202,31 @@ export const plannerSlice = createSlice({
       console.log('__postCategory action.payload', action.payload);
     },
     [__postCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __deleteCategory
+    [__deleteCategory.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__deleteCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.category = state.category.filter(
+        (item) => item.id !== Number(action.payload)
+      );
+    },
+    [__deleteCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __updateCategory
+    [__updateCategory.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__updateCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__updateCategory.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

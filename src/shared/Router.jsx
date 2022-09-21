@@ -27,7 +27,7 @@ const Router = () => {
         <Route path='/planner' element={<PlannerPage />} />
         <Route path='/planner/category' element={<PlannerCategoryAdd />} />
         <Route path='/statistics' element={<StatisticsPage />} />
-        <Route path='/profileinfo' element={nickname !== null ? <Navigate replace to='/' /> : <ProfileInfoPage />} />
+        <Route path='/profileinfo' element={<ProfileInfoPage />} />
         <Route path='/user/kakao/callback' element={<KakaoLogin />} />
         <Route path='/user/google/callback' element={<GoogleLogin />} />
         <Route path='/user/naver/callback' element={<NaverLogin />} />

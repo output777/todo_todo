@@ -16,21 +16,22 @@ import { __getMyInfo } from "../../redux/modules/mySlice";
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
   const dispatch = useDispatch();
-  const { achievementRate } = useSelector((state) => state.main);
+  const { thisMonthRate, totalRate } = useSelector((state) => state.main);
+  console.log('thisMonthRate', thisMonthRate, 'totalRate', totalRate)
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
   // -------------------- 소수점 반올림 ---------------------
-  let thisMonthRate = Math.round(achievementRate[0].achievementRate);
-  let thisMonthRate2 = isNaN(thisMonthRate)
-    ? 0
-    : Math.round(achievementRate[0].achievementRate);
+  // let thisMonthRate = Math.round(achievementRate[0].achievementRate);
+  // let thisMonthRate2 = isNaN(thisMonthRate)
+  //   ? 0
+  //   : Math.round(achievementRate[0].achievementRate);
 
-  let totalRate = Math.round(achievementRate[1].achievementRate);
-  let totalRate2 = isNaN(totalRate)
-    ? 0
-    : Math.round(achievementRate[1].achievementRate);
+  // let totalRate = Math.round(achievementRate[1].achievementRate);
+  // let totalRate2 = isNaN(totalRate)
+  //   ? 0
+  //   : Math.round(achievementRate[1].achievementRate);
 
   const nickname = localStorage.getItem("nickname");
 
@@ -55,7 +56,7 @@ const Main = () => {
   useEffect(() => {
     // dispatch(__getMyInfo());
     dispatch(__getAchievementRate());
-  }, [dispatch]);
+  }, []);
 
   return (
     <StMainContainer>
@@ -71,20 +72,20 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate2} %</div>
+              <div>{thisMonthRate} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={thisMonthRate2} />
+              <ProgressBar now={thisMonthRate} />
             </div>
           </StthisMonthGauge>
 
           <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate2} %</div>
+              <div>{totalRate} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={totalRate2} />
+              <ProgressBar now={totalRate} />
             </div>
           </StTotalGauge>
         </StAchievementsBottomBox>
