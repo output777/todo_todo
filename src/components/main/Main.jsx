@@ -10,6 +10,7 @@ import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 import Dday from "./Dday";
 import { __getAchievementRate } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
+import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -17,33 +18,43 @@ import { __getMyInfo } from "../../redux/modules/mySlice";
 // 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
   const dispatch = useDispatch();
-  const { achievementRate } = useSelector((state) => state.main);
 
+  const { thisMonthRate, totalRate } = useSelector((state) => state.main);
+  console.log("thisMonthRate", thisMonthRate, "totalRate", totalRate);
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
+  const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   // -------------------- 소수점 반올림 ---------------------
-  let thisMonthRate = Math.round(achievementRate[0].achievementRate);
-  let thisMonthRate2 = isNaN(thisMonthRate)
-    ? 0
-    : Math.round(achievementRate[0].achievementRate);
+  // let thisMonthRate = Math.round(achievementRate[0].achievementRate);
+  // let thisMonthRate2 = isNaN(thisMonthRate)
+  //   ? 0
+  //   : Math.round(achievementRate[0].achievementRate);
 
-  let totalRate = Math.round(achievementRate[1].achievementRate);
-  let totalRate2 = isNaN(totalRate)
-    ? 0
-    : Math.round(achievementRate[1].achievementRate);
+  // let totalRate = Math.round(achievementRate[1].achievementRate);
+  // let totalRate2 = isNaN(totalRate)
+  //   ? 0
+  //   : Math.round(achievementRate[1].achievementRate);
 
   const nickname = localStorage.getItem("nickname");
 
-  const onClickMonth = () => {
-    setMonth(true);
-    setWeekly(false);
+  const onClickWeekly = () => {
+    setWeekly(true);
+    setMonth(false);
+    setSchool(false);
   };
 
-  const onClickWeekly = () => {
+  const onClickMonth = () => {
+    setWeekly(false);
+    setMonth(true);
+    setSchool(false);
+  };
+
+  const onClickSchoolRank = () => {
+    setWeekly(false);
     setMonth(false);
-    setWeekly(true);
+    setSchool(true);
   };
 
   const openModal = () => {
@@ -55,7 +66,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(__getAchievementRate());
-  }, [dispatch]);
+  }, []);
 
   return (
     <StMainContainer>
@@ -69,26 +80,30 @@ const Main = () => {
       </StPhrasesBox>
       <StAchievementsBox>
         <StAchievementsTopBox>
-          <div>{nickname}님의 업적</div>
+          <div>
+            {nickname == null || nickname == "null"
+              ? "닉네임이 미설정 상태입니다."
+              : `${nickname}님의 업적`}
+          </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate2} %</div>
+              <div>{thisMonthRate} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={thisMonthRate2} />
+              <ProgressBar now={thisMonthRate} />
             </div>
           </StthisMonthGauge>
 
           <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate2} %</div>
+              <div>{totalRate} %</div>
             </StGaugeText>
             <div>
-              <ProgressBar now={totalRate2} />
+              <ProgressBar now={totalRate} />
             </div>
           </StTotalGauge>
         </StAchievementsBottomBox>
@@ -133,37 +148,76 @@ const Main = () => {
                 실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
                 랭킹은 매달 며칠에
               </div>
+            </StModalExplainTop>
 
-              <StCloseBtnContainer>
-                <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn>
-              </StCloseBtnContainer>
-            </StModalBottom>
-          </Modal>
-        )}
-      </StRankingPhrases>
-      <StRankingBtnBox>
+            <StModalExplainBottom>
+              <img src={trophy} />
+              <span>주간 랭킹</span>
+            </StModalExplainBottom>
+            <div>
+              실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간 랭킹은
+              매달 며칠에
+            </div>
+
+            <StCloseBtnContainer>
+              <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn>
+            </StCloseBtnContainer>
+          </StModalBottom>
+        </Modal>
+      )}
+
+      {/* -------------------- 랭킹 --------------------*/}
+      <div className="rank">
+        <StRankingPhrases>
+          <img src={trophy} />
+          <span>랭킹</span>
+          <img src={info} onClick={openModal} />
+        </StRankingPhrases>
+
+        <StRankingBtnBox>
+          {weekly ? (
+            <StWeeklyRankingBtn onClick={onClickWeekly}>
+              <span>주간 랭킹</span>
+            </StWeeklyRankingBtn>
+          ) : (
+            <StWeeklyRankingBtn2nd onClick={onClickWeekly}>
+              <span>주간 랭킹</span>
+            </StWeeklyRankingBtn2nd>
+          )}
+          {month ? (
+            <StMonthRankingBtn onClick={onClickMonth}>
+              <span>월간 랭킹</span>
+            </StMonthRankingBtn>
+          ) : (
+            <StMonthRankingBtn2nd onClick={onClickMonth}>
+              <span>월간 랭킹</span>
+            </StMonthRankingBtn2nd>
+          )}
+          {school ? (
+            <StMonthRankingBtn onClick={onClickSchoolRank}>
+              <span>학교 랭킹</span>
+            </StMonthRankingBtn>
+          ) : (
+            <StMonthRankingBtn2nd onClick={onClickSchoolRank}>
+              <span>학교 랭킹</span>
+            </StMonthRankingBtn2nd>
+          )}
+        </StRankingBtnBox>
+
         {weekly ? (
-          <StWeeklyRankingBtn onClick={onClickWeekly}>
-            <span>주간 랭킹</span>
-          </StWeeklyRankingBtn>
+          <>
+            <InfiniteScroll />
+          </>
+        ) : month ? (
+          <>
+            <InfiniteScrollMonthly />
+          </>
         ) : (
-          <StWeeklyRankingBtn2nd onClick={onClickWeekly}>
-            <span>주간 랭킹</span>
-          </StWeeklyRankingBtn2nd>
+          <>
+            <InfiniteScrollSchoolRank />
+          </>
         )}
-        {month ? (
-          <StMonthRankingBtn onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn>
-        ) : (
-          <StMonthRankingBtn2nd onClick={onClickMonth}>
-            <span>월간 랭킹</span>
-          </StMonthRankingBtn2nd>
-        )}
-      </StRankingBtnBox>
-      <StScrollDiv>
-        {weekly ? <InfiniteScroll /> : <InfiniteScrollMonthly />}
-      </StScrollDiv>
+      </div>
     </StMainContainer>
   );
 };
@@ -186,11 +240,35 @@ const StPhrasesBox = styled.div`
     font-weight: bold;
     font-size: 1rem;
   }
-  div {
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 1.2rem;
+
+  .mainTopSentenceBox {
+    margin-top: 0.7em;
   }
+  .mainTopSentence {
+    margin-top: 0.3em;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .DdayBox {
+    margin-top: 0.7em;
+    height: 80%;
+    width: 25%;
+    background-color: white;
+    box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
+    border-radius: 20px;
+    font-weight: bold;
+    color: #ff7b00;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const StLogoDdayBox = styled.div`
@@ -283,38 +361,53 @@ const StGaugeText = styled.div`
 `;
 
 const StRankingPhrases = styled.div`
+
   /* margin: 0 0 0 1.5em; */
   width: 90%;
   margin: auto;
+  
   span {
     margin-left: 7px;
     margin-right: 7px;
     font-weight: 600;
     font-size: 20px;
+    background-color: #fafafa;
   }
   img {
     margin-bottom: 7px;
+    background-color: #fafafa;
   }
+  position: sticky;
+  top: 0;
+  background-color: #fafafa;
+  padding: 1em 0 0 1.5em;
 `;
 
 const StRankingBtnBox = styled.div`
+
   /* margin: 0 0 1em 1.5em; */
   width: 90%;
   margin: auto;
+
   font-weight: 600;
+
+  background-color: #fafafa;
+  padding: 0.1em 0em 1em 1.5em;
+  position: sticky;
+  top: 2.6em;
 `;
 
-const StMonthRankingBtn = styled.button`
+const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-  margin: 10px 0 0 2%;
-  background: #ffe9d5;
+
+  background: #ff8f27;
 
   border: 1px solid #ff8f27;
   border-radius: 44px;
 
   span {
-    color: #ff7b00;
+    color: white;
     font-size: 14px;
   }
 `;
@@ -333,18 +426,17 @@ const StMonthRankingBtn2nd = styled.button`
     font-size: 14px;
   }
 `;
-
-const StWeeklyRankingBtn = styled.button`
+const StMonthRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-
-  background: #ffe9d5;
+  margin: 10px 0 0 2%;
+  background: #ff8f27;
 
   border: 1px solid #ff8f27;
   border-radius: 44px;
 
   span {
-    color: #ff7b00;
+    color: white;
     font-size: 14px;
   }
 `;

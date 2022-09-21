@@ -1,6 +1,5 @@
 import axios from "axios";
-import { debounce, escapeRegExp } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
 import regionSvg from "../../assets/img/regionSvg.svg";
@@ -11,8 +10,20 @@ import {
 } from "../../redux/modules/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import { __getSearch } from "../../redux/modules/profileinfoSlice";
+import { throttle, debounce, escapeRegExp, set } from "lodash";
 
-const ProfileInfo = () => {
+const ProfileInfoCopy = () => {
+  const { searchList } = useSelector((state) => state.profileinfo);
+  console.log(searchList);
+  // const [ref, inView] = useInView();
+  // console.log("inView", inView);
+
+  const targetRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
+  const [page, setPage] = useState(0); // 페이지
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { nicknameCheck } = useSelector((state) => state.login);
@@ -46,12 +57,11 @@ const ProfileInfo = () => {
 
   const onSubmitNicknameCheckHandler = (e) => {
     e.preventDefault();
-    console.log("nickname", nickname);
 
     const newNickname = {
       nickname: nickname,
     };
-    console.log(nickname.length);
+
     if (nickname.length > 1) {
       dispatch(__nicknameCheck(newNickname));
       setIsNicknameCheck(() => true);
@@ -84,14 +94,47 @@ const ProfileInfo = () => {
     threeRef.current.classList.add("active");
   };
 
-  console.log("grade", grade);
-
-  const getHighschool = async () => {
-    const { data } = await axios.get(
-      "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8b6987e3437f2f606c0b32a837986a81&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2378&searchSchulNm=%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90"
-    );
-    setHighschools([...data.dataSearch.content]);
+  // ----------------- 무한스크롤 -----------------------
+  const accessToken = localStorage.getItem("accessToken");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   };
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+  const checkIntersect = useCallback(async ([entry], observer) => {
+    observer.unobserve(entry.target);
+    // setPage((prev) => prev + 1);
+    console.log(page);
+
+    // const _ = require("lodash");
+    // let throt_fun = _.throttle(function () {
+    //   console.log("Function throttled after 1000ms!");
+    // }, 2000);
+    // throt_fun();
+    // setHighschools([...data.data.content]);
+    // setHighschoolResult([...data.data.content]);
+    // observer.unobserve(entry.target);
+    // setPage((prev) => prev + 1); // 인풋값 입력할때마다 page가 바뀌면 안됨
+  }, []);
+
+  // console.log("highschools", highschools);
+  console.log("page", page);
+
+  // 무한 루프 발생으로 분리
+  useEffect(() => {
+    dispatch(__getSearch({ search: highschoolInput, page: page }));
+  }, [page]);
+
+  useEffect(() => {
+    let observer = new IntersectionObserver(checkIntersect, {
+      threshold: 0.5,
+    });
+    observer.observe(targetRef.current);
+  }, [searchList]);
+
+  // ------------------------------------------------------
 
   const ch2pattern = (ch) => {
     const offset = 44032;
@@ -124,9 +167,8 @@ const ProfileInfo = () => {
     //   const begin =
     //     con2syl[ch] || (ch.charCodeAt(0) - 12613) * 588 + con2syl["ㅅ"];
     //   const end = begin + 587;
-    //   return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
+    // return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     // }
-    
     return escapeRegExp(ch);
   };
 
@@ -135,7 +177,7 @@ const ProfileInfo = () => {
     return new RegExp(pattern);
   };
 
-  const onChangeSearchHandler = (e) => {
+  const onChangeSearchHandler = async (e) => {
     const { value } = e.target;
     let val = value.trim();
     setHighschoolInput(val);
@@ -147,7 +189,6 @@ const ProfileInfo = () => {
         return regex.test(row["schoolName"]);
       })
       .map((row) => {
-        console.log(row);
         return { school: row["schoolName"], adres: row["adres"] };
       });
     setHighschoolResult(resultData);
@@ -163,16 +204,6 @@ const ProfileInfo = () => {
     setHighschoolResult([]);
   };
 
-  console.log(
-    "nickname",
-    nickname,
-    "grade",
-    grade,
-    typeof grade,
-    "highschoolInput",
-    highschoolInput
-  );
-
   const onSubmitRegisterHandler = (e) => {
     e.preventDefault();
     const newUserInfoRegister = {
@@ -183,10 +214,6 @@ const ProfileInfo = () => {
     dispatch(__userInfoRegister(newUserInfoRegister));
     navigate("/");
   };
-
-  useEffect(() => {
-    getHighschool();
-  }, []);
 
   return (
     <div
@@ -257,13 +284,13 @@ const ProfileInfo = () => {
           )}
         </div>
       </StHighschoolBox>
-      <StHighschoolSearchBox>
+      <StHighschoolSearchBox className="scroll">
         {highschoolInput.length > 0
-          ? highschoolResult &&
-            highschoolResult.map((data, index) => (
+          ? searchList &&
+            searchList.map((data, index) => (
               <div className="content" key={index}>
                 <div className="school" onClick={onClickSelectHandler}>
-                  {data.school}
+                  {data.schoolName}
                 </div>
                 <div className="region">
                   <img src={regionSvg} />
@@ -272,13 +299,25 @@ const ProfileInfo = () => {
               </div>
             ))
           : null}
+        <StRefDiv ref={targetRef} style={{ backgroundColor: "red" }}>
+          temp
+        </StRefDiv>
       </StHighschoolSearchBox>
+
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
         <button>투두투두 시작하기!</button>
       </StBtnBox>
     </div>
   );
 };
+
+const StRefDiv = styled.div`
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
 
 const StInfoTitle = styled.div`
   font-size: 1.4rem;
@@ -437,13 +476,14 @@ const StHighschoolBox = styled.div`
 const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   border-radius: 10px;
-  height: 40%;
+  height: 50%;
 
   & .content {
     align-items: center;
     padding: 0.5rem 1rem;
+    margin-bottom: 20px;
 
     .school {
       font-size: 1rem;
@@ -476,4 +516,4 @@ const StBtnBox = styled.form`
   }
 `;
 
-export default ProfileInfo;
+export default ProfileInfoCopy;

@@ -5,28 +5,25 @@ import { __getMainRank } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
-const InfiniteScroll = () => {
-  const dispatch = useDispatch();
-  const [totalCount, setTotalCount] = useState(null);
+const InfiniteScrollSearch = () => {
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-  console.log('totalCount', totalCount);
-  console.log('error', error);
-  console.log('mainRankList.length', mainRankList.length)
+  const dispatch = useDispatch();
   const targetRef = useRef(null);
-  // const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(0); // 페이지
+  const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
+  const [page, setPage] = useState(1); // 페이지
 
-  const checkIntersect = ([entry], observer) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
-      setPage((prev) => prev + 1);
-    }
-  };
+  const checkIntersect = useCallback(
+    ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded) {
+        dispatch(__getMainRank(page));
 
-  useEffect(() => {
-    dispatch(__getMainRank(page));
-  }, [page])
+        observer.unobserve(entry.target);
+        setPage((prev) => prev + 1);
+      }
+    },
+    [dispatch, isLoaded, page]
+  );
 
   useEffect(() => {
     let observer;
@@ -34,15 +31,8 @@ const InfiniteScroll = () => {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       });
-      setTotalCount(mainRankList.length)
       observer.observe(targetRef.current);
     }
-    return () => {
-      console.log(totalCount);
-      localStorage.setItem('totalCount', totalCount);
-      console.log('aaaaaaaaaaaaaa');
-      observer && observer.disconnect()
-    };
   }, [mainRankList]);
 
   console.log("page", page);
@@ -68,7 +58,7 @@ const InfiniteScroll = () => {
   );
 };
 
-export default InfiniteScroll;
+export default InfiniteScrollSearch;
 
 const Stdiv = styled.div`
   background-color: #fafafa;

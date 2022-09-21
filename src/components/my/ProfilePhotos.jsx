@@ -4,60 +4,73 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __getImages, __deleteImages } from "../../redux/modules/mySlice";
-import cancelSvg from '../../assets/img/cancelSvg.svg';
-import threeDotSvg from '../../assets/img/threeDotSvg.svg';
-import Slider from "react-slick";
+import cancelSvg from "../../assets/img/cancelSvg.svg";
+import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import Modal from "../utils/Modal";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const ProfilePhotos = () => {
   const dispatch = useDispatch();
   const [fullScreen, setFullScreen] = useState(false);
-  const [imgCount, setImgCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectImgId, setSelectImgId] = useState(1);
+  const [selectImg, setSelectImg] = useState(null);
+  const [selectImgIndex, setSelectImgIndex] = useState(0);
 
   const { userInfo } = useSelector((state) => state.my);
 
-  const onClickFullScreenImgsHandler = () => {
-    setFullScreen(true)
-  }
+  const selectImgFunc = (id) => {
+    setSelectImgId(id);
+    const data = userInfo.imgList.filter((data) => data.id === Number(id));
+    const index = userInfo.imgList.indexOf(...data);
+    setSelectImgIndex(index);
+    setSelectImg(userInfo.imgList[index]);
+    setFullScreen(true);
+  };
+
+  const onClickFullScreenImgsHandler = (e) => {
+    console.log(e.target.id);
+    const { id } = e.target;
+    selectImgFunc(id);
+    // console.log('userInfo', userInfo.imgList, userInfo.imgList.length);
+  };
+
+  const onClickPrevHandler = () => {
+    const prevData = userInfo.imgList[selectImgIndex - 1];
+    setSelectImgId(prevData.id);
+    setSelectImg(prevData);
+    setSelectImgIndex((prev) => prev - 1);
+    // console.log('prevData', prevData);
+  };
+
+  const onClickNextHandler = () => {
+    const nextData = userInfo.imgList[selectImgIndex + 1];
+    setSelectImgId(nextData.id);
+    setSelectImg(nextData);
+    setSelectImgIndex((prev) => prev + 1);
+    // console.log('nextData', nextData);
+  };
 
   const onClickFullScreenCloseHandler = () => {
-    setFullScreen(false)
-  }
-
-  const onMouseEnterImgCounterHandler = (e) => {
-    const { className } = e.target;
-    setImgCount(Number(className));
-  }
+    setFullScreen(false);
+  };
 
   const onClicOptionModalOpenHandler = () => {
     setModalVisible(true);
-  }
+  };
 
   const onClickDeleteImgHandler = () => {
-    dispatch(__deleteImages(userInfo.imgList[imgCount].id))
-    setFullScreen(false)
+    dispatch(__deleteImages(selectImgId));
+    setFullScreen(false);
     setModalVisible(false);
-  }
+  };
 
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
-
   useEffect(() => {
-    dispatch(__getImages())
-  }, [dispatch])
+    dispatch(__getImages());
+  }, [dispatch]);
 
   return (
     <>
@@ -65,39 +78,48 @@ const ProfilePhotos = () => {
         {userInfo &&
           userInfo.imgList.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
-              <img src={data.imgUrl} alt="boast" />
+              <img id={data.id} src={data.imgUrl} alt="boast" />
             </StImg>
           ))}
       </StContainer>
-      {fullScreen
-        ?
+      {fullScreen ? (
         <StFullScreen>
           <div className="header">
             <div className="cancelBox" onClick={onClickFullScreenCloseHandler}>
-              <img src={cancelSvg} alt='cancelBtn' />
+              <img src={cancelSvg} alt="cancelBtn" />
             </div>
             <div className="imgCount">
-              {userInfo && <span>{imgCount + 1}/{userInfo.imgList.length}</span>}
+              {userInfo && (
+                <span>
+                  {selectImgIndex + 1}/{userInfo.imgList.length}
+                </span>
+              )}
             </div>
             <div className="optionBox">
-              <img src={threeDotSvg} alt="optionBtn" onClick={onClicOptionModalOpenHandler} />
+              <img
+                src={threeDotSvg}
+                alt="optionBtn"
+                onClick={onClicOptionModalOpenHandler}
+              />
             </div>
           </div>
           <StSliderBox>
-            <StyledSlider {...settings}>
-              {userInfo && userInfo.imgList.map((data, index) => {
-                return (
-                  <div className="imgBox" key={data.id} >
-                    <img src={data.imgUrl} alt='img' id={data.id} className={index} onMouseEnter={onMouseEnterImgCounterHandler} />
-                  </div>
-                )
-              })}
-            </StyledSlider>
+            <div className="imgBox" key={selectImgId}>
+              {selectImgIndex === 0 ? null : (
+                <button className="prev" onClick={onClickPrevHandler}>
+                  ◀
+                </button>
+              )}
+              <img src={selectImg.imgUrl} alt="img" id={selectImg.id} />
+              {userInfo.imgList.length - 1 === selectImgIndex ? null : (
+                <button className="next" onClick={onClickNextHandler}>
+                  ▶
+                </button>
+              )}
+            </div>
           </StSliderBox>
         </StFullScreen>
-        :
-        null
-      }
+      ) : null}
       <StModalBox>
         {modalVisible && (
           <Modal
@@ -131,7 +153,8 @@ const StContainer = styled.div`
   grid-auto-rows: 100px;
   grid-gap: 2px;
   padding-bottom: 70px;
-  overflow-y: scroll;
+
+  /* overflow-y: scroll; */
 `;
 
 const StImg = styled.div`
@@ -143,36 +166,43 @@ const StImg = styled.div`
   }
 `;
 
-const StyledSlider = styled(Slider)`
-  width:100%;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  .slick-prev::before,
-  .slick-next::before {
-    opacity: 0;
-    display: none;
-  }`;
-
 const StSliderBox = styled.div`
-  width:100%;
-  height:500px;
-  z-index:15;
-  padding-top:50px;
-  box-sizing:border-box;
-  
+  width: 100%;
+  height: 500px;
+  z-index: 15;
+  padding-top: 50px;
+  box-sizing: border-box;
+
   & div.imgBox {
-    width:100%;
-    height:450px;
+    width: 100%;
+    height: 450px;
+    position: relative;
 
     img {
-      width:100%;
-      height:100%;
-      background-size:contain;
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+    }
+
+    button {
+      position: absolute;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      color: #111;
+      top: 50%;
+      box-sizing: border-box;
+    }
+
+    button.prev {
+      left: 0;
+    }
+
+    button.next {
+      right: 0;
     }
   }
 `;
-
 
 const StFullScreen = styled.div`
   width:100%;
@@ -213,23 +243,22 @@ const StFullScreen = styled.div`
 `;
 
 const StModalBox = styled.div`
-
   & .btnBox {
-      width:100%;
-      height:100%;
-      display: flex;
-      padding:1rem 0.5rem;
-      box-sizing:border-box;
-      flex-direction:column;
-    }
-`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+`;
 const StModalBtn = styled.button`
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   width: 100%;
-  height:50%;
-  outline:none;
+  height: 50%;
+  outline: none;
   border: none;
   border-bottom: 1px solid #eee;
   background-color: white;

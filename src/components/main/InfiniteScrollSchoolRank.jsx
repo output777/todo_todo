@@ -1,32 +1,34 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { __getMainRank } from "../../redux/modules/mainSlice";
+import {
+  __getMainRankMonthly,
+  __getMainRankSchool,
+} from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
-const InfiniteScroll = () => {
-  const dispatch = useDispatch();
-  const [totalCount, setTotalCount] = useState(null);
-  const { mainRankList } = useSelector((state) => state.main);
+const InfiniteScrollSchoolRank = () => {
+  const { mainRankListSchool } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-  console.log('totalCount', totalCount);
-  console.log('error', error);
-  console.log('mainRankList.length', mainRankList.length)
+  const dispatch = useDispatch();
   const targetRef = useRef(null);
-  // const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(0); // 페이지
+  const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
+  const [page, setPage] = useState(1); // 페이지
 
-  const checkIntersect = ([entry], observer) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
-      setPage((prev) => prev + 1);
-    }
-  };
+  console.log("mainRankListSchool", mainRankListSchool);
 
-  useEffect(() => {
-    dispatch(__getMainRank(page));
-  }, [page])
+  const checkIntersect = useCallback(
+    ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded) {
+        dispatch(__getMainRankSchool(page));
+
+        observer.unobserve(entry.target);
+        setPage((prev) => prev + 1);
+      }
+    },
+    [dispatch, isLoaded, page]
+  );
 
   useEffect(() => {
     let observer;
@@ -34,23 +36,13 @@ const InfiniteScroll = () => {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       });
-      setTotalCount(mainRankList.length)
       observer.observe(targetRef.current);
     }
-    return () => {
-      console.log(totalCount);
-      localStorage.setItem('totalCount', totalCount);
-      console.log('aaaaaaaaaaaaaa');
-      observer && observer.disconnect()
-    };
-  }, [mainRankList]);
-
-  console.log("page", page);
-  console.log("mainRankList", mainRankList);
+  }, [mainRankListSchool]);
 
   return (
     <Stdiv>
-      {mainRankList.map((each) => (
+      {mainRankListSchool.map((each) => (
         <StRankingBox key={each.id}>
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
@@ -68,7 +60,7 @@ const InfiniteScroll = () => {
   );
 };
 
-export default InfiniteScroll;
+export default InfiniteScrollSchoolRank;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
@@ -91,8 +83,7 @@ const StRankingBox = styled.div`
 
   width: 90%;
   margin: auto;
-  /* height: 70px; */
-  height: 4.5em;
+  height: 70px;
 
   background: #ffffff;
 
