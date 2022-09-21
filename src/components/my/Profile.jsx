@@ -12,12 +12,12 @@ import {
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
-import { __getAchievementRate } from "../../redux/modules/mainSlice";
+import { __getTotalRate } from "../../redux/modules/mainSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(__getAchievementRate());
+    dispatch(__getTotalRate());
   }, []);
 
   const { achievementRate } = useSelector((state) => state.main);
