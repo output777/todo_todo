@@ -14,9 +14,69 @@ const config = {
 const initialState = {
   todoCount: [],
   todos: [],
+  category: [],
   isLoading: false,
   error: null,
 };
+
+export const __getCategory = createAsyncThunk(
+  "getCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}/todo/category`, config);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __postCategory = createAsyncThunk(
+  "postCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/todo/category`, payload, config);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __deleteCategory = createAsyncThunk(
+  "__deleteCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `${BASE_URL}/todo/category/${payload}`,
+        config
+      );
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
+export const __updateCategory = createAsyncThunk(
+  "__updateCategory",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.put(
+        `${BASE_URL}/todo/category/${payload.id}`,
+        payload.title,
+        config
+      );
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 export const __getTodoCount = createAsyncThunk(
   "getTodoCount",
@@ -122,6 +182,54 @@ export const plannerSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // __getCategory
+    [__getCategory.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.category = action.payload;
+    },
+    [__getCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __postCategory
+    [__postCategory.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__postCategory.fulfilled]: (state, action) => {
+      console.log('__postCategory action.payload', action.payload);
+    },
+    [__postCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __deleteCategory
+    [__deleteCategory.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__deleteCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.category = state.category.filter(
+        (item) => item.id !== Number(action.payload)
+      );
+    },
+    [__deleteCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __updateCategory
+    [__updateCategory.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__updateCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__updateCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // __getTodoCount
     [__getTodoCount.pending]: (state) => {
       state.isLoading = true;

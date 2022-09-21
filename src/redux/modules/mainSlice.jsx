@@ -11,7 +11,8 @@ const config = {
 };
 
 const initialState = {
-  achievementRate: [{}, {}],
+  thisMonthRate: [],
+  totalRate: [],
   mainRankList: [],
   mainRankListMonthly: [],
   mainRankListSchool: [],
@@ -23,17 +24,15 @@ export const __getAchievementRate = createAsyncThunk(
   "getAchievementRate",
   async (payload, thunkAPI) => {
     try {
-      const thisMonthData = await axios.get(
-        `${BASE_URL}/todo/achievement/thismonth`,
-        config
-      );
-      const totalData = await axios.get(
-        `${BASE_URL}/todo/achievement/total`,
-        config
-      );
-      console.log("temp", [thisMonthData.data, totalData.data]);
-      return thunkAPI.fulfillWithValue([thisMonthData.data, totalData.data]);
+      const { data } = await axios.get(`${BASE_URL}/todo/achievement/thismonth`, config);
+      // const totalData = await axios.get(
+      //   `${BASE_URL}/todo/achievement/total`,
+      //   config
+      // );
+      console.log("temp", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log('error', error)
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -43,12 +42,15 @@ export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
+
     try {
       const data = await axios.get(
         `${BASE_URL}/rank/weekly?page=${payload}&size=${3}`,
-        payload,
+        // payload,
         config
       );
+
+      console.log("data.data", data.data);
       console.log("data.data.content", data.data.content);
       return thunkAPI.fulfillWithValue(data.data.content);
     } catch (error) {
@@ -82,7 +84,7 @@ export const __getMainRankSchool = createAsyncThunk(
     try {
       const data = await axios.get(
         `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
-        payload,
+        // payload,
         config
       );
       console.log("data.data.content", data.data.content);
@@ -105,6 +107,8 @@ export const mainSlice = createSlice({
       // console.log("action.payload", action.payload);
       state.isLoading = false;
       state.achievementRate = action.payload;
+      state.mainRankList = [];
+      state.mainRankListMonthly = [];
     },
     [__getAchievementRate.rejected]: (state, action) => {
       state.isLoading = false;
@@ -117,7 +121,7 @@ export const mainSlice = createSlice({
     [__getMainRank.fulfilled]: (state, action) => {
       console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.mainRankList.push(...action.payload);
+      state.mainRankList.push(...action.payload)
       state.mainRankListMonthly = [];
       state.mainRankListSchool = [];
     },
