@@ -28,14 +28,15 @@ const Dday = () => {
     //console.log(ddate);
   };
 
-  const onSubmitHandler = () => {
-    dispatch(
+  const onSubmitHandler = async () => {
+    await dispatch(
       __updateDday({
         ...ddate,
         title: ddate.title,
         selectedDate: ddate.selectedDate,
       })
     );
+    await dispatch(__getDday());
   };
   console.log(Date.now());
   console.log(ddate.selectedDate.replace(/\-/g, ""));

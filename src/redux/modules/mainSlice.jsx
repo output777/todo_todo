@@ -27,6 +27,7 @@ export const __getAchievementRate = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/todo/achievement/thismonth`, config);
+
       // const totalData = await axios.get(
       //   `${BASE_URL}/todo/achievement/total`,
       //   config
@@ -87,6 +88,11 @@ export const __getDday = createAsyncThunk(
       const data = await axios.get(`${BASE_URL}/d-day`, config);
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const __getMainRankSchool = createAsyncThunk(
   "getMainRankSchool",
@@ -199,7 +205,7 @@ export const mainSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       console.log(state);
-      },
+    },
 
     [__getMainRankSchool.pending]: (state) => {
       state.isLoading = true;
