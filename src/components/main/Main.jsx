@@ -74,10 +74,10 @@ const Main = () => {
           </div>
         </div>
 
-        {/* <div className="DdayBox">
+        <div className="DdayBox">
           수능 <br />
           D-100
-        </div> */}
+        </div>
       </StPhrasesbox>
       <StAchievementsBox>
         <StAchievementsTopBox>

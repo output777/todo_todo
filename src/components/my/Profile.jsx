@@ -13,11 +13,15 @@ import {
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
 import { __getTotalRate } from "../../redux/modules/mainSlice";
+import { useNavigate } from "react-router-dom";
 import settingSvg from "../../assets/img/myPage/settingSvg.svg";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
+import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import Setting from "./Setting";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(__getTotalRate());
   }, []);
@@ -27,6 +31,7 @@ const Profile = () => {
 
   const [edit, setEdit] = useState(false);
   const [motoInput, setMotoInput] = useState("");
+  const [settingMenu, setSettingMenu] = useState(false);
 
   const uploadProfileRef = useRef(null);
   const motoFormRef = useRef(null);
@@ -51,7 +56,7 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("multipartFile", e.target.files[0]);
 
-    dispatch(__postProfileImg(formData));
+    // dispatch(__postProfileImg(formData));
   };
 
   const onClickEditProfileImgHandler = () => {
@@ -95,94 +100,109 @@ const Profile = () => {
   }, [setMotoInput, motto]);
 
   useEffect(() => {
-    dispatch(__getMyInfo());
+    // dispatch(__getMyInfo());
   }, [dispatch]);
 
   return (
-    <StProfileContainer>
-      <div className="title">
-        <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
-          마이페이지
-        </h3>
-        <img src={settingSvg} />
-      </div>
-      <StLine></StLine>
-      <StImgInfoBox>
-        <StImg>
-          {!edit ? (
-            <>
-              <img src={defaultProfile} alt="profile" />
-            </>
-          ) : (
-            <div onClick={onClickEditProfileImgHandler}>
-              <input
-                type="file"
-                accept="image/*"
-                ref={uploadProfileRef}
-                onChange={onChangeUploadProfileImageHandler}
-              />
-              <img src={userInfo && userInfo.profileImage} alt="profile" />
-              <div className="editBox">
-                <img src={cameraSvg} alt="imgEdit" style={{ width: "100%" }} />
+    <>
+      <StProfileContainer>
+        <div className="title">
+          <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
+            마이페이지
+          </h3>
+          <img
+            src={settingSvg}
+            onClick={() => {
+              navigate("/setting");
+            }}
+          />
+        </div>
+        <StLine></StLine>
+        <StImgInfoBox>
+          <StImg>
+            <img src={profileImgSvg} alt="profile" />
+            {/* {!edit ? (
+              <>
+                <img src={defaultProfile} alt="profile" />
+              </>
+            ) : (
+              <div onClick={onClickEditProfileImgHandler}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={uploadProfileRef}
+                  onChange={onChangeUploadProfileImageHandler}
+                />
+                <img src={userInfo && userInfo.profileImage} alt="profile" />
+                <div className="editBox">
+                  <img
+                    src={cameraSvg}
+                    alt="imgEdit"
+                    style={{ width: "100%" }}
+                  />
+                </div>
               </div>
+            )} */}
+          </StImg>
+          <StInfo>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">게시물</span>
+            </div>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">팔로워</span>
+            </div>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">팔로잉</span>
+            </div>
+          </StInfo>
+        </StImgInfoBox>
+        <StStatusDiv>
+          <div className="userName">이름</div>
+          <div>09년생 / INFJ / 일반계 여고</div>
+        </StStatusDiv>
+        {/* <StTextBox>
+          <p>{userInfo?.nickname}</p>
+          {edit ? (
+            <p className="text show">{motto && motto}</p>
+          ) : (
+            <div className="editText" onClick={onClickEditTextHandler}>
+              <form ref={motoFormRef} onSubmit={onSubmitHandler}>
+                <input
+                  type="text"
+                  ref={motoInputRef}
+                  value={motoInput}
+                  onChange={onChangeMotoInputHandler}
+                />
+                <button type="button" onClick={onClickEditTextCancelHandler}>
+                  ✖
+                </button>
+                <button type="submit">✔</button>
+              </form>
+              <p className="text show" ref={motoRef}>
+                {motto && motto}
+              </p>
+              <img
+                className="show"
+                src={logoPencil}
+                alt="editTextImg"
+                ref={motoImgRef}
+              />
             </div>
           )}
-        </StImg>
-        <StInfo>
-          <div className="nextToPicture">
-            <span className="count">60</span>
-            <span className="text">게시물</span>
-          </div>
-          <div className="nextToPicture">
-            <span className="count">60</span>
-            <span className="text">팔로워</span>
-          </div>
-          <div className="nextToPicture">
-            <span className="count">60</span>
-            <span className="text">팔로잉</span>
-          </div>
-        </StInfo>
-      </StImgInfoBox>
-      <StStatusDiv>
-        <div className="userName">이름</div>
-        <div>09년생 / INFJ / 일반계 여고</div>
-      </StStatusDiv>
-      {/* <StTextBox>
-        <p>{userInfo?.nickname}</p>
-        {!edit ? (
-          <p className="text show">{motto && motto}</p>
-        ) : (
-          <div className="editText" onClick={onClickEditTextHandler}>
-            <form ref={motoFormRef} onSubmit={onSubmitHandler}>
-              <input
-                type="text"
-                ref={motoInputRef}
-                value={motoInput}
-                onChange={onChangeMotoInputHandler}
-              />
-              <button type="button" onClick={onClickEditTextCancelHandler}>
-                ✖
-              </button>
-              <button type="submit">✔</button>
-            </form>
-            <p className="text show" ref={motoRef}>
-              {motto && motto}
-            </p>
-            <img
-              className="show"
-              src={logoPencil}
-              alt="editTextImg"
-              ref={motoImgRef}
-            />
-          </div>
-        )}
-      </StTextBox> */}
-      {!edit ? (
-        <StBtn onClick={onClickEditHandler}>프로필 편집</StBtn>
-      ) : (
-        <StBtn onClick={onClickCompleteHandler}>완료</StBtn>
-      )}
-    </StProfileContainer>
+        </StTextBox> */}
+        <StBtn
+          onClick={() => {
+            navigate("/profileedit");
+          }}
+        >
+          프로필 편집
+        </StBtn>
+        {/* <StBtn onClick={onClickCompleteHandler}>완료</StBtn> */}
+      </StProfileContainer>
+    </>
   );
 };
 

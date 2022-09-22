@@ -10,6 +10,8 @@ import GoogleLogin from "../components/login/GoogleLogin";
 import NaverLogin from "../components/login/NaverLogin";
 import ProfileInfoPage from "../pages/ProfileInfoPage";
 import PlannerCategoryAdd from "../components/planner/PlannerCategoryAdd";
+import Setting from "../components/my/Setting";
+import ProfileEdit from "../components/my/ProfileEdit";
 
 const Router = () => {
   let token = localStorage.getItem("accessToken");
@@ -25,6 +27,8 @@ const Router = () => {
         />
         <Route path="/" element={<MainPage />} />
         <Route path="/my" element={<MyPage />} />
+        <Route path="/profileedit" element={<ProfileEdit />} />
+        <Route path="/setting" element={<Setting />} />
         <Route path="/planner" element={<PlannerPage />} />
         <Route path="/planner/category" element={<PlannerCategoryAdd />} />
         <Route path="/statistics" element={<StatisticsPage />} />
