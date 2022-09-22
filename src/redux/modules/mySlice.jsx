@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import defaultProfile from "../../assets/img/defaultProfile.jpg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -7,14 +8,14 @@ const accessToken = localStorage.getItem("accessToken");
 // const nickname = localStorage.getItem('nickname')
 const config = {
   headers: {
-    'Content-Type': 'multipart/form-data',
+    "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${accessToken}`,
   },
 };
 
 const configStr = {
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`,
   },
 };
@@ -45,11 +46,15 @@ export const __postProfileImg = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-      const data = await axios.post(`${BASE_URL}/image/profile`, payload, config);
+      const data = await axios.post(
+        `${BASE_URL}/image/profile`,
+        payload,
+        config
+      );
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -64,7 +69,7 @@ export const __postProfileMoto = createAsyncThunk(
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -104,7 +109,10 @@ export const __deleteImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload, typeof payload);
     try {
-      const data = await axios.delete(`${BASE_URL}/image/boast/${payload}`, config);
+      const data = await axios.delete(
+        `${BASE_URL}/image/boast/${payload}`,
+        config
+      );
       console.log("data", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
@@ -162,7 +170,7 @@ export const mySlice = createSlice({
     },
     [__getImages.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload', action.payload);
+      console.log("action.payload", action.payload);
       state.images = action.payload.data;
     },
     [__getImages.rejected]: (state, action) => {
@@ -186,15 +194,16 @@ export const mySlice = createSlice({
     [__deleteImages.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log(action.payload);
-      state.userInfo.imgList = state.userInfo.imgList.filter((data) => data.id !== Number(action.payload));
+      state.userInfo.imgList = state.userInfo.imgList.filter(
+        (data) => data.id !== Number(action.payload)
+      );
     },
     [__deleteImages.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    }
-
-  }
+    },
+  },
 });
 
-export const { } = mySlice.actions;
+export const {} = mySlice.actions;
 export default mySlice.reducer;

@@ -12,25 +12,26 @@ import {
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
-import { __getAchievementRate } from "../../redux/modules/mainSlice";
+import { __getTotalRate } from "../../redux/modules/mainSlice";
+import { useNavigate } from "react-router-dom";
+import settingSvg from "../../assets/img/myPage/settingSvg.svg";
+import defaultProfile from "../../assets/img/defaultProfile.jpg";
+import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import Setting from "./Setting";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
-    dispatch(__getAchievementRate());
+    dispatch(__getTotalRate());
   }, []);
-
-  const { achievementRate } = useSelector((state) => state.main);
-  let totalRate = Math.round(achievementRate[1].achievementRate);
-  let totalRate2 = isNaN(totalRate)
-    ? 0
-    : Math.round(achievementRate[1].achievementRate);
 
   const { userInfo, motto } = useSelector((state) => state.my);
   console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
 
   const [edit, setEdit] = useState(false);
   const [motoInput, setMotoInput] = useState("");
+  const [settingMenu, setSettingMenu] = useState(false);
 
   const uploadProfileRef = useRef(null);
   const motoFormRef = useRef(null);
@@ -55,7 +56,7 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("multipartFile", e.target.files[0]);
 
-    dispatch(__postProfileImg(formData));
+    // dispatch(__postProfileImg(formData));
   };
 
   const onClickEditProfileImgHandler = () => {
@@ -99,99 +100,147 @@ const Profile = () => {
   }, [setMotoInput, motto]);
 
   useEffect(() => {
-    dispatch(__getMyInfo());
+    // dispatch(__getMyInfo());
   }, [dispatch]);
 
   return (
-    <StProfileContainer>
-      <StImgInfoBox>
-        <StImg>
-          {!edit ? (
-            <>
-              <img src={userInfo && userInfo.profileImage} alt="profile" />
-              <div className="rank">실시간 순위</div>
-            </>
-          ) : (
-            <div onClick={onClickEditProfileImgHandler}>
-              <input
-                type="file"
-                accept="image/*"
-                ref={uploadProfileRef}
-                onChange={onChangeUploadProfileImageHandler}
-              />
-              <img src={userInfo && userInfo.profileImage} alt="profile" />
-              <div className="editBox">
-                <img src={cameraSvg} alt="imgEdit" style={{ width: "100%" }} />
-              </div>
-            </div>
-          )}
-        </StImg>
-        <StInfo>
-          <p>평균 투두 달성률</p>
-          <p>{totalRate2} %</p>
-          <ProgressBar
-            now={totalRate2}
-            style={{
-              backgroundColor: "#fff",
-              color: "#FF8F27",
-              height: "12px",
-              marginTop: "5px",
+    <>
+      <StProfileContainer>
+        <div className="title">
+          <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
+            마이페이지
+          </h3>
+          <img
+            src={settingSvg}
+            onClick={() => {
+              navigate("/setting");
             }}
           />
-        </StInfo>
-      </StImgInfoBox>
-      <StTextBox>
-        <p>{userInfo?.nickname}</p>
-        {!edit ? (
-          <p className="text show">{motto && motto}</p>
-        ) : (
-          <div className="editText" onClick={onClickEditTextHandler}>
-            <form ref={motoFormRef} onSubmit={onSubmitHandler}>
-              <input
-                type="text"
-                ref={motoInputRef}
-                value={motoInput}
-                onChange={onChangeMotoInputHandler}
+        </div>
+        <StLine></StLine>
+        <StImgInfoBox>
+          <StImg>
+            <img src={profileImgSvg} alt="profile" />
+            {/* {!edit ? (
+              <>
+                <img src={defaultProfile} alt="profile" />
+              </>
+            ) : (
+              <div onClick={onClickEditProfileImgHandler}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={uploadProfileRef}
+                  onChange={onChangeUploadProfileImageHandler}
+                />
+                <img src={userInfo && userInfo.profileImage} alt="profile" />
+                <div className="editBox">
+                  <img
+                    src={cameraSvg}
+                    alt="imgEdit"
+                    style={{ width: "100%" }}
+                  />
+                </div>
+              </div>
+            )} */}
+          </StImg>
+          <StInfo>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">게시물</span>
+            </div>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">팔로워</span>
+            </div>
+            <div className="nextToPicture">
+              <span className="count">60</span>
+              <span className="text">팔로잉</span>
+            </div>
+          </StInfo>
+        </StImgInfoBox>
+        <StStatusDiv>
+          <div className="userName">이름</div>
+          <div>09년생 / INFJ / 일반계 여고</div>
+        </StStatusDiv>
+        {/* <StTextBox>
+          <p>{userInfo?.nickname}</p>
+          {edit ? (
+            <p className="text show">{motto && motto}</p>
+          ) : (
+            <div className="editText" onClick={onClickEditTextHandler}>
+              <form ref={motoFormRef} onSubmit={onSubmitHandler}>
+                <input
+                  type="text"
+                  ref={motoInputRef}
+                  value={motoInput}
+                  onChange={onChangeMotoInputHandler}
+                />
+                <button type="button" onClick={onClickEditTextCancelHandler}>
+                  ✖
+                </button>
+                <button type="submit">✔</button>
+              </form>
+              <p className="text show" ref={motoRef}>
+                {motto && motto}
+              </p>
+              <img
+                className="show"
+                src={logoPencil}
+                alt="editTextImg"
+                ref={motoImgRef}
               />
-              <button type="button" onClick={onClickEditTextCancelHandler}>
-                ✖
-              </button>
-              <button type="submit">✔</button>
-            </form>
-            <p className="text show" ref={motoRef}>
-              {motto && motto}
-            </p>
-            <img
-              className="show"
-              src={logoPencil}
-              alt="editTextImg"
-              ref={motoImgRef}
-            />
-          </div>
-        )}
-      </StTextBox>
-      {!edit ? (
-        <StBtn onClick={onClickEditHandler}>프로필 편집</StBtn>
-      ) : (
-        <StBtn onClick={onClickCompleteHandler}>완료</StBtn>
-      )}
-    </StProfileContainer>
+            </div>
+          )}
+        </StTextBox> */}
+        <StBtn
+          onClick={() => {
+            navigate("/profileedit");
+          }}
+        >
+          프로필 편집
+        </StBtn>
+        {/* <StBtn onClick={onClickCompleteHandler}>완료</StBtn> */}
+      </StProfileContainer>
+    </>
   );
 };
+
+const StStatusDiv = styled.div`
+  width: 90%;
+  margin: 0.3em auto 0 auto;
+  .userName {
+    font-weight: 1000;
+  }
+`;
+
+const StLine = styled.div`
+  width: 100%;
+  height: 1.5px;
+  background-color: #ffe9d4;
+`;
 
 const StProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 300px;
   box-sizing: border-box;
-  padding: 2rem 1rem 1rem 1rem;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 1.5em;
+  }
 `;
 
 const StImgInfoBox = styled.div`
-  width: 100%;
-  height: 100px;
+  width: 90%;
+  margin: 1em auto 0 auto;
+  height: 30%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const StImg = styled.div`
@@ -241,36 +290,46 @@ const StImg = styled.div`
 `;
 
 const StInfo = styled.div`
-  width: 168px;
+  width: 70%;
   height: 80px;
-  background-color: #ffe9d4;
 
   border-radius: 10px;
   font-size: 0.9rem;
   padding: 0.5rem 0.8rem;
-  box-sizing: border-box;
-  text-align: right;
-  /* box-shadow: 0px 4px 15px 1px rgba(17, 17, 17, 0.05);*/
-  box-shadow: 0px 4px 15px 0px lightgray;
 
-  & p {
-    margin: 0;
-    color: #ff8f27;
-  }
+  /* box-shadow: 0px 4px 15px 0px lightgray; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-  .progress-bar {
-    background-color: #ff8f27;
+  .nextToPicture {
+    width: 30%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .count {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .text {
+      color: gray;
+      font-weight: 7000;
+    }
   }
 `;
 
 const StTextBox = styled.div`
   margin-top: 10px;
-  height: 90px;
 
-  & p {
-    margin: 0;
+  /* height: 90px; */
+  /* p {
     color: #111;
-    font-size: 1rem;
+    font-size: 2rem;
   }
 
   & p.text {
@@ -328,11 +387,11 @@ const StTextBox = styled.div`
       height: 20px;
       display: block;
     }
-  }
+  } */
 `;
 
 const StBtn = styled.button`
-  width: 280px;
+  width: 50%;
   height: 40px;
   background-color: #f8f8f8;
   border-radius: 8px;

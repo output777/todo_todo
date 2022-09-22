@@ -7,7 +7,10 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
-import { __getAchievementRate } from "../../redux/modules/mainSlice";
+import {
+  __getThisMonthRate,
+  __getTotalRate,
+} from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 import Dday from './Dday';
@@ -24,17 +27,6 @@ const Main = () => {
   const [weekly, setWeekly] = useState(true);
   const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // -------------------- 소수점 반올림 ---------------------
-  // let thisMonthRate = Math.round(achievementRate[0].achievementRate);
-  // let thisMonthRate2 = isNaN(thisMonthRate)
-  //   ? 0
-  //   : Math.round(achievementRate[0].achievementRate);
-
-  // let totalRate = Math.round(achievementRate[1].achievementRate);
-  // let totalRate2 = isNaN(totalRate)
-  //   ? 0
-  //   : Math.round(achievementRate[1].achievementRate);
 
   const nickname = localStorage.getItem("nickname");
 
@@ -65,7 +57,8 @@ const Main = () => {
 
   useEffect(() => {
     // dispatch(__getMyInfo());
-    dispatch(__getAchievementRate());
+    dispatch(__getThisMonthRate());
+    dispatch(__getTotalRate());
   }, []);
 
   return (
