@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import profileImgSvg from "../../src/assets/img/profileImgSvg.svg";
 import arrow from "../assets/img/arrow.svg";
 import follwingcheck from "../assets/img/followingcheck.svg";
 
 const FollowingPage = () => {
+  const [follow, setFollow] = useState(true);
+
+  const followingBtnHandler = () => {
+    setFollow(!follow);
+  };
   return (
     <Stdiv>
       <StFollowtopBox>
@@ -19,10 +24,18 @@ const FollowingPage = () => {
           <StFollowProfile src={profileImgSvg} />
           <StFollowNickname>wowns740</StFollowNickname>
         </div>
-        <StFollowingBtn>
-          팔로잉
-          <img src={follwingcheck} />
-        </StFollowingBtn>
+
+        {follow ? (
+          <StFollowingBtn onClick={followingBtnHandler}>
+            팔로잉
+            <img src={follwingcheck} />
+          </StFollowingBtn>
+        ) : (
+          <StNotFollowBtn onClick={followingBtnHandler}>
+            팔로우
+            <span>+</span>
+          </StNotFollowBtn>
+        )}
       </StFollowBox>
     </Stdiv>
   );
@@ -115,6 +128,8 @@ const StFollowingBtn = styled.button`
 `;
 
 const StFollowtopBox = styled.div`
+  position: sticky;
+  top: 0;
   background-color: #ffffff;
   height: 100px;
   display: flex;

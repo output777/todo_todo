@@ -6,7 +6,8 @@ import * as echarts from "echarts";
 import { __getLineChartData } from "../../redux/modules/statisticsSlice";
 
 const LineChart = () => {
-  const { data } = useSelector((state) => state.statistics);
+  const data = useSelector((state) => state?.statistics);
+
   const dispatch = useDispatch();
   echarts.registerTheme("myTheme", {
     backgroundColor: "#ffffff",
@@ -30,17 +31,15 @@ const LineChart = () => {
   });
   useEffect(() => {
     dispatch(__getLineChartData());
-    let a = [30, 33, 15, 45, 34, 78];
-    let b = [24, 43, 45, 78, 45, 56];
-    // setOptions({
-    //   ...options,
-    //   series: [{ data: a }, { data: b }],
-    // });
-  }, []);
+  }, [dispatch]);
 
+  console.log(data.lineData);
   const [options, setOptions] = useState({
     legend: {
-      data: ["상위랭커", "이번주"],
+      data: [
+        //"상위랭커",
+        // "이번주",
+      ],
     },
 
     xAxis: {
@@ -53,15 +52,15 @@ const LineChart = () => {
       splitNumber: 3,
     },
     series: [
+      // {
+      //   name: "상위랭커",
+      //   data: [100, 200, 300, 300, 370, 550, 620],
+      //   type: "line",
+      //   color: "#D34C4C",
+      // },
       {
-        name: "상위랭커",
-        data: [100, 200, 300, 300, 370, 550, 620],
-        type: "line",
-        color: "#D34C4C",
-      },
-      {
-        name: "이번주",
-        data: [70, 120, 260, 270, 300, 370, 400],
+        //name: "이번주",
+        data: [],
         type: "line",
         color: "#618AF2",
       },

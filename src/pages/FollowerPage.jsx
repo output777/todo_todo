@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import profileImgSvg from "../../src/assets/img/profileImgSvg.svg";
 import arrow from "../assets/img/arrow.svg";
+import follwingcheck from "../assets/img/followingcheck.svg";
 
 const FollowerPage = () => {
+  const [follow, setFollow] = useState(false);
+
+  const followerBtnHandler = () => {
+    setFollow(!follow);
+  };
+
   return (
     <Stdiv>
       <StFollowtopBox>
@@ -18,10 +25,18 @@ const FollowerPage = () => {
           <StFollowProfile src={profileImgSvg} />
           <StFollowNickname>wowns740</StFollowNickname>
         </div>
-        <StNotFollowBtn>
-          팔로우
-          <span>+</span>
-        </StNotFollowBtn>
+
+        {follow ? (
+          <StFollowingBtn onClick={followerBtnHandler}>
+            팔로잉
+            <img src={follwingcheck} />
+          </StFollowingBtn>
+        ) : (
+          <StNotFollowBtn onClick={followerBtnHandler}>
+            팔로우
+            <span>+</span>
+          </StNotFollowBtn>
+        )}
       </StFollowBox>
     </Stdiv>
   );
@@ -95,7 +110,27 @@ const StNotFollowBtn = styled.button`
   }
 `;
 
+const StFollowingBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  color: #ff8f27;
+  width: 100px;
+  height: 38px;
+  background: #fff3e8;
+  border-radius: 16px;
+  img {
+    padding: 0 0 0px 4px;
+    font-size: 16px;
+  }
+`;
+
 const StFollowtopBox = styled.div`
+  position: sticky;
+  top: 0;
   background-color: #ffffff;
   height: 100px;
   display: flex;

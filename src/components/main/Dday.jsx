@@ -42,7 +42,7 @@ const Dday = () => {
   console.log(ddate.selectedDate.replace(/\-/g, ""));
 
   //옵셔널 체이닝을 사용하여 데이터를 불러오느라 아직 없을 경우에는 에러가 아닌 null을, 데이터가 있으면 값을 불러옴
-  // const dday = useSelector((state) => state.main?.todos);
+  // const dday = useSelector((state) => state.main?.dday);
   const dday = useSelector((state) => state.main);
   console.log(dday.dday);
 
