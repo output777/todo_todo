@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import defaultProfile from "../../assets/img/defaultProfile.jpg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
