@@ -13,6 +13,7 @@ const HeatMapSample = () => {
 
   const yLabels = ["", "", "", "", "", "", ""]; // 월, 화, 수, 목, 금, 토, 일
   const yLabelsVisibility = new Array(7).fill().map((_, i) => i + 1);
+
   const data = new Array(yLabels.length)
     .fill(0)
     .map(() =>
