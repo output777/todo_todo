@@ -13,6 +13,7 @@ import {
 } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
+import Dday from './Dday';
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -74,9 +75,8 @@ const Main = () => {
           </div>
         </div>
 
-        <div className="DdayBox">
-          수능 <br />
-          D-100
+        <div>
+          <Dday />
         </div>
       </StPhrasesbox>
       <StAchievementsBox>
@@ -222,12 +222,13 @@ const StPhrasesbox = styled.div`
   width: 90%;
   margin: auto;
   padding-top: 3%;
+  display: flex;
+  align-items:flex-start;
   span {
     color: #ff7b00;
     font-weight: bold;
     font-size: 1rem;
   }
-
   .mainTopSentenceBox {
     margin-top: 0.7em;
   }
@@ -236,7 +237,6 @@ const StPhrasesbox = styled.div`
     font-weight: bold;
     font-size: 1rem;
   }
-
   .DdayBox {
     margin-top: 0.7em;
     height: 80%;
@@ -252,7 +252,6 @@ const StPhrasesbox = styled.div`
     justify-content: center;
     text-align: center;
   }
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -295,44 +294,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 
@@ -362,7 +361,6 @@ const StRankingPhrases = styled.div`
 
 const StRankingBtnBox = styled.div`
   font-weight: 600;
-
   background-color: #fafafa;
   padding: 0.1em 0em 1em 1.5em;
   position: sticky;
@@ -372,12 +370,9 @@ const StRankingBtnBox = styled.div`
 const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-
   background: #ff8f27;
-
   border: 1px solid #ff8f27;
   border-radius: 44px;
-
   span {
     color: white;
     font-size: 14px;
@@ -389,10 +384,8 @@ const StMonthRankingBtn2nd = styled.button`
   height: 40px;
   margin: 10px 0 0 2%;
   background: #ffffff;
-
   border: 1px solid #d7d5d5;
   border-radius: 44px;
-
   span {
     color: #9f9e9e;
     font-size: 14px;
@@ -403,10 +396,8 @@ const StMonthRankingBtn = styled.button`
   height: 40px;
   margin: 10px 0 0 2%;
   background: #ff8f27;
-
   border: 1px solid #ff8f27;
   border-radius: 44px;
-
   span {
     color: white;
     font-size: 14px;
@@ -416,12 +407,9 @@ const StMonthRankingBtn = styled.button`
 const StWeeklyRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
-
   background: #ffffff;
-
   border: 1px solid #d7d5d5;
   border-radius: 44px;
-
   span {
     color: #9f9e9e;
     font-size: 14px;
@@ -434,7 +422,6 @@ const StModalTop = styled.div`
   align-items: center;
   width: 350px;
   height: 85px;
-
   border-radius: 48px 48px 0 0;
   background-color: #ffe9d5;
   color: #ff7b00;
@@ -463,12 +450,10 @@ const StCloseBtnContainer = styled.div`
 const StModalCloseBtn = styled.button`
   display: flex;
   justify-content: center;
-
   width: 93px;
   border: none;
   background-color: white;
   color: #ff8f27;
-
   margin-top: 5%;
 `;
 

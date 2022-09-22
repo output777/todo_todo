@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const accessToken = localStorage.getItem("accessToken");
@@ -83,7 +83,7 @@ export const __getTodoCount = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `${BASE_URL}/todo/achievement?date=${moment(payload).format(
+        `${BASE_URL}/todo/achievement?date=${dayjs(payload).format(
           "YYYY-MM-DD"
         )}`,
         config
@@ -101,7 +101,7 @@ export const __getTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `${BASE_URL}/todo?date=${moment(payload).format("YYYY-MM-DD")}`,
+        `${BASE_URL}/todo?date=${dayjs(payload).format("YYYY-MM-DD")}`,
         config
       );
       console.log("data", data.data);
@@ -132,13 +132,13 @@ export const __updateTodo = createAsyncThunk(
       console.log("payload", payload, payload.todoId, typeof payload.todoId);
       const data = await axios.put(
         `${BASE_URL}/todo/${payload.todoId}`,
-        payload.edit,
+        payload,
         config
       );
-      console.log('data', data)
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }

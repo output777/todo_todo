@@ -19,11 +19,10 @@ const initialState = {
 export const __getSearch = createAsyncThunk(
   "getSearch",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
+    console.log("payload", payload.search, payload.page);
     try {
       const data = await axios.get(
-        `${BASE_URL}/school?search=${payload.search}&page=${
-          payload.page
+        `${BASE_URL}/school?search=${payload.search}&page=${payload.page
         }&size=${5}`
       );
       return thunkAPI.fulfillWithValue(data.data.content);

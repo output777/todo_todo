@@ -195,7 +195,7 @@ const Planner = () => {
             <div>{0 + "%"}</div>
           </StNumberDiv>
           {/* variant = "warning", "danger", "success" ,"info" */}
-          <ProgressBar now={0} variant="temp" />
+          <ProgressBar now={0} variant='temp' />
         </StProgressBarDiv>
       </StAchievementRateDiv>
       <StInputContainer>

@@ -2,11 +2,15 @@ import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../utils/Modal";
 import Calendar from "../utils/Calendar";
-import moment from "moment";
+import dayjs from "dayjs";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
 
 const PlannerCalender = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [calenderdate, setCalenderdate] = useState(
+    dayjs(Date.now()).format("YYYY-MM-DD")
+  );
+  console.log(dayjs(calenderdate).format("YYYY-MM-DD"));
 
   const openModal = () => {
     setModalVisible(true);
@@ -14,9 +18,10 @@ const PlannerCalender = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
   return (
     <StDateDiv>
-      <StSpan>{moment(Date.now()).format("YYYY-MM-DD")}</StSpan>
+      <StSpan>{dayjs(calenderdate).format("YYYY-MM-DD")}</StSpan>
       <img src={calendarSvg} onClick={openModal} />
       {modalVisible && (
         <Modal
@@ -27,7 +32,7 @@ const PlannerCalender = () => {
           width='350px'
           top='30%'
         >
-          <Calendar />
+          <Calendar setCalenderdate={setCalenderdate} />
         </Modal>
       )}
     </StDateDiv>

@@ -16,13 +16,13 @@ import { throttle, debounce, escapeRegExp, set } from "lodash";
 
 const ProfileInfoCopy = () => {
   const { searchList } = useSelector((state) => state.profileinfo);
-  console.log(searchList);
   // const [ref, inView] = useInView();
   // console.log("inView", inView);
 
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(0); // 페이지
+  const [check, setCheck] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -95,61 +95,56 @@ const ProfileInfoCopy = () => {
   };
 
   // ----------------- 무한스크롤 -----------------------
-  const accessToken = localStorage.getItem("accessToken");
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-  const checkIntersect = useCallback(async ([entry], observer) => {
+  const checkIntersect = async ([entry], observer) => {
+    setPage((prev) => prev + 1);
     observer.unobserve(entry.target);
-    // setPage((prev) => prev + 1);
-    console.log(page);
+  };
 
-    // const _ = require("lodash");
-    // let throt_fun = _.throttle(function () {
-    //   console.log("Function throttled after 1000ms!");
-    // }, 2000);
-    // throt_fun();
-    // setHighschools([...data.data.content]);
-    // setHighschoolResult([...data.data.content]);
-    // observer.unobserve(entry.target);
-    // setPage((prev) => prev + 1); // 인풋값 입력할때마다 page가 바뀌면 안됨
-  }, []);
-
-  // console.log("highschools", highschools);
-  console.log("page", page);
 
   // 무한 루프 발생으로 분리
-  useEffect(() => {
-    dispatch(__getSearch({ search: highschoolInput, page: page }));
-  }, [page]);
+  console.log('highschoolInput.length', highschoolInput.length)
+
+  console.log('check', check);
 
   useEffect(() => {
-    let observer = new IntersectionObserver(checkIntersect, {
-      threshold: 0.5,
-    });
-    observer.observe(targetRef.current);
+    if (highschoolInput.length > 0) {
+      dispatch(__getSearch({ search: highschoolInput, page: page }))
+    }
+  }, [highschoolInput]);
+
+  useEffect(() => {
+    let observer;
+    console.log('targetRef', targetRef);
+    if (targetRef) {
+      console.log('ok?????')
+      observer = new IntersectionObserver(checkIntersect, {
+        threshold: 0.3,
+      });
+      observer.observe(targetRef.current);
+    }
+    return () => {
+      console.log(searchList);
+      console.log('nnnnnnnnnnnnnnnn')
+      observer && observer.disconnect()
+    };
   }, [searchList]);
 
   // ------------------------------------------------------
 
   const ch2pattern = (ch) => {
-    const offset = 44032;
+    // const offset = 44032;
 
-    if (/[가-힣]/.test(ch)) {
-      const chCode = ch.charCodeAt(0) - offset;
+    // if (/[가-힣]/.test(ch)) {
+    //   const chCode = ch.charCodeAt(0) - offset;
 
-      if (chCode % 28 > 0) {
-        return ch;
-      }
+    //   if (chCode % 28 > 0) {
+    //     return ch;
+    //   }
 
-      const begin = Math.floor(chCode / 28) * 28 + offset;
-      const end = begin + 27;
-      return `[\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
-    }
+    //   const begin = Math.floor(chCode / 28) * 28 + offset;
+    //   const end = begin + 27;
+    //   return `[\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
+    // }
 
     // if (/[ㄱ-ㅎ]/.test(ch)) {
     //   const con2syl = {
@@ -169,7 +164,7 @@ const ProfileInfoCopy = () => {
     //   const end = begin + 587;
     // return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     // }
-    return escapeRegExp(ch);
+    // return escapeRegExp(ch);
   };
 
   const createFuzzyMatcher = (input) => {
@@ -181,17 +176,18 @@ const ProfileInfoCopy = () => {
     const { value } = e.target;
     let val = value.trim();
     setHighschoolInput(val);
+    setPage(0);
 
-    const regex = createFuzzyMatcher(val);
+    // const regex = createFuzzyMatcher(val);
 
-    const resultData = highschools
-      .filter((row) => {
-        return regex.test(row["schoolName"]);
-      })
-      .map((row) => {
-        return { school: row["schoolName"], adres: row["adres"] };
-      });
-    setHighschoolResult(resultData);
+    // const resultData = highschools
+    //   .filter((row) => {
+    //     return regex.test(row["schoolName"]);
+    //   })
+    //   .map((row) => {
+    //     return { school: row["schoolName"], adres: row["adres"] };
+    //   });
+    // setHighschoolResult(resultData);
   };
 
   const onClickSelectHandler = (e) => {
@@ -287,17 +283,17 @@ const ProfileInfoCopy = () => {
       <StHighschoolSearchBox className="scroll">
         {highschoolInput.length > 0
           ? searchList &&
-            searchList.map((data, index) => (
-              <div className="content" key={index}>
-                <div className="school" onClick={onClickSelectHandler}>
-                  {data.schoolName}
-                </div>
-                <div className="region">
-                  <img src={regionSvg} />
-                  {data.adres}
-                </div>
+          searchList.map((data, index) => (
+            <div className="content" key={index}>
+              <div className="school" onClick={onClickSelectHandler}>
+                {data.schoolName}
               </div>
-            ))
+              <div className="region">
+                <img src={regionSvg} />
+                {data.adres}
+              </div>
+            </div>
+          ))
           : null}
         <StRefDiv ref={targetRef} style={{ backgroundColor: "red" }}>
           temp
@@ -476,9 +472,10 @@ const StHighschoolBox = styled.div`
 const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   border-radius: 10px;
   height: 50%;
+  border: 2px solid green;
 
   & .content {
     align-items: center;
