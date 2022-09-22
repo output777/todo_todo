@@ -15,7 +15,7 @@ const UploadPhoto = () => {
   const uploadRef = useRef(null);
 
   const onClickUploadPhotoHandler = () => {
-    uploadRef.current.click();
+    // uploadRef.current.click();
   };
 
   const onChangeUploadImageHandler = async (e) => {
@@ -39,12 +39,12 @@ const UploadPhoto = () => {
   return (
     <StUploadPhoto onClick={onClickUploadPhotoHandler}>
       <input
-        type='file'
-        accept='image/*'
+        type="file"
+        accept="image/*"
         ref={uploadRef}
-        onChange={onChangeUploadImageHandler}
+        // onChange={onChangeUploadImageHandler}
       />
-      <img src={cameraSvg} alt='camera' />
+      {/* <img src={cameraSvg} alt="camera" /> */}
     </StUploadPhoto>
   );
 };
@@ -63,7 +63,7 @@ const StUploadPhoto = styled.div`
   cursor: pointer;
 
   & input {
-    display: none;
+    /* display: none; */
   }
 `;
 

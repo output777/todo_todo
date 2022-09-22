@@ -12,7 +12,7 @@ import {
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
-import { __getTotalRate } from "../../redux/modules/mainSlice";
+// import { __getTotalRate } from "../../redux/modules/mainSlice";
 import { useNavigate } from "react-router-dom";
 import settingSvg from "../../assets/img/myPage/settingSvg.svg";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -23,7 +23,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(__getTotalRate());
+    // dispatch(__getTotalRate());
   }, []);
 
   const { userInfo, motto } = useSelector((state) => state.my);

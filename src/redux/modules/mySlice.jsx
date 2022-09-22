@@ -83,7 +83,7 @@ export const __getImages = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.get(`${BASE_URL}/image/boast`, config);
-      console.log("data", data);
+      console.log("boast", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
@@ -133,6 +133,7 @@ export const mySlice = createSlice({
       state.isLoading = true;
     },
     [__getMyInfo.fulfilled]: (state, action) => {
+      console.log("state.userInfo", action.payload);
       state.isLoading = false;
       state.userInfo = action.payload;
       state.motto = action.payload.myMotto;
@@ -172,7 +173,7 @@ export const mySlice = createSlice({
     },
     [__getImages.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("action.payload", action.payload);
+      console.log("action.payload", action.payload.data);
       state.images = action.payload.data;
     },
     [__getImages.rejected]: (state, action) => {

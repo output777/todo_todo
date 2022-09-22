@@ -17,6 +17,8 @@ const ProfilePhotos = () => {
   const [selectImgIndex, setSelectImgIndex] = useState(0);
 
   const { userInfo } = useSelector((state) => state.my);
+  const { images } = useSelector((state) => state.my);
+  console.log("userInfo", userInfo);
 
   const selectImgFunc = (id) => {
     setSelectImgId(id);
@@ -28,7 +30,7 @@ const ProfilePhotos = () => {
   };
 
   const onClickFullScreenImgsHandler = (e) => {
-    console.log(e.target.id);
+    // console.log(e.target.id);
     const { id } = e.target;
     selectImgFunc(id);
     // console.log('userInfo', userInfo.imgList, userInfo.imgList.length);
@@ -205,41 +207,41 @@ const StSliderBox = styled.div`
 `;
 
 const StFullScreen = styled.div`
-  width:100%;
-  height:100vh;
+  width: 100%;
+  height: 100vh;
   background-color: #111;
-  z-index:10;
-  position:fixed;
+  z-index: 10;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 
   & .header {
-    height:50px;
-    display:flex;
-    align-items:center;
-    padding:15px;
-    justify-content:space-between;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    justify-content: space-between;
+  }
+  .cancelBox {
+    width: 15px;
+    height: auto;
 
-    .cancelBox {
-    width:15px;
-    height:auto;
-
-      img {
-        width:100%;
-      }
+    img {
+      width: 100%;
     }
+  }
 
-    .imgCount {
-      color: #fff;
-    }
+  .imgCount {
+    color: #fff;
+  }
 
-    .optionBox {
-      img {
-        transform: rotate(90deg)
-      }
+  .optionBox {
+    img {
+      transform: rotate(90deg);
     }
+  }
 `;
 
 const StModalBox = styled.div`
