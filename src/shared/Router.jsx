@@ -14,6 +14,7 @@ import FollowerPage from "../pages/FollowerPage";
 import FollowingPage from "../pages/FollowingPage";
 import Setting from "../components/my/Setting";
 import ProfileEdit from "../components/my/ProfileEdit";
+import Planner from "../components/planner/Planner";
 
 const Router = () => {
   let token = localStorage.getItem("accessToken");
@@ -35,6 +36,7 @@ const Router = () => {
         <Route path="/setting" element={<Setting />} />
         <Route path='/planner' element={<PlannerPage />} />
         <Route path='/planner/category' element={<PlannerCategoryAdd />} />
+        <Route path='/planner/category/todolist' element={<Planner />} />
         <Route path='/statistics' element={<StatisticsPage />} />
         <Route path='/profileinfo' element={<ProfileInfoPage />} />
         <Route path='/user/kakao/callback' element={<KakaoLogin />} />

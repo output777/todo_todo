@@ -6,35 +6,36 @@ import * as echarts from "echarts";
 import { __getLineChartData } from "../../redux/modules/statisticsSlice";
 
 const LineChart = () => {
-  const data = useSelector((state) => state?.statistics);
-
   const dispatch = useDispatch();
-  echarts.registerTheme("myTheme", {
-    backgroundColor: "#ffffff",
+  const [lineDataRate, setLineDataRate] = useState([]);
+  const { lineData } = useSelector((state) => state.statistics);
 
-    title: {
-      textStyle: {
-        color: "#ffffff",
-      },
-    },
-    legend: {
-      textStyle: {
-        color: "#ffffff",
-      },
-    },
-    dataZoom: {
-      textStyle: {
-        color: "#ffffff",
-      },
-      borderColor: "#b9beed",
-    },
-  });
-  useEffect(() => {
-    dispatch(__getLineChartData());
-  }, [dispatch]);
+  // console.log('lineData', lineData)
+  console.log(lineData.length > 0 && lineData[0].achievementRate);
 
-  console.log(data.lineData);
-  const [options, setOptions] = useState({
+  // echarts.registerTheme("myTheme", {
+  //   backgroundColor: "#ffffff",
+
+  //   title: {
+  //     textStyle: {
+  //       color: "#ffffff",
+  //     },
+  //   },
+  //   legend: {
+  //     textStyle: {
+  //       color: "#ffffff",
+  //     },
+  //   },
+  //   dataZoom: {
+  //     textStyle: {
+  //       color: "#ffffff",
+  //     },
+  //     borderColor: "#b9beed",
+  //   },
+  // });
+
+
+  const options = {
     legend: {
       data: [
         //"상위랭커",
@@ -59,8 +60,8 @@ const LineChart = () => {
       //   color: "#D34C4C",
       // },
       {
-        //name: "이번주",
-        data: [],
+        // name: "이번주",
+        data: lineDataRate,
         type: "line",
         color: "#618AF2",
       },
@@ -70,7 +71,26 @@ const LineChart = () => {
       left: "15%",
       top: "12%",
     },
-  });
+  };
+
+  useEffect(() => {
+    const arr = [];
+    console.log('lineData', lineData)
+    if (lineData.length > 0) {
+      for (let i = 0; i < lineData.length; i++) {
+        const data = lineData[i].achievementRate;
+        arr.push(data);
+      }
+    }
+    console.log('arr', arr);
+    setLineDataRate(arr);
+  }, [lineData])
+
+  console.log('lineDataRate', lineDataRate)
+
+  useEffect(() => {
+    dispatch(__getLineChartData());
+  }, [dispatch]);
 
   return (
     <ECharts
