@@ -10,6 +10,8 @@ const config = {
   },
 };
 
+const nickname = localStorage.getItem("nickname");
+
 const initialState = {
   rankScoreData: [{}, {}, {}],
   barData: [{}, {}],
@@ -28,11 +30,11 @@ export const __getRankScoreData = createAsyncThunk(
         config
       );
       const weeklyData = await axios.get(
-        `${BASE_URL}/rank/weekly/member`,
+        `${BASE_URL}/rank/weekly/member/${nickname}`,
         config
       );
       const monthlyData = await axios.get(
-        `${BASE_URL}/rank/monthly/member`,
+        `${BASE_URL}/rank/monthly/member/${nickname}`,
         config
       );
       console.log("lastWeekData.data", lastWeekData.data);
@@ -55,8 +57,28 @@ export const __getLineChartData = createAsyncThunk(
   async (payload, thunkAPI) => {
     // console.log("payload", payload);
     try {
-      const data = await axios.get(`${BASE_URL}/rank/lastweek/member`, config);
-      console.log("data.data", data.data);
+      const data = await axios.get(
+        `${BASE_URL}/todo/achievement/thisweek`,
+        config
+      );
+      console.log("linechart", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getHeatMapData = createAsyncThunk(
+  "getHeatMapData",
+  async (payload, thunkAPI) => {
+    // console.log("payload", payload);
+    try {
+      const data = await axios.get(
+        `${BASE_URL}/todo/achievement/dayly`,
+        config
+      );
+      console.log("Heatmap", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -73,7 +95,7 @@ export const statisticsSlice = createSlice({
       state.isLoading = true;
     },
     [__getRankScoreData.fulfilled]: (state, action) => {
-      console.log("extraReducers action.payload", action.payload);
+      // console.log("extraReducers action.payload", action.payload);
       state.isLoading = false;
       state.rankScoreData = action.payload;
     },
@@ -87,11 +109,25 @@ export const statisticsSlice = createSlice({
       state.isLoading = true;
     },
     [__getLineChartData.fulfilled]: (state, action) => {
-      console.log("action.payload", action.payload);
+      console.log("linechart/action.payload", action.payload);
       state.isLoading = false;
       state.lineData = action.payload;
     },
     [__getLineChartData.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log("rejected action", action);
+      state.error = action.payload.message;
+    },
+
+    [__getHeatMapData.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getHeatMapData.fulfilled]: (state, action) => {
+      // console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.heatmapData = action.payload;
+    },
+    [__getHeatMapData.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
       state.error = action.payload.message;

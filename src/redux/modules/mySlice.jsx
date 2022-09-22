@@ -20,6 +20,8 @@ const configStr = {
   },
 };
 
+const nickname = localStorage.getItem("nickname");
+
 const initialState = {
   userInfo: null,
   images: [],
@@ -32,7 +34,7 @@ export const __getMyInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${BASE_URL}/member`, config);
+      const data = await axios.get(`${BASE_URL}/member/${nickname}`, config);
       console.log("data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

@@ -10,6 +10,8 @@ import GoogleLogin from "../components/login/GoogleLogin";
 import NaverLogin from "../components/login/NaverLogin";
 import ProfileInfoPage from "../pages/ProfileInfoPage";
 import PlannerCategoryAdd from "../components/planner/PlannerCategoryAdd";
+import FollowerPage from "../pages/FollowerPage";
+import FollowingPage from "../pages/FollowingPage";
 import Setting from "../components/my/Setting";
 import ProfileEdit from "../components/my/ProfileEdit";
 
@@ -22,20 +24,22 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/login"
-          element={token !== null ? <Navigate replace to="/" /> : <LoginPage />}
+          path='/login'
+          element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
         />
-        <Route path="/" element={<MainPage />} />
-        <Route path="/my" element={<MyPage />} />
+        <Route path='/' element={<MainPage />} />
+        <Route path='/my' element={<MyPage />} />
+        <Route path='/follower' element={<FollowerPage />} />
+        <Route path='/following' element={<FollowingPage />} />
         <Route path="/profileedit" element={<ProfileEdit />} />
         <Route path="/setting" element={<Setting />} />
-        <Route path="/planner" element={<PlannerPage />} />
-        <Route path="/planner/category" element={<PlannerCategoryAdd />} />
-        <Route path="/statistics" element={<StatisticsPage />} />
-        <Route path="/profileinfo" element={<ProfileInfoPage />} />
-        <Route path="/user/kakao/callback" element={<KakaoLogin />} />
-        <Route path="/user/google/callback" element={<GoogleLogin />} />
-        <Route path="/user/naver/callback" element={<NaverLogin />} />
+        <Route path='/planner' element={<PlannerPage />} />
+        <Route path='/planner/category' element={<PlannerCategoryAdd />} />
+        <Route path='/statistics' element={<StatisticsPage />} />
+        <Route path='/profileinfo' element={<ProfileInfoPage />} />
+        <Route path='/user/kakao/callback' element={<KakaoLogin />} />
+        <Route path='/user/google/callback' element={<GoogleLogin />} />
+        <Route path='/user/naver/callback' element={<NaverLogin />} />
       </Routes>
     </BrowserRouter>
   );

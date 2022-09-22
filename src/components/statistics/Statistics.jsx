@@ -7,14 +7,17 @@ import HeatmapSample from "./HeatmapSample";
 import LineChart from "./LineChart";
 import Modal from "../utils/Modal";
 import trophy from "../../assets/img/mainpage/trophy.svg";
-import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
+import {
+  __getRankScoreData,
+  __getLineChartData,
+} from "../../redux/modules/statisticsSlice";
 
 const Statistics = () => {
   const [modalView, setModalView] = useState(false);
   const [modal, setModal] = useState(null);
   const dispatch = useDispatch();
   const { rankScoreData } = useSelector((state) => state.statistics);
-  console.log("rankScoreData", rankScoreData);
+  // console.log("rankScoreData", rankScoreData);
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
     setModal(parameter);
@@ -83,8 +86,8 @@ const Statistics = () => {
         </div>
         <StScoreChangeBoxDiv>
           <div>
-            <span className="lastweek">저번주 </span>
-            <span className="thisweek"> 이번주</span> <br />
+            <span className='lastweek'>저번주 </span>
+            <span className='thisweek'> 이번주</span> <br />
             주간 랭킹 점수 변화
           </div>
 
@@ -109,13 +112,13 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width="350px"
+          width='350px'
           height={
             modal === "score" ? "22em" : modal === "rank" ? "20em" : "21em"
           }
-          radius="48px"
-          top="40%"
-          backgroundcolor="#46464624"
+          radius='48px'
+          top='40%'
+          backgroundcolor='#46464624'
         >
           <StModalTop>
             {modal === "score" ? (
@@ -172,16 +175,16 @@ const Statistics = () => {
                     gap: "3%",
                   }}
                 >
-                  <img src={trophy} />
+                  {/* <img src={trophy} /> */}
                   주간 랭킹 점수란?
                 </span>
                 <div style={{ marginTop: "3%" }}>
                   아래 그래프는 매주 요일별 누적 점수 추이를 보여줍니다.
-                  <span style={{ color: "#D34C4C", fontWeight: "bold" }}>
+                  {/* <span style={{ color: "#D34C4C", fontWeight: "bold" }}>
                     {" "}
                     붉은색
                   </span>
-                  은 상위랭커,
+                  은 상위랭커, */}
                   <span style={{ color: "#618AF2", fontWeight: "bold" }}>
                     파란색
                   </span>
@@ -200,18 +203,20 @@ const Statistics = () => {
                     gap: "3%",
                   }}
                 >
-                  <img src={trophy} />
+                  {/* <img src={trophy} /> */}
                   히트맵 이란?
                 </span>
+                <StTemp>
+                  <div style={{ backgroundColor: "#F3F3F3" }}></div>
+                  <div style={{ backgroundColor: "#FF8F2740" }}></div>
+                  <div style={{ backgroundColor: "#FF8F2780" }}></div>
+                  <div style={{ backgroundColor: "#FF8F27" }}></div>
+                </StTemp>
+
                 <div>
                   히트맵은 주차별(가로축), 요일별(세로축) 달성률에 따라 색깔의
                   옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이 진해집니다.
                 </div>
-                <StTemp>
-                  <div style={{ backgroundColor: "#c2ffbe" }}></div>
-                  <div style={{ backgroundColor: "#4cff3f" }}></div>
-                  <div style={{ backgroundColor: "rgb(0, 213, 0)" }}></div>
-                </StTemp>
               </StModalExplainTop>
             )}
             <StModalCloseDiv onClick={modalToggleHandler}>닫기</StModalCloseDiv>
@@ -226,7 +231,7 @@ export default Statistics;
 const StTemp = styled.div`
   width: 100%;
   height: 30%;
-  margin: 1% auto;
+  margin: 2% auto;
   /* background-color: gray; */
   display: flex;
   flex-direction: row;

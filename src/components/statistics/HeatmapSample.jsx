@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeatMap from "react-heatmap-grid";
+import { __getHeatMapData } from "../../redux/modules/statisticsSlice";
+import { useDispatch } from "react-redux";
 
 export default function () {
   const xLabels = new Array(10).fill(0).map((_, i) => `${i + 1}주`);
@@ -14,6 +16,11 @@ export default function () {
         .fill(0)
         .map(() => Math.floor(Math.random() * 100))
     );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getHeatMapData());
+  }, []);
 
   return (
     <div
@@ -44,13 +51,15 @@ export default function () {
         height={30}
         cellStyle={(background, value, min, max, data, x, y) => ({
           background:
-            value <= 30
-              ? "#c2ffbe"
-              : value <= 70
-              ? "#4cff3f"
-              : value > 70
-              ? "rgb(0, 213, 0)"
-              : null,
+            value <= 25
+              ? "#F3F3F3"
+              : value <= 50
+              ? "#FF8F2740"
+              : value <= 75
+              ? "#FF8F2780"
+              : value > 75
+              ? "#FF8F27"
+              : "null",
           color: "transparent",
           fontSize: "1px",
           // height: "20em",
