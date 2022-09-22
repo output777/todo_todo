@@ -19,13 +19,13 @@ const PlannerCategoryAdd = () => {
   const [categoryId, setCategoryId] = useState(0);
   const [selectCategory, setSelectCategory] = useState();
   const [editCategoryName, setEditCategoryName] = useState(false);
-  const [deleteCategoryCheckModalVisible, setEeleteCategoryCheckModalVisible] = useState(false);
+  const [deleteCategoryCheckModalVisible, setDeleteCategoryCheckModalVisible] = useState(false);
 
   const closeModal = () => {
     setModalVisible(false);
     setEditModalVisible(false);
     setEditCategoryName(false);
-    setEeleteCategoryCheckModalVisible(false);
+    setDeleteCategoryCheckModalVisible(false);
   };
 
   const onChangeInputHandler = (e) => {
@@ -76,18 +76,18 @@ const PlannerCategoryAdd = () => {
 
   const onClickCategoryDeleteHandler = () => {
     console.log('categoryId', categoryId);
-    setEeleteCategoryCheckModalVisible(true);
+    setDeleteCategoryCheckModalVisible(true);
     setEditModalVisible(false);
   }
 
   const onClickEditCategoryNameDeleteCancel = () => {
-    setEeleteCategoryCheckModalVisible(false);
+    setDeleteCategoryCheckModalVisible(false);
     setEditModalVisible(true);
   }
 
   const onClickEditCategoryNameDeleteCheck = () => {
     dispatch(__deleteCategory(categoryId));
-    setEeleteCategoryCheckModalVisible(false);
+    setDeleteCategoryCheckModalVisible(false);
   }
 
   const onClickEditCategoryNameHandler = async () => {
@@ -96,7 +96,7 @@ const PlannerCategoryAdd = () => {
     }
     await dispatch(__updateCategory({ id: categoryId, title: editCategoryName }))
     await dispatch(__getCategory())
-    setEeleteCategoryCheckModalVisible(false);;
+    setDeleteCategoryCheckModalVisible(false);;
     setEditModalVisible(false);
     setEditCategoryName(false);
     setCategoryName('');

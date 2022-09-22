@@ -96,6 +96,22 @@ export const __getTodoCount = createAsyncThunk(
   }
 );
 
+export const __getTodayTodo = createAsyncThunk(
+  "todo/getTodo",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/todo/today`,
+        config
+      );
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getTodo = createAsyncThunk(
   "todo/getTodo",
   async (payload, thunkAPI) => {
@@ -132,7 +148,7 @@ export const __updateTodo = createAsyncThunk(
       console.log("payload", payload, payload.todoId, typeof payload.todoId);
       const data = await axios.put(
         `${BASE_URL}/todo/${payload.todoId}`,
-        payload,
+        payload.editTodo,
         config
       );
       console.log("data", data);
@@ -147,6 +163,7 @@ export const __updateTodo = createAsyncThunk(
 export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
+    console.log('payload', payload);
     try {
       const { data } = await axios.delete(
         `${BASE_URL}/todo/${payload}`,
@@ -242,6 +259,18 @@ export const plannerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // __getTodayTodo
+    [__getTodayTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getTodayTodo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todos = action.payload;
+    },
+    [__getTodayTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // __getTodo
     [__getTodo.pending]: (state) => {
       state.isLoading = true;
@@ -272,15 +301,7 @@ export const plannerSlice = createSlice({
     [__updateTodo.fulfilled]: (state, action) => {
       console.log("action", action);
       state.isLoading = false;
-      state.todos = state.todos.map((todo) => {
-        // 코드 변경했는데 작동하는지 확인하기
-        if (todo.todoId === action.meta.arg.todoId) {
-          todo.content = action.meta.arg.content;
-          console.log(todo.todoId);
-          // return { ...todo, complete: action.payload.complete };
-        }
-        return todo;
-      });
+      // update action.payload에 category 미포함
     },
     [__updateTodo.rejected]: (state, action) => {
       state.isLoading = false;

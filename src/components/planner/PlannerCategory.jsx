@@ -4,20 +4,51 @@ import PlannerCalender from "./PlannerCalender";
 import categorySvg from '../../assets/img/categorySvg.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { __getCategory } from '../../redux/modules/plannerSlice';
+import { __getCategory, __getTodayTodo } from '../../redux/modules/plannerSlice';
 
 const PlannerCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [categoryTodoList, setCategoryTodoList] = useState([]);
+  const [categoryTodoComplete, setCategoryTodoComplete] = useState([]);
 
-  const { category } = useSelector((state) => state.planner);
-  console.log('category', category)
+  const { category, todos } = useSelector((state) => state.planner);
+  console.log('category', category, 'todos', todos)
   const onClickAddCategoryHandler = () => {
     navigate('/planner/category')
   }
 
+  const onClickSelectCategoryToTodoListHandler = (e) => {
+    const { innerText } = e.target.children[0];
+    const { id } = e.target.parentElement;
+    localStorage.setItem('category', innerText);
+    localStorage.setItem('categoryId', id);
+    navigate('/planner/category/todolist')
+  }
+
+  useEffect(() => {
+    const arr = [];
+    const arrRate = [];
+    for (let i = 0; i < category.length; i++) {
+      const data = todos.filter((data) => data.category === category[i].title);
+      arr.push(data);
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+      const rate = ((arr[i].filter((data) => data.complete === true).length / arr[i].length) * 100).toFixed();
+      arrRate.push(rate);
+    }
+
+    setCategoryTodoComplete(arrRate);
+    setCategoryTodoList(arr);
+  }, [category, todos])
+
+  console.log('categoryTodoList', categoryTodoList);
+  console.log('categoryTodoComplete', categoryTodoComplete);
+
   useEffect(() => {
     dispatch(__getCategory())
+    dispatch(__getTodayTodo());
   }, [dispatch]);
 
   return (
@@ -30,14 +61,17 @@ const PlannerCategory = () => {
       </div>
 
       <StCategoryContainer>
-        {category.length > 0 && category.map((data) => (
-          <StCategoryItem>
-            <div className='top'>
+        {category.length > 0 && category.map((data, index) => (
+          <StCategoryItem key={data.id} id={data.id} name={data.title}>
+            <div className='top' onClick={onClickSelectCategoryToTodoListHandler} >
               <p className='title'>{data.title}</p>
-              <p>총 갯수</p>
+              {categoryTodoList.length > 0 &&
+                <p onClick={(e) => e.stopPropagation()}>
+                  {categoryTodoList[index].filter((data) => data.complete === true).length}/{categoryTodoList[index].length}
+                </p>}
             </div>
-            <StProgressBarBox>
-              <StProgressBar></StProgressBar>
+            <StProgressBarBox onClick={(e) => e.stopPropagation()}>
+              <StProgressBar width={categoryTodoComplete[index]} backgroundColor='#74E272'></StProgressBar>
             </StProgressBarBox>
           </StCategoryItem>
         ))}
@@ -90,9 +124,13 @@ const StCategoryItem = styled.div`
   box-sizing:border-box;
   margin-bottom:16px;
   padding: 15px 20px;
+  -webkit-box-shadow: 0px 4px 8px -2px rgba(16,24,40,0.1); 
+  box-shadow: 0px 4px 8px -2px rgba(16,24,40,0.1);
 
   & .top {
     display: flex;
+    justify-content:space-between;
+    align-items:center;
     padding-bottom:5px;
     p {
       margin:0
@@ -107,6 +145,12 @@ const StProgressBarBox = styled.div`
   background-color:#ECECEC;
 `
 
-const StProgressBar = styled.div``
+const StProgressBar = styled.div`
+  transition: all 0.3s;
+  width: ${props => props.width + '%' || '0%'};
+  height:13px;
+  border-radius:10px;
+  background:${props => props.backgroundColor || '#D34C4C'};
+`
 
 export default PlannerCategory
