@@ -11,8 +11,8 @@ const LineChart = () => {
   const dispatch = useDispatch();
   const [lineDataRate, setLineDataRate] = useState([]);
 
-  // console.log('lineData', lineData)
-  console.log(lineData.length > 0 && lineData[0].achievementRate);
+  console.log("lineData", lineData);
+  //console.log(lineData.length > 0 && lineData[0].achievementRate);
 
   // echarts.registerTheme("myTheme", {
   //   backgroundColor: "#ffffff",
@@ -86,7 +86,8 @@ const LineChart = () => {
     setLineDataRate(arr);
   }, [lineData]);
 
-  console.log("lineDataRate", lineDataRate);
+
+  // console.log('lineDataRate', lineDataRate)
 
   useEffect(() => {
     dispatch(__getLineChartData());

@@ -4,15 +4,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { __getMainRank } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import { useNavigate } from "react-router-dom";
 
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [totalCount, setTotalCount] = useState(null);
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-  console.log('totalCount', totalCount);
-  console.log('error', error);
-  console.log('mainRankList.length', mainRankList.length)
+  console.log("totalCount", totalCount);
+  console.log("error", error);
+  console.log("mainRankList", mainRankList);
+
+  let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
   // const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(0); // 페이지
@@ -26,7 +30,7 @@ const InfiniteScroll = () => {
 
   useEffect(() => {
     dispatch(__getMainRank(page));
-  }, [page])
+  }, [page]);
 
   useEffect(() => {
     let observer;
@@ -34,14 +38,14 @@ const InfiniteScroll = () => {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       });
-      setTotalCount(mainRankList.length)
+      setTotalCount(mainRankList.length);
       observer.observe(targetRef.current);
     }
     return () => {
       console.log(totalCount);
-      localStorage.setItem('totalCount', totalCount);
-      console.log('aaaaaaaaaaaaaa');
-      observer && observer.disconnect()
+      localStorage.setItem("totalCount", totalCount);
+      console.log("aaaaaaaaaaaaaa");
+      observer && observer.disconnect();
     };
   }, [mainRankList]);
 
@@ -51,7 +55,16 @@ const InfiniteScroll = () => {
   return (
     <Stdiv>
       {mainRankList.map((each) => (
-        <StRankingBox key={each.id}>
+        <StRankingBox
+          key={each.id}
+          onClick={() => {
+            if (nickname === each.nickname) {
+              navigate(`/my`);
+            } else {
+              navigate(`/othermy/${each.nickname}`);
+            }
+          }}
+        >
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>

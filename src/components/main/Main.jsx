@@ -67,13 +67,16 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
-              <>{nickname}님, 오늘 하루도 힘내세요!</>
+              <StPhrase>
+                <div>{nickname}님,</div>
+                <div>오늘 하루도 힘내세요!</div>
+              </StPhrase>
             )}
           </div>
         </div>
@@ -120,11 +123,11 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="350px"
-          height="330px"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(31, 31, 31, 0.116)"
+          width='350px'
+          height='330px'
+          radius='48px'
+          top='40%'
+          backgroundcolor='rgba(31, 31, 31, 0.116)'
         >
           <StModalTop>
             <span>랭킹 시스템이란?</span>
@@ -157,7 +160,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
@@ -260,9 +263,13 @@ const StPhrasesbox = styled.div`
   justify-content: space-between;
 `;
 
+const StPhrase = styled.div`
+  font-size: 20px;
+`;
+
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 5% auto;
+  margin: 12% auto 5% auto;
   height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;

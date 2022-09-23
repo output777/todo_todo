@@ -24,6 +24,7 @@ const configStr = {
 const nickname = localStorage.getItem("nickname");
 
 const initialState = {
+  follow: null,
   userInfo: null,
   motto: "",
   images: [],
@@ -39,6 +40,20 @@ export const __getMyInfo = createAsyncThunk(
     try {
       const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getOtherInfo = createAsyncThunk(
+  "getMyInfo",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -129,6 +144,20 @@ export const __deleteImages = createAsyncThunk(
   }
 );
 
+export const __getFollow = createAsyncThunk(
+  "getFollow",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const mySlice = createSlice({
   name: "mySlice",
   initialState,
@@ -145,6 +174,18 @@ export const mySlice = createSlice({
       state.motto = action.payload.myMotto;
     },
     [__getMyInfo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //getOtherInfo
+    [__getOtherInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getOtherInfo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.userInfo = action.payload;
+    },
+    [__getOtherInfo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -212,6 +253,17 @@ export const mySlice = createSlice({
       );
     },
     [__deleteImages.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__getFollow.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getFollow.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.follow = action.payload;
+    },
+    [__getFollow.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
