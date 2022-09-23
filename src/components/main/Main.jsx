@@ -13,7 +13,7 @@ import {
 } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
-import Dday from './Dday';
+import Dday from "./Dday";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -29,6 +29,9 @@ const Main = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const nickname = localStorage.getItem("nickname");
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+  console.log("accessToken", accessToken, "refreshToken", refreshToken);
 
   const onClickWeekly = () => {
     setWeekly(true);
@@ -223,7 +226,7 @@ const StPhrasesbox = styled.div`
   margin: auto;
   padding-top: 3%;
   display: flex;
-  align-items:flex-start;
+  align-items: flex-start;
   span {
     color: #ff7b00;
     font-weight: bold;
@@ -294,44 +297,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -6,14 +6,65 @@ import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import pencilSvg from "../../assets/img/pencilSvg.svg";
 import Modal from "../utils/Modal";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  __getMyInfo,
+  __postProfileImg,
+  __postProfileMoto,
+} from "../../redux/modules/mySlice";
+import { useEffect } from "react";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+const nickname = localStorage.getItem("nickname");
+
 const ProfileEdit = () => {
+  const { profileImage } = useSelector((state) => state.my);
+  const { userInfo } = useSelector((state) => state.my);
+  console.log("profileImage", profileImage);
+  console.log("userInfo", userInfo);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [saveStatus, setSaveStatus] = useState(false);
   const [modalView, setModalView] = useState(false);
+  const [profileState, setProfileState] = useState(false);
+  const [mottoInput, setMottoInput] = useState("");
+  const uploadRef = useRef(null);
+
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
     // setModal(parameter);
   };
+
+  const onClickUploadPhotoHandler = () => {
+    uploadRef.current.click();
+  };
+
+  const onChangeUploadImageHandler = async (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("multipartFile", e.target.files[0]);
+
+    console.log("e.target.files", e.target.files);
+    console.log("e.target.files[0].name", e.target.files[0].name);
+    dispatch(__postProfileImg(formData));
+    dispatch(__getMyInfo(nickname));
+    // await dispatch(__getImages(nickname));
+    // await dispatch(__getMyInfo());
+  };
+
+  useEffect(() => {
+    dispatch(__getMyInfo(nickname));
+  }, [dispatch]);
+
+  const mottoInputHandler = (e) => {
+    setMottoInput(e.target.value);
+  };
+  console.log(mottoInput);
   return (
     <>
       <StTitle>
@@ -30,6 +81,7 @@ const ProfileEdit = () => {
         <div className="title">프로필 편집</div>
         <button
           onClick={() => {
+            dispatch(__postProfileMoto(mottoInput)); // 좌우명
             navigate("/my");
           }}
         >
@@ -39,16 +91,26 @@ const ProfileEdit = () => {
 
       <StLine></StLine>
       <StImgDiv>
-        <StImg src={profileImgSvg} />
-        <div className="pencilBox" onClick={() => {}}>
+        <StImg src={userInfo?.profileImage} />
+        <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
           <img className="pencil" src={pencilSvg} />
+          <input
+            type="file"
+            accept="image/*"
+            ref={uploadRef}
+            onChange={onChangeUploadImageHandler}
+          />
         </div>
       </StImgDiv>
 
       <StMotto>
         <div>좌우명</div>
-        <textarea className="textArea"></textarea>
-        <div>0/40</div>
+        <textarea
+          className="textArea"
+          value={mottoInput}
+          onChange={mottoInputHandler}
+        ></textarea>
+        <div className="mottoInputCount">{mottoInput.length}/40</div>
       </StMotto>
 
       {/* ------------ 안내창 모달 -------------*/}
@@ -148,6 +210,10 @@ const StMotto = styled.div`
     width: 90%;
     height: 10em;
   }
+
+  .mottoInputCount {
+    color: #ff7b00;
+  }
 `;
 const StImgDiv = styled.div`
   position: relative;
@@ -172,6 +238,10 @@ const StImgDiv = styled.div`
     top: 4.3em;
   }
   .pencil {
+  }
+
+  & input {
+    display: none;
   }
 `;
 const StImg = styled.img`

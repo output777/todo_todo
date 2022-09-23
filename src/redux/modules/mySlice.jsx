@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
+import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -24,7 +25,9 @@ const nickname = localStorage.getItem("nickname");
 
 const initialState = {
   userInfo: null,
+  motto: "",
   images: [],
+  profileImage: profileImgSvg,
   isLoading: false,
   error: null,
   motto: null,
@@ -34,7 +37,7 @@ export const __getMyInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${BASE_URL}/member/${nickname}`, config);
+      const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -150,13 +153,16 @@ export const mySlice = createSlice({
       state.isLoading = true;
     },
     [__postProfileImg.fulfilled]: (state, action) => {
+      console.log("__postProfileImg.fulfilled", action.payload);
       state.isLoading = false;
+      state.profileImage = action.payload;
       state.userInfo.profileImage = action.payload;
     },
     [__postProfileImg.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+
     //__postProfileMoto
     [__postProfileMoto.pending]: (state) => {
       state.isLoading = true;
