@@ -6,9 +6,10 @@ import * as echarts from "echarts";
 import { __getLineChartData } from "../../redux/modules/statisticsSlice";
 
 const LineChart = () => {
+  const { lineData } = useSelector((state) => state?.statistics);
+  console.log("lineData", lineData);
   const dispatch = useDispatch();
   const [lineDataRate, setLineDataRate] = useState([]);
-  const { lineData } = useSelector((state) => state.statistics);
 
   console.log("lineData", lineData);
   //console.log(lineData.length > 0 && lineData[0].achievementRate);
@@ -84,6 +85,7 @@ const LineChart = () => {
     console.log("arr", arr);
     setLineDataRate(arr);
   }, [lineData]);
+
 
   // console.log('lineDataRate', lineDataRate)
 

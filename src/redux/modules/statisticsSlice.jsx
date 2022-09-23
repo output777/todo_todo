@@ -15,7 +15,7 @@ const nickname = localStorage.getItem("nickname");
 const initialState = {
   rankScoreData: [{}, {}, {}],
   barData: [{}, {}],
-  lineData: [],
+  lineData: [{}, {}],
   heatmapData: [],
   isLoading: false,
   error: null,

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
+import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -25,7 +26,9 @@ const nickname = localStorage.getItem("nickname");
 const initialState = {
   follow: null,
   userInfo: null,
+  motto: "",
   images: [],
+  profileImage: profileImgSvg,
   isLoading: false,
   error: null,
   motto: null,
@@ -35,7 +38,7 @@ export const __getMyInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(`${BASE_URL}/member/${nickname}`, config);
+      const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -95,11 +98,14 @@ export const __postProfileMoto = createAsyncThunk(
 export const __getImages = createAsyncThunk(
   "getImages",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
+    console.log("getImages payload", payload);
     try {
-      const data = await axios.get(`${BASE_URL}/image/boast`, config);
-      console.log("data", data);
-      return thunkAPI.fulfillWithValue(data);
+      const data = await axios.get(
+        `${BASE_URL}/image/boast/${payload}`,
+        config
+      );
+      console.log("boast", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -113,7 +119,7 @@ export const __postImages = createAsyncThunk(
     console.log("payload", payload);
     try {
       const data = await axios.post(`${BASE_URL}/image/boast`, payload, config);
-      console.log("data", data);
+      console.log("postImages data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -162,6 +168,7 @@ export const mySlice = createSlice({
       state.isLoading = true;
     },
     [__getMyInfo.fulfilled]: (state, action) => {
+      console.log("state.userInfo", action.payload);
       state.isLoading = false;
       state.userInfo = action.payload;
       state.motto = action.payload.myMotto;
@@ -187,13 +194,16 @@ export const mySlice = createSlice({
       state.isLoading = true;
     },
     [__postProfileImg.fulfilled]: (state, action) => {
+      console.log("__postProfileImg.fulfilled", action.payload);
       state.isLoading = false;
+      state.profileImage = action.payload;
       state.userInfo.profileImage = action.payload;
     },
     [__postProfileImg.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+
     //__postProfileMoto
     [__postProfileMoto.pending]: (state) => {
       state.isLoading = true;
@@ -214,7 +224,7 @@ export const mySlice = createSlice({
     [__getImages.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log("action.payload", action.payload);
-      state.images = action.payload.data;
+      state.images = action.payload;
     },
     [__getImages.rejected]: (state, action) => {
       state.isLoading = false;
@@ -225,6 +235,7 @@ export const mySlice = createSlice({
     },
     [__postImages.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.images.push(action.payload);
     },
     [__postImages.rejected]: (state, action) => {
       state.isLoading = false;
@@ -237,7 +248,7 @@ export const mySlice = createSlice({
     [__deleteImages.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log(action.payload);
-      state.userInfo.imgList = state.userInfo.imgList.filter(
+      state.images = state.images.filter(
         (data) => data.id !== Number(action.payload)
       );
     },

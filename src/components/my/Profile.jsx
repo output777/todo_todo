@@ -12,7 +12,6 @@ import {
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
-import { __getTotalRate } from "../../redux/modules/mainSlice";
 import { useNavigate } from "react-router-dom";
 import settingSvg from "../../assets/img/myPage/settingSvg.svg";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -22,85 +21,28 @@ import Setting from "./Setting";
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(__getTotalRate());
-  }, []);
 
-  const { userInfo, motto } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
+  const { userInfo } = useSelector((state) => state.my);
+  console.log("userInfo", userInfo);
+  const { motto } = useSelector((state) => state.my);
 
   const [edit, setEdit] = useState(false);
-  const [motoInput, setMotoInput] = useState("");
-  const [settingMenu, setSettingMenu] = useState(false);
+  const [mottoInput, setmottoInput] = useState("");
 
   const uploadProfileRef = useRef(null);
   const motoFormRef = useRef(null);
-  const motoInputRef = useRef(null);
+  const mottoInputRef = useRef(null);
   const motoRef = useRef(null);
   const motoImgRef = useRef(null);
 
-  const onClickEditHandler = () => {
-    setEdit(true);
-    setMotoInput(motto);
-  };
+  useEffect(() => {
+    setmottoInput(motto);
+  }, [setmottoInput, motto]);
 
-  const onClickCompleteHandler = () => {
-    setEdit(false);
-  };
-
-  const onChangeUploadProfileImageHandler = (e) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("multipartFile", e.target.files[0]);
-
-    // dispatch(__postProfileImg(formData));
-  };
-
-  const onClickEditProfileImgHandler = () => {
-    uploadProfileRef.current.click();
-  };
-
-  const onClickEditTextHandler = () => {
-    motoFormRef.current.classList.add("show");
-    motoInputRef.current.focus();
-    motoRef.current.classList.remove("show");
-    motoImgRef.current.classList.remove("show");
-  };
-
-  const onChangeMotoInputHandler = (e) => {
-    const { value } = e.target;
-    setMotoInput(value);
-  };
-
-  const onClickEditTextCancelHandler = (e) => {
-    e.stopPropagation();
-    motoFormRef.current.classList.remove("show");
-    motoRef.current.classList.add("show");
-    motoImgRef.current.classList.add("show");
-  };
-
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const newMoto = {
-      myMotto: motoInput,
-    };
-    await dispatch(__postProfileMoto(newMoto));
-    await dispatch(__getMyInfo());
-    setMotoInput("");
-    motoFormRef.current.classList.remove("show");
-    motoRef.current.classList.add("show");
-    motoImgRef.current.classList.add("show");
-  };
+  const nickname = localStorage.getItem("nickname");
 
   useEffect(() => {
-    setMotoInput(motto);
-  }, [setMotoInput, motto]);
-
-  useEffect(() => {
-    // dispatch(__getMyInfo());
+    dispatch(__getMyInfo(nickname));
   }, [dispatch]);
 
   return (
@@ -120,7 +62,7 @@ const Profile = () => {
         <StLine></StLine>
         <StImgInfoBox>
           <StImg>
-            <img src={profileImgSvg} alt="profile" />
+            <img src={userInfo?.profileImage} alt="profile" />
             {/* {!edit ? (
               <>
                 <img src={defaultProfile} alt="profile" />
@@ -160,8 +102,12 @@ const Profile = () => {
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-          <div className="userName">이름</div>
-          <div>09년생 / INFJ / 일반계 여고</div>
+          <div className="userName">{nickname}</div>
+          <div>
+            {userInfo?.myMotto == null
+              ? "좌우명을 입력해주세요"
+              : userInfo?.myMotto}
+          </div>
         </StStatusDiv>
         {/* <StTextBox>
           <p>{userInfo?.nickname}</p>
@@ -172,9 +118,9 @@ const Profile = () => {
               <form ref={motoFormRef} onSubmit={onSubmitHandler}>
                 <input
                   type="text"
-                  ref={motoInputRef}
-                  value={motoInput}
-                  onChange={onChangeMotoInputHandler}
+                  ref={mottoInputRef}
+                  value={mottoInput}
+                  onChange={onChangemottoInputHandler}
                 />
                 <button type="button" onClick={onClickEditTextCancelHandler}>
                   ✖
@@ -200,7 +146,6 @@ const Profile = () => {
         >
           프로필 편집
         </StBtn>
-        {/* <StBtn onClick={onClickCompleteHandler}>완료</StBtn> */}
       </StProfileContainer>
     </>
   );

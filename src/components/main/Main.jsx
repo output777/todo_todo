@@ -29,6 +29,9 @@ const Main = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const nickname = localStorage.getItem("nickname");
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+  console.log("accessToken", accessToken, "refreshToken", refreshToken);
 
   const onClickWeekly = () => {
     setWeekly(true);
