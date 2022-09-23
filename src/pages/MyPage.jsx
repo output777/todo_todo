@@ -8,11 +8,9 @@ import UploadPhoto from "../components/my/UploadPhoto";
 const MyPage = () => {
   return (
     <StContainer>
-      {/* <ProfileCalender /> */}
       <Profile />
       <ProfileTabs />
       <Navbar myPage={true} />
-      <UploadPhoto />
     </StContainer>
   );
 };

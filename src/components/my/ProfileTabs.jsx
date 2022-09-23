@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ProfilePhotos from "./ProfilePhotos";
 import ProfilePlanner from "./ProfilePlanner";
+import UploadPhoto from "./UploadPhoto";
 
 const ProfileTabs = () => {
   const [change, setChange] = useState(true);
@@ -37,6 +38,7 @@ const ProfileTabs = () => {
       {change ? (
         <>
           <ProfilePhotos />
+          <UploadPhoto />
         </>
       ) : (
         <ProfilePlanner />

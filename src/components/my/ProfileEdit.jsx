@@ -40,7 +40,7 @@ const ProfileEdit = () => {
       <StLine></StLine>
       <StImgDiv>
         <StImg src={profileImgSvg} />
-        <div className="pencilBox">
+        <div className="pencilBox" onClick={() => {}}>
           <img className="pencil" src={pencilSvg} />
         </div>
       </StImgDiv>

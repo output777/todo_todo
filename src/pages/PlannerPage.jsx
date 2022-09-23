@@ -9,8 +9,7 @@ const PlannerPage = () => {
     <>
       {/* <Planner /> */}
       <PlannerCategory />
-      {/* <Navbar planner={true} /> */}
-      <Navbar />
+      <Navbar planner={true} />
     </>
   );
 };

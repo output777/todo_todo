@@ -27,7 +27,7 @@ const Profile = () => {
   }, []);
 
   const { userInfo, motto } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
+  // console.log("userInfo", userInfo, userInfo?.myMotto, "motto", motto);
 
   const [edit, setEdit] = useState(false);
   const [motoInput, setMotoInput] = useState("");
@@ -200,7 +200,6 @@ const Profile = () => {
         >
           프로필 편집
         </StBtn>
-        {/* <StBtn onClick={onClickCompleteHandler}>완료</StBtn> */}
       </StProfileContainer>
     </>
   );

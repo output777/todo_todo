@@ -15,7 +15,7 @@ const UploadPhoto = () => {
   const uploadRef = useRef(null);
 
   const onClickUploadPhotoHandler = () => {
-    // uploadRef.current.click();
+    uploadRef.current.click();
   };
 
   const onChangeUploadImageHandler = async (e) => {
@@ -28,8 +28,11 @@ const UploadPhoto = () => {
 
     // 사진 업로드 했을 때 유저 정보에 사진 이미지가 바로 입력안됨
     // 그래서 id값을 바로 가질 수 없어서 해결해야 함
+
+    const nickname = localStorage.getItem("nickname");
+    console.log("nickname", nickname);
     await dispatch(__postImages(formData));
-    await dispatch(__getImages());
+    await dispatch(__getImages(nickname));
     await dispatch(__getMyInfo());
 
     console.log(e.target.files);
@@ -42,9 +45,9 @@ const UploadPhoto = () => {
         type="file"
         accept="image/*"
         ref={uploadRef}
-        // onChange={onChangeUploadImageHandler}
+        onChange={onChangeUploadImageHandler}
       />
-      {/* <img src={cameraSvg} alt="camera" /> */}
+      <img src={cameraSvg} alt="camera" />
     </StUploadPhoto>
   );
 };
@@ -63,7 +66,7 @@ const StUploadPhoto = styled.div`
   cursor: pointer;
 
   & input {
-    /* display: none; */
+    display: none;
   }
 `;
 

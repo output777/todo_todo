@@ -13,27 +13,36 @@ const ProfilePhotos = () => {
   const [fullScreen, setFullScreen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectImgId, setSelectImgId] = useState(1);
-  const [selectImg, setSelectImg] = useState(null);
+  const [selectImg, setSelectImg] = useState("");
   const [selectImgIndex, setSelectImgIndex] = useState(0);
 
   const { userInfo } = useSelector((state) => state.my);
   const { images } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo);
+  console.log("images", images);
+  // console.log("userInfo", userInfo);
+  console.log(selectImgId);
 
-  const selectImgFunc = (id) => {
-    setSelectImgId(id);
-    const data = userInfo.imgList.filter((data) => data.id === Number(id));
-    const index = userInfo.imgList.indexOf(...data);
-    setSelectImgIndex(index);
-    setSelectImg(userInfo.imgList[index]);
-    setFullScreen(true);
+  // 1
+  const onClickFullScreenImgsHandler = (e) => {
+    const { id } = e.target;
+    console.log("e.target.id", id);
+    selectImgFunc(id);
+
+    // console.log('userInfo', userInfo.imgList, userInfo.imgList.length);
   };
 
-  const onClickFullScreenImgsHandler = (e) => {
-    // console.log(e.target.id);
-    const { id } = e.target;
-    selectImgFunc(id);
-    // console.log('userInfo', userInfo.imgList, userInfo.imgList.length);
+  // 2
+  const selectImgFunc = (id) => {
+    const data = images.filter((data) => data.id === Number(id));
+    // console.log("filter data", data);
+
+    setSelectImgId(id);
+    setSelectImg(data[0].imageUrl);
+    setFullScreen(true);
+
+    // const data = userInfo.imgList.filter((data) => data.id === Number(id));
+    // const index = userInfo.imgList.indexOf(...data);
+    // setSelectImgIndex(index);
   };
 
   const onClickPrevHandler = () => {
@@ -70,17 +79,26 @@ const ProfilePhotos = () => {
     setModalVisible(false);
   };
 
-  useEffect(() => {
-    dispatch(__getImages());
-  }, [dispatch]);
+  const nickname = localStorage.getItem("nickname");
+  // console.log("nickname", nickname);
 
+  useEffect(() => {
+    dispatch(__getImages(nickname));
+  }, [dispatch]);
+  // console.log("selectImg", selectImg);
   return (
     <>
       <StContainer>
-        {userInfo &&
+        {/* {userInfo &&
           userInfo.imgList.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
               <img id={data.id} src={data.imgUrl} alt="boast" />
+            </StImg>
+          ))} */}
+        {images &&
+          images.map((data) => (
+            <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
+              <img id={data.id} src={data.imageUrl} alt="boast" />
             </StImg>
           ))}
       </StContainer>
@@ -91,11 +109,11 @@ const ProfilePhotos = () => {
               <img src={cancelSvg} alt="cancelBtn" />
             </div>
             <div className="imgCount">
-              {userInfo && (
+              {/* {images && (
                 <span>
-                  {selectImgIndex + 1}/{userInfo.imgList.length}
+                  {selectImgIndex + 1}/{images.length}
                 </span>
-              )}
+              )} */}
             </div>
             <div className="optionBox">
               <img
@@ -107,21 +125,22 @@ const ProfilePhotos = () => {
           </div>
           <StSliderBox>
             <div className="imgBox" key={selectImgId}>
-              {selectImgIndex === 0 ? null : (
+              {/* {selectImgIndex === 0 ? null : (
                 <button className="prev" onClick={onClickPrevHandler}>
                   ◀
                 </button>
-              )}
-              <img src={selectImg.imgUrl} alt="img" id={selectImg.id} />
-              {userInfo.imgList.length - 1 === selectImgIndex ? null : (
+              )} */}
+              <img src={selectImg} alt="img" id={selectImgId} />
+              {/* {images.length - 1 === selectImgIndex ? null : (
                 <button className="next" onClick={onClickNextHandler}>
                   ▶
                 </button>
-              )}
+              )} */}
             </div>
           </StSliderBox>
         </StFullScreen>
       ) : null}
+
       <StModalBox>
         {modalVisible && (
           <Modal
@@ -209,7 +228,7 @@ const StSliderBox = styled.div`
 const StFullScreen = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: #111;
+  background-color: #5f5f5f;
   z-index: 10;
   position: fixed;
   top: 0;
