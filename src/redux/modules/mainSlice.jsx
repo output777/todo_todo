@@ -10,8 +10,9 @@ const config = {
   },
 };
 
-const initialState = {
+const nickname = localStorage.getItem("nickname");
 
+const initialState = {
   dday: [],
   thisMonthRate: [],
   totalRate: [],
@@ -44,7 +45,7 @@ export const __getTotalRate = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `${BASE_URL}/todo/achievement/total`,
+        `${BASE_URL}/todo/achievement/total/${nickname}`,
         config
       );
       console.log("__getTotalRate data", data.data.achievementRate);
@@ -95,7 +96,6 @@ export const __getMainRankMonthly = createAsyncThunk(
   }
 );
 
-
 export const __getDday = createAsyncThunk(
   "getDday",
   async (payload, thunkAPI) => {
@@ -126,7 +126,6 @@ export const __getMainRankSchool = createAsyncThunk(
     }
   }
 );
-
 
 export const __updateDday = createAsyncThunk(
   "updateDday",

@@ -87,7 +87,7 @@ export const __getHeatMapData = createAsyncThunk(
 );
 
 export const statisticsSlice = createSlice({
-  name: "mainSlice",
+  name: "statisticsSlice",
   initialState,
   reducers: {},
   extraReducers: {

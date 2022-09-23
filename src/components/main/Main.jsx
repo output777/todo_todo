@@ -13,7 +13,7 @@ import {
 } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
-import Dday from './Dday';
+import Dday from "./Dday";
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -64,13 +64,16 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
-              <>{nickname}님, 오늘 하루도 힘내세요!</>
+              <StPhrase>
+                <div>{nickname}님,</div>
+                <div>오늘 하루도 힘내세요!</div>
+              </StPhrase>
             )}
           </div>
         </div>
@@ -117,11 +120,11 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="350px"
-          height="330px"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(31, 31, 31, 0.116)"
+          width='350px'
+          height='330px'
+          radius='48px'
+          top='40%'
+          backgroundcolor='rgba(31, 31, 31, 0.116)'
         >
           <StModalTop>
             <span>랭킹 시스템이란?</span>
@@ -154,7 +157,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
@@ -223,7 +226,7 @@ const StPhrasesbox = styled.div`
   margin: auto;
   padding-top: 3%;
   display: flex;
-  align-items:flex-start;
+  align-items: flex-start;
   span {
     color: #ff7b00;
     font-weight: bold;
@@ -257,9 +260,13 @@ const StPhrasesbox = styled.div`
   justify-content: space-between;
 `;
 
+const StPhrase = styled.div`
+  font-size: 20px;
+`;
+
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 5% auto;
+  margin: 12% auto 5% auto;
   height: 13em;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
@@ -294,44 +301,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 

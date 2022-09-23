@@ -16,7 +16,7 @@ const Dday = () => {
       ...ddate,
       title: value,
     });
-    //console.log(ddate);
+    // console.log(value);
   };
 
   const onChangeDateHandler = (e) => {
@@ -29,22 +29,26 @@ const Dday = () => {
   };
 
   const onSubmitHandler = async () => {
-    await dispatch(
-      __updateDday({
-        ...ddate,
-        title: ddate.title,
-        selectedDate: ddate.selectedDate,
-      })
-    );
-    await dispatch(__getDday());
+    if (ddate.title.length > 8) {
+      alert("8자 이내로 입력해주세요.");
+    } else {
+      await dispatch(
+        __updateDday({
+          ...ddate,
+          title: ddate.title,
+          selectedDate: ddate.selectedDate,
+        })
+      );
+      await dispatch(__getDday());
+    }
   };
-  console.log(Date.now());
-  console.log(ddate.selectedDate.replace(/\-/g, ""));
+  // console.log(Date.now());
+  // console.log(ddate.selectedDate.replace(/\-/g, ""));
 
   //옵셔널 체이닝을 사용하여 데이터를 불러오느라 아직 없을 경우에는 에러가 아닌 null을, 데이터가 있으면 값을 불러옴
   // const dday = useSelector((state) => state.main?.dday);
   const dday = useSelector((state) => state.main);
-  console.log(dday.dday);
+  //console.log(dday.dday);
 
   const dispatch = useDispatch();
 
@@ -82,7 +86,12 @@ const Dday = () => {
         >
           <StModalTop>디데이</StModalTop>
           <StInputbox>
-            <input type='text' maxLength='8' onChange={onChangeHandler} />
+            <input
+              type='text'
+              maxLength='8'
+              placeholder='8자 이내로 입력해주세요.'
+              onChange={onChangeHandler}
+            />
           </StInputbox>
           <StDate>날짜</StDate>
           <StDateInput
@@ -118,11 +127,12 @@ const StDdayBox = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 69px;
-  height: 34px;
-  border: 1px solid #ff8f27;
-  border-left: none;
-  border-right: none;
+  width: 82px;
+  height: 44px;
+  background: #ffffff;
+  box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+    0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+  border-radius: 16px;
 `;
 
 const StModalTop = styled.div`
@@ -164,7 +174,7 @@ const StDateInput = styled.input`
 
 const StModalBottom = styled.div`
   position: relative;
-  top: 25px;
+  top: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
