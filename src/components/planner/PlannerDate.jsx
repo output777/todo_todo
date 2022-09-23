@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { __getTodayTodo, __postTodo, __deleteTodo, __updateTodo } from "../../redux/modules/plannerSlice";
 import Modal from '../utils/Modal';
 
-const Planner = ({ x, setX }) => {
+const PlannerDate = ({ selectedCategoryName, dateTodo, x, setX }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState(null);
@@ -34,108 +34,15 @@ const Planner = ({ x, setX }) => {
   console.log('todos', todos);
   console.log('todoList', todoList);
 
-
-
-  const closeModal = () => {
-    setModalVisible(false);
-    setEditModalVisible(false);
-    setEditTodoName(false);
-    setDeleteTodoCheckModalVisible(false);
-    setTodo('');
-  };
-
-  const onChangeInputHandler = (e) => {
-    const { value } = e.target
-    setTodo(value);
-  }
-
+  console.log(selectedCategoryName, dateTodo, x)
 
   const onClickBackPlannerHandler = () => {
-    navigate('/planner')
-  }
-
-  const onClickAddTodoModalHandler = () => {
-    setModalVisible(true)
-  }
-
-  const onClickTodoAddHandler = async () => {
-    if (todo.length > 0) {
-      const newTodo = {
-        content: todo,
-        category: categoryName,
-        isComplete: false,
-      }
-      await dispatch(__postTodo(newTodo))
-      await dispatch(__getTodayTodo());
-      setTodo('');
-    }
+    setX(false);
   }
 
 
-  const onClickSelectToTodoHandler = (e) => {
-    console.dir(e.target.parentElement.parentElement.id);
-    const { id } = e.target.parentElement.parentElement;
-    const data = todoList.filter((data) => data.todoId === Number(id));
-    console.log('data', data);
-    setSelectTodo(...data);
-    setEditModalVisible(true);
-    setTodoId(id);
-    setTodo(data[0].content)
-  }
 
-  const onClickEditTodoName = () => {
-    setEditTodoName(true);
-  }
 
-  const onClickTodoDeleteHandler = () => {
-    console.log('categoryId', categoryId);
-    setDeleteTodoCheckModalVisible(true);
-    setEditModalVisible(false);
-  }
-
-  const onClickEditTodoNameCancel = () => {
-
-    setEditTodoName(false);
-  }
-
-  const onClickEditTodoHandler = async () => {
-    const editTodo = {
-      content: todo,
-      isComplete: todoComplete,
-    }
-    await dispatch(__updateTodo({ todoId, editTodo }))
-    await dispatch(__getTodayTodo());
-    setModalVisible(false);
-    setEditModalVisible(false);
-    setEditTodoName(false);
-    setTodo('');
-  }
-
-  const onClickEditTodoDeleteCancel = () => {
-    setEditModalVisible(true);
-    setDeleteTodoCheckModalVisible(false);
-  }
-
-  const onClickEditTodoDeleteCheck = () => {
-    dispatch(__deleteTodo(todoId))
-    setDeleteTodoCheckModalVisible(false);
-  }
-
-  const onClickTodoCompleteHandler = async (e) => {
-    console.dir(e.target.parentElement.parentElement.id);
-    const { id } = e.target.parentElement.parentElement;
-    const data = todoList.filter((data) => data.todoId === Number(id));
-    console.log('data', data);
-    setTodoComplete(!data[0].complete);
-    setTodoId(id);
-    console.log('todoComplte', todoComplete);
-    const completeTodo = {
-      content: data[0].content,
-      isComplete: !data[0].complete,
-    }
-    await dispatch(__updateTodo({ todoId: id, editTodo: completeTodo }))
-    await dispatch(__getTodayTodo());
-  }
 
   console.log('selectTodo', selectTodo)
 
@@ -147,28 +54,20 @@ const Planner = ({ x, setX }) => {
 
 
   useEffect(() => {
-    const data = todos.filter((data) => data.category === categoryName);
+    const data = dateTodo.filter((data) => data.category === selectedCategoryName);
     console.log('data', data)
     setTodoList([...data]);
-  }, [todos])
-
-  console.log('todoRate', todoRate)
-
-  useEffect(() => {
-    setCategoryName(localStorage.getItem('category'))
-    setCategoryId(localStorage.getItem('categoryId'))
-    dispatch(__getTodayTodo());
-  }, [dispatch]);
+  }, [selectedCategoryName, x])
 
   return (
-    <StDiv>
+    <StDiv x={x}>
       <div className='header'>
         <StHeaderBox>
           <div className='iconBox'>
             <img src={leftArrowSvg} alt="leftArrowIcon" onClick={onClickBackPlannerHandler} />
           </div>
           <div className="categoryTitle">
-            <p>{categoryName}</p>
+            <p>{selectedCategoryName}</p>
           </div>
         </StHeaderBox>
         <StCategoryProgressContainer>
@@ -181,20 +80,14 @@ const Planner = ({ x, setX }) => {
           </StProgressBarBox>
         </StCategoryProgressContainer>
       </div>
-      <StPlusBtnBox onClick={onClickAddTodoModalHandler}>
-        <img src={whitePlusSvg} alt="plusBtnIcon" />
-      </StPlusBtnBox>
 
       <StTodoContainer>
         {todoList.length > 0 && todoList.filter((data) => data.complete === false).map((data) => (
           <StTodoItem key={data.todoId} name={data.title}>
             <div className='top' id={data.todoId}>
               <div className="content" style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={notDoneSvg} alt="notDoneIcon" onClick={onClickTodoCompleteHandler} />
+                <img src={notDoneSvg} alt="notDoneIcon" />
                 <StTodoTitle className='title'>{data.content}</StTodoTitle>
-              </div>
-              <div className="option" onClick={onClickSelectToTodoHandler}>
-                <img src={threeDotSvg} alt="threeDotIcon" />
               </div>
             </div>
           </StTodoItem>
@@ -206,104 +99,14 @@ const Planner = ({ x, setX }) => {
           <StTodoItem key={data.todoId} name={data.title}>
             <div className='top' id={data.todoId}>
               <div className="content" style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={doneSvg} alt="doneIcon" onClick={onClickTodoCompleteHandler} />
+                <img src={doneSvg} alt="doneIcon" />
                 <StTodoTitle className='title' color='#E8E8E8'>{data.content}</StTodoTitle>
-              </div>
-              <div className="option">
-                <img src={threeDotDoneSvg} alt="threeDotDoneIcon" />
               </div>
             </div>
           </StTodoItem>
         ))}
       </StTodoContainer>
 
-      {
-        modalVisible && (
-          <Modal
-            visible={modalVisible}
-            closable={true}
-            maskClosable={true}
-            onClose={closeModal}
-            width="250px"
-            height="150px"
-            radius="20px"
-            top="40%"
-            backgroundcolor="rgba(0, 0, 0, 0.2)"
-          >
-            <StModalBtnBox>
-              <p>투두 추가</p>
-              <StTodoInput type='text' value={todo} onChange={onChangeInputHandler} />
-              <div className='btnBox'>
-                <StModalBtn onClick={closeModal}>취소</StModalBtn>
-                <StModalBtn onClick={onClickTodoAddHandler}>추가</StModalBtn>
-              </div>
-            </StModalBtnBox>
-          </Modal>
-        )
-      }
-
-      {
-        editModalVisible && (
-          <Modal
-            visible={editModalVisible}
-            closable={true}
-            maskClosable={true}
-            onClose={closeModal}
-            width="250px"
-            height="150px"
-            radius="20px"
-            top="40%"
-            backgroundcolor="rgba(0, 0, 0, 0.2)"
-          >
-            <StModalBtnBox>
-              {!editTodoName
-                ?
-                <>
-                  <p className='title'>{selectTodo.content}</p>
-                  <p onClick={onClickEditTodoName}>이름 변경</p>
-                  <div className='btnBox'>
-                    <StModalBtn onClick={onClickTodoDeleteHandler}>삭제</StModalBtn>
-                  </div>
-                </>
-                :
-                <>
-                  <p className='title'>투두 내용 변경</p>
-                  <StTodoInput type='text' value={todo} onChange={onChangeInputHandler} />
-                  <div className='btnBox'>
-                    <StModalBtn onClick={onClickEditTodoNameCancel}>취소</StModalBtn>
-                    <StModalBtn onClick={onClickEditTodoHandler}>확인</StModalBtn>
-                  </div>
-                </>
-              }
-            </StModalBtnBox>
-          </Modal>
-        )
-      }
-
-      {
-        deleteTodoCheckModalVisible && (
-          <Modal
-            visible={deleteTodoCheckModalVisible}
-            closable={true}
-            maskClosable={true}
-            onClose={closeModal}
-            width="250px"
-            height="150px"
-            radius="20px"
-            top="40%"
-            backgroundcolor="rgba(0, 0, 0, 0.2)"
-          >
-            <StModalBtnBox>
-              <p className='title'>투두를 삭제하시겠습니까?</p>
-              <p>삭제하면 다시 불러올 수 없습니다</p>
-              <div className='btnBox'>
-                <StModalBtn onClick={onClickEditTodoDeleteCancel}>취소</StModalBtn>
-                <StModalBtn onClick={onClickEditTodoDeleteCheck}>확인</StModalBtn>
-              </div>
-            </StModalBtnBox>
-          </Modal>
-        )
-      }
 
     </StDiv >
   );
@@ -314,8 +117,13 @@ const StDiv = styled.div`
   width:100%;
   background-color: #fafafa;
   height: 100vh;
+  position:fixed;
+  top: 0;
+  left: 0;
+  transform: ${(props) => props.x ? `translateX(0%)` : `translateX(100%)`};
   font-family: "SUIT-Regular", sans-serif;
   overflow-y: scroll;
+  transition:all 0.3s;
 
   & .header {
     width:100%;
@@ -506,6 +314,6 @@ const StTodoTitle = styled.p`
 `
 
 
-export default Planner;
+export default PlannerDate;
 
 

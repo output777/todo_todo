@@ -1,5 +1,4 @@
 import React from "react";
-import Planner from "../components/planner/Planner";
 import Navbar from "../components/utils/Navbar";
 import styled from "styled-components";
 import PlannerCategory from "../components/planner/PlannerCategory";

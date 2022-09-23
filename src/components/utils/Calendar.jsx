@@ -5,10 +5,11 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
+import { useNavigate } from "react-router-dom";
 
-const Calendar = (props) => {
+const Calendar = ({ selectDate, setSelectDate }) => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const marks = [
     { achievementRate: 15, addDate: "2022-09-01" },
     { achievementRate: 25, addDate: "2022-09-02" },
@@ -23,21 +24,33 @@ const Calendar = (props) => {
     { achievementRate: 100, addDate: "2022-09-11" },
   ];
 
-  const [date, setDate] = useState();
 
-  const selectDate = (date) => {
-    dispatch(__getTodo(date));
+  const selectDateHandler = async (date) => {
+    // object 비교해야되서 JSON.stringify사용함
+    // navigate로 page를 변경될 때 달력을 누르면 달력이 닫힘
+    setSelectDate(date)
+    console.log('date', date)
+    localStorage.setItem('date', date);
+    await dispatch(__getTodo(date));
+    navigate('/planner/date');
+    // console.log(JSON.stringify(date), JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d));
+    // console.log(JSON.stringify(date) === JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d));
+    // if (JSON.stringify(date) === JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d)) {
+    //   setSelectDate(null)
+    //   navigate('/planner')
+    // } else {
+    // setSelectDate(date)
+    // console.log('date', date)
+    // navigate('/planner/date');
+    // }
   };
 
-  console.log(dayjs(date).format("YYYY-MM-DD"));
-
-  props.setCalenderdate(date);
   return (
     <StDiv>
       <ReactCalendar
-        onChange={setDate}
-        onClickDay={selectDate}
-        value={date}
+        onChange={setSelectDate}
+        onClickDay={selectDateHandler}
+        value={selectDate}
         locale='Korean'
         formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'

@@ -270,5 +270,5 @@ export const mySlice = createSlice({
   },
 });
 
-export const {} = mySlice.actions;
+export const { } = mySlice.actions;
 export default mySlice.reducer;

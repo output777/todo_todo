@@ -15,6 +15,7 @@ import FollowingPage from "../pages/FollowingPage";
 import Setting from "../components/my/Setting";
 import ProfileEdit from "../components/my/ProfileEdit";
 import Planner from "../components/planner/Planner";
+import PlannerCategoryDate from "../components/planner/PlannerCategoryDate";
 import OtherMyPage from "../pages/OtherMyPage";
 
 const Router = () => {
@@ -37,6 +38,7 @@ const Router = () => {
         <Route path='/profileedit' element={<ProfileEdit />} />
         <Route path='/setting' element={<Setting />} />
         <Route path='/planner' element={<PlannerPage />} />
+        <Route path='/planner/date' element={<PlannerCategoryDate />} />
         <Route path='/planner/category' element={<PlannerCategoryAdd />} />
         <Route path='/planner/category/todolist' element={<Planner />} />
         <Route path='/statistics' element={<StatisticsPage />} />

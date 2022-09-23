@@ -5,15 +5,23 @@ import categorySvg from '../../assets/img/categorySvg.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { __getCategory, __getTodayTodo } from '../../redux/modules/plannerSlice';
+import dayjs from "dayjs";
+import Planner from './Planner';
 
 const PlannerCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [selectDate, setSelectDate] = useState(null);
+
+  const [calenderdate, setCalenderdate] = useState(dayjs(Date.now()).format("YYYY-MM-DD"));
   const [categoryTodoList, setCategoryTodoList] = useState([]);
   const [categoryTodoComplete, setCategoryTodoComplete] = useState([]);
 
-  const { category, todos } = useSelector((state) => state.planner);
-  console.log('category', category, 'todos', todos)
+  const { category, todos, dateTodo, date } = useSelector((state) => state.planner);
+  console.log('category', category, 'todos', todos, 'dateTodo', dateTodo, 'date', date)
+
+  console.log(todos.length > 0 && todos[0].addDate === date);
+
   const onClickAddCategoryHandler = () => {
     navigate('/planner/category')
   }
@@ -25,6 +33,7 @@ const PlannerCategory = () => {
     localStorage.setItem('categoryId', id);
     navigate('/planner/category/todolist')
   }
+
 
   useEffect(() => {
     const arr = [];
@@ -52,32 +61,34 @@ const PlannerCategory = () => {
   }, [dispatch]);
 
   return (
-    <StDiv>
-      <div className='header'>
-        <PlannerCalender />
-        <div className='categoryBox'>
-          <img className='category' src={categorySvg} alt="categoryIcon" onClick={onClickAddCategoryHandler} />
+    <>
+      <StDiv>
+        <div className='header'>
+          <PlannerCalender calenderdate={calenderdate} selectDate={selectDate} setSelectDate={setSelectDate} />
+          <div className='categoryBox'>
+            <img className='category' src={categorySvg} alt="categoryIcon" onClick={onClickAddCategoryHandler} />
+          </div>
         </div>
-      </div>
 
-      <StCategoryContainer>
-        {category.length > 0 && category.map((data, index) => (
-          <StCategoryItem key={data.id} id={data.id} name={data.title}>
-            <div className='top' onClick={onClickSelectCategoryToTodoListHandler} >
-              <p className='title'>{data.title}</p>
-              {categoryTodoList.length > 0 &&
-                <p onClick={(e) => e.stopPropagation()}>
-                  {categoryTodoList[index].filter((data) => data.complete === true).length}/{categoryTodoList[index].length}
-                </p>}
-            </div>
-            <StProgressBarBox onClick={(e) => e.stopPropagation()}>
-              <StProgressBar width={categoryTodoComplete[index]} backgroundColor='#74E272'></StProgressBar>
-            </StProgressBarBox>
-          </StCategoryItem>
-        ))}
-      </StCategoryContainer>
-
-    </StDiv>
+        <StCategoryContainer>
+          {category.length > 0 && category.map((data, index) => (
+            <StCategoryItem key={data.id} id={data.id} name={data.title}>
+              <div className='top' onClick={onClickSelectCategoryToTodoListHandler} >
+                <p className='title'>{data.title}</p>
+                {categoryTodoList.length > 0 &&
+                  <p onClick={(e) => e.stopPropagation()}>
+                    {categoryTodoList[index].filter((data) => data.complete === true).length}/{categoryTodoList[index].length}
+                  </p>}
+              </div>
+              <StProgressBarBox onClick={(e) => e.stopPropagation()}>
+                <StProgressBar width={categoryTodoComplete[index] === 'NaN' ? 0 : categoryTodoComplete[index]} backgroundColor='#74E272'></StProgressBar>
+              </StProgressBarBox>
+            </StCategoryItem>
+          ))}
+        </StCategoryContainer>
+      </StDiv>
+      {/* <Planner x={x} setX={setX} /> */}
+    </>
   )
 }
 

@@ -14,7 +14,9 @@ const config = {
 const initialState = {
   todoCount: [],
   todos: [],
+  dateTodo: [],
   category: [],
+  date: null,
   isLoading: false,
   error: null,
 };
@@ -97,31 +99,33 @@ export const __getTodoCount = createAsyncThunk(
 );
 
 export const __getTodayTodo = createAsyncThunk(
-  "todo/getTodo",
+  "getTodayTodo",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
         `${BASE_URL}/todo/today`,
         config
       );
-      console.log("data", data);
+      console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const __getTodo = createAsyncThunk(
-  "todo/getTodo",
+  "getTodo",
   async (payload, thunkAPI) => {
+    console.log('payload!!!!!!!', payload);
     try {
       const data = await axios.get(
         `${BASE_URL}/todo?date=${dayjs(payload).format("YYYY-MM-DD")}`,
         config
       );
       console.log("data", data.data);
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue({ data: data.data, date: payload });
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -216,7 +220,7 @@ export const plannerSlice = createSlice({
       state.isLoading = true;
     },
     [__postCategory.fulfilled]: (state, action) => {
-      console.log('__postCategory action.payload', action.payload);
+      // console.log('__postCategory action.payload', action.payload);
     },
     [__postCategory.rejected]: (state, action) => {
       state.isLoading = false;
@@ -265,6 +269,7 @@ export const plannerSlice = createSlice({
     },
     [__getTodayTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log('action.payload!!!', action.payload)
       state.todos = action.payload;
     },
     [__getTodayTodo.rejected]: (state, action) => {
@@ -277,7 +282,10 @@ export const plannerSlice = createSlice({
     },
     [__getTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todos = action.payload;
+      console.log('action.payload***', action.payload)
+      // state.todos = action.payload;
+      state.dateTodo = action.payload.data;
+      state.date = action.payload.date;
     },
     [__getTodo.rejected]: (state, action) => {
       state.isLoading = false;
