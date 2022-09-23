@@ -43,6 +43,20 @@ export const __getMyInfo = createAsyncThunk(
   }
 );
 
+export const __getOtherInfo = createAsyncThunk(
+  "getMyInfo",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __postProfileImg = createAsyncThunk(
   "postProfileImg",
   async (payload, thunkAPI) => {
@@ -138,6 +152,18 @@ export const mySlice = createSlice({
       state.motto = action.payload.myMotto;
     },
     [__getMyInfo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //getOtherInfo
+    [__getOtherInfo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getOtherInfo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.userInfo = action.payload;
+    },
+    [__getOtherInfo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

@@ -4,14 +4,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { __getMainRankMonthly } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import { useNavigate } from "react-router-dom";
 
 const InfiniteScrollMonthly = () => {
   const { mainRankListMonthly } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
+
+  let nickname = localStorage.getItem("nickname");
 
   console.log("mainRankListMonthly", mainRankListMonthly);
 
@@ -40,7 +44,16 @@ const InfiniteScrollMonthly = () => {
   return (
     <Stdiv>
       {mainRankListMonthly.map((each) => (
-        <StRankingBox key={each.id}>
+        <StRankingBox
+          key={each.id}
+          onClick={() => {
+            if (nickname === each.nickname) {
+              navigate(`/my`);
+            } else {
+              navigate(`/othermy/${each.nickname}`);
+            }
+          }}
+        >
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>

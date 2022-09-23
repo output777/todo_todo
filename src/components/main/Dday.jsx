@@ -29,7 +29,7 @@ const Dday = () => {
   };
 
   const onSubmitHandler = async () => {
-    if (ddate.title > 8) {
+    if (ddate.title.length > 8) {
       alert("8자 이내로 입력해주세요.");
     } else {
       await dispatch(
@@ -174,7 +174,7 @@ const StDateInput = styled.input`
 
 const StModalBottom = styled.div`
   position: relative;
-  top: 25px;
+  top: 45px;
   display: flex;
   justify-content: center;
   align-items: center;

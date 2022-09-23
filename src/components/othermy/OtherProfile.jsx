@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __getMyInfo,
-  __postProfileImg,
-  __postProfileMoto,
-} from "../../redux/modules/mySlice";
 import { __getTotalRate } from "../../redux/modules/mainSlice";
-import { useNavigate } from "react-router-dom";
+import { __getOtherInfo } from "../../redux/modules/mySlice";
+import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
@@ -22,36 +19,57 @@ const OtherProfile = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch(__getTotalRate());
+    dispatch(__getOtherInfo(params.id));
+    dispatch(__getRankScoreData(params.id));
+    dispatch(__getTotalRate(params.id));
   }, []);
 
+  const user = useSelector((state) => state.my?.userInfo);
+  console.log(user);
+
+  const userRank = useSelector((state) => state.statistics?.rankScoreData);
+  console.log(userRank);
+
+  const userRate = useSelector((state) => state.main?.totalRate);
+  console.log(userRate);
+
+  const params = useParams();
+  console.log(params.id);
+
+  if (!user) {
+    return <div></div>;
+  }
   return (
     <>
       <StProfileContainer>
         <div className='title'>
           <img
             src={arrow}
-            // onClick={() => {
-            //   navigate("/setting");}}
+            onClick={() => {
+              navigate("/");
+            }}
           />
         </div>
         <StLine />
         <StImgInfoBox>
           <StImg>
-            <img src={profileImgSvg} alt='profile' />
+            <img src={user.profileImage} alt='profile' />
           </StImg>
           <StInfo>
             <div className='nextToPicture'>
-              <span className='count'>60</span>
+              <span className='count'>
+                {user.imgList == null ? 0 : user.imgList.length}
+              </span>
               <span className='text'>게시물</span>
             </div>
             <div className='nextToPicture'>
-              <span className='count'>60</span>
+              <span className='count'>{user.followersCnt}</span>
               <span className='text'>팔로워</span>
             </div>
             <div className='nextToPicture'>
-              <span className='count'>60</span>
+              <span className='count'>{user.followingsCnt}</span>
               <span className='text'>팔로잉</span>
             </div>
           </StInfo>
@@ -59,22 +77,22 @@ const OtherProfile = () => {
 
         <StNameAndScore>
           <StStatusDiv>
-            <div className='userName'>이름</div>
-            <div>09년생 / INFJ / 일반계 여고</div>
+            <div className='userName'>{user.nickname}</div>
+            <div>{user.mymotto}</div>
           </StStatusDiv>
           <StScoreBox>
             <span>
-              10위 (100)
+              {userRank[1].ranking}위 {userRank[1].score}
               <div>주간 점수</div>
             </span>
 
             <span>
-              1위 (80)
+              {userRank[2].ranking}위 {userRank[2].score}
               <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>
-              82.57%
+              <StuserRate>{userRate}</StuserRate>
               <StAverageText>평균 달성률</StAverageText>
             </span>
           </StScoreBox>
@@ -362,6 +380,11 @@ const StScoreBox = styled.div`
 const StAverageText = styled.div`
   position: relative;
   right: 10px;
+`;
+
+const StuserRate = styled.span`
+  position: relative;
+  left: 20px;
 `;
 
 const StMonthlyScoreText = styled.div`

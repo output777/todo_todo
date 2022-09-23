@@ -31,7 +31,7 @@ const Router = () => {
         />
         <Route path='/' element={<MainPage />} />
         <Route path='/my' element={<MyPage />} />
-        <Route path='/othermypage' element={<OtherMyPage />} />
+        <Route path='/othermy/:id' element={<OtherMyPage />} />
         <Route path='/follower' element={<FollowerPage />} />
         <Route path='/following' element={<FollowingPage />} />
         <Route path='/profileedit' element={<ProfileEdit />} />

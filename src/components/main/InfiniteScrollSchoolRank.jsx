@@ -7,11 +7,15 @@ import {
 } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
+import { useNavigate } from "react-router-dom";
+
+let nickname = localStorage.getItem("nickname");
 
 const InfiniteScrollSchoolRank = () => {
   const { mainRankListSchool } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
@@ -43,7 +47,16 @@ const InfiniteScrollSchoolRank = () => {
   return (
     <Stdiv>
       {mainRankListSchool.map((each) => (
-        <StRankingBox key={each.id}>
+        <StRankingBox
+          key={each.id}
+          onClick={() => {
+            if (nickname === each.nickname) {
+              navigate(`/my`);
+            } else {
+              navigate(`/othermy/${each.nickname}`);
+            }
+          }}
+        >
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>
