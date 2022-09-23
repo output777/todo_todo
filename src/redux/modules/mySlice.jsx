@@ -86,8 +86,8 @@ export const __getImages = createAsyncThunk(
         `${BASE_URL}/image/boast/${payload}`,
         config
       );
-      console.log("boast", data);
-      return thunkAPI.fulfillWithValue(data);
+      console.log("boast", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -176,8 +176,8 @@ export const mySlice = createSlice({
     },
     [__getImages.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("action.payload", action.payload.data);
-      state.images = action.payload.data;
+      console.log("action.payload", action.payload);
+      state.images = action.payload;
     },
     [__getImages.rejected]: (state, action) => {
       state.isLoading = false;

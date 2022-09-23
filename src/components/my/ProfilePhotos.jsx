@@ -42,22 +42,31 @@ const ProfilePhotos = () => {
 
     // const data = userInfo.imgList.filter((data) => data.id === Number(id));
     // const index = userInfo.imgList.indexOf(...data);
-    // setSelectImgIndex(index);
+    // setSelectImgIndex(index); //* */
   };
 
-  const onClickPrevHandler = () => {
-    const prevData = userInfo.imgList[selectImgIndex - 1];
+  const onClickPrevHandler = (id) => {
+    let a = images.find((data) => data.id == id);
+
+    console.log(images.indexOf(a));
+    console.log(typeof Number(a));
+    const prevData = images[images.indexOf(a) - 1];
+    console.log(prevData);
     setSelectImgId(prevData.id);
-    setSelectImg(prevData);
-    setSelectImgIndex((prev) => prev - 1);
+    setSelectImg(prevData.imageUrl);
+    // setSelectImgIndex((prev) => prev - 1);
     // console.log('prevData', prevData);
   };
 
-  const onClickNextHandler = () => {
-    const nextData = userInfo.imgList[selectImgIndex + 1];
+  const onClickNextHandler = (id) => {
+    let a = images.find((data) => data.id == id);
+    console.log(images.indexOf(a));
+    const nextData = images[images.indexOf(a) + 1];
+    console.log(nextData);
+
     setSelectImgId(nextData.id);
-    setSelectImg(nextData);
-    setSelectImgIndex((prev) => prev + 1);
+    setSelectImg(nextData.imageUrl);
+    // setSelectImgIndex((prev) => prev + 1);
     // console.log('nextData', nextData);
   };
 
@@ -125,17 +134,21 @@ const ProfilePhotos = () => {
           </div>
           <StSliderBox>
             <div className="imgBox" key={selectImgId}>
-              {/* {selectImgIndex === 0 ? null : (
-                <button className="prev" onClick={onClickPrevHandler}>
-                  ◀
-                </button>
-              )} */}
+              <button
+                className="prev"
+                onClick={() => onClickPrevHandler(selectImgId)}
+              >
+                ◀
+              </button>
+
               <img src={selectImg} alt="img" id={selectImgId} />
-              {/* {images.length - 1 === selectImgIndex ? null : (
-                <button className="next" onClick={onClickNextHandler}>
-                  ▶
-                </button>
-              )} */}
+
+              <button
+                className="next"
+                onClick={() => onClickNextHandler(selectImgId)}
+              >
+                ▶
+              </button>
             </div>
           </StSliderBox>
         </StFullScreen>
