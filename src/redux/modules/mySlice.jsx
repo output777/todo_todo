@@ -23,6 +23,7 @@ const configStr = {
 const nickname = localStorage.getItem("nickname");
 
 const initialState = {
+  follow: null,
   userInfo: null,
   images: [],
   isLoading: false,
@@ -137,6 +138,20 @@ export const __deleteImages = createAsyncThunk(
   }
 );
 
+export const __getFollow = createAsyncThunk(
+  "getFollow",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const mySlice = createSlice({
   name: "mySlice",
   initialState,
@@ -227,6 +242,17 @@ export const mySlice = createSlice({
       );
     },
     [__deleteImages.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__getFollow.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getFollow.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.follow = action.payload;
+    },
+    [__getFollow.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

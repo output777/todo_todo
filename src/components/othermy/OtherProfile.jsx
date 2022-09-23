@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTotalRate } from "../../redux/modules/mainSlice";
-import { __getOtherInfo } from "../../redux/modules/mySlice";
+import { __getOtherInfo, __getFollow } from "../../redux/modules/mySlice";
 import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
@@ -13,15 +13,11 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 const OtherProfile = () => {
   const [follow, setFollow] = useState();
 
-  const followerBtnHandler = () => {
-    setFollow(!follow);
-  };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(__getOtherInfo(params.id));
+    // dispatch(__getOtherInfo(params.id));
     dispatch(__getRankScoreData(params.id));
     dispatch(__getTotalRate(params.id));
   }, []);
@@ -38,9 +34,19 @@ const OtherProfile = () => {
   const params = useParams();
   console.log(params.id);
 
+  const followerBtnHandler = () => {
+    dispatch(__getFollow(user.id));
+    setFollow(!follow);
+  };
+
+  useEffect(() => {
+    dispatch(__getOtherInfo(params.id));
+  }, [dispatch]);
+
   if (!user) {
     return <div></div>;
   }
+
   return (
     <>
       <StProfileContainer>
@@ -55,7 +61,12 @@ const OtherProfile = () => {
         <StLine />
         <StImgInfoBox>
           <StImg>
-            <img src={user.profileImage} alt='profile' />
+            <img
+              src={
+                user.profileImage == null ? profileImgSvg : user.profileImage
+              }
+              alt='profile'
+            />
           </StImg>
           <StInfo>
             <div className='nextToPicture'>
@@ -82,17 +93,16 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking}위 {userRank[1].score}
-              <div>주간 점수</div>
+              {userRank[1].ranking}위 {userRank[1].score}점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking}위 {userRank[2].score}
+              {userRank[2].ranking}위 {userRank[2].score}점
               <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>
-              <StuserRate>{userRate}</StuserRate>
+              <StuserRate>{userRate}%</StuserRate>
               <StAverageText>평균 달성률</StAverageText>
             </span>
           </StScoreBox>
@@ -379,7 +389,7 @@ const StScoreBox = styled.div`
 
 const StAverageText = styled.div`
   position: relative;
-  right: 10px;
+  right: 5px;
 `;
 
 const StuserRate = styled.span`
