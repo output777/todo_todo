@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTotalRate } from "../../redux/modules/mainSlice";
-import { __getOtherInfo, __getFollow } from "../../redux/modules/mySlice";
+import {
+  __getOtherInfo,
+  __getFollowInfo,
+  __getFollowerList,
+  __getFollowingList,
+} from "../../redux/modules/mySlice";
 import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
@@ -11,7 +16,7 @@ import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
 
 const OtherProfile = () => {
-  const [follow, setFollow] = useState();
+  const [follow, setFollow] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,6 +25,7 @@ const OtherProfile = () => {
     // dispatch(__getOtherInfo(params.id));
     dispatch(__getRankScoreData(params.id));
     dispatch(__getTotalRate(params.id));
+    dispatch(__getFollowingList());
   }, []);
 
   const user = useSelector((state) => state.my?.userInfo);
@@ -34,9 +40,38 @@ const OtherProfile = () => {
   const params = useParams();
   console.log(params.id);
 
-  const followerBtnHandler = () => {
-    dispatch(__getFollow(user.id));
-    setFollow(!follow);
+  const followingList = useSelector((state) => state.my.follow);
+  console.log(followingList);
+
+  useEffect(() => {
+    if (followingList !== null && followingList.length > 0) {
+      const followingListFunction = followingList.filter(
+        (data) => data.nickname === params.id
+      );
+      if (followingListFunction.length > 0) {
+        setFollow(() => true);
+      } else {
+        setFollow(() => false);
+      }
+      console.log(followingListFunction);
+    }
+  }, [followingList]);
+
+  let followcheck = localStorage.getItem("follow");
+  console.log(typeof followcheck);
+
+  //followingList.findIndex((element) => element.nickname == params.id)
+
+  const followerBtnHandler = async () => {
+    await dispatch(__getFollowInfo(user.id));
+    await dispatch(__getOtherInfo(params.id));
+    setFollow(() => false);
+  };
+
+  const followBtnHandler = async () => {
+    await dispatch(__getFollowInfo(user.id));
+    await dispatch(__getOtherInfo(params.id));
+    setFollow(() => true);
   };
 
   useEffect(() => {
@@ -108,13 +143,13 @@ const OtherProfile = () => {
           </StScoreBox>
         </StNameAndScore>
 
-        {follow ? (
+        {follow === true ? (
           <StFollowingBtn onClick={followerBtnHandler}>
             팔로잉
             <img src={follwingcheck} />
           </StFollowingBtn>
         ) : (
-          <StNotFollowBtn onClick={followerBtnHandler}>
+          <StNotFollowBtn onClick={followBtnHandler}>
             팔로우
             <span>+</span>
           </StNotFollowBtn>
