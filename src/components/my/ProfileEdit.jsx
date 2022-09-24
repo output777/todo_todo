@@ -31,6 +31,7 @@ const ProfileEdit = () => {
   const [profileState, setProfileState] = useState(false);
   const [mottoInput, setMottoInput] = useState("");
   const uploadRef = useRef(null);
+  const profileUploadRef = useRef(null);
 
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
@@ -39,6 +40,7 @@ const ProfileEdit = () => {
 
   const onClickUploadPhotoHandler = () => {
     // uploadRef.current.click();
+    profileUploadRef.current.click();
   };
 
   const onChangeUploadImageHandler = async (e) => {
@@ -64,6 +66,7 @@ const ProfileEdit = () => {
   const mottoInputHandler = (e) => {
     setMottoInput(e.target.value.slice(0, 40));
   };
+
   console.log(mottoInput);
 
   const handleImgError = (e) => {
@@ -71,107 +74,126 @@ const ProfileEdit = () => {
   };
 
   // Dropzone, Preview
-  const thumbsContainer = {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 16,
-  };
+  // const thumbsContainer = {
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   flexWrap: "wrap",
+  //   marginTop: 16,
+  // };
 
-  const thumb = {
-    display: "inline-flex",
-    borderRadius: 2,
-    border: "1px solid #eaeaea",
-    marginBottom: 8,
-    marginRight: 8,
-    width: 100,
-    height: 100,
-    padding: 4,
-    boxSizing: "border-box",
-  };
+  // const thumb = {
+  //   display: "inline-flex",
+  //   borderRadius: 2,
+  //   border: "1px solid #eaeaea",
+  //   borderRadius: "100px",
+  //   marginBottom: 8,
+  //   marginRight: 8,
+  //   width: 100,
+  //   height: 100,
+  //   padding: 4,
+  //   boxSizing: "border-box",
+  // };
 
-  const thumbInner = {
-    display: "flex",
-    minWidth: 0,
-    overflow: "hidden",
-  };
+  // const thumbInner = {
+  //   display: "flex",
+  //   minWidth: 0,
+  //   overflow: "hidden",
+  // };
 
-  const img = {
-    display: "block",
-    width: "auto",
-    height: "100%",
-  };
+  // const img = {
+  //   display: "block",
+  //   width: "auto",
+  //   height: "100%",
+  // };
 
-  function Previews(props) {
-    const [files, setFiles] = useState([]);
-    const { getRootProps, getInputProps } = useDropzone({
-      accept: {
-        "image/*": [],
-      },
-      onDrop: (acceptedFiles) => {
-        setFiles(
-          acceptedFiles.map((file) =>
-            Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            })
-          )
-        );
-      },
-    });
+  // function Previews(props) {
+  //   const [files, setFiles] = useState([]);
+  //   const { getRootProps, getInputProps } = useDropzone({
+  //     accept: {
+  //       "image/*": [],
+  //     },
+  //     onDrop: (acceptedFiles) => {
+  //       setFiles(
+  //         acceptedFiles.map((file) =>
+  //           Object.assign(file, {
+  //             preview: URL.createObjectURL(file),
+  //           })
+  //         )
+  //       );
+  //     },
+  //   });
 
-    const thumbs = files.map((file) => (
-      <div style={thumb} key={file.name}>
-        <div style={thumbInner}>
-          <img
-            src={file.preview}
-            style={img}
-            // Revoke data uri after image is loaded
-            onLoad={() => {
-              URL.revokeObjectURL(file.preview);
-            }}
-          />
-        </div>
-      </div>
-    ));
+  //   const thumbs = files.map((file) => (
+  //     <div style={thumb} key={file.name}>
+  //       <div style={thumbInner}>
+  //         <img
+  //           src={file.preview}
+  //           style={img}
+  //           // Revoke data uri after image is loaded
+  //           onLoad={() => {
+  //             URL.revokeObjectURL(file.preview);
+  //           }}
+  //         />
+  //       </div>
+  //     </div>
+  //   ));
 
-    useEffect(() => {
-      // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-      return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-    }, []);
+  //   useEffect(() => {
+  //     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+  //     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  //   }, []);
 
-    return (
-      <section className="container" style={{ width: "100%" }}>
-        <div
-          {...getRootProps({ className: "dropzone" })}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <input {...getInputProps()} />
-          <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
-            <img className="pencil" src={pencilSvg} />
-            <input type="file" accept="image/*" />
-          </div>
-          {thumbs.length == 0 ? (
-            <StImg
-              src={
-                userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg
-              }
-              onError={handleImgError}
-            />
-          ) : null}
-          <aside style={thumbsContainer}>
-            {thumbs}
-            {/* {console.log("thumbs", thumbs)} */}
-            {/* {profileImgSvg} */}
-          </aside>
-        </div>
-      </section>
-    );
+  //   return (
+  //     <section className="container" style={{ width: "100%" }}>
+  //       <div
+  //         {...getRootProps({ className: "dropzone" })}
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //         }}
+  //       >
+  //         <input {...getInputProps()} />
+  //         <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+  //           <img className="pencil" src={pencilSvg} />
+  //           <input type="file" accept="image/*" />
+  //         </div>
+  //         {thumbs.length > 0 ? (
+  //           <StImg src={userInfo?.profileImage} onError={handleImgError} />
+  //         ) : (
+  //           <StImg src={profileImgSvg} onError={handleImgError} />
+  //         )}
+  //       </div>
+  //       <aside style={thumbsContainer}>
+  //         {thumbs}
+  //         {console.log("thumbs", thumbs)}
+  //         {/* {profileImgSvg} */}
+  //       </aside>
+  //     </section>
+  //   );
+  // }
+
+  function readImage(input) {
+    // 인풋 태그에 파일이 있는 경우
+    if (input.files && input.files[0]) {
+      // 이미지 파일인지 검사 (생략)
+      // FileReader 인스턴스 생성
+      const reader = new FileReader();
+      // 이미지가 로드가 된 경우
+      reader.onload = (e) => {
+        const previewImage = document?.getElementById("preview-image");
+        previewImage.src = e.target.result;
+      };
+      // reader가 이미지 읽도록 하기
+      reader.readAsDataURL(input.files[0]);
+    }
   }
+  // input file에 change 이벤트 부여
+  const inputImage = document?.getElementById("input-image");
+  inputImage?.addEventListener("change", (e) => {
+    readImage(e.target);
+  });
 
   return (
     <>
@@ -200,21 +222,36 @@ const ProfileEdit = () => {
       <StLine></StLine>
 
       <StImgDiv>
-        <Previews />
+        <div className="image-container">
+          <img
+            style={{ width: "100%", height: "100%" }}
+            id="preview-image"
+            src={userInfo?.profileImage}
+          />
+          <input
+            style={{ display: "none" }}
+            type="file"
+            id="input-image"
+            ref={profileUploadRef}
+          />
+        </div>
+        {/* <Previews /> */}
         {/* <StImg
-          src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
-          onError={handleImgError}
+          // src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
+          src={userInfo?.profileImage}
+          // onError={handleImgError}
         /> */}
 
-        {/* <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+        {/* --- 연필 --- */}
+        <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
           <img className="pencil" src={pencilSvg} />
           <input
             type="file"
             accept="image/*"
-            ref={uploadRef}
-            onChange={onChangeUploadImageHandler}
+            // ref={uploadRef}
+            // onChange={onChangeUploadImageHandler}
           />
-        </div> */}
+        </div>
       </StImgDiv>
 
       <StMotto>
@@ -337,6 +374,19 @@ const StImgDiv = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  .image-container {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      width: 50%;
+      margin: auto;
+    }
+  }
   .pencilBox {
     width: 3em;
     height: 3em;
