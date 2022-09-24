@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -12,8 +12,8 @@ import {
   __postProfileImg,
   __postProfileMoto,
 } from "../../redux/modules/mySlice";
-import { useEffect } from "react";
 import axios from "axios";
+import { useDropzone } from "react-dropzone";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const nickname = localStorage.getItem("nickname");
@@ -38,7 +38,7 @@ const ProfileEdit = () => {
   };
 
   const onClickUploadPhotoHandler = () => {
-    uploadRef.current.click();
+    // uploadRef.current.click();
   };
 
   const onChangeUploadImageHandler = async (e) => {
@@ -62,9 +62,117 @@ const ProfileEdit = () => {
   }, [dispatch]);
 
   const mottoInputHandler = (e) => {
-    setMottoInput(e.target.value);
+    setMottoInput(e.target.value.slice(0, 40));
   };
   console.log(mottoInput);
+
+  const handleImgError = (e) => {
+    e.target.src = profileImgSvg;
+  };
+
+  // Dropzone, Preview
+  const thumbsContainer = {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 16,
+  };
+
+  const thumb = {
+    display: "inline-flex",
+    borderRadius: 2,
+    border: "1px solid #eaeaea",
+    marginBottom: 8,
+    marginRight: 8,
+    width: 100,
+    height: 100,
+    padding: 4,
+    boxSizing: "border-box",
+  };
+
+  const thumbInner = {
+    display: "flex",
+    minWidth: 0,
+    overflow: "hidden",
+  };
+
+  const img = {
+    display: "block",
+    width: "auto",
+    height: "100%",
+  };
+
+  function Previews(props) {
+    const [files, setFiles] = useState([]);
+    const { getRootProps, getInputProps } = useDropzone({
+      accept: {
+        "image/*": [],
+      },
+      onDrop: (acceptedFiles) => {
+        setFiles(
+          acceptedFiles.map((file) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          )
+        );
+      },
+    });
+
+    const thumbs = files.map((file) => (
+      <div style={thumb} key={file.name}>
+        <div style={thumbInner}>
+          <img
+            src={file.preview}
+            style={img}
+            // Revoke data uri after image is loaded
+            onLoad={() => {
+              URL.revokeObjectURL(file.preview);
+            }}
+          />
+        </div>
+      </div>
+    ));
+
+    useEffect(() => {
+      // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+      return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    }, []);
+
+    return (
+      <section className="container" style={{ width: "100%" }}>
+        <div
+          {...getRootProps({ className: "dropzone" })}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <input {...getInputProps()} />
+          <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+            <img className="pencil" src={pencilSvg} />
+            <input type="file" accept="image/*" />
+          </div>
+          {thumbs.length == 0 ? (
+            <StImg
+              src={
+                userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg
+              }
+              onError={handleImgError}
+            />
+          ) : null}
+          <aside style={thumbsContainer}>
+            {thumbs}
+            {/* {console.log("thumbs", thumbs)} */}
+            {/* {profileImgSvg} */}
+          </aside>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <StTitle>
@@ -90,9 +198,15 @@ const ProfileEdit = () => {
       </StTitle>
 
       <StLine></StLine>
+
       <StImgDiv>
-        <StImg src={userInfo?.profileImage} />
-        <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+        <Previews />
+        {/* <StImg
+          src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
+          onError={handleImgError}
+        /> */}
+
+        {/* <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
           <img className="pencil" src={pencilSvg} />
           <input
             type="file"
@@ -100,7 +214,7 @@ const ProfileEdit = () => {
             ref={uploadRef}
             onChange={onChangeUploadImageHandler}
           />
-        </div>
+        </div> */}
       </StImgDiv>
 
       <StMotto>
