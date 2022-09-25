@@ -23,6 +23,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.my);
+  const { profileImage } = useSelector((state) => state.my);
   console.log("userInfo", userInfo);
   const { motto } = useSelector((state) => state.my);
 
@@ -43,7 +44,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
-  }, [dispatch]);
+  }, [profileImage]);
 
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;

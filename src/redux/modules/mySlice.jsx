@@ -28,7 +28,7 @@ const initialState = {
   userInfo: null,
   motto: "",
   images: [],
-  profileImage: profileImgSvg,
+  profileImage: [], //주의
   isLoading: false,
   error: null,
   motto: null,
@@ -79,7 +79,7 @@ export const __postProfileImg = createAsyncThunk(
         config
       );
       console.log("data", data);
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue(data.data); // data 는 수정완료 메세지
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -187,7 +187,7 @@ export const mySlice = createSlice({
     [__postProfileImg.fulfilled]: (state, action) => {
       console.log("__postProfileImg.fulfilled", action.payload);
       state.isLoading = false;
-      state.userInfo.profileImage = action.payload;
+      state.profileImage.push(...action.payload);
       // state.profileImage = action.payload;
     },
     [__postProfileImg.rejected]: (state, action) => {

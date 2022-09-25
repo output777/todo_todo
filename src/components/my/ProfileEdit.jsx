@@ -41,6 +41,7 @@ const ProfileEdit = () => {
 
   const onClickProfileEditComplete = () => {
     dispatch(__postProfileImg(formData));
+    dispatch(__getMyInfo(nickname));
     navigate("/my");
   };
 
