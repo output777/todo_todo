@@ -187,8 +187,7 @@ export const mySlice = createSlice({
     [__postProfileImg.fulfilled]: (state, action) => {
       console.log("__postProfileImg.fulfilled", action.payload);
       state.isLoading = false;
-      state.profileImage.push(...action.payload);
-      // state.profileImage = action.payload;
+      state.profileImage.push(...action.payload); //주의
     },
     [__postProfileImg.rejected]: (state, action) => {
       state.isLoading = false;

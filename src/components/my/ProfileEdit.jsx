@@ -13,7 +13,6 @@ import {
   __postProfileImg,
   __postProfileMoto,
 } from "../../redux/modules/mySlice";
-import axios from "axios";
 import { useDropzone } from "react-dropzone";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -22,37 +21,41 @@ const nickname = localStorage.getItem("nickname");
 const ProfileEdit = () => {
   const { profileImage } = useSelector((state) => state.my);
   const { userInfo } = useSelector((state) => state.my);
-  // console.log("profileImage", profileImage);
   console.log("userInfo", userInfo);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [saveStatus, setSaveStatus] = useState(false);
   const [modalView, setModalView] = useState(false);
-  const [profileState, setProfileState] = useState(false);
-  const [mottoInput, setMottoInput] = useState("");
-  const uploadRef = useRef(null);
+  const [profileImageState, setProfileImageState] = useState();
+  const [mottoInput, setMottoInput] = useState(userInfo?.myMotto);
   const profileUploadRef = useRef(null);
 
   let formData = new FormData();
-
   let newCamp = { myMotto: mottoInput };
-  console.log("newCamp", newCamp);
+
+  for (let key of formData.keys()) {
+    console.log(key, formData.get(key));
+  }
 
   const onClickProfileEditComplete = () => {
+    formData.append("multipartFile", profileImageState);
+    formData.append(
+      "dto",
+      new Blob([JSON.stringify(newCamp)], { type: "application/json" })
+    );
+
     dispatch(__postProfileImg(formData));
     dispatch(__getMyInfo(nickname));
     navigate("/my");
   };
 
   const onClickUploadPhotoHandler = () => {
-    // uploadRef.current.click();
     profileUploadRef.current.click();
   };
 
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
-    // setModal(parameter);
   };
 
   // const onChangeUploadImageHandler = async (e) => {
@@ -78,23 +81,13 @@ const ProfileEdit = () => {
   // 좌우명 입력시
   const mottoInputHandler = (e) => {
     setMottoInput(e.target.value.slice(0, 40));
-    formData.append(
-      "dto",
-      new Blob([JSON.stringify(newCamp)], { type: "application/json" })
-    );
-
-    for (let key of formData.keys()) {
-      console.log(key, formData.get(key));
-    }
   };
-
-  console.log(mottoInput);
 
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
   };
 
-  // Dropzone, Preview
+  // --- Dropzone, Preview ---
   // const thumbsContainer = {
   //   display: "flex",
   //   flexDirection: "row",
@@ -198,7 +191,6 @@ const ProfileEdit = () => {
   const readImage = (input) => {
     // 인풋 태그에 파일이 있는 경우
     if (input.files && input.files[0]) {
-      // 이미지 파일인지 검사 (생략)
       // FileReader 인스턴스 생성
       const reader = new FileReader();
       // 이미지가 로드가 된 경우
@@ -210,18 +202,14 @@ const ProfileEdit = () => {
       reader.readAsDataURL(input.files[0]);
 
       console.log("input.files[0]", input.files[0]);
-      formData.append("multipartFile", input.files[0]);
-
-      for (let key of formData.keys()) {
-        console.log(key, formData.get(key));
-      }
     }
   };
   // input file에 change 이벤트 부여
   const inputImage = document?.getElementById("input-image");
   inputImage?.addEventListener("change", (e) => {
     readImage(e.target);
-    console.log("e.target", e.target);
+    console.log("e.target", e.target, e.target.files[0]);
+    setProfileImageState(e.target.files[0]);
   });
 
   return (
@@ -246,7 +234,7 @@ const ProfileEdit = () => {
       <StImgDiv>
         <div className="image-container">
           <img
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "6em", height: "6em", borderRadius: "100px" }}
             id="preview-image"
             src={userInfo?.profileImage}
             onError={handleImgError}
@@ -257,6 +245,7 @@ const ProfileEdit = () => {
             id="input-image"
             ref={profileUploadRef}
           />
+          {/* --- 연필 --- */}
           <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
             <img className="pencil" src={pencilSvg} />
             <input
@@ -267,15 +256,6 @@ const ProfileEdit = () => {
             />
           </div>
         </div>
-
-        {/* --- 연필 --- */}
-
-        {/* <Previews /> */}
-        {/* <StImg
-              // src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
-              src={userInfo?.profileImage}
-              // onError={handleImgError}
-            /> */}
       </StImgDiv>
 
       <StMotto>
@@ -285,7 +265,7 @@ const ProfileEdit = () => {
           value={mottoInput}
           onChange={mottoInputHandler}
         ></textarea>
-        <div className="mottoInputCount">{mottoInput.length}/40</div>
+        <div className="mottoInputCount">{mottoInput?.length}/40</div>
       </StMotto>
 
       {/* ------------ 안내창 모달 -------------*/}

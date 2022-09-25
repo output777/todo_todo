@@ -206,15 +206,16 @@ const StImgInfoBox = styled.div`
 `;
 
 const StImg = styled.div`
-  width: 80px;
-  height: 80px;
+  width: auto;
+  height: auto;
   border-radius: 50%;
   position: relative;
 
   & img {
-    width: 80px;
-    height: 80px;
+    width: 6em;
+    height: 5em;
     border-radius: 50%;
+    object-fit: contain;
   }
 
   & div.rank {
