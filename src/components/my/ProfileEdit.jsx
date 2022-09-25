@@ -8,6 +8,7 @@ import Modal from "../utils/Modal";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  __getImages,
   __getMyInfo,
   __postProfileImg,
   __postProfileMoto,
@@ -21,7 +22,7 @@ const nickname = localStorage.getItem("nickname");
 const ProfileEdit = () => {
   const { profileImage } = useSelector((state) => state.my);
   const { userInfo } = useSelector((state) => state.my);
-  console.log("profileImage", profileImage);
+  // console.log("profileImage", profileImage);
   console.log("userInfo", userInfo);
 
   const navigate = useNavigate();
@@ -33,9 +34,14 @@ const ProfileEdit = () => {
   const uploadRef = useRef(null);
   const profileUploadRef = useRef(null);
 
-  const modalToggleHandler = (parameter) => {
-    setModalView(!modalView);
-    // setModal(parameter);
+  let formData = new FormData();
+
+  let newCamp = { myMotto: mottoInput };
+  console.log("newCamp", newCamp);
+
+  const onClickProfileEditComplete = () => {
+    dispatch(__postProfileImg(formData));
+    navigate("/my");
   };
 
   const onClickUploadPhotoHandler = () => {
@@ -43,28 +49,42 @@ const ProfileEdit = () => {
     profileUploadRef.current.click();
   };
 
-  const onChangeUploadImageHandler = async (e) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("multipartFile", e.target.files[0]);
-
-    console.log("e.target.files", e.target.files);
-    console.log("e.target.files[0].name", e.target.files[0].name);
-    dispatch(__postProfileImg(formData));
-    dispatch(__getMyInfo(nickname));
-    // await dispatch(__getImages(nickname));
-    // await dispatch(__getMyInfo());
+  const modalToggleHandler = (parameter) => {
+    setModalView(!modalView);
+    // setModal(parameter);
   };
+
+  // const onChangeUploadImageHandler = async (e) => {
+  //   if (!e.target.files) {
+  //     return;
+  //   }
+
+  //   formData.append("multipartFile", e.target.files[0]);
+
+  //   console.log("e.target.files", e.target.files);
+  //   console.log("e.target.files[0].name", e.target.files[0].name);
+
+  //   dispatch(__postProfileImg(formData));
+  //   dispatch(__getMyInfo(nickname));
+  //   // await dispatch(__getImages(nickname));
+  //   // await dispatch(__getMyInfo());
+  // };
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
   }, [dispatch]);
 
+  // 좌우명 입력시
   const mottoInputHandler = (e) => {
     setMottoInput(e.target.value.slice(0, 40));
+    formData.append(
+      "dto",
+      new Blob([JSON.stringify(newCamp)], { type: "application/json" })
+    );
+
+    for (let key of formData.keys()) {
+      console.log(key, formData.get(key));
+    }
   };
 
   console.log(mottoInput);
@@ -174,7 +194,7 @@ const ProfileEdit = () => {
   //   );
   // }
 
-  function readImage(input) {
+  const readImage = (input) => {
     // 인풋 태그에 파일이 있는 경우
     if (input.files && input.files[0]) {
       // 이미지 파일인지 검사 (생략)
@@ -187,12 +207,20 @@ const ProfileEdit = () => {
       };
       // reader가 이미지 읽도록 하기
       reader.readAsDataURL(input.files[0]);
+
+      console.log("input.files[0]", input.files[0]);
+      formData.append("multipartFile", input.files[0]);
+
+      for (let key of formData.keys()) {
+        console.log(key, formData.get(key));
+      }
     }
-  }
+  };
   // input file에 change 이벤트 부여
   const inputImage = document?.getElementById("input-image");
   inputImage?.addEventListener("change", (e) => {
     readImage(e.target);
+    console.log("e.target", e.target);
   });
 
   return (
@@ -209,14 +237,7 @@ const ProfileEdit = () => {
           }}
         />
         <div className="title">프로필 편집</div>
-        <button
-          onClick={() => {
-            dispatch(__postProfileMoto(mottoInput)); // 좌우명
-            navigate("/my");
-          }}
-        >
-          완료
-        </button>
+        <button onClick={onClickProfileEditComplete}>완료</button>
       </StTitle>
 
       <StLine></StLine>
@@ -227,6 +248,7 @@ const ProfileEdit = () => {
             style={{ width: "100%", height: "100%" }}
             id="preview-image"
             src={userInfo?.profileImage}
+            onError={handleImgError}
           />
           <input
             style={{ display: "none" }}
@@ -234,24 +256,25 @@ const ProfileEdit = () => {
             id="input-image"
             ref={profileUploadRef}
           />
+          <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+            <img className="pencil" src={pencilSvg} />
+            <input
+              type="file"
+              accept="image/*"
+              // ref={uploadRef}
+              // onChange={onChangeUploadImageHandler}
+            />
+          </div>
         </div>
-        {/* <Previews /> */}
-        {/* <StImg
-          // src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
-          src={userInfo?.profileImage}
-          // onError={handleImgError}
-        /> */}
 
         {/* --- 연필 --- */}
-        <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
-          <img className="pencil" src={pencilSvg} />
-          <input
-            type="file"
-            accept="image/*"
-            // ref={uploadRef}
-            // onChange={onChangeUploadImageHandler}
-          />
-        </div>
+
+        {/* <Previews /> */}
+        {/* <StImg
+              // src={userInfo?.profileImage ? userInfo?.profileImage : profileImgSvg}
+              src={userInfo?.profileImage}
+              // onError={handleImgError}
+            /> */}
       </StImgDiv>
 
       <StMotto>
@@ -367,7 +390,6 @@ const StMotto = styled.div`
   }
 `;
 const StImgDiv = styled.div`
-  position: relative;
   width: 80%;
   margin: 10% auto;
   display: flex;
@@ -376,6 +398,7 @@ const StImgDiv = styled.div`
   justify-content: center;
 
   .image-container {
+    position: relative;
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -388,6 +411,10 @@ const StImgDiv = styled.div`
     }
   }
   .pencilBox {
+    position: absolute;
+    right: -1.3em;
+    bottom: -0.3em;
+
     width: 3em;
     height: 3em;
     border-radius: 100%;
@@ -396,10 +423,6 @@ const StImgDiv = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
-    right: 5em;
-    top: 4.3em;
   }
   .pencil {
   }

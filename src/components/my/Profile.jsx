@@ -40,7 +40,6 @@ const Profile = () => {
   }, [setmottoInput, motto]);
 
   const nickname = localStorage.getItem("nickname");
-  console.log("nickname", nickname == "null");
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
