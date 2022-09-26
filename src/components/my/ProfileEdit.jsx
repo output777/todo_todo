@@ -14,6 +14,7 @@ import {
   __postProfileMoto,
 } from "../../redux/modules/mySlice";
 import { useDropzone } from "react-dropzone";
+import imageCompression from "browser-image-compression";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const nickname = localStorage.getItem("nickname");
@@ -195,8 +196,34 @@ const ProfileEdit = () => {
   inputImage?.addEventListener("change", (e) => {
     readImage(e.target);
     console.log("e.target", e.target, e.target.files[0]);
-    setProfileImageState(e.target.files[0]);
+    // setProfileImageState(e.target.files[0]);
   });
+
+  // Browser Image Compression
+  const handleImageUpload = async (event) => {
+    const imageFile = event.target.files[0];
+    console.log(imageFile);
+    console.log("originalFile instanceof Blob", imageFile instanceof Blob);
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      );
+      console.log(`compressedFile size ${compressedFile.size}`);
+      // await uploadToServer(compressedFile);
+      setProfileImageState(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -230,6 +257,7 @@ const ProfileEdit = () => {
             type="file"
             id="input-image"
             ref={profileUploadRef}
+            onChange={handleImageUpload}
           />
           {/* ----- 연필 ----- */}
           <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
