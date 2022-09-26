@@ -58,8 +58,8 @@ const OtherProfile = () => {
     }
   }, [followingList]);
 
-  let followcheck = localStorage.getItem("follow");
-  console.log(typeof followcheck);
+  // let followcheck = localStorage.getItem("follow");
+  // console.log(typeof followcheck);
 
   //followingList.findIndex((element) => element.nickname == params.id)
 

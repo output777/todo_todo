@@ -102,7 +102,7 @@ const Profile = () => {
           <StInfo>
             <div className='nextToPicture'>
               <span className='count'>
-                {userInfo.imgList == null ? 0 : userInfo.imgList.length}
+                {/* {userInfo.imgList == null ? 0 : userInfo.imgList.length} */}
               </span>
               <span className='text'>게시물</span>
             </div>

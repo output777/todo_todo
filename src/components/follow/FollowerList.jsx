@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   __getFollowerList,
   __getFollowingList,
+  __getFollowInfo,
+  __getOtherInfo,
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
@@ -26,8 +28,14 @@ const FollowerList = () => {
 
   const params = useParams();
 
-  const followerBtnHandler = () => {
-    setFollow(!follow);
+  const followerBtnHandler = async (id) => {
+    await dispatch(__getFollowInfo(id));
+    setFollow(() => false);
+  };
+
+  const followBtnHandler = async (id) => {
+    await dispatch(__getFollowInfo(id));
+    setFollow(() => true);
   };
 
   useEffect(() => {
@@ -72,7 +80,7 @@ const FollowerList = () => {
             <StFollowingBtn
               onClick={(event) => {
                 event.stopPropagation();
-                followerBtnHandler();
+                followerBtnHandler(member.id);
               }}
             >
               팔로잉
@@ -82,7 +90,7 @@ const FollowerList = () => {
             <StNotFollowBtn
               onClick={(event) => {
                 event.stopPropagation();
-                followerBtnHandler();
+                followBtnHandler(member.id);
               }}
             >
               팔로우
