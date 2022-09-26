@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { __getImages, __deleteImages } from "../../redux/modules/mySlice";
 import cancelSvg from "../../assets/img/cancelSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
+import wastebasketSvg from "../../assets/img/myPage/wastebasket.svg";
 import Modal from "../utils/Modal";
 
 const ProfilePhotos = () => {
@@ -47,25 +48,25 @@ const ProfilePhotos = () => {
 
   const onClickPrevHandler = (id) => {
     let a = images.find((data) => data.id == id);
-
-    console.log(images.indexOf(a));
-    console.log(typeof Number(a));
     const prevData = images[images.indexOf(a) - 1];
     console.log(prevData);
     setSelectImgId(prevData.id);
     setSelectImg(prevData.imageUrl);
+
+    // console.log(images.indexOf(a));
+    // console.log(typeof Number(a));
     // setSelectImgIndex((prev) => prev - 1);
     // console.log('prevData', prevData);
   };
 
   const onClickNextHandler = (id) => {
     let a = images.find((data) => data.id == id);
-    console.log(images.indexOf(a));
     const nextData = images[images.indexOf(a) + 1];
-    console.log(nextData);
-
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
+
+    // console.log(images.indexOf(a));
+    // console.log(nextData);
     // setSelectImgIndex((prev) => prev + 1);
     // console.log('nextData', nextData);
   };
@@ -118,39 +119,53 @@ const ProfilePhotos = () => {
               <img src={cancelSvg} alt="cancelBtn" />
             </div>
             <div className="imgCount">
-              {/* {images && (
+              {images && (
                 <span>
-                  {selectImgIndex + 1}/{images.length}
+                  {images.indexOf(
+                    images.find((data) => data.id == selectImgId)
+                  ) + 1}
+                  /{images.length}
                 </span>
-              )} */}
+              )}
             </div>
             <div className="optionBox">
               <img
-                src={threeDotSvg}
+                src={wastebasketSvg}
                 alt="optionBtn"
                 onClick={onClicOptionModalOpenHandler}
               />
             </div>
           </div>
-          <StSliderBox>
-            <div className="imgBox" key={selectImgId}>
-              <button
-                className="prev"
-                onClick={() => onClickPrevHandler(selectImgId)}
-              >
-                ◀
-              </button>
+          <div className="StSliderBoxParent">
+            <StSliderBox>
+              <div className="imgBox" key={selectImgId}>
+                {images.indexOf(
+                  images.find((data) => data.id == selectImgId)
+                ) == 0 ? null : (
+                  <button
+                    className="prev"
+                    onClick={() => onClickPrevHandler(selectImgId)}
+                  >
+                    ◀
+                  </button>
+                )}
 
-              <img src={selectImg} alt="img" id={selectImgId} />
+                <img src={selectImg} alt="img" id={selectImgId} />
 
-              <button
-                className="next"
-                onClick={() => onClickNextHandler(selectImgId)}
-              >
-                ▶
-              </button>
-            </div>
-          </StSliderBox>
+                {images.indexOf(
+                  images.find((data) => data.id == selectImgId)
+                ) ==
+                images.length - 1 ? null : (
+                  <button
+                    className="next"
+                    onClick={() => onClickNextHandler(selectImgId)}
+                  >
+                    ▶
+                  </button>
+                )}
+              </div>
+            </StSliderBox>
+          </div>
         </StFullScreen>
       ) : null}
 
@@ -197,25 +212,36 @@ const StImg = styled.div`
   & img {
     width: 100%;
     height: 100px;
+    margin: auto;
   }
 `;
 
 const StSliderBox = styled.div`
   width: 100%;
-  height: 500px;
+  height: auto;
   z-index: 15;
-  padding-top: 50px;
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   & div.imgBox {
     width: 100%;
-    height: 450px;
+    height: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     img {
-      width: 100%;
-      height: 100%;
+      width: 95%;
+      margin: auto;
+      height: 30em;
       background-size: contain;
+      border-radius: 30px;
     }
 
     button {
@@ -241,7 +267,7 @@ const StSliderBox = styled.div`
 const StFullScreen = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: #5f5f5f;
+  background-color: #111111;
   z-index: 10;
   position: fixed;
   top: 0;
@@ -249,12 +275,22 @@ const StFullScreen = styled.div`
   left: 0;
   right: 0;
 
+  .StSliderBoxParent {
+    background-color: #111111;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   & .header {
-    height: 50px;
+    height: 4em;
     display: flex;
     align-items: center;
     padding: 15px;
     justify-content: space-between;
+    background-color: white;
   }
   .cancelBox {
     width: 15px;
@@ -266,12 +302,13 @@ const StFullScreen = styled.div`
   }
 
   .imgCount {
-    color: #fff;
+    color: #111111;
+    font-weight: bold;
   }
 
   .optionBox {
     img {
-      transform: rotate(90deg);
+      /* transform: rotate(90deg); */
     }
   }
 `;

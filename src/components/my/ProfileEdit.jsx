@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
@@ -8,12 +8,13 @@ import Modal from "../utils/Modal";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  __getImages,
   __getMyInfo,
   __postProfileImg,
   __postProfileMoto,
 } from "../../redux/modules/mySlice";
-import { useEffect } from "react";
-import axios from "axios";
+import { useDropzone } from "react-dropzone";
+import imageCompression from "browser-image-compression";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const nickname = localStorage.getItem("nickname");
@@ -21,50 +22,209 @@ const nickname = localStorage.getItem("nickname");
 const ProfileEdit = () => {
   const { profileImage } = useSelector((state) => state.my);
   const { userInfo } = useSelector((state) => state.my);
-  console.log("profileImage", profileImage);
   console.log("userInfo", userInfo);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [saveStatus, setSaveStatus] = useState(false);
   const [modalView, setModalView] = useState(false);
-  const [profileState, setProfileState] = useState(false);
-  const [mottoInput, setMottoInput] = useState("");
-  const uploadRef = useRef(null);
+  const [profileImageState, setProfileImageState] = useState();
+  const [mottoInput, setMottoInput] = useState(userInfo?.myMotto);
+  const profileUploadRef = useRef(null);
 
-  const modalToggleHandler = (parameter) => {
-    setModalView(!modalView);
-    // setModal(parameter);
+  let formData = new FormData();
+  let newCamp = { myMotto: mottoInput };
+
+  for (let key of formData.keys()) {
+    console.log(key, formData.get(key));
+  }
+
+  // 완료버튼 클릭
+  const onClickProfileEditComplete = () => {
+    formData.append("multipartFile", profileImageState);
+    formData.append(
+      "dto",
+      new Blob([JSON.stringify(newCamp)], { type: "application/json" })
+    );
+
+    dispatch(__postProfileImg(formData));
+    dispatch(__getMyInfo(nickname));
+    navigate("/my");
   };
 
   const onClickUploadPhotoHandler = () => {
-    uploadRef.current.click();
+    profileUploadRef.current.click();
   };
 
-  const onChangeUploadImageHandler = async (e) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("multipartFile", e.target.files[0]);
-
-    console.log("e.target.files", e.target.files);
-    console.log("e.target.files[0].name", e.target.files[0].name);
-    dispatch(__postProfileImg(formData));
-    dispatch(__getMyInfo(nickname));
-    // await dispatch(__getImages(nickname));
-    // await dispatch(__getMyInfo());
+  const modalToggleHandler = (parameter) => {
+    setModalView(!modalView);
   };
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
   }, [dispatch]);
 
+  // 좌우명 입력시
   const mottoInputHandler = (e) => {
-    setMottoInput(e.target.value);
+    setMottoInput(e.target.value.slice(0, 40));
   };
-  console.log(mottoInput);
+
+  // 이미지 에러 발생시
+  const handleImgError = (e) => {
+    e.target.src = profileImgSvg;
+  };
+
+  // --- Dropzone, Preview ---
+  // const thumbsContainer = {
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   flexWrap: "wrap",
+  //   marginTop: 16,
+  // };
+
+  // const thumb = {
+  //   display: "inline-flex",
+  //   borderRadius: 2,
+  //   border: "1px solid #eaeaea",
+  //   borderRadius: "100px",
+  //   marginBottom: 8,
+  //   marginRight: 8,
+  //   width: 100,
+  //   height: 100,
+  //   padding: 4,
+  //   boxSizing: "border-box",
+  // };
+
+  // const thumbInner = {
+  //   display: "flex",
+  //   minWidth: 0,
+  //   overflow: "hidden",
+  // };
+
+  // const img = {
+  //   display: "block",
+  //   width: "auto",
+  //   height: "100%",
+  // };
+
+  // function Previews(props) {
+  //   const [files, setFiles] = useState([]);
+  //   const { getRootProps, getInputProps } = useDropzone({
+  //     accept: {
+  //       "image/*": [],
+  //     },
+  //     onDrop: (acceptedFiles) => {
+  //       setFiles(
+  //         acceptedFiles.map((file) =>
+  //           Object.assign(file, {
+  //             preview: URL.createObjectURL(file),
+  //           })
+  //         )
+  //       );
+  //     },
+  //   });
+
+  //   const thumbs = files.map((file) => (
+  //     <div style={thumb} key={file.name}>
+  //       <div style={thumbInner}>
+  //         <img
+  //           src={file.preview}
+  //           style={img}
+  //           // Revoke data uri after image is loaded
+  //           onLoad={() => {
+  //             URL.revokeObjectURL(file.preview);
+  //           }}
+  //         />
+  //       </div>
+  //     </div>
+  //   ));
+
+  //   useEffect(() => {
+  //     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+  //     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  //   }, []);
+
+  //   return (
+  //     <section className="container" style={{ width: "100%" }}>
+  //       <div
+  //         {...getRootProps({ className: "dropzone" })}
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //         }}
+  //       >
+  //         <input {...getInputProps()} />
+  //         <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+  //           <img className="pencil" src={pencilSvg} />
+  //           <input type="file" accept="image/*" />
+  //         </div>
+  //         {thumbs.length > 0 ? (
+  //           <StImg src={userInfo?.profileImage} onError={handleImgError} />
+  //         ) : (
+  //           <StImg src={profileImgSvg} onError={handleImgError} />
+  //         )}
+  //       </div>
+  //       <aside style={thumbsContainer}>
+  //         {thumbs}
+  //         {console.log("thumbs", thumbs)}
+  //         {/* {profileImgSvg} */}
+  //       </aside>
+  //     </section>
+  //   );
+  // }
+
+  const readImage = (input) => {
+    // 인풋 태그에 파일이 있는 경우
+    if (input.files && input.files[0]) {
+      // FileReader 인스턴스 생성
+      const reader = new FileReader();
+      // 이미지가 로드가 된 경우
+      reader.onload = (e) => {
+        const previewImage = document?.getElementById("preview-image");
+        previewImage.src = e.target.result;
+      };
+      // reader가 이미지 읽도록 하기
+      reader.readAsDataURL(input.files[0]);
+
+      console.log("input.files[0]", input.files[0]);
+    }
+  };
+  // input file에 change 이벤트 부여
+  const inputImage = document?.getElementById("input-image");
+  inputImage?.addEventListener("change", (e) => {
+    readImage(e.target);
+    console.log("e.target", e.target, e.target.files[0]);
+    // setProfileImageState(e.target.files[0]);
+  });
+
+  // Browser Image Compression
+  const handleImageUpload = async (event) => {
+    const imageFile = event.target.files[0];
+    console.log(imageFile);
+    console.log("originalFile instanceof Blob", imageFile instanceof Blob);
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      );
+      console.log(`compressedFile size ${compressedFile.size}`);
+      // await uploadToServer(compressedFile);
+      setProfileImageState(compressedFile);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <StTitle>
@@ -79,27 +239,30 @@ const ProfileEdit = () => {
           }}
         />
         <div className="title">프로필 편집</div>
-        <button
-          onClick={() => {
-            dispatch(__postProfileMoto(mottoInput)); // 좌우명
-            navigate("/my");
-          }}
-        >
-          완료
-        </button>
+        <button onClick={onClickProfileEditComplete}>완료</button>
       </StTitle>
 
       <StLine></StLine>
+
       <StImgDiv>
-        <StImg src={userInfo?.profileImage} />
-        <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
-          <img className="pencil" src={pencilSvg} />
-          <input
-            type="file"
-            accept="image/*"
-            ref={uploadRef}
-            onChange={onChangeUploadImageHandler}
+        <div className="image-container">
+          <img
+            style={{ width: "6em", height: "6em", borderRadius: "100px" }}
+            id="preview-image"
+            src={userInfo?.profileImage}
+            onError={handleImgError}
           />
+          <input
+            style={{ display: "none" }}
+            type="file"
+            id="input-image"
+            ref={profileUploadRef}
+            onChange={handleImageUpload}
+          />
+          {/* ----- 연필 ----- */}
+          <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
+            <img className="pencil" src={pencilSvg} />
+          </div>
         </div>
       </StImgDiv>
 
@@ -110,10 +273,10 @@ const ProfileEdit = () => {
           value={mottoInput}
           onChange={mottoInputHandler}
         ></textarea>
-        <div className="mottoInputCount">{mottoInput.length}/40</div>
+        <div className="mottoInputCount">{mottoInput?.length}/40</div>
       </StMotto>
 
-      {/* ------------ 안내창 모달 -------------*/}
+      {/* -------- 안내창 모달 ---------*/}
       {modalView ? (
         <Modal
           visible={modalView}
@@ -216,14 +379,31 @@ const StMotto = styled.div`
   }
 `;
 const StImgDiv = styled.div`
-  position: relative;
   width: 80%;
   margin: 10% auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  .image-container {
+    position: relative;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      width: 50%;
+      margin: auto;
+    }
+  }
   .pencilBox {
+    position: absolute;
+    right: -1.3em;
+    bottom: -0.3em;
+
     width: 3em;
     height: 3em;
     border-radius: 100%;
@@ -232,10 +412,6 @@ const StImgDiv = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
-    right: 5em;
-    top: 4.3em;
   }
   .pencil {
   }

@@ -21,14 +21,13 @@ import OtherMyPage from "../pages/OtherMyPage";
 const Router = () => {
   let token = localStorage.getItem("accessToken");
   let nickname = localStorage.getItem("nickname");
-  console.log(token);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path='/login'
-          element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
+          path="/login"
+          element={token !== null ? <Navigate replace to="/" /> : <LoginPage />}
         />
         <Route path='/' element={<MainPage />} />
         <Route path='/my' element={<MyPage />} />
