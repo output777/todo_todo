@@ -170,7 +170,7 @@ const ProfilePhotos = () => {
       ) : null}
 
       <StModalBox>
-        {modalVisible && (
+        {/* {modalVisible && (
           <Modal
             visible={modalVisible}
             closable={true}
@@ -187,11 +187,76 @@ const ProfilePhotos = () => {
               <StModalBtn onClick={closeModal}>취소</StModalBtn>
             </div>
           </Modal>
-        )}
+        )} */}
+
+        {/* -------- 안내창 모달 ---------*/}
+        {modalVisible ? (
+          <Modal
+            visible={modalVisible}
+            closable={true}
+            maskClosable={true}
+            onClose={closeModal}
+            radius="48px"
+            top="40%"
+            width="90%"
+            height="230px"
+            backgroundcolor="#46464624"
+          >
+            <StModalTop>
+              <div className="title">사진을 삭제하시겠습니까?</div>
+              <div>삭제하면 다시 불러올 수 없습니다.</div>
+            </StModalTop>
+            <StModalBottom>
+              <div className="cancel" onClick={closeModal}>
+                취소
+              </div>
+              <div className="confirm" onClick={onClickDeleteImgHandler}>
+                확인
+              </div>
+            </StModalBottom>
+          </Modal>
+        ) : null}
       </StModalBox>
     </>
   );
 };
+
+const StModalTop = styled.div`
+  height: 75%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+`;
+const StModalBottom = styled.div`
+  border-top: 1px solid lightgray;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+
+  div {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .confirm {
+    border-left: 1px solid lightgray;
+  }
+`;
 
 const StContainer = styled.div`
   width: 100%;
@@ -200,7 +265,7 @@ const StContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 100px;
-  grid-gap: 2px;
+  grid-gap: 5px;
   padding-bottom: 70px;
 
   /* overflow-y: scroll; */
