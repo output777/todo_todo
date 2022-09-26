@@ -76,28 +76,6 @@ const Profile = () => {
               }
               onError={handleImgError}
             />
-            {/* {!edit ? (
-              <>
-                <img src={defaultProfile} alt="profile" />
-              </>
-            ) : (
-              <div onClick={onClickEditProfileImgHandler}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={uploadProfileRef}
-                  onChange={onChangeUploadProfileImageHandler}
-                />
-                <img src={userInfo && userInfo.profileImage} alt="profile" />
-                <div className="editBox">
-                  <img
-                    src={cameraSvg}
-                    alt="imgEdit"
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-            )} */}
           </StImg>
           <StInfo>
             <div className="nextToPicture">
@@ -120,36 +98,7 @@ const Profile = () => {
           </div>
           <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
         </StStatusDiv>
-        {/* <StTextBox>
-          <p>{userInfo?.nickname}</p>
-          {edit ? (
-            <p className="text show">{motto && motto}</p>
-          ) : (
-            <div className="editText" onClick={onClickEditTextHandler}>
-              <form ref={motoFormRef} onSubmit={onSubmitHandler}>
-                <input
-                  type="text"
-                  ref={mottoInputRef}
-                  value={mottoInput}
-                  onChange={onChangemottoInputHandler}
-                />
-                <button type="button" onClick={onClickEditTextCancelHandler}>
-                  ✖
-                </button>
-                <button type="submit">✔</button>
-              </form>
-              <p className="text show" ref={motoRef}>
-                {motto && motto}
-              </p>
-              <img
-                className="show"
-                src={logoPencil}
-                alt="editTextImg"
-                ref={motoImgRef}
-              />
-            </div>
-          )}
-        </StTextBox> */}
+
         <StBtn
           onClick={() => {
             navigate("/profileedit");
@@ -257,7 +206,6 @@ const StInfo = styled.div`
   font-size: 0.9rem;
   padding: 0.5rem 0.8rem;
 
-  /* box-shadow: 0px 4px 15px 0px lightgray; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -281,73 +229,6 @@ const StInfo = styled.div`
       font-weight: 7000;
     }
   }
-`;
-
-const StTextBox = styled.div`
-  margin-top: 10px;
-
-  /* height: 90px; */
-  /* p {
-    color: #111;
-    font-size: 2rem;
-  }
-
-  & p.text {
-    margin-top: 5px;
-    width: 90%;
-    font-size: 0.9rem;
-    display: none;
-  }
-
-  & p.text.show {
-    margin-top: 5px;
-    width: 90%;
-    font-size: 0.9rem;
-    display: block;
-  }
-
-  & div.editText {
-    margin-top: 5px;
-    position: relative;
-    height: 30px;
-    border-bottom: 1px solid #ececec;
-    display: flex;
-
-    form {
-      width: 100%;
-      display: none;
-    }
-
-    form.show {
-      display: block;
-
-      input {
-        border: 1px solid red;
-        width: 80%;
-        border: none;
-        outline: none;
-      }
-    }
-
-    button {
-      width: 10%;
-      font-size: 1rem;
-      border: none;
-      background-color: #fff;
-    }
-
-    img {
-      width: 20px;
-      height: 20px;
-      display: none;
-    }
-
-    img.show {
-      width: 20px;
-      height: 20px;
-      display: block;
-    }
-  } */
 `;
 
 const StBtn = styled.button`
