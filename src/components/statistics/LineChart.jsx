@@ -49,8 +49,8 @@ const LineChart = () => {
     },
     yAxis: {
       type: "value",
-      // interval: 10,
-      splitNumber: 3,
+      // interval: 100,
+      splitNumber: 4,
     },
     series: [
       // {
@@ -77,8 +77,9 @@ const LineChart = () => {
     const arr = [];
     console.log("lineData", lineData);
     if (lineData.length > 0) {
-      for (let i = 0; i < lineData.length; i++) {
-        const data = lineData[i].achievementRate;
+      let len = lineData.length
+      for (let i = 0; i < len; i++) {
+        const data = (lineData[i].achievementRate / 7).toFixed(2);
         arr.push(data);
       }
     }

@@ -1,5 +1,4 @@
-import axios from "axios";
-import { debounce, escapeRegExp } from "lodash";
+import { debounce } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import searchSvg from "../../assets/img/searchSvg.svg";
@@ -11,8 +10,10 @@ import {
 } from "../../redux/modules/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ProfileInfo = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { nicknameCheck } = useSelector((state) => state.login);
@@ -23,7 +24,6 @@ const ProfileInfo = () => {
   const [grade, setGrade] = useState(null);
 
   // 고등학교 검색
-  const [highschools, setHighschools] = useState([]);
   const [highschoolInput, setHighschoolInput] = useState("");
   const [highschoolResult, setHighschoolResult] = useState([]);
 
@@ -86,71 +86,17 @@ const ProfileInfo = () => {
 
   console.log("grade", grade);
 
-  const getHighschool = async () => {
-    const { data } = await axios.get(
-      "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8b6987e3437f2f606c0b32a837986a81&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2378&searchSchulNm=%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90"
-    );
-    setHighschools([...data.dataSearch.content]);
-  };
-
-  const ch2pattern = (ch) => {
-    const offset = 44032;
-
-    if (/[가-힣]/.test(ch)) {
-      const chCode = ch.charCodeAt(0) - offset;
-
-      if (chCode % 28 > 0) {
-        return ch;
-      }
-
-      const begin = Math.floor(chCode / 28) * 28 + offset;
-      const end = begin + 27;
-      return `[\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
-    }
-
-    // if (/[ㄱ-ㅎ]/.test(ch)) {
-    //   const con2syl = {
-    //     ㄱ: "가".charCodeAt(0),
-    //     ㄲ: "까".charCodeAt(0),
-    //     ㄴ: "나".charCodeAt(0),
-    //     ㄷ: "다".charCodeAt(0),
-    //     ㄸ: "따".charCodeAt(0),
-    //     ㄹ: "라".charCodeAt(0),
-    //     ㅁ: "마".charCodeAt(0),
-    //     ㅂ: "바".charCodeAt(0),
-    //     ㅃ: "빠".charCodeAt(0),
-    //     ㅅ: "사".charCodeAt(0),
-    //   };
-    //   const begin =
-    //     con2syl[ch] || (ch.charCodeAt(0) - 12613) * 588 + con2syl["ㅅ"];
-    //   const end = begin + 587;
-    //   return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
-    // }
-
-    return escapeRegExp(ch);
-  };
-
-  const createFuzzyMatcher = (input) => {
-    const pattern = input.split("").map(ch2pattern).join(".*?");
-    return new RegExp(pattern);
-  };
+  const debouncedSearch = debounce(async (val) => {
+    const { data } = await axios.get(`${BASE_URL}/school?search=${val}`)
+    setHighschoolResult(data);
+  }, 500);
 
   const onChangeSearchHandler = (e) => {
     const { value } = e.target;
     let val = value.trim();
+    console.log(typeof val, val)
     setHighschoolInput(val);
-
-    const regex = createFuzzyMatcher(val);
-
-    const resultData = highschools
-      .filter((row) => {
-        return regex.test(row["schoolName"]);
-      })
-      .map((row) => {
-        console.log(row);
-        return { school: row["schoolName"], adres: row["adres"] };
-      });
-    setHighschoolResult(resultData);
+    debouncedSearch(val);
   };
 
   const onClickSelectHandler = (e) => {
@@ -163,15 +109,6 @@ const ProfileInfo = () => {
     setHighschoolResult([]);
   };
 
-  console.log(
-    "nickname",
-    nickname,
-    "grade",
-    grade,
-    typeof grade,
-    "highschoolInput",
-    highschoolInput
-  );
 
   const onSubmitRegisterHandler = (e) => {
     e.preventDefault();
@@ -185,8 +122,12 @@ const ProfileInfo = () => {
   };
 
   useEffect(() => {
-    getHighschool();
-  }, []);
+    if (highschoolInput.length === 0) {
+      setHighschoolResult([]);
+    }
+  }, [highschoolInput])
+
+  console.log('highschoolResult', highschoolResult)
 
   return (
     <div
@@ -259,15 +200,16 @@ const ProfileInfo = () => {
       </StHighschoolBox>
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
-          ? highschoolResult &&
+          ? highschoolResult.length > 0 &&
           highschoolResult.map((data, index) => (
             <div className="content" key={index}>
               <div className="school" onClick={onClickSelectHandler}>
-                {data.school}
+                {data.schoolName}
               </div>
               <div className="region">
-                <img src={regionSvg} />
-                {data.adres}
+                <img src={regionSvg} alt='addressIcon' />
+                {data.address
+                }
               </div>
             </div>
           ))

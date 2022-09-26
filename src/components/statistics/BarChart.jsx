@@ -8,14 +8,15 @@ const BarChart = () => {
   const { rankScoreData } = useSelector((state) => state.statistics);
 
   // ---------------- 점수 소수점 반올림 ----------------
-  let lastweekScore = Math.round(rankScoreData[0].score);
+  let lastweekScore = rankScoreData[0].score;
   let lastweekScore2 = isNaN(lastweekScore)
     ? 0
-    : Math.round(rankScoreData[0].score);
-  let weeklyScore = Math.round(rankScoreData[1].score);
+    : (lastweekScore / 7).toFixed(2);
+
+  let weeklyScore = rankScoreData[1].score;
   let weeklyScore2 = isNaN(weeklyScore)
     ? 0
-    : Math.round(rankScoreData[1].score);
+    : (rankScoreData[1].score / 7).toFixed(2);
   let monthlyScore = Math.round(rankScoreData[2].score);
 
   const options = {

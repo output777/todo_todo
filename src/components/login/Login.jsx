@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <StLoginContainer>
       {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
-      <StPhrases>고등학생을 위한 투두리스트,</StPhrases>
+      <StPhrases>고등학생을 위한 투두리스트</StPhrases>
       <StLogobox>
         <StLogo src={logo} />
         <StLogoPencil src={logoPencil} />
@@ -39,7 +39,7 @@ const Login = () => {
           <StKakaoBtnImg src={kakaoUnion} />
           <StKakaoBtnFont>카카오 로그인</StKakaoBtnFont>
         </StKakaoBtn>
-        <Naver />
+        {/* <Naver /> */}
         <StGoogleBtn onClick={onGoogleLoginHandler}>
           <StGoogleBtnImg src={googleUnion} />
           <StGoogleBtnFont>구글 로그인</StGoogleBtnFont>
@@ -85,6 +85,10 @@ const StPhrases = styled.div`
 `;
 const StLoginBtnbox = styled.div`
   margin-top: 100px;
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 `;
 const StKakaoBtn = styled.button`
   width: 280px;

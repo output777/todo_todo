@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [rankList, setRankList] = useState([])
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
 

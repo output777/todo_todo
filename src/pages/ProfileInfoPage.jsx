@@ -6,7 +6,7 @@ import Navbar from "../components/utils/Navbar";
 const ProfileInfoPage = () => {
   return (
     <>
-      <ProfileInfoCopy />
+      <ProfileInfo />
     </>
   );
 };

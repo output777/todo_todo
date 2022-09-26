@@ -24,20 +24,20 @@ const Statistics = () => {
   };
 
   // ----------------- 점수 소수점 반올림 -------------------
-  let lastweekScore = Math.round(rankScoreData[0].score);
-  let lastweekScore2 = isNaN(lastweekScore)
-    ? 0
-    : Math.round(rankScoreData[0].score);
+  // let lastweekScore = Math.round(rankScoreData[0].score);
+  // let lastweekScore2 = isNaN(lastweekScore)
+  //   ? 0
+  //   : Math.round(rankScoreData[0].score);
 
-  let weeklyScore = Math.round(rankScoreData[1].score);
+  let weeklyScore = rankScoreData[1].score;
   let weeklyScore2 = isNaN(weeklyScore)
     ? 0
-    : Math.round(rankScoreData[1].score);
+    : (weeklyScore / 7).toFixed(2);
 
-  let monthlyScore = Math.round(rankScoreData[2].score);
+  let monthlyScore = rankScoreData[2].score;
   let monthlyScore2 = isNaN(monthlyScore)
     ? 0
-    : Math.round(rankScoreData[2].score);
+    : monthlyScore.toFixed(2);
 
   let weeklyRank =
     rankScoreData[1].ranking === undefined ? "-" : rankScoreData[1].ranking;
@@ -99,7 +99,7 @@ const Statistics = () => {
         </StTopSubjectDiv>
         <LineChart />
         <StTopSubjectDiv>
-          <div>히트맵</div>
+          <div>나의 투두 달성률</div>
           <img src={info} onClick={() => modalToggleHandler("heatMap")} />
         </StTopSubjectDiv>
         <HeatmapSample />

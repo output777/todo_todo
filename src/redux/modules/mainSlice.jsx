@@ -210,9 +210,6 @@ export const mainSlice = createSlice({
       console.log("dday", state.dday);
       //console.log("dday", action.payload);
       state.dday = action.payload;
-      state.mainRankList = [];
-      state.mainRankListMonthly = [];
-      state.mainRankListSchool = [];
     },
     [__getDday.rejected]: (state, action) => {
       state.isLoading = false;
