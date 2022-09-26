@@ -1,43 +1,96 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  __getFollowerList,
+  __getFollowingList,
+} from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
+  const nickname = localStorage.getItem("nickname");
+
   const [follow, setFollow] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const followerList = useSelector((state) => state.my?.follower);
+  console.log(followerList);
+
+  const myfollowingList = useSelector((state) => state.my?.following);
+  console.log(myfollowingList);
+
+  const params = useParams();
 
   const followerBtnHandler = () => {
     setFollow(!follow);
   };
 
+  useEffect(() => {
+    dispatch(__getFollowerList(params.id));
+    dispatch(__getFollowingList(nickname));
+  }, []);
+
   return (
     <Stdiv>
       <StFollowtopBox>
         <div>
-          <StarrowImg src={arrow} />
+          <StarrowImg
+            src={arrow}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
           <StTopText>팔로워 목록</StTopText>
         </div>
       </StFollowtopBox>
 
-      <StFollowBox>
-        <div>
-          <StFollowProfile src={profileImgSvg} />
-          <StFollowNickname>wowns740</StFollowNickname>
-        </div>
+      {followerList?.map((member) => (
+        <StFollowBox
+          key={member.id}
+          onClick={() => {
+            if (member.nickname == nickname) {
+              navigate("/my");
+            } else {
+              navigate(`/othermy/${member.nickname}`);
+            }
+          }}
+        >
+          <div>
+            <StFollowProfile src={member.profileImage} />
+            <StFollowNickname>{member.nickname}</StFollowNickname>
+          </div>
 
-        {follow ? (
-          <StFollowingBtn onClick={followerBtnHandler}>
-            팔로잉
-            <img src={follwingcheck} />
-          </StFollowingBtn>
-        ) : (
-          <StNotFollowBtn onClick={followerBtnHandler}>
-            팔로우
-            <span>+</span>
-          </StNotFollowBtn>
-        )}
-      </StFollowBox>
+          {nickname == member.nickname ? (
+            <div></div>
+          ) : nickname !== member.nickname &&
+            myfollowingList.find((v) => v.nickname == member.nickname) ? (
+            <StFollowingBtn
+              onClick={(event) => {
+                event.stopPropagation();
+                followerBtnHandler();
+              }}
+            >
+              팔로잉
+              <img src={follwingcheck} />
+            </StFollowingBtn>
+          ) : (
+            <StNotFollowBtn
+              onClick={(event) => {
+                event.stopPropagation();
+                followerBtnHandler();
+              }}
+            >
+              팔로우
+              <span>+</span>
+            </StNotFollowBtn>
+          )}
+        </StFollowBox>
+      ))}
     </Stdiv>
   );
 };

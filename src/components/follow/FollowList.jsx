@@ -1,47 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  __getOtherFollowingList,
+  __getFollowingList,
+} from "../../redux/modules/mySlice";
 
-const FollowList = () => {
-  const [follow, setFollow] = useState(true);
+const FollowerList = () => {
+  const nickname = localStorage.getItem("nickname");
 
-  const followingBtnHandler = () => {
+  const [follow, setFollow] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const followingList = useSelector((state) => state.my.following);
+  console.log(followingList);
+
+  const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
+  console.log(OtherfollowingList);
+
+  const params = useParams();
+
+  const followerBtnHandler = () => {
     setFollow(!follow);
   };
+
+  useEffect(() => {
+    dispatch(__getOtherFollowingList(params.id));
+    dispatch(__getFollowingList(nickname));
+  }, []);
+
   return (
     <Stdiv>
       <StFollowtopBox>
         <div>
-          <StarrowImg src={arrow} />
-          <StTopText>팔로잉 목록</StTopText>
+          <StarrowImg
+            src={arrow}
+            onClick={() => {
+              navigate(-1);
+            }}
+          />
+          <StTopText>팔로워 목록</StTopText>
         </div>
       </StFollowtopBox>
 
-      <StFollowBox>
-        <div>
-          <StFollowProfile src={profileImgSvg} />
-          <StFollowNickname>wowns740</StFollowNickname>
-        </div>
+      {OtherfollowingList?.map((member) => (
+        <StFollowBox
+          key={member.id}
+          onClick={() => {
+            if (member.nickname == nickname) {
+              navigate("/my");
+            } else {
+              navigate(`/othermy/${member.nickname}`);
+            }
+          }}
+        >
+          <div>
+            <StFollowProfile src={member.profileImage} />
+            <StFollowNickname>{member.nickname}</StFollowNickname>
+          </div>
 
-        {follow ? (
-          <StFollowingBtn onClick={followingBtnHandler}>
-            팔로잉
-            <img src={follwingcheck} />
-          </StFollowingBtn>
-        ) : (
-          <StNotFollowBtn onClick={followingBtnHandler}>
-            팔로우
-            <span>+</span>
-          </StNotFollowBtn>
-        )}
-      </StFollowBox>
+          {nickname == member.nickname ? (
+            <div></div>
+          ) : nickname !== member.nickname &&
+            followingList.find((v) => v.nickname == member.nickname) ? (
+            <StFollowingBtn
+              onClick={(event) => {
+                event.stopPropagation();
+                followerBtnHandler();
+              }}
+            >
+              팔로잉
+              <img src={follwingcheck} />
+            </StFollowingBtn>
+          ) : (
+            <StNotFollowBtn
+              onClick={(event) => {
+                event.stopPropagation();
+                followerBtnHandler();
+              }}
+            >
+              팔로우
+              <span>+</span>
+            </StNotFollowBtn>
+          )}
+        </StFollowBox>
+      ))}
     </Stdiv>
   );
 };
 
-export default FollowList;
+export default FollowerList;
 
 const Stdiv = styled.div`
   background-color: #fafafa;

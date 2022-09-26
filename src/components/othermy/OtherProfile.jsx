@@ -6,7 +6,6 @@ import { __getTotalRate } from "../../redux/modules/mainSlice";
 import {
   __getOtherInfo,
   __getFollowInfo,
-  __getFollowerList,
   __getFollowingList,
 } from "../../redux/modules/mySlice";
 import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
@@ -16,6 +15,8 @@ import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
 
 const OtherProfile = () => {
+  const nickname = localStorage.getItem("nickname");
+
   const [follow, setFollow] = useState(false);
 
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const OtherProfile = () => {
     // dispatch(__getOtherInfo(params.id));
     dispatch(__getRankScoreData(params.id));
     dispatch(__getTotalRate(params.id));
-    dispatch(__getFollowingList());
+    dispatch(__getFollowingList(nickname));
   }, []);
 
   const user = useSelector((state) => state.my?.userInfo);
@@ -40,7 +41,7 @@ const OtherProfile = () => {
   const params = useParams();
   console.log(params.id);
 
-  const followingList = useSelector((state) => state.my.follow);
+  const followingList = useSelector((state) => state.my.following);
   console.log(followingList);
 
   useEffect(() => {
@@ -110,11 +111,21 @@ const OtherProfile = () => {
               </span>
               <span className='text'>게시물</span>
             </div>
-            <div className='nextToPicture'>
+            <div
+              className='nextToPicture'
+              onClick={() => {
+                navigate(`/follower/${params.id}`);
+              }}
+            >
               <span className='count'>{user.followersCnt}</span>
               <span className='text'>팔로워</span>
             </div>
-            <div className='nextToPicture'>
+            <div
+              className='nextToPicture'
+              onClick={() => {
+                navigate(`/following/${params.id}`);
+              }}
+            >
               <span className='count'>{user.followingsCnt}</span>
               <span className='text'>팔로잉</span>
             </div>

@@ -33,8 +33,8 @@ const Router = () => {
         <Route path='/' element={<MainPage />} />
         <Route path='/my' element={<MyPage />} />
         <Route path='/othermy/:id' element={<OtherMyPage />} />
-        <Route path='/follower' element={<FollowerPage />} />
-        <Route path='/following' element={<FollowingPage />} />
+        <Route path='/follower/:id' element={<FollowerPage />} />
+        <Route path='/following/:id' element={<FollowingPage />} />
         <Route path='/profileedit' element={<ProfileEdit />} />
         <Route path='/setting' element={<Setting />} />
         <Route path='/planner' element={<PlannerPage />} />
