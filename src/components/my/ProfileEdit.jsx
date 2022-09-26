@@ -38,6 +38,7 @@ const ProfileEdit = () => {
     console.log(key, formData.get(key));
   }
 
+  // 완료버튼 클릭
   const onClickProfileEditComplete = () => {
     formData.append("multipartFile", profileImageState);
     formData.append(
@@ -58,22 +59,6 @@ const ProfileEdit = () => {
     setModalView(!modalView);
   };
 
-  // const onChangeUploadImageHandler = async (e) => {
-  //   if (!e.target.files) {
-  //     return;
-  //   }
-
-  //   formData.append("multipartFile", e.target.files[0]);
-
-  //   console.log("e.target.files", e.target.files);
-  //   console.log("e.target.files[0].name", e.target.files[0].name);
-
-  //   dispatch(__postProfileImg(formData));
-  //   dispatch(__getMyInfo(nickname));
-  //   // await dispatch(__getImages(nickname));
-  //   // await dispatch(__getMyInfo());
-  // };
-
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
   }, [dispatch]);
@@ -83,6 +68,7 @@ const ProfileEdit = () => {
     setMottoInput(e.target.value.slice(0, 40));
   };
 
+  // 이미지 에러 발생시
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
   };
@@ -245,15 +231,9 @@ const ProfileEdit = () => {
             id="input-image"
             ref={profileUploadRef}
           />
-          {/* --- 연필 --- */}
+          {/* ----- 연필 ----- */}
           <div className="pencilBox" onClick={onClickUploadPhotoHandler}>
             <img className="pencil" src={pencilSvg} />
-            <input
-              type="file"
-              accept="image/*"
-              // ref={uploadRef}
-              // onChange={onChangeUploadImageHandler}
-            />
           </div>
         </div>
       </StImgDiv>
@@ -268,7 +248,7 @@ const ProfileEdit = () => {
         <div className="mottoInputCount">{mottoInput?.length}/40</div>
       </StMotto>
 
-      {/* ------------ 안내창 모달 -------------*/}
+      {/* -------- 안내창 모달 ---------*/}
       {modalView ? (
         <Modal
           visible={modalView}
