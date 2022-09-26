@@ -21,10 +21,10 @@ const configStr = {
   },
 };
 
-const nickname = localStorage.getItem("nickname");
-
 const initialState = {
-  follow: null,
+  follower: null,
+  otherfollowing: null,
+  following: null,
   userInfo: null,
   motto: "",
   images: [],
@@ -136,11 +136,53 @@ export const __deleteImages = createAsyncThunk(
   }
 );
 
-export const __getFollow = createAsyncThunk(
-  "getFollow",
+export const __getFollowInfo = createAsyncThunk(
+  "getFollowInfo",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getFollowingList = createAsyncThunk(
+  "__getFollowingList",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/followings/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getOtherFollowingList = createAsyncThunk(
+  "__getOtherFollowingList",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/followings/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getFollowerList = createAsyncThunk(
+  "getFollowerList",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.get(`${BASE_URL}/followers/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
@@ -232,14 +274,50 @@ export const mySlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__getFollow.pending]: (state) => {
+    //__getFollowInfo
+    [__getFollowInfo.pending]: (state) => {
       state.isLoading = true;
     },
-    [__getFollow.fulfilled]: (state, action) => {
+    [__getFollowInfo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.follow = action.payload;
     },
-    [__getFollow.rejected]: (state, action) => {
+    [__getFollowInfo.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__getFollowingList
+    [__getFollowingList.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getFollowingList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.following = action.payload;
+    },
+    [__getFollowingList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__getFollowerList
+    [__getFollowerList.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getFollowerList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.follower = action.payload;
+    },
+    [__getFollowerList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__getOtherFollowingList
+    [__getOtherFollowingList.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getOtherFollowingList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.otherfollowing = action.payload;
+    },
+    [__getOtherFollowingList.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
