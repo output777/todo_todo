@@ -429,7 +429,7 @@ const StImg = styled.img`
 const StTitle = styled.div`
   width: 90%;
   margin: auto;
-  height: 10vh;
+  height: 72px;
   font-weight: bold;
   font-size: 1.2em;
 

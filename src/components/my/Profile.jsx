@@ -191,8 +191,10 @@ const StProfileContainer = styled.div`
   .title {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     margin-right: 1.5em;
+    height: 72px;
   }
 `;
 
