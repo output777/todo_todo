@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
@@ -31,7 +30,6 @@ const Main = () => {
   const nickname = localStorage.getItem("nickname");
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
-  console.log("accessToken", accessToken, "refreshToken", refreshToken);
 
   const onClickWeekly = () => {
     setWeekly(true);
@@ -67,9 +65,9 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className='mainTopSentenceBox'>
+        <div className="mainTopSentenceBox">
           <span>투두투두</span>
-          <div className='mainTopSentence'>
+          <div className="mainTopSentence">
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -99,9 +97,10 @@ const Main = () => {
               이번달 플래너 달성률
               <div>{thisMonthRate} %</div>
             </StGaugeText>
-            <div>
-              <ProgressBar now={thisMonthRate} />
-            </div>
+
+            <StProgressBarBox>
+              <StProgressBar width={thisMonthRate}></StProgressBar>
+            </StProgressBarBox>
           </StthisMonthGauge>
 
           <StTotalGauge totalRate={totalRate}>
@@ -109,9 +108,10 @@ const Main = () => {
               플래너 총 달성률
               <div>{totalRate} %</div>
             </StGaugeText>
-            <div>
-              <ProgressBar now={totalRate} />
-            </div>
+
+            <StProgressBarBox>
+              <StProgressBar width={totalRate}></StProgressBar>
+            </StProgressBarBox>
           </StTotalGauge>
         </StAchievementsBottomBox>
       </StAchievementsBox>
@@ -123,11 +123,11 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width='350px'
-          height='330px'
-          radius='48px'
-          top='40%'
-          backgroundcolor='rgba(31, 31, 31, 0.116)'
+          width="350px"
+          height="330px"
+          radius="48px"
+          top="40%"
+          backgroundcolor="rgba(31, 31, 31, 0.116)"
         >
           <StModalTop>
             <span>랭킹 시스템이란?</span>
@@ -160,7 +160,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className='rank'>
+      <div className="rank">
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
@@ -216,6 +216,37 @@ const Main = () => {
 };
 
 export default Main;
+
+const StProgressBarBox = styled.div`
+  width: 100%;
+  height: 13px;
+  border-radius: 10px;
+  background-color: #ececec;
+`;
+
+const StProgressBar = styled.div`
+  ${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+        width: ${width}%;
+        background-color: #ffdb80;
+      `;
+    } else if (width <= 100) {
+      return css`
+        width: ${width}%;
+        background-color: #74e272;
+      `;
+    }
+  }};
+  transition: all 0.3s;
+  height: 13px;
+  border-radius: 10px;
+`;
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
