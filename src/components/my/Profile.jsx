@@ -53,7 +53,7 @@ const Profile = () => {
   return (
     <>
       <StProfileContainer>
-        <div className="title">
+        <div className='title'>
           <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
             마이페이지
           </h3>
@@ -78,21 +78,34 @@ const Profile = () => {
             />
           </StImg>
           <StInfo>
-            <div className="nextToPicture">
-              <span className="count">60</span>
-              <span className="text">게시물</span>
+            <div className='nextToPicture'>
+              <span className='count'>
+                {/* {userInfo.imgList == null ? 0 : userInfo.imgList.length} */}
+              </span>
+              <span className='text'>게시물</span>
             </div>
-            <div className="nextToPicture">
-              <span className="count">60</span>
-              <span className="text">팔로워</span>
+            <div
+              className='nextToPicture'
+              onClick={() => {
+                navigate(`/follower/${nickname}`);
+              }}
+            >
+              <span className='count'>{userInfo.followersCnt}</span>
+              <span className='text'>팔로워</span>
             </div>
-            <div className="nextToPicture">
-              <span className="count">60</span>
-              <span className="text">팔로잉</span>
+            <div
+              className='nextToPicture'
+              onClick={() => {
+                navigate(`/following/${nickname}`);
+              }}
+            >
+              <span className='count'>{userInfo.followingsCnt}</span>
+              <span className='text'>팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
+
           <div className="userName">
             {nickname == null || nickname == "null" ? "" : nickname}
           </div>
