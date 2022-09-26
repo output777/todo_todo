@@ -21,31 +21,30 @@ import OtherMyPage from "../pages/OtherMyPage";
 const Router = () => {
   let token = localStorage.getItem("accessToken");
   let nickname = localStorage.getItem("nickname");
-  console.log(token);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path='/login'
-          element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
+          path="/login"
+          element={token !== null ? <Navigate replace to="/" /> : <LoginPage />}
         />
-        <Route path='/' element={<MainPage />} />
-        <Route path='/my' element={<MyPage />} />
-        <Route path='/othermy/:id' element={<OtherMyPage />} />
-        <Route path='/follower' element={<FollowerPage />} />
-        <Route path='/following' element={<FollowingPage />} />
-        <Route path='/profileedit' element={<ProfileEdit />} />
-        <Route path='/setting' element={<Setting />} />
-        <Route path='/planner' element={<PlannerPage />} />
-        <Route path='/planner/date' element={<PlannerCategoryDate />} />
-        <Route path='/planner/category' element={<PlannerCategoryAdd />} />
-        <Route path='/planner/category/todolist' element={<Planner />} />
-        <Route path='/statistics' element={<StatisticsPage />} />
-        <Route path='/profileinfo' element={<ProfileInfoPage />} />
-        <Route path='/user/kakao/callback' element={<KakaoLogin />} />
-        <Route path='/user/google/callback' element={<GoogleLogin />} />
-        <Route path='/user/naver/callback' element={<NaverLogin />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/my" element={<MyPage />} />
+        <Route path="/othermy/:id" element={<OtherMyPage />} />
+        <Route path="/follower" element={<FollowerPage />} />
+        <Route path="/following" element={<FollowingPage />} />
+        <Route path="/profileedit" element={<ProfileEdit />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/planner" element={<PlannerPage />} />
+        <Route path="/planner/date" element={<PlannerCategoryDate />} />
+        <Route path="/planner/category" element={<PlannerCategoryAdd />} />
+        <Route path="/planner/category/todolist" element={<Planner />} />
+        <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path="/profileinfo" element={<ProfileInfoPage />} />
+        <Route path="/user/kakao/callback" element={<KakaoLogin />} />
+        <Route path="/user/google/callback" element={<GoogleLogin />} />
+        <Route path="/user/naver/callback" element={<NaverLogin />} />
       </Routes>
     </BrowserRouter>
   );

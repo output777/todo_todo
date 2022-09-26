@@ -23,6 +23,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.my);
+  const { profileImage } = useSelector((state) => state.my);
   console.log("userInfo", userInfo);
   const { motto } = useSelector((state) => state.my);
 
@@ -43,7 +44,11 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
-  }, [dispatch]);
+  }, [profileImage]);
+
+  const handleImgError = (e) => {
+    e.target.src = profileImgSvg;
+  };
 
   return (
     <>
@@ -62,7 +67,15 @@ const Profile = () => {
         <StLine></StLine>
         <StImgInfoBox>
           <StImg>
-            <img src={userInfo?.profileImage} alt="profile" />
+            <img
+              src={
+                userInfo?.profileImage == null ||
+                userInfo?.profileImage == "null"
+                  ? profileImgSvg
+                  : userInfo?.profileImage
+              }
+              onError={handleImgError}
+            />
             {/* {!edit ? (
               <>
                 <img src={defaultProfile} alt="profile" />
@@ -102,7 +115,11 @@ const Profile = () => {
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-          <div className="userName">{nickname}</div>
+          <div className="userName">
+            {nickname == null || nickname == "null"
+              ? "닉네임을 설정해주세요"
+              : nickname}
+          </div>
           <div>
             {userInfo?.myMotto == null
               ? "좌우명을 입력해주세요"
@@ -189,15 +206,16 @@ const StImgInfoBox = styled.div`
 `;
 
 const StImg = styled.div`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: auto;
+  height: auto;
+  border-radius: 100px;
   position: relative;
 
   & img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 6em;
+    height: 6em;
+    border-radius: 100px;
+    /* object-fit: contain; */
   }
 
   & div.rank {
