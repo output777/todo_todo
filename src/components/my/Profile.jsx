@@ -116,15 +116,9 @@ const Profile = () => {
         </StImgInfoBox>
         <StStatusDiv>
           <div className="userName">
-            {nickname == null || nickname == "null"
-              ? "닉네임을 설정해주세요"
-              : nickname}
+            {nickname == null || nickname == "null" ? "" : nickname}
           </div>
-          <div>
-            {userInfo?.myMotto == null
-              ? "좌우명을 입력해주세요"
-              : userInfo?.myMotto}
-          </div>
+          <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
         </StStatusDiv>
         {/* <StTextBox>
           <p>{userInfo?.nickname}</p>
@@ -183,6 +177,7 @@ const StLine = styled.div`
 `;
 
 const StProfileContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 300px;
@@ -356,14 +351,15 @@ const StTextBox = styled.div`
 `;
 
 const StBtn = styled.button`
+  position: absolute;
+  bottom: 5px;
+  left: 25%;
   width: 50%;
   height: 40px;
   background-color: #f8f8f8;
-  border-radius: 8px;
+  border-radius: 16px;
   border: none;
   margin: 15px auto 0rem auto;
-  /* box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05); */
-  box-shadow: 0px 4px 15px 0px lightgray;
 `;
 
 export default Profile;

@@ -213,6 +213,7 @@ const StImg = styled.div`
     width: 100%;
     height: 100px;
     margin: auto;
+    border-radius: 16px;
   }
 `;
 
@@ -285,7 +286,7 @@ const StFullScreen = styled.div`
   }
 
   & .header {
-    height: 4em;
+    height: 72px;
     display: flex;
     align-items: center;
     padding: 15px;

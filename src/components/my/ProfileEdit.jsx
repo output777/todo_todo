@@ -273,7 +273,10 @@ const ProfileEdit = () => {
           value={mottoInput}
           onChange={mottoInputHandler}
         ></textarea>
-        <div className="mottoInputCount">{mottoInput?.length}/40</div>
+
+        <div className="mottoInputCount">
+          {mottoInput == null ? 0 : mottoInput?.length}/40
+        </div>
       </StMotto>
 
       {/* -------- 안내창 모달 ---------*/}
@@ -368,7 +371,7 @@ const StMotto = styled.div`
   gap: 1em;
 
   .textArea {
-    border: 1px solid black;
+    border: 1px solid #e8e8e8;
     border-radius: 20px;
     width: 90%;
     height: 10em;
