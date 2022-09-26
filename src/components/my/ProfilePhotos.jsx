@@ -146,7 +146,7 @@ const ProfilePhotos = () => {
                     className="prev"
                     onClick={() => onClickPrevHandler(selectImgId)}
                   >
-                    ◀
+                    <div className="prevArrow"></div>
                   </button>
                 )}
 
@@ -160,7 +160,7 @@ const ProfilePhotos = () => {
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
                   >
-                    ▶
+                    <div className="nextArrow"></div>
                   </button>
                 )}
               </div>
@@ -195,7 +195,7 @@ const ProfilePhotos = () => {
 
 const StContainer = styled.div`
   width: 100%;
-  height: 50vh;
+  height: 80vh;
   background-color: #f8f8f8;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -213,6 +213,7 @@ const StImg = styled.div`
     width: 100%;
     height: 100px;
     margin: auto;
+    border-radius: 16px;
   }
 `;
 
@@ -247,7 +248,7 @@ const StSliderBox = styled.div`
     button {
       position: absolute;
       border: none;
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: transparent;
       border-radius: 50%;
       color: #111;
       top: 50%;
@@ -260,6 +261,36 @@ const StSliderBox = styled.div`
 
     button.next {
       right: 0;
+    }
+
+    .prevArrow {
+      position: relative;
+    }
+    .prevArrow::after {
+      position: absolute;
+      left: 1em;
+      top: 0;
+      content: "";
+      width: 1.5em;
+      height: 1.5em;
+      border-top: 5px solid #ffffff;
+      border-right: 5px solid #ffffff;
+      transform: rotate(225deg);
+    }
+
+    .nextArrow {
+      position: relative;
+    }
+    .nextArrow::after {
+      position: absolute;
+      right: 1em;
+      top: 0;
+      content: "";
+      width: 1.5em;
+      height: 1.5em;
+      border-top: 5px solid #ffffff;
+      border-right: 5px solid #ffffff;
+      transform: rotate(45deg);
     }
   }
 `;
@@ -285,7 +316,7 @@ const StFullScreen = styled.div`
   }
 
   & .header {
-    height: 4em;
+    height: 72px;
     display: flex;
     align-items: center;
     padding: 15px;

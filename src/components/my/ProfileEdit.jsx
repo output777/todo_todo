@@ -273,7 +273,10 @@ const ProfileEdit = () => {
           value={mottoInput}
           onChange={mottoInputHandler}
         ></textarea>
-        <div className="mottoInputCount">{mottoInput?.length}/40</div>
+
+        <div className="mottoInputCount">
+          {mottoInput == null ? 0 : mottoInput?.length}/40
+        </div>
       </StMotto>
 
       {/* -------- 안내창 모달 ---------*/}
@@ -368,7 +371,7 @@ const StMotto = styled.div`
   gap: 1em;
 
   .textArea {
-    border: 1px solid black;
+    border: 1px solid #e8e8e8;
     border-radius: 20px;
     width: 90%;
     height: 10em;
@@ -429,7 +432,7 @@ const StImg = styled.img`
 const StTitle = styled.div`
   width: 90%;
   margin: auto;
-  height: 10vh;
+  height: 72px;
   font-weight: bold;
   font-size: 1.2em;
 
@@ -454,19 +457,16 @@ const StTitle = styled.div`
 
   .arrow {
     position: relative;
-    /* background-color: gray; */
   }
-
   .arrow::after {
-    /* background-color: gray; */
     position: absolute;
     left: 0;
     top: -0.3em;
     content: "";
-    width: 0.7em; /* 사이즈 */
-    height: 0.7em; /* 사이즈 */
-    border-top: 3px solid #ff7b00; /* 선 두께 */
-    border-right: 3px solid #ff7b00; /* 선 두께 */
+    width: 0.7em;
+    height: 0.7em;
+    border-top: 3px solid #ff7b00;
+    border-right: 3px solid #ff7b00;
     transform: rotate(225deg);
   }
 `;
