@@ -9,6 +9,7 @@ import {
   __postImages,
   __getMyInfo,
 } from "../../redux/modules/mySlice";
+import imageCompression from "browser-image-compression";
 
 const UploadPhoto = () => {
   const dispatch = useDispatch();
@@ -25,19 +26,28 @@ const UploadPhoto = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("multipartFile", e.target.files[0]);
+    const imageFile = e.target.files[0];
+    console.log("imageFile", imageFile);
 
-    // 사진 업로드 했을 때 유저 정보에 사진 이미지가 바로 입력안됨
-    // 그래서 id값을 바로 가질 수 없어서 해결해야 함
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
 
-    console.log("nickname", nickname);
-    await dispatch(__postImages(formData));
-    await dispatch(__getImages(nickname));
-    // await dispatch(__getMyInfo());
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log(`compressedFile.size ${compressedFile.size}`);
 
-    console.log(e.target.files);
-    console.log(e.target.files[0].name);
+      // await uploadToServer(compressedFile);
+      const formData = new FormData();
+      formData.append("multipartFile", compressedFile);
+
+      await dispatch(__postImages(formData));
+      await dispatch(__getImages(nickname));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
