@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PlannerCategory from "../components/planner/PlannerCategory";
 
 const PlannerPage = () => {
+
   return (
     <>
       {/* <Planner /> */}

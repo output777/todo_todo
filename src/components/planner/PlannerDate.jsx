@@ -2,49 +2,20 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import leftArrowSvg from '../../assets/img/leftArrowSvg.svg'
-import whitePlusSvg from '../../assets/img/whitePlusSvg.svg';
 import notDoneSvg from '../../assets/img/notDoneSvg.svg';
 import doneSvg from '../../assets/img/doneSvg.svg';
-import threeDotSvg from '../../assets/img/threeDotSvg.svg';
-import threeDotDoneSvg from '../../assets/img/threeDotDoneSvg.svg';
-import { useNavigate } from 'react-router-dom';
-import { __getTodayTodo, __postTodo, __deleteTodo, __updateTodo } from "../../redux/modules/plannerSlice";
-import Modal from '../utils/Modal';
+
 
 const PlannerDate = ({ selectedCategoryName, dateTodo, x, setX }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [categoryName, setCategoryName] = useState(null);
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const [categoryId, setCategoryId] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [todo, setTodo] = useState("");
+
   const [todoList, setTodoList] = useState([]);
-  const [todoId, setTodoId] = useState(null);
-  const [selectTodo, setSelectTodo] = useState(null);
-  const [editTodoName, setEditTodoName] = useState(false);
-  const [deleteTodoCheckModalVisible, setDeleteTodoCheckModalVisible] = useState(false);
-  const [todoComplete, setTodoComplete] = useState(false);
   const [todoRate, setTodoRate] = useState(0);
-
-  const { todos } = useSelector((state) => state.planner)
-  console.log('todos', todos);
-  console.log('todoList', todoList);
-
-  console.log(selectedCategoryName, dateTodo, x)
 
   const onClickBackPlannerHandler = () => {
     setX(false);
   }
-
-
-
-
-
-  console.log('selectTodo', selectTodo)
 
   useEffect(() => {
     const rate = ((todoList.filter((data) => data.complete === true).length / todoList.length) * 100).toFixed()
@@ -76,7 +47,7 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, x, setX }) => {
             <p>{isNaN(todoRate) ? 0 : todoRate}%</p>
           </div>
           <StProgressBarBox>
-            <StProgressBar width={isNaN(todoRate) ? 0 : todoRate} backgroundColor='#74E272'></StProgressBar>
+            <StProgressBar width={isNaN(todoRate) ? 0 : todoRate}></StProgressBar>
           </StProgressBarBox>
         </StCategoryProgressContainer>
       </div>
@@ -194,11 +165,27 @@ const StProgressBarBox = styled.div`
 `
 
 const StProgressBar = styled.div`
+  ${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+      width: ${width}%;
+      background-color: #ffdb80;
+    `
+    } else if (width <= 100) {
+      return css`
+      width: ${width}%;
+      background-color: #74e272;
+    `
+    }
+  }};
   transition: all 0.3s;
-  width: ${props => props.width + '%' || '0%'};
   height:13px;
   border-radius:10px;
-  background:${props => props.backgroundColor || '#D34C4C'};
 `
 
 const StPlusBtnBox = styled.div`

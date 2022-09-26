@@ -4,25 +4,10 @@ import Modal from "../utils/Modal";
 import Calendar from "../utils/Calendar";
 import dayjs from "dayjs";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { __getTodo } from "../../redux/modules/plannerSlice";
 
 const PlannerCalender = ({ calenderdate, selectDate, setSelectDate }) => {
-  const dispatch = useDispatch();
   const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-
-  // const { dateTodo } = useSelector((data) => data.planner)
-  // console.log('dateTodo', dateTodo)
-
   const [modalVisible, setModalVisible] = useState(false);
-  // const [date, setDate] = useState(null);
-  // const [calenderdate, setCalenderdate] = useState(dayjs(Date.now()).format("YYYY-MM-DD"));
-  // dayjs(Date.now()).format("YYYY-MM-DD")
-
-
-  // console.log(selectDate);
-  // console.log(calenderdate);
 
   const openModal = () => {
     setModalVisible(true);
@@ -30,32 +15,6 @@ const PlannerCalender = ({ calenderdate, selectDate, setSelectDate }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
-
-
-  useEffect(() => {
-    // console.log(selectDate);
-    // console.log(calenderdate);
-    // console.log('new Date', new Date(selectDate))
-    // console.log('selectDate', selectDate, Boolean(selectDate))
-    // if (!selectDate) {
-    //   setCalenderdate(dayjs(Date.now()).format("YYYY-MM-DD"))
-    // } else {
-    //   console.log('new Date', new Date(selectDate))
-    // }
-  }, [])
-
-
-  // useEffect(() => {
-  //   if (selectDate) {
-  //     setCalenderdate(dayjs(new Date(selectDate)).format("YYYY-MM-DD"))
-  //   }
-  // }, [selectDate])
-
-  // useEffect(() => {
-  //   dispatch(__getTodo(calenderdate))
-  // }, [dispatch, calenderdate])
-
-  // console.log('calenderdate', calenderdate)
 
   return (
     <StDateDiv>

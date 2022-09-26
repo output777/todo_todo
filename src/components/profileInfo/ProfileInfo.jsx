@@ -126,7 +126,7 @@ const ProfileInfo = () => {
     //   const end = begin + 587;
     //   return `[${ch}\\u${begin.toString(16)}-\\u${end.toString(16)}]`;
     // }
-    
+
     return escapeRegExp(ch);
   };
 
@@ -224,7 +224,7 @@ const ProfileInfo = () => {
             </>
           )}
         </form>
-        <span>{isNicknameCheck ? nicknameCheck : null}</span>
+        <span>{isNicknameCheck ? nicknameCheck : '사용불가'}</span>
       </StInfoNicknameBox>
       <StHighschoolBox>
         <p>고등학교</p>
@@ -260,17 +260,17 @@ const ProfileInfo = () => {
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
           ? highschoolResult &&
-            highschoolResult.map((data, index) => (
-              <div className="content" key={index}>
-                <div className="school" onClick={onClickSelectHandler}>
-                  {data.school}
-                </div>
-                <div className="region">
-                  <img src={regionSvg} />
-                  {data.adres}
-                </div>
+          highschoolResult.map((data, index) => (
+            <div className="content" key={index}>
+              <div className="school" onClick={onClickSelectHandler}>
+                {data.school}
               </div>
-            ))
+              <div className="region">
+                <img src={regionSvg} />
+                {data.adres}
+              </div>
+            </div>
+          ))
           : null}
       </StHighschoolSearchBox>
       <StBtnBox onSubmit={onSubmitRegisterHandler}>

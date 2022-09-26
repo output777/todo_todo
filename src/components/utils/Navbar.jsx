@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import homeSvg from "../../assets/img/homeSvg.svg";
 import statisticsSvg from "../../assets/img/statisticsSvg.svg";
@@ -9,22 +9,28 @@ import clickStatisticsSvg from "../../assets/img/clickStatisticsSvg.svg";
 import clickPlannerSvg from "../../assets/img/clickPlannerSvg.svg";
 import clickMypageSvg from "../../assets/img/clickMypageSvg.svg";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { __getDday } from "../../redux/modules/mainSlice";
 
 const Navbar = (props) => {
+  const dispatch = useDispatch();
+  const dday = useSelector((state) => state.main);
+  console.log(dday)
   const [home, setHome] = useState(props.home);
   const [statistics, setStatistics] = useState(props.statistics);
   const [planner, setPlanner] = useState(props.planner);
   const [mypage, setMypage] = useState(props.myPage);
   const navigate = useNavigate();
 
-  const onClickHomeMenu = () => {
+  const onClickHomeMenu = async () => {
     navigate("/");
     setHome(true);
     setStatistics(false);
     setPlanner(false);
     setMypage(false);
   };
-  const onClickStatisticsMenu = () => {
+  const onClickStatisticsMenu = async () => {
+    await dispatch(__getDday())
     navigate("/statistics");
     setHome(false);
     setStatistics(true);
@@ -32,20 +38,23 @@ const Navbar = (props) => {
     setMypage(false);
   };
 
-  const onClickPlannerMenu = () => {
+  const onClickPlannerMenu = async () => {
+    await dispatch(__getDday())
     setHome(false);
     setStatistics(false);
     setPlanner(true);
     setMypage(false);
     navigate("/planner");
   };
-  const onClickMypageMenu = () => {
+  const onClickMypageMenu = async () => {
+    await dispatch(__getDday())
     setHome(false);
     setStatistics(false);
     setPlanner(false);
     setMypage(true);
     navigate("/my");
   };
+
   return (
     <StNav>
       {home ? (

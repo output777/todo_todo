@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PlannerCalender from "./PlannerCalender";
 import categorySvg from '../../assets/img/categorySvg.svg';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getCategory, __getTodayTodo } from '../../redux/modules/plannerSlice';
 import dayjs from "dayjs";
 import Planner from './Planner';
+import { __getDday } from '../../redux/modules/mainSlice';
 
 const PlannerCategory = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ const PlannerCategory = () => {
   useEffect(() => {
     const arr = [];
     const arrRate = [];
+
+    // length를 구해놓고 for문을 돌리면 성능이 빨라짐 -> 코드 수정하기
     for (let i = 0; i < category.length; i++) {
       const data = todos.filter((data) => data.category === category[i].title);
       arr.push(data);
@@ -56,7 +59,7 @@ const PlannerCategory = () => {
   console.log('categoryTodoComplete', categoryTodoComplete);
 
   useEffect(() => {
-    dispatch(__getCategory())
+    dispatch(__getCategory());
     dispatch(__getTodayTodo());
   }, [dispatch]);
 
@@ -81,7 +84,7 @@ const PlannerCategory = () => {
                   </p>}
               </div>
               <StProgressBarBox onClick={(e) => e.stopPropagation()}>
-                <StProgressBar width={categoryTodoComplete[index] === 'NaN' ? 0 : categoryTodoComplete[index]} backgroundColor='#74E272'></StProgressBar>
+                <StProgressBar width={categoryTodoComplete[index] === 'NaN' ? 0 : categoryTodoComplete[index]}></StProgressBar>
               </StProgressBarBox>
             </StCategoryItem>
           ))}
@@ -157,11 +160,27 @@ const StProgressBarBox = styled.div`
 `
 
 const StProgressBar = styled.div`
+    ${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+      width: ${width}%;
+      background-color: #ffdb80;
+    `
+    } else if (width <= 100) {
+      return css`
+      width: ${width}%;
+      background-color: #74e272;
+    `
+    }
+  }};
   transition: all 0.3s;
-  width: ${props => props.width + '%' || '0%'};
   height:13px;
   border-radius:10px;
-  background:${props => props.backgroundColor || '#D34C4C'};
 `
 
 export default PlannerCategory

@@ -1,25 +1,21 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { __getMainRank } from "../../redux/modules/mainSlice";
-import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import { useNavigate } from "react-router-dom";
 
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [totalCount, setTotalCount] = useState(null);
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-  console.log("totalCount", totalCount);
-  console.log("error", error);
+
   console.log("mainRankList", mainRankList);
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
-  // const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(0); // 페이지
+  const [page, setPage] = useState(0);
 
   const checkIntersect = ([entry], observer) => {
     if (entry.isIntersecting) {
@@ -28,6 +24,7 @@ const InfiniteScroll = () => {
     }
   };
 
+  // nav누른다음에 가면 0페이지는 호출하지만 0페이지가 화면에 적용 안되는 상황이 발생함
   useEffect(() => {
     dispatch(__getMainRank(page));
   }, [page]);
@@ -38,19 +35,13 @@ const InfiniteScroll = () => {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       });
-      setTotalCount(mainRankList.length);
       observer.observe(targetRef.current);
     }
     return () => {
-      console.log(totalCount);
-      localStorage.setItem("totalCount", totalCount);
-      console.log("aaaaaaaaaaaaaa");
       observer && observer.disconnect();
     };
   }, [mainRankList]);
 
-  console.log("page", page);
-  console.log("mainRankList", mainRankList);
 
   return (
     <Stdiv>

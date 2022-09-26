@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import dayjs from "dayjs";
@@ -26,23 +26,9 @@ const Calendar = ({ selectDate, setSelectDate }) => {
 
 
   const selectDateHandler = async (date) => {
-    // object 비교해야되서 JSON.stringify사용함
-    // navigate로 page를 변경될 때 달력을 누르면 달력이 닫힘
     setSelectDate(date)
-    console.log('date', date)
-    localStorage.setItem('date', date);
     await dispatch(__getTodo(date));
     navigate('/planner/date');
-    // console.log(JSON.stringify(date), JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d));
-    // console.log(JSON.stringify(date) === JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d));
-    // if (JSON.stringify(date) === JSON.stringify(dayjs(new Date().setHours(0, 0, 0, 0)).$d)) {
-    //   setSelectDate(null)
-    //   navigate('/planner')
-    // } else {
-    // setSelectDate(date)
-    // console.log('date', date)
-    // navigate('/planner/date');
-    // }
   };
 
   return (

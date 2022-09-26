@@ -3,7 +3,7 @@ import React, {
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import leftArrowSvg from '../../assets/img/leftArrowSvg.svg'
 import whitePlusSvg from '../../assets/img/whitePlusSvg.svg';
 import notDoneSvg from '../../assets/img/notDoneSvg.svg';
@@ -386,21 +386,37 @@ const StProgressBarBox = styled.div`
 `
 
 const StProgressBar = styled.div`
+${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+      width: ${width}%;
+      background-color: #ffdb80;
+    `
+    } else if (width <= 100) {
+      return css`
+      width: ${width}%;
+      background-color: #74e272;
+    `
+    }
+  }};
   transition: all 0.3s;
-  width: ${props => props.width + '%' || '0%'};
   height:13px;
   border-radius:10px;
-  background:${props => props.backgroundColor || '#D34C4C'};
 `
 
 const StPlusBtnBox = styled.div`
-  width: 55px;
-  height: 55px;
-  border-radius:75px;
+  width: 58px;
+  height: 58px;
+  border-radius:50%;
   background-color: #FF8F27;
   position:fixed;
-  top:545px;
-  left: 281px;
+  bottom:100px;
+  right: 26px;
   display:flex;
   align-items:center;
   justify-content:center;

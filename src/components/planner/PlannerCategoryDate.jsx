@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PlannerCalender from "./PlannerCalender";
 import categorySvg from '../../assets/img/categorySvg.svg';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,6 @@ const PlannerCategoryDate = () => {
 
   const { dateTodo, date } = useSelector((state) => state.planner);
 
-  // dayjs(Date.now()).format("YYYY-MM-DD")
   const [calenderdate, setCalenderdate] = useState(null);
   const [dateTodoObj, setDateTodoObj] = useState({});
   const [categoryTodoList, setCategoryTodoList] = useState([]);
@@ -41,22 +40,12 @@ const PlannerCategoryDate = () => {
     const obj = {};
     let arr = [];
     const arrComplete = {};
-    // obj.dateTodo[0]['category'] = true;
     if (dateTodo.length > 0) {
 
       const completeTodo = dateTodo.filter((data) => data['complete'] === true);
-      console.log('completeTodo', completeTodo)
-
-
-      console.log(dateTodo[0])
-      console.log(dateTodo.length)
-      console.log(obj[`${dateTodo[0].category}`] === undefined);
-      console.log(arrComplete[`${completeTodo[0].category}`]);
 
       for (let i = 0; i < dateTodo.length; i++) {
         obj[`${dateTodo[i].category}`] = (obj[`${dateTodo[i].category}`] || 0) + 1;
-        // arrComplete[`${completeTodo[i].category}`] = (arrComplete[`${completeTodo[i].category}`] || 0) + 1;
-
       }
 
       for (let i = 0; i < completeTodo.length; i++) {
@@ -65,12 +54,7 @@ const PlannerCategoryDate = () => {
       }
     }
 
-    console.log('obj', obj)
     arr = Object.keys(obj);
-    console.log('arr', arr);
-    console.log('arrComplete', arrComplete);
-    console.log('categoryTodoComplete', categoryTodoComplete)
-
     setCategoryTodoComplete(arrComplete)
     setCategoryTodoList(arr)
     setDateTodoObj(obj);
@@ -189,11 +173,27 @@ const StProgressBarBox = styled.div`
 `
 
 const StProgressBar = styled.div`
+${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+      width: ${width}%;
+      background-color: #ffdb80;
+    `
+    } else if (width <= 100) {
+      return css`
+      width: ${width}%;
+      background-color: #74e272;
+    `
+    }
+  }};
   transition: all 0.3s;
-  width: ${props => props.width + '%' || '0%'};
   height:13px;
   border-radius:10px;
-  background:${props => props.backgroundColor || '#D34C4C'};
 `
 
 export default PlannerCategoryDate;
