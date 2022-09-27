@@ -76,7 +76,7 @@ const FollowerList = () => {
           {nickname == member.nickname ? (
             <div></div>
           ) : nickname !== member.nickname &&
-            myfollowingList.find((v) => v.nickname == member.nickname) ? (
+            myfollowingList?.find((v) => v.nickname === member.nickname) ? (
             <StFollowingBtn
               onClick={(event) => {
                 event.stopPropagation();
@@ -84,7 +84,7 @@ const FollowerList = () => {
               }}
             >
               팔로잉
-              <img src={follwingcheck} />
+              <img src={follwingcheck} alt='' />
             </StFollowingBtn>
           ) : (
             <StNotFollowBtn

@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   __getOtherFollowingList,
   __getFollowingList,
+  __getFollowerList,
+  __getFollowInfo,
 } from "../../redux/modules/mySlice";
 
-const FollowerList = () => {
+const FollowList = () => {
   const nickname = localStorage.getItem("nickname");
 
   const [follow, setFollow] = useState(false);
@@ -26,8 +28,14 @@ const FollowerList = () => {
 
   const params = useParams();
 
-  const followerBtnHandler = () => {
-    setFollow(!follow);
+  const followerBtnHandler = async (id) => {
+    await dispatch(__getFollowInfo(id));
+    setFollow(() => true);
+  };
+
+  const followBtnHandler = async (id) => {
+    await dispatch(__getFollowInfo(id));
+    setFollow(() => false);
   };
 
   useEffect(() => {
@@ -45,7 +53,7 @@ const FollowerList = () => {
               navigate(-1);
             }}
           />
-          <StTopText>팔로워 목록</StTopText>
+          <StTopText>팔로잉 목록</StTopText>
         </div>
       </StFollowtopBox>
 
@@ -68,11 +76,12 @@ const FollowerList = () => {
           {nickname == member.nickname ? (
             <div></div>
           ) : nickname !== member.nickname &&
-            followingList.find((v) => v.nickname == member.nickname) ? (
+            followingList?.find((v) => v.nickname === member.nickname) &&
+            follow === false ? (
             <StFollowingBtn
               onClick={(event) => {
                 event.stopPropagation();
-                followerBtnHandler();
+                followerBtnHandler(member.id);
               }}
             >
               팔로잉
@@ -82,7 +91,7 @@ const FollowerList = () => {
             <StNotFollowBtn
               onClick={(event) => {
                 event.stopPropagation();
-                followerBtnHandler();
+                followBtnHandler(member.id);
               }}
             >
               팔로우
@@ -95,7 +104,7 @@ const FollowerList = () => {
   );
 };
 
-export default FollowerList;
+export default FollowList;
 
 const Stdiv = styled.div`
   background-color: #fafafa;

@@ -1,8 +1,8 @@
 import React from "react";
-import FollowerList from "../components/follow/FollowList";
+import FollowList from "../components/follow/FollowList";
 
 const FollowingPage = () => {
-  return <FollowerList />;
+  return <FollowList />;
 };
 
 export default FollowingPage;

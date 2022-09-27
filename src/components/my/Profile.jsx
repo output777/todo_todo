@@ -79,9 +79,7 @@ const Profile = () => {
           </StImg>
           <StInfo>
             <div className='nextToPicture'>
-              <span className='count'>
-                {/* {userInfo.imgList == null ? 0 : userInfo.imgList.length} */}
-              </span>
+              {/* <span className='count'>{userInfo.imgList?.length}</span> */}
               <span className='text'>게시물</span>
             </div>
             <div
@@ -90,7 +88,7 @@ const Profile = () => {
                 navigate(`/follower/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo.followersCnt}</span>
+              <span className='count'>{userInfo?.followersCnt}</span>
               <span className='text'>팔로워</span>
             </div>
             <div
@@ -99,14 +97,13 @@ const Profile = () => {
                 navigate(`/following/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo.followingsCnt}</span>
+              <span className='count'>{userInfo?.followingsCnt}</span>
               <span className='text'>팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-
-          <div className="userName">
+          <div className='userName'>
             {nickname == null || nickname == "null" ? "" : nickname}
           </div>
           <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
