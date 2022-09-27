@@ -94,7 +94,7 @@ const Main = () => {
         <div className='mainTopSentenceBox'>
           <span>투두투두</span>
           <div className='mainTopSentence'>
-            {nickname == null || nickname == "null" ? (
+            {nickname == null || nickname === "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
               <StPhrase>

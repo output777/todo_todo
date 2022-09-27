@@ -144,6 +144,10 @@ const StDiv = styled.div`
   height: 100vh;
   font-family: "SUIT-Regular", sans-serif;
 
+  & div {
+    box-sizing:border-box;
+  }
+
   & div.header {
     width: 100%;
     height: 100px;
@@ -153,6 +157,7 @@ const StDiv = styled.div`
     align-items: flex-end;
     padding: 1rem;
     border-bottom: 1px solid #f1f3f5;
+    
 
     .categoryBox {
       padding: 10px;
