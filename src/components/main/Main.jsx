@@ -91,9 +91,9 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -121,17 +121,21 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate[0] === undefined ? 0 : thisMonthRate} %</div>
+              <div>
+                {thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]} %
+              </div>
             </StGaugeText>
 
             <StProgressBarBox>
               <StProgressBar
-                width={thisMonthRate[0] === undefined ? 0 : thisMonthRate}
+                width={thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]}
               ></StProgressBar>
             </StProgressBarBox>
           </StthisMonthGauge>
 
-          <StTotalGauge totalRate={totalRate}>
+          <StTotalGauge
+            totalRate={totalRate[0] === undefined ? 0 : totalRate[0]}
+          >
             <StGaugeText>
               플래너 총 달성률
               <div>{totalRate[0] == undefined ? 0 : totalRate} %</div>
@@ -139,7 +143,7 @@ const Main = () => {
 
             <StProgressBarBox>
               <StProgressBar
-                width={totalRate[0] == undefined ? 0 : totalRate}
+                width={totalRate[0] === undefined ? 0 : totalRate[0]}
               ></StProgressBar>
             </StProgressBarBox>
           </StTotalGauge>
@@ -202,7 +206,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
