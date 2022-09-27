@@ -13,6 +13,16 @@ import {
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 import Dday from "./Dday";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import "swiper/css";
+// import "swiper/css/bundle";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+SwiperCore.use([Navigation, Pagination]);
+
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -123,39 +133,65 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="350px"
-          height="330px"
+          width="80%"
+          height="22rem"
           radius="48px"
           top="40%"
-          backgroundcolor="rgba(31, 31, 31, 0.116)"
+          backgroundcolor="rgba(17, 17, 17, 0.6)"
         >
           <StModalTop>
-            <span>랭킹 시스템이란?</span>
+            <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
+          <Swiper
+            // modules={[Navigation, Pagination, Scrollbar, A11y]}
+            className="banner"
+            spaceBetween={50}
+            slidesPerView={1}
+            // navigation
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>
+              <StModalBottom>
+                <StModalExplainTop>
+                  <span>주간/월간 랭킹</span>
+                  <img src={trophy} />
+                  <div>
+                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                    랭킹은 매달 며칠에
+                  </div>
+                </StModalExplainTop>
 
-          <StModalBottom>
-            <StModalExplainTop>
-              <img src={trophy} />
-              <span>실시간 랭킹</span>
-              <div>
-                실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                랭킹은 매달 며칠에
-              </div>
-            </StModalExplainTop>
+                <StCloseBtnContainer>
+                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
+                </StCloseBtnContainer>
+              </StModalBottom>
+            </SwiperSlide>
+            <SwiperSlide>
+              <StModalBottom>
+                <StModalExplainTop>
+                  <span>실시간 랭킹</span>
+                  <img src={trophy} />
+                  <div>
+                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                    랭킹은 매달 며칠에
+                  </div>
+                </StModalExplainTop>
 
-            <StModalExplainBottom>
-              <img src={trophy} />
-              <span>주간 랭킹</span>
-            </StModalExplainBottom>
-            <div>
-              실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간 랭킹은
-              매달 며칠에
-            </div>
+                <StModalExplainBottom>
+                  <span>주간 랭킹</span>
+                  <img src={trophy} />
+                </StModalExplainBottom>
+                <div>
+                  실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                  랭킹은 매달 며칠에
+                </div>
 
-            <StCloseBtnContainer>
-              <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn>
-            </StCloseBtnContainer>
-          </StModalBottom>
+                <StCloseBtnContainer>
+                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
+                </StCloseBtnContainer>
+              </StModalBottom>
+            </SwiperSlide>
+          </Swiper>
         </Modal>
       )}
 
@@ -461,7 +497,7 @@ const StModalTop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 100%;
   height: 85px;
   border-radius: 48px 48px 0 0;
   background-color: #ffe9d5;
@@ -472,6 +508,7 @@ const StModalTop = styled.div`
 
 const StModalBottom = styled.div`
   width: 90%;
+  height: 15rem;
   margin: 5% 0 0 5%;
   span {
     font-size: 1rem;
