@@ -32,12 +32,12 @@ const Modal = ({
       <ModalWrapper
         className={className}
         onClick={maskClosable ? onMaskClick : null}
-        tabIndex='-1'
+        tabIndex="-1"
         visible={visible}
       >
         <ModalInner
-          tabIndex='0'
-          className='modal-inner'
+          tabIndex="0"
+          className="modal-inner"
           width={width}
           height={height}
           radius={radius}
@@ -93,6 +93,15 @@ const ModalInner = styled.div`
   top: ${(props) => props.top};
   transform: translateY(-50%);
   margin: 0 auto;
+
+  .swiper-pagination-horizontal {
+  }
+  .swiper-pagination-bullet {
+  }
+  .swiper-pagination-bullet-active {
+    color: #fff;
+    background: #ff8f27;
+  }
 `;
 
 export default Modal;

@@ -20,7 +20,7 @@ const ProfilePhotos = () => {
   const { userInfo } = useSelector((state) => state.my);
   const { images } = useSelector((state) => state.my);
   console.log("images", images);
-  // console.log("userInfo", userInfo);
+
   console.log(selectImgId);
 
   // 1
@@ -28,22 +28,15 @@ const ProfilePhotos = () => {
     const { id } = e.target;
     console.log("e.target.id", id);
     selectImgFunc(id);
-
-    // console.log('userInfo', userInfo.imgList, userInfo.imgList.length);
   };
 
   // 2
   const selectImgFunc = (id) => {
     const data = images.filter((data) => data.id === Number(id));
-    // console.log("filter data", data);
 
     setSelectImgId(id);
     setSelectImg(data[0].imageUrl);
     setFullScreen(true);
-
-    // const data = userInfo.imgList.filter((data) => data.id === Number(id));
-    // const index = userInfo.imgList.indexOf(...data);
-    // setSelectImgIndex(index); //* */
   };
 
   const onClickPrevHandler = (id) => {
@@ -52,11 +45,6 @@ const ProfilePhotos = () => {
     console.log(prevData);
     setSelectImgId(prevData.id);
     setSelectImg(prevData.imageUrl);
-
-    // console.log(images.indexOf(a));
-    // console.log(typeof Number(a));
-    // setSelectImgIndex((prev) => prev - 1);
-    // console.log('prevData', prevData);
   };
 
   const onClickNextHandler = (id) => {
@@ -64,11 +52,6 @@ const ProfilePhotos = () => {
     const nextData = images[images.indexOf(a) + 1];
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
-
-    // console.log(images.indexOf(a));
-    // console.log(nextData);
-    // setSelectImgIndex((prev) => prev + 1);
-    // console.log('nextData', nextData);
   };
 
   const onClickFullScreenCloseHandler = () => {
@@ -99,12 +82,6 @@ const ProfilePhotos = () => {
   return (
     <>
       <StContainer>
-        {/* {userInfo &&
-          userInfo.imgList.map((data) => (
-            <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
-              <img id={data.id} src={data.imgUrl} alt="boast" />
-            </StImg>
-          ))} */}
         {images &&
           images.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
@@ -170,28 +147,74 @@ const ProfilePhotos = () => {
       ) : null}
 
       <StModalBox>
-        {modalVisible && (
+        {/* -------- 안내창 모달 ---------*/}
+        {modalVisible ? (
           <Modal
             visible={modalVisible}
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            width="250px"
-            height="150px"
-            radius="20px"
+            radius="48px"
             top="40%"
-            backgroundcolor="rgba(0, 0, 0, 0.2)"
+            width="90%"
+            height="230px"
+            backgroundcolor="#46464624"
           >
-            <div className="btnBox">
-              <StModalBtn onClick={onClickDeleteImgHandler}>삭제</StModalBtn>
-              <StModalBtn onClick={closeModal}>취소</StModalBtn>
-            </div>
+            <StModalTop>
+              <div className="title">사진을 삭제하시겠습니까?</div>
+              <div>삭제하면 다시 불러올 수 없습니다.</div>
+            </StModalTop>
+            <StModalBottom>
+              <div className="cancel" onClick={closeModal}>
+                취소
+              </div>
+              <div className="confirm" onClick={onClickDeleteImgHandler}>
+                확인
+              </div>
+            </StModalBottom>
           </Modal>
-        )}
+        ) : null}
       </StModalBox>
     </>
   );
 };
+
+const StModalTop = styled.div`
+  height: 75%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+`;
+const StModalBottom = styled.div`
+  border-top: 1px solid lightgray;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+
+  div {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .confirm {
+    border-left: 1px solid lightgray;
+  }
+`;
 
 const StContainer = styled.div`
   width: 100%;
@@ -200,7 +223,7 @@ const StContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 100px;
-  grid-gap: 2px;
+  grid-gap: 5px;
   padding-bottom: 70px;
 
   /* overflow-y: scroll; */
