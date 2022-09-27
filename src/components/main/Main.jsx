@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
+import bigTrophy from "../../assets/img/mainpage/bigTrophy.svg";
+import schoolSvg from "../../assets/img/mainpage/school.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
@@ -70,7 +72,6 @@ const Main = () => {
   };
 
   useEffect(() => {
-
     // 무한스크롤을 처음 로딩할 때 바로 불러오면 아래와 같은 에러가 발생
     // Objects are not valid as a React child (found: object with keys {message, name, code, config, request, response}). If you meant to render a collection of children, use an array instead.
     // 그래서 시간차를 줌
@@ -86,7 +87,6 @@ const Main = () => {
     //   clearTimeout(weeklyTimer)
     // }
   }, []);
-
 
   return (
     <StMainContainer>
@@ -125,7 +125,9 @@ const Main = () => {
             </StGaugeText>
 
             <StProgressBarBox>
-              <StProgressBar width={thisMonthRate}></StProgressBar>
+              <StProgressBar
+                width={thisMonthRate[0] === undefined ? 0 : thisMonthRate}
+              ></StProgressBar>
             </StProgressBarBox>
           </StthisMonthGauge>
 
@@ -136,7 +138,9 @@ const Main = () => {
             </StGaugeText>
 
             <StProgressBarBox>
-              <StProgressBar width={totalRate}></StProgressBar>
+              <StProgressBar
+                width={totalRate[0] == undefined ? 0 : totalRate}
+              ></StProgressBar>
             </StProgressBarBox>
           </StTotalGauge>
         </StAchievementsBottomBox>
@@ -150,7 +154,7 @@ const Main = () => {
           maskClosable={true}
           onClose={closeModal}
           width="80%"
-          height="22rem"
+          height="23rem"
           radius="48px"
           top="40%"
           backgroundcolor="rgba(17, 17, 17, 0.6)"
@@ -159,7 +163,6 @@ const Main = () => {
             <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
           <Swiper
-            // modules={[Navigation, Pagination, Scrollbar, A11y]}
             className="banner"
             spaceBetween={50}
             slidesPerView={1}
@@ -168,46 +171,33 @@ const Main = () => {
           >
             <SwiperSlide>
               <StModalBottom>
-                <StModalExplainTop>
+                <StModalExplainDiv>
                   <span>주간/월간 랭킹</span>
-                  <img src={trophy} />
+                  <img src={bigTrophy} />
                   <div>
-                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                    랭킹은 매달 며칠에
+                    주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
+                    순으로 순위가 결정됩니다.
                   </div>
-                </StModalExplainTop>
-
-                <StCloseBtnContainer>
-                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
-                </StCloseBtnContainer>
+                </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide>
             <SwiperSlide>
               <StModalBottom>
-                <StModalExplainTop>
-                  <span>실시간 랭킹</span>
-                  <img src={trophy} />
+                <StModalExplainDiv>
+                  <span>학교 랭킹</span>
+                  <img src={schoolSvg} />
                   <div>
-                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                    랭킹은 매달 며칠에
+                    학교 랭킹은 같은 학교에 소속돼 있는 학생들의 한달 간 측정한
+                    투두 달성률의 평균이 높은 순으로 순위가 결정됩니다.
                   </div>
-                </StModalExplainTop>
-
-                <StModalExplainBottom>
-                  <span>주간 랭킹</span>
-                  <img src={trophy} />
-                </StModalExplainBottom>
-                <div>
-                  실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                  랭킹은 매달 며칠에
-                </div>
-
-                <StCloseBtnContainer>
-                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
-                </StCloseBtnContainer>
+                </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide>
           </Swiper>
+
+          <StCloseBtnContainer>
+            <StModalCloseBtn onClick={closeModal}>확인</StModalCloseBtn>
+          </StCloseBtnContainer>
         </Modal>
       )}
 
@@ -249,7 +239,6 @@ const Main = () => {
           )}
         </StRankingBtnBox>
 
-
         {weekly ? <InfiniteScroll /> : null}
         {month ? <InfiniteScrollMonthly /> : null}
         {school ? <InfiniteScrollSchoolRank /> : null}
@@ -269,7 +258,12 @@ const StProgressBarBox = styled.div`
 
 const StProgressBar = styled.div`
   ${({ width }) => {
-    if (width < 33) {
+    if (width === 0) {
+      return css`
+        width: ${width}%;
+        background-color: none;
+      `;
+    } else if (width < 33) {
       return css`
         width: ${width}%;
         background-color: #d34c4c;
@@ -378,44 +372,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 
@@ -515,21 +509,35 @@ const StModalTop = styled.div`
 
 const StModalBottom = styled.div`
   width: 90%;
-  height: 15rem;
+  height: 16rem;
   margin: 5% 0 0 5%;
   span {
     font-size: 1rem;
   }
 `;
-const StModalExplainTop = styled.div``;
+const StModalExplainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
-const StModalExplainBottom = styled.div`
-  margin-top: 5%;
+  span {
+    font-weight: bold;
+  }
+
+  div {
+    width: 80%;
+    text-align: center;
+  }
 `;
 
 const StCloseBtnContainer = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  height: 6rem;
 `;
 
 const StModalCloseBtn = styled.button`
@@ -537,16 +545,17 @@ const StModalCloseBtn = styled.button`
   justify-content: center;
   width: 93px;
   border: none;
-  background-color: white;
-  color: #ff8f27;
-  margin-top: 5%;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 1.2rem;
+  padding: 1em;
 `;
 
 const StScrollDiv = styled.div`
   background-color: #fafafa;
-  /* height: 40%; */
-  /* overflow: scroll; */
-  /* ::-webkit-scrollbar {
+  height: 40%;
+  overflow: scroll;
+  ::-webkit-scrollbar {
     width: 10px;
     height: 150px;
     border-radius: 0px;
@@ -555,5 +564,5 @@ const StScrollDiv = styled.div`
   ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: #d1d1d1;
-  } */
+  }
 `;
