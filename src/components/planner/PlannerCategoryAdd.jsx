@@ -328,27 +328,6 @@ const StCategoryInput = styled.input`
   &:focus {border-color:#FF8F27
 `;
 
-const StModalBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 250px;
-  height: 50px;
-  outline: none;
-  border-top: 1px solid #f1f3f5;
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-  border-radius: 0 0 16px 0;
-  background-color: white;
-
-  /* margin: 30px 0 0 0; */
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
 const StModalAddBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -409,6 +388,11 @@ const StbuttonSet = styled.div`
   display: flex;
 `;
 
+const StEditBtnBox = styled.div`
+  position: relative;
+  top: 10px;
+`;
+
 const StEditBtnbox = styled.div`
   display: flex;
   position: relative;
@@ -431,11 +415,6 @@ const StCategoryBox = styled.div`
   & p {
     margin: 0;
   }
-`;
-
-const StEditBtnBox = styled.div`
-  position: relative;
-  top: 10px;
 `;
 
 export default PlannerCategoryAdd;

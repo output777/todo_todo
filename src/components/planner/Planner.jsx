@@ -263,16 +263,18 @@ const Planner = ({ x, setX }) => {
           backgroundcolor='rgba(0, 0, 0, 0.2)'
         >
           <StModalBtnBox>
-            <p>투두 추가</p>
+            <p className='title'>투두 추가</p>
             <StTodoInput
               type='text'
               value={todo}
               onChange={onChangeInputHandler}
             />
-            <div className='btnBox'>
-              <StModalBtn onClick={closeModal}>취소</StModalBtn>
-              <StModalBtn onClick={onClickTodoAddHandler}>추가</StModalBtn>
-            </div>
+            <StEditBtnbox>
+              <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
+              <StModalAddBtn onClick={onClickTodoAddHandler}>
+                추가
+              </StModalAddBtn>
+            </StEditBtnbox>
           </StModalBtnBox>
         </Modal>
       )}
@@ -291,15 +293,17 @@ const Planner = ({ x, setX }) => {
         >
           <StModalBtnBox>
             {!editTodoName ? (
-              <>
+              <StEditBtnBox>
                 <p className='title'>{selectTodo.content}</p>
-                <p onClick={onClickEditTodoName}>이름 변경</p>
+                <p onClick={onClickEditTodoName} className='updatetitle'>
+                  이름 변경
+                </p>
                 <div className='btnBox'>
-                  <StModalBtn onClick={onClickTodoDeleteHandler}>
+                  <StModalDeleteBtn onClick={onClickTodoDeleteHandler}>
                     삭제
-                  </StModalBtn>
+                  </StModalDeleteBtn>
                 </div>
-              </>
+              </StEditBtnBox>
             ) : (
               <>
                 <p className='title'>투두 내용 변경</p>
@@ -308,12 +312,14 @@ const Planner = ({ x, setX }) => {
                   value={todo}
                   onChange={onChangeInputHandler}
                 />
-                <div className='btnBox'>
-                  <StModalBtn onClick={onClickEditTodoNameCancel}>
+                <StEditBtnbox>
+                  <StModalCancelBtn onClick={onClickEditTodoNameCancel}>
                     취소
-                  </StModalBtn>
-                  <StModalBtn onClick={onClickEditTodoHandler}>확인</StModalBtn>
-                </div>
+                  </StModalCancelBtn>
+                  <StModalAddBtn onClick={onClickEditTodoHandler}>
+                    확인
+                  </StModalAddBtn>
+                </StEditBtnbox>
               </>
             )}
           </StModalBtnBox>
@@ -326,7 +332,7 @@ const Planner = ({ x, setX }) => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width='250px'
+          width='260px'
           height='150px'
           radius='20px'
           top='40%'
@@ -335,12 +341,14 @@ const Planner = ({ x, setX }) => {
           <StModalBtnBox>
             <p className='title'>투두를 삭제하시겠습니까?</p>
             <p>삭제하면 다시 불러올 수 없습니다</p>
-            <div className='btnBox'>
-              <StModalBtn onClick={onClickEditTodoDeleteCancel}>
+            <StEditBtnbox>
+              <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
                 취소
-              </StModalBtn>
-              <StModalBtn onClick={onClickEditTodoDeleteCheck}>확인</StModalBtn>
-            </div>
+              </StModalCancelBtn>
+              <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
+                확인
+              </StModalAddBtn>
+            </StEditBtnbox>
           </StModalBtnBox>
         </Modal>
       )}
@@ -468,7 +476,6 @@ const StModalBtnBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 40px;
-
   & p {
     width: 100%;
     margin: 0;
@@ -476,8 +483,19 @@ const StModalBtnBox = styled.div`
     padding: 5px;
   }
 
+  & p.updatetitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 45px;
+    border-top: 1px solid #f1f3f5;
+  }
+
   & p.title {
     font-weight: 600;
+    position: relative;
+    bottom: 5px;
   }
 
   & .btnBox {
@@ -494,6 +512,7 @@ const StTodoInput = styled.textarea`
   border-radius: 16px;
   outline: none;
   resize: none;
+  &:focus {border-color:#FF8F27
 `;
 
 const StModalBtn = styled.button`
@@ -556,4 +575,74 @@ const StTodoTitle = styled.p`
   color: ${(props) => props.color || "#111"};
 `;
 
+const StModalAddBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 125px;
+  height: 40px;
+  outline: none;
+  border-right: none;
+  border-top: 1px solid #f1f3f5;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 0 16px 0;
+  background-color: white;
+  color: #ff8f27;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const StModalCancelBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 125px;
+  height: 40px;
+  outline: none;
+  border-left: none;
+  border-top: 1px solid #f1f3f5;
+  border-right: 1px solid #f1f3f5;
+  border-bottom: none;
+  border-radius: 0 0 0 16px;
+  background-color: white;
+  color: black;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const StModalDeleteBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 40px;
+  color: red;
+  outline: none;
+  border-top: 1px solid #f1f3f5;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0 0 16px 16px;
+  background-color: white;
+`;
+
+const StbuttonSet = styled.div`
+  display: flex;
+`;
+
+const StEditBtnBox = styled.div`
+  position: relative;
+  top: 10px;
+`;
+
+const StEditBtnbox = styled.div`
+  display: flex;
+  position: relative;
+  top: 15px;
+`;
 export default Planner;
