@@ -79,11 +79,13 @@ const Profile = () => {
             />
           </StImg>
           <StInfo>
+
             <div className="nextToPicture">
               <span className="count">
-                {images == null ? 0 : images.length}
+                {images === null ? 0 : images.length}
               </span>
               <span className="text">사진</span>
+
             </div>
             <div
               className="nextToPicture"

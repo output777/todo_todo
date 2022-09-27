@@ -30,14 +30,10 @@ const Statistics = () => {
   //   : Math.round(rankScoreData[0].score);
 
   let weeklyScore = rankScoreData[1].score;
-  let weeklyScore2 = isNaN(weeklyScore)
-    ? 0
-    : (weeklyScore / 7).toFixed(2);
+  let weeklyScore2 = isNaN(weeklyScore) ? 0 : (weeklyScore / 7).toFixed(2);
 
   let monthlyScore = rankScoreData[2].score;
-  let monthlyScore2 = isNaN(monthlyScore)
-    ? 0
-    : monthlyScore.toFixed(2);
+  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
 
   let weeklyRank =
     rankScoreData[1].ranking === undefined ? "-" : rankScoreData[1].ranking;
@@ -51,11 +47,12 @@ const Statistics = () => {
 
   return (
     <div style={{ fontFamily: "SUIT-Regular, sans-serif" }}>
-      <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
-        통계
-      </h3>
+      <StHeader>
+        <span style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
+          통계
+        </span>
+      </StHeader>
       <StBackground>
-        <StLine></StLine>
         <StTopSubjectDiv>
           <div>나의 점수</div>
           <img src={info} onClick={() => modalToggleHandler("score")} />
@@ -118,7 +115,7 @@ const Statistics = () => {
           }
           radius='48px'
           top='40%'
-          backgroundcolor='#46464624'
+          backgroundcolor='#11111180 '
         >
           <StModalTop>
             {modal === "score" ? (
@@ -126,7 +123,7 @@ const Statistics = () => {
             ) : modal === "rank" ? (
               <span>주간 랭킹 점수</span>
             ) : (
-              <span>히트맵</span>
+              <span>나의 투두 달성률</span>
             )}
           </StModalTop>
 
@@ -188,34 +185,24 @@ const Statistics = () => {
                   <span style={{ color: "#618AF2", fontWeight: "bold" }}>
                     파란색
                   </span>
-                  은 유저님의 이번주 점수 추이입니다.
+                  선은 유저님의 이번주 점수 추이입니다.
                 </div>
               </StModalExplainTop>
             ) : (
               <StModalExplainTop>
-                <span
-                  style={{
-                    margin: "3% 0 3% 0",
-                    fontWeight: "bold",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: "3%",
-                  }}
-                >
-                  {/* <img src={trophy} /> */}
-                  히트맵 이란?
-                </span>
                 <StTemp>
+                  <span>낮음</span>
                   <div style={{ backgroundColor: "#F3F3F3" }}></div>
                   <div style={{ backgroundColor: "#FF8F2740" }}></div>
                   <div style={{ backgroundColor: "#FF8F2780" }}></div>
                   <div style={{ backgroundColor: "#FF8F27" }}></div>
+                  <span>높음</span>
                 </StTemp>
 
                 <div>
-                  히트맵은 주차별(가로축), 요일별(세로축) 달성률에 따라 색깔의
-                  옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이 진해집니다.
+                  나의 투두 달성률은 주차별(가로축), 요일별(세로축) 달성률에
+                  따라 색깔의 옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이
+                  진해집니다.
                 </div>
               </StModalExplainTop>
             )}
@@ -227,28 +214,41 @@ const Statistics = () => {
   );
 };
 export default Statistics;
+const StHeader = styled.div`
+  display: flex;
+  align-items: center;
+  height: 70px;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #f1f3f5;
+`;
 
 const StTemp = styled.div`
   width: 100%;
-  height: 30%;
+  height: 80px;
   margin: 2% auto;
   /* background-color: gray; */
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
-  gap: 2%;
+  justify-content: center;
+  gap: 10px;
   div {
-    width: 10%;
-    height: 70%;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
     /* background-color: #c2ffbe; */
-    margin: 0;
+  }
+  span {
+    font-weight: 700;
+    font-size: 15px;
   }
 `;
 const StLine = styled.div`
   width: 100%;
   height: 1.5px;
-  background-color: #ffe9d4;
+  background-color: #f1f3f5;
 `;
 
 const StBackground = styled.div`
@@ -259,12 +259,12 @@ const StBackground = styled.div`
 
 const StTopSubjectDiv = styled.div`
   position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 2%;
-  margin: 5% 0 3% 8%;
+  margin: 0 0 3% 8%;
+  padding-top: 5%;
   div {
     font-size: 1em;
     font-weight: bold;
@@ -297,7 +297,7 @@ const StScoreChangeBoxDiv = styled.div`
   align-items: center;
   justify-content: center;
   width: 90%;
-  margin: 5% auto;
+  margin: 5% auto 0 auto;
   height: 12vh;
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
@@ -357,7 +357,7 @@ const StModalExplainBottom = styled.div`
     gap: 3%;
   }
   div {
-    margin-top: 3%;
+    margin-top: 10%;
   }
 `;
 
