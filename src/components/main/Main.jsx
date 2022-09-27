@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 import {
+  __getDday,
+  __getMainRank,
   __getThisMonthRate,
   __getTotalRate,
 } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 import Dday from "./Dday";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import "swiper/css";
+// import "swiper/css/bundle";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+SwiperCore.use([Navigation, Pagination]);
+
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
 // 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
 // 필요 없으면 useRef로 css 변경하려고 함
@@ -27,11 +38,11 @@ const Main = () => {
   const [weekly, setWeekly] = useState(true);
   const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [day, setDay] = useState(true);
 
   const nickname = localStorage.getItem("nickname");
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
-  console.log("accessToken", accessToken, "refreshToken", refreshToken);
 
   const onClickWeekly = () => {
     setWeekly(true);
@@ -59,17 +70,30 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // dispatch(__getMyInfo());
+
+    // 무한스크롤을 처음 로딩할 때 바로 불러오면 아래와 같은 에러가 발생
+    // Objects are not valid as a React child (found: object with keys {message, name, code, config, request, response}). If you meant to render a collection of children, use an array instead.
+    // 그래서 시간차를 줌
+    // const weeklyTimer = setTimeout(() => {
+    //   setWeekly(true)
+    // }, 100)
+
+    dispatch(__getMyInfo(nickname));
     dispatch(__getThisMonthRate());
-    dispatch(__getTotalRate());
+    dispatch(__getTotalRate(nickname));
+
+    // return () => {
+    //   clearTimeout(weeklyTimer)
+    // }
   }, []);
+
 
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className='mainTopSentenceBox'>
+        <div className="mainTopSentenceBox">
           <span>투두투두</span>
-          <div className='mainTopSentence'>
+          <div className="mainTopSentence">
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -88,7 +112,7 @@ const Main = () => {
       <StAchievementsBox>
         <StAchievementsTopBox>
           <div>
-            {nickname == null || nickname == "null"
+            {nickname === null || nickname === "null"
               ? "닉네임이 미설정 상태입니다."
               : `${nickname}님의 업적`}
           </div>
@@ -97,21 +121,23 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate} %</div>
+              <div>{thisMonthRate[0] === undefined ? 0 : thisMonthRate} %</div>
             </StGaugeText>
-            <div>
-              <ProgressBar now={thisMonthRate} />
-            </div>
+
+            <StProgressBarBox>
+              <StProgressBar width={thisMonthRate}></StProgressBar>
+            </StProgressBarBox>
           </StthisMonthGauge>
 
           <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate} %</div>
+              <div>{totalRate[0] == undefined ? 0 : totalRate} %</div>
             </StGaugeText>
-            <div>
-              <ProgressBar now={totalRate} />
-            </div>
+
+            <StProgressBarBox>
+              <StProgressBar width={totalRate}></StProgressBar>
+            </StProgressBarBox>
           </StTotalGauge>
         </StAchievementsBottomBox>
       </StAchievementsBox>
@@ -123,44 +149,70 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width='350px'
-          height='330px'
-          radius='48px'
-          top='40%'
-          backgroundcolor='rgba(31, 31, 31, 0.116)'
+          width="80%"
+          height="22rem"
+          radius="48px"
+          top="40%"
+          backgroundcolor="rgba(17, 17, 17, 0.6)"
         >
           <StModalTop>
-            <span>랭킹 시스템이란?</span>
+            <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
+          <Swiper
+            // modules={[Navigation, Pagination, Scrollbar, A11y]}
+            className="banner"
+            spaceBetween={50}
+            slidesPerView={1}
+            // navigation
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>
+              <StModalBottom>
+                <StModalExplainTop>
+                  <span>주간/월간 랭킹</span>
+                  <img src={trophy} />
+                  <div>
+                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                    랭킹은 매달 며칠에
+                  </div>
+                </StModalExplainTop>
 
-          <StModalBottom>
-            <StModalExplainTop>
-              <img src={trophy} />
-              <span>실시간 랭킹</span>
-              <div>
-                실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                랭킹은 매달 며칠에
-              </div>
-            </StModalExplainTop>
+                <StCloseBtnContainer>
+                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
+                </StCloseBtnContainer>
+              </StModalBottom>
+            </SwiperSlide>
+            <SwiperSlide>
+              <StModalBottom>
+                <StModalExplainTop>
+                  <span>실시간 랭킹</span>
+                  <img src={trophy} />
+                  <div>
+                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                    랭킹은 매달 며칠에
+                  </div>
+                </StModalExplainTop>
 
-            <StModalExplainBottom>
-              <img src={trophy} />
-              <span>주간 랭킹</span>
-            </StModalExplainBottom>
-            <div>
-              실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간 랭킹은
-              매달 며칠에
-            </div>
+                <StModalExplainBottom>
+                  <span>주간 랭킹</span>
+                  <img src={trophy} />
+                </StModalExplainBottom>
+                <div>
+                  실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
+                  랭킹은 매달 며칠에
+                </div>
 
-            <StCloseBtnContainer>
-              <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn>
-            </StCloseBtnContainer>
-          </StModalBottom>
+                <StCloseBtnContainer>
+                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
+                </StCloseBtnContainer>
+              </StModalBottom>
+            </SwiperSlide>
+          </Swiper>
         </Modal>
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className='rank'>
+      <div className="rank">
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
@@ -197,25 +249,47 @@ const Main = () => {
           )}
         </StRankingBtnBox>
 
-        {weekly ? (
-          <>
-            <InfiniteScroll />
-          </>
-        ) : month ? (
-          <>
-            <InfiniteScrollMonthly />
-          </>
-        ) : (
-          <>
-            <InfiniteScrollSchoolRank />
-          </>
-        )}
+
+        {weekly ? <InfiniteScroll /> : null}
+        {month ? <InfiniteScrollMonthly /> : null}
+        {school ? <InfiniteScrollSchoolRank /> : null}
       </div>
     </StMainContainer>
   );
 };
 
 export default Main;
+
+const StProgressBarBox = styled.div`
+  width: 100%;
+  height: 13px;
+  border-radius: 10px;
+  background-color: #ececec;
+`;
+
+const StProgressBar = styled.div`
+  ${({ width }) => {
+    if (width < 33) {
+      return css`
+        width: ${width}%;
+        background-color: #d34c4c;
+      `;
+    } else if (width < 66) {
+      return css`
+        width: ${width}%;
+        background-color: #ffdb80;
+      `;
+    } else if (width <= 100) {
+      return css`
+        width: ${width}%;
+        background-color: #74e272;
+      `;
+    }
+  }};
+  transition: all 0.3s;
+  height: 13px;
+  border-radius: 10px;
+`;
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
@@ -304,44 +378,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 
@@ -430,7 +504,7 @@ const StModalTop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 100%;
   height: 85px;
   border-radius: 48px 48px 0 0;
   background-color: #ffe9d5;
@@ -441,6 +515,7 @@ const StModalTop = styled.div`
 
 const StModalBottom = styled.div`
   width: 90%;
+  height: 15rem;
   margin: 5% 0 0 5%;
   span {
     font-size: 1rem;

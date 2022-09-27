@@ -42,7 +42,8 @@ const Statistics = () => {
     rankScoreData[2].ranking === undefined ? "-" : rankScoreData[2].ranking;
 
   useEffect(() => {
-    dispatch(__getRankScoreData());
+    let nickname = localStorage.getItem('nickname');
+    dispatch(__getRankScoreData(nickname));
   }, []);
 
   return (

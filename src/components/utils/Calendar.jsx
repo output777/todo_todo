@@ -13,7 +13,9 @@ const Calendar = ({ selectDate, setSelectDate }) => {
   const marks = [];
 
   const selectDateHandler = async (date) => {
-    setSelectDate(date);
+    console.log('date', date);
+    localStorage.setItem('date', date);
+    setSelectDate(date)
     await dispatch(__getTodo(date));
     navigate("/planner/date");
   };

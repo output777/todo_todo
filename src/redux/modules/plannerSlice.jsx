@@ -3,13 +3,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const accessToken = localStorage.getItem("accessToken");
-const config = {
-  headers: {
-    "Content-type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
 
 const initialState = {
   todoCount: [],
@@ -25,6 +18,14 @@ export const __getCategory = createAsyncThunk(
   "getCategory",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.get(`${BASE_URL}/todo/category`, config);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -37,6 +38,14 @@ export const __postCategory = createAsyncThunk(
   "postCategory",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.post(
         `${BASE_URL}/todo/category`,
         payload,
@@ -53,6 +62,14 @@ export const __deleteCategory = createAsyncThunk(
   "__deleteCategory",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.delete(
         `${BASE_URL}/todo/category/${payload}`,
         config
@@ -69,6 +86,14 @@ export const __updateCategory = createAsyncThunk(
   "__updateCategory",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.put(
         `${BASE_URL}/todo/category/${payload.id}`,
         payload.title,
@@ -86,6 +111,14 @@ export const __getTodoCount = createAsyncThunk(
   "getTodoCount",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(
         `${BASE_URL}/todo/achievement?date=${dayjs(payload).format(
           "YYYY-MM-DD"
@@ -104,6 +137,14 @@ export const __getTodayTodo = createAsyncThunk(
   "getTodayTodo",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.get(`${BASE_URL}/todo/today`, config);
       console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
@@ -119,6 +160,14 @@ export const __getTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload!!!!!!!", payload);
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(
         `${BASE_URL}/todo?date=${dayjs(payload).format("YYYY-MM-DD")}`,
         config
@@ -135,6 +184,14 @@ export const __postTodo = createAsyncThunk(
   "todo/postTodo",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.post(`${BASE_URL}/todo`, payload, config);
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -148,6 +205,14 @@ export const __updateTodo = createAsyncThunk(
   "todo/updateTodo",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       console.log("payload", payload, payload.todoId, typeof payload.todoId);
       const data = await axios.put(
         `${BASE_URL}/todo/${payload.todoId}`,
@@ -168,6 +233,14 @@ export const __deleteTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const { data } = await axios.delete(
         `${BASE_URL}/todo/${payload}`,
         config
@@ -184,6 +257,14 @@ export const __completeTodo = createAsyncThunk(
   "todo/completeTodo",
   async (payload, thunkAPI) => {
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       console.log("payload", payload);
       const data = await axios.put(
         `${BASE_URL}/todo/${payload.todoId}`,

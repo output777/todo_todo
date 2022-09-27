@@ -30,7 +30,6 @@ const Navbar = (props) => {
     setMypage(false);
   };
   const onClickStatisticsMenu = async () => {
-    await dispatch(__getDday())
     navigate("/statistics");
     setHome(false);
     setStatistics(true);
@@ -39,7 +38,6 @@ const Navbar = (props) => {
   };
 
   const onClickPlannerMenu = async () => {
-    await dispatch(__getDday())
     setHome(false);
     setStatistics(false);
     setPlanner(true);
@@ -47,7 +45,6 @@ const Navbar = (props) => {
     navigate("/planner");
   };
   const onClickMypageMenu = async () => {
-    await dispatch(__getDday())
     setHome(false);
     setStatistics(false);
     setPlanner(false);

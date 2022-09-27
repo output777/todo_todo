@@ -5,10 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../utils/Modal";
 
 const Dday = () => {
+  const dispatch = useDispatch();
   const [ddate, setDdate] = useState({
     title: "",
     selectedDate: "",
   });
+
+  //옵셔널 체이닝을 사용하여 데이터를 불러오느라 아직 없을 경우에는 에러가 아닌 null을, 데이터가 있으면 값을 불러옴
+  // const dday = useSelector((state) => state.main?.dday);
+  const dday = useSelector((state) => state.main);
+  console.log('ddaydday', dday.dday);
 
   const onChangeHandler = (e) => {
     const { value } = e.target;
@@ -45,12 +51,6 @@ const Dday = () => {
   // console.log(Date.now());
   // console.log(ddate.selectedDate.replace(/\-/g, ""));
 
-  //옵셔널 체이닝을 사용하여 데이터를 불러오느라 아직 없을 경우에는 에러가 아닌 null을, 데이터가 있으면 값을 불러옴
-  // const dday = useSelector((state) => state.main?.dday);
-  const dday = useSelector((state) => state.main);
-  //console.log(dday.dday);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(__getDday());

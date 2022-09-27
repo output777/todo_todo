@@ -23,8 +23,9 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.my);
-  const { profileImage } = useSelector((state) => state.my);
+  const { images } = useSelector((state) => state.my);
   console.log("userInfo", userInfo);
+  const { profileImage } = useSelector((state) => state.my);
   const { motto } = useSelector((state) => state.my);
 
   const [edit, setEdit] = useState(false);
@@ -53,7 +54,7 @@ const Profile = () => {
   return (
     <>
       <StProfileContainer>
-        <div className='title'>
+        <div className="title">
           <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
             마이페이지
           </h3>
@@ -70,41 +71,46 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                userInfo?.profileImage == "null"
+                  userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
+              alt='profileImage'
               onError={handleImgError}
             />
           </StImg>
           <StInfo>
-            <div className='nextToPicture'>
-              {/* <span className='count'>{userInfo.imgList?.length}</span> */}
-              <span className='text'>게시물</span>
+
+            <div className="nextToPicture">
+              <span className="count">
+                {images === null ? 0 : images.length}
+              </span>
+              <span className="text">사진</span>
+
             </div>
             <div
-              className='nextToPicture'
+              className="nextToPicture"
               onClick={() => {
                 navigate(`/follower/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo?.followersCnt}</span>
-              <span className='text'>팔로워</span>
+              <span className="count">{userInfo?.followersCnt}</span>
+              <span className="text">팔로워</span>
             </div>
             <div
-              className='nextToPicture'
+              className="nextToPicture"
               onClick={() => {
                 navigate(`/following/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo?.followingsCnt}</span>
-              <span className='text'>팔로잉</span>
+              <span className="count">{userInfo?.followingsCnt}</span>
+              <span className="text">팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-          <div className='userName'>
-            {nickname == null || nickname == "null" ? "" : nickname}
+          <div className="userName">
+            {nickname == null || nickname === "null" ? "" : nickname}
           </div>
           <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
         </StStatusDiv>
@@ -132,7 +138,7 @@ const StStatusDiv = styled.div`
 const StLine = styled.div`
   width: 100%;
   height: 1.5px;
-  background-color: #ffe9d4;
+  background-color: #f1f3f5;
 `;
 
 const StProfileContainer = styled.div`

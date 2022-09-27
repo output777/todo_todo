@@ -25,7 +25,7 @@ export const __kakaoLogin = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
-      // window.alert('로그인에 실패하였습니다.')
+      window.alert('로그인에 실패하였습니다.')
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -103,6 +103,22 @@ export const __userInfoRegister = createAsyncThunk(
   }
 );
 
+export const __loginReissue = createAsyncThunk(
+  "loginReissue/login",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    try {
+      const { headers } = await axios.post(`${BASE_URL}/reissue`, payload);
+      console.log('headers!!!!!!!!!!!!!!', headers.authorization);
+      localStorage.setItem("accessToken", headers.authorization);
+      return thunkAPI.fulfillWithValue(headers);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const loginSlice = createSlice({
   name: "loginSlice",
   initialState,
@@ -157,6 +173,17 @@ export const loginSlice = createSlice({
       // state.nickname
     },
     [__userInfoRegister.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __loginReissue
+    [__loginReissue.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__loginReissue.fulfilled]: (state, action) => {
+      state.isLoading = false;
+    },
+    [__loginReissue.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
