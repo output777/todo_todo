@@ -5,6 +5,7 @@ import searchSvg from "../../assets/img/searchSvg.svg";
 import regionSvg from "../../assets/img/regionSvg.svg";
 import cancelSvg from "../../assets/img/cancelSvg.svg";
 import {
+  __loginReissue,
   __nicknameCheck,
   __userInfoRegister,
 } from "../../redux/modules/loginSlice";
@@ -110,14 +111,22 @@ const ProfileInfo = () => {
   };
 
 
-  const onSubmitRegisterHandler = (e) => {
+  const onSubmitRegisterHandler = async (e) => {
     e.preventDefault();
+    localStorage.setItem('nickname', nickname);
     const newUserInfoRegister = {
       nickname: nickname,
       highschool: highschoolInput,
       grade: grade,
     };
-    dispatch(__userInfoRegister(newUserInfoRegister));
+    await dispatch(__userInfoRegister(newUserInfoRegister));
+    let accessToken = localStorage.getItem('accessToken');
+    let refreshToken = localStorage.getItem('refreshToken');
+    const token = {
+      accessToken,
+      refreshToken
+    }
+    // await dispatch(__loginReissue(token))
     navigate("/");
   };
 

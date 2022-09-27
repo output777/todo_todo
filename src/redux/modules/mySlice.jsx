@@ -5,28 +5,13 @@ import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const accessToken = localStorage.getItem("accessToken");
-// const nickname = localStorage.getItem('nickname')
-const config = {
-  headers: {
-    "Content-Type": "multipart/form-data",
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
 
-const configStr = {
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
 
 const initialState = {
   follower: null,
   otherfollowing: null,
   following: null,
   userInfo: null,
-  motto: "",
   images: [],
   profileImage: [], //주의
   isLoading: false,
@@ -38,6 +23,16 @@ export const __getMyInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -51,6 +46,18 @@ export const __getOtherInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+
+
       const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
@@ -65,6 +72,9 @@ export const __postProfileImg = createAsyncThunk(
   "postProfileImg",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
+
+    let accessToken = localStorage.getItem("accessToken");
+
     const config = {
       headers: {
         "Content-type": false,
@@ -92,6 +102,15 @@ export const __getImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("getImages payload", payload);
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(
         `${BASE_URL}/image/boast/${payload}`,
         config
@@ -110,6 +129,15 @@ export const __postImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.post(`${BASE_URL}/image/boast`, payload, config);
       console.log("postImages data", data);
       // return thunkAPI.fulfillWithValue(data); // data는 완료 메세지, images에 반영됨
@@ -124,6 +152,15 @@ export const __deleteImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload, typeof payload);
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.delete(
         `${BASE_URL}/image/boast/${payload}`,
         config
@@ -140,6 +177,17 @@ export const __getFollowInfo = createAsyncThunk(
   "getFollowInfo",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
@@ -154,6 +202,16 @@ export const __getFollowingList = createAsyncThunk(
   "__getFollowingList",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(`${BASE_URL}/followings/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
@@ -168,6 +226,16 @@ export const __getOtherFollowingList = createAsyncThunk(
   "__getOtherFollowingList",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(`${BASE_URL}/followings/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
@@ -182,6 +250,16 @@ export const __getFollowerList = createAsyncThunk(
   "getFollowerList",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(`${BASE_URL}/followers/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
@@ -324,5 +402,5 @@ export const mySlice = createSlice({
   },
 });
 
-export const {} = mySlice.actions;
+export const { } = mySlice.actions;
 export default mySlice.reducer;

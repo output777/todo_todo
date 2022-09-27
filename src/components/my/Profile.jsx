@@ -71,10 +71,11 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                userInfo?.profileImage == "null"
+                  userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
+              alt='profileImage'
               onError={handleImgError}
             />
           </StImg>
@@ -109,7 +110,7 @@ const Profile = () => {
         </StImgInfoBox>
         <StStatusDiv>
           <div className="userName">
-            {nickname == null || nickname == "null" ? "" : nickname}
+            {nickname == null || nickname === "null" ? "" : nickname}
           </div>
           <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
         </StStatusDiv>

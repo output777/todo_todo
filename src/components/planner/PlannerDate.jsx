@@ -8,13 +8,13 @@ import notDoneSvg from '../../assets/img/notDoneSvg.svg';
 import doneSvg from '../../assets/img/doneSvg.svg';
 
 
-const PlannerDate = ({ selectedCategoryName, dateTodo, x, setX }) => {
+const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) => {
 
   const [todoList, setTodoList] = useState([]);
   const [todoRate, setTodoRate] = useState(0);
 
   const onClickBackPlannerHandler = () => {
-    setX(false);
+    setDisplay(false);
   }
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, x, setX }) => {
     const data = dateTodo.filter((data) => data.category === selectedCategoryName);
     console.log('data', data)
     setTodoList([...data]);
-  }, [selectedCategoryName, x])
+  }, [selectedCategoryName, display])
 
   return (
-    <StDiv x={x}>
+    <StDiv display={display}>
       <div className='header'>
         <StHeaderBox>
           <div className='iconBox'>
@@ -91,10 +91,9 @@ const StDiv = styled.div`
   position:fixed;
   top: 0;
   left: 0;
-  transform: ${(props) => props.x ? `translateX(0%)` : `translateX(100%)`};
+  display: ${(props) => props.display ? 'block' : 'none'};
   font-family: "SUIT-Regular", sans-serif;
   overflow-y: scroll;
-  transition:all 0.3s;
 
   & .header {
     width:100%;

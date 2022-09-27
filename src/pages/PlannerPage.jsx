@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/utils/Navbar";
-import styled from "styled-components";
 import PlannerCategory from "../components/planner/PlannerCategory";
+import { useDispatch } from "react-redux";
+import { __reset } from "../redux/modules/mainSlice";
 
 const PlannerPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__reset())
+  }, [])
 
   return (
     <>
-      {/* <Planner /> */}
       <PlannerCategory />
       <Navbar planner={true} />
     </>
@@ -16,7 +21,3 @@ const PlannerPage = () => {
 
 export default PlannerPage;
 
-const Stdiv = styled.div`
-  background-color: #fafafa;
-  height: 100vh;
-`;

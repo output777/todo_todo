@@ -7,6 +7,8 @@ import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
 import {
+  __getDday,
+  __getMainRank,
   __getThisMonthRate,
   __getTotalRate,
 } from "../../redux/modules/mainSlice";
@@ -36,6 +38,7 @@ const Main = () => {
   const [weekly, setWeekly] = useState(true);
   const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [day, setDay] = useState(true);
 
   const nickname = localStorage.getItem("nickname");
   const accessToken = localStorage.getItem("accessToken");
@@ -67,10 +70,23 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // dispatch(__getMyInfo());
+
+    // 무한스크롤을 처음 로딩할 때 바로 불러오면 아래와 같은 에러가 발생
+    // Objects are not valid as a React child (found: object with keys {message, name, code, config, request, response}). If you meant to render a collection of children, use an array instead.
+    // 그래서 시간차를 줌
+    // const weeklyTimer = setTimeout(() => {
+    //   setWeekly(true)
+    // }, 100)
+
+    dispatch(__getMyInfo(nickname));
     dispatch(__getThisMonthRate());
-    dispatch(__getTotalRate());
+    dispatch(__getTotalRate(nickname));
+
+    // return () => {
+    //   clearTimeout(weeklyTimer)
+    // }
   }, []);
+
 
   return (
     <StMainContainer>
@@ -96,7 +112,7 @@ const Main = () => {
       <StAchievementsBox>
         <StAchievementsTopBox>
           <div>
-            {nickname == null || nickname == "null"
+            {nickname === null || nickname === "null"
               ? "닉네임이 미설정 상태입니다."
               : `${nickname}님의 업적`}
           </div>
@@ -105,7 +121,7 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate[0] == undefined ? 0 : thisMonthRate} %</div>
+              <div>{thisMonthRate[0] === undefined ? 0 : thisMonthRate} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
@@ -233,19 +249,10 @@ const Main = () => {
           )}
         </StRankingBtnBox>
 
-        {weekly ? (
-          <>
-            <InfiniteScroll />
-          </>
-        ) : month ? (
-          <>
-            <InfiniteScrollMonthly />
-          </>
-        ) : (
-          <>
-            <InfiniteScrollSchoolRank />
-          </>
-        )}
+
+        {weekly ? <InfiniteScroll /> : null}
+        {month ? <InfiniteScrollMonthly /> : null}
+        {school ? <InfiniteScrollSchoolRank /> : null}
       </div>
     </StMainContainer>
   );
@@ -371,44 +378,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 

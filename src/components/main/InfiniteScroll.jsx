@@ -12,7 +12,6 @@ const InfiniteScroll = () => {
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
 
-  console.log("mainRankList", mainRankList);
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
@@ -25,7 +24,6 @@ const InfiniteScroll = () => {
     }
   };
 
-  // nav누른다음에 가면 0페이지는 호출하지만 0페이지가 화면에 적용 안되는 상황이 발생함
   useEffect(() => {
     dispatch(__getMainRank(page));
   }, [page]);
@@ -43,10 +41,12 @@ const InfiniteScroll = () => {
     };
   }, [mainRankList]);
 
+  const data = mainRankList.map((data) => { console.log(data) });
+  console.log('data********', data)
 
   return (
     <Stdiv>
-      {mainRankList.map((each) => (
+      {mainRankList.length > 0 && mainRankList.map((each) => (
         <StRankingBox
           key={each.id}
           onClick={() => {
@@ -60,7 +60,7 @@ const InfiniteScroll = () => {
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>
-              <StRankingProfile src={profileImgSvg} />
+              <StRankingProfile src={profileImgSvg} alt='profileImg' />
               <StRankingNickname>{each.nickname}</StRankingNickname>
             </div>
           </div>
@@ -68,7 +68,7 @@ const InfiniteScroll = () => {
           <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
         </StRankingBox>
       ))}
-      <StRefDiv ref={targetRef}>{error}</StRefDiv>
+      <StRefDiv ref={targetRef}></StRefDiv>
     </Stdiv>
   );
 };

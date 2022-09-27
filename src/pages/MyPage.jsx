@@ -3,9 +3,17 @@ import styled from "styled-components";
 import Profile from "../components/my/Profile";
 import ProfileTabs from "../components/my/ProfileTabs";
 import Navbar from "../components/utils/Navbar";
-import UploadPhoto from "../components/my/UploadPhoto";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { __reset } from "../redux/modules/mainSlice";
 
 const MyPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__reset())
+  }, [])
+
   return (
     <StContainer>
       <Profile />

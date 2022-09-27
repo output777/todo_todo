@@ -105,7 +105,7 @@ const HeatMapSample = () => {
           // width: "30em",
           // margin: "0px",
         })}
-        cellRender={(value) => value && <div>{value}%</div>}
+      // cellRender={(value) => value && <div>{value}%</div>}
       />
     </div>
   );

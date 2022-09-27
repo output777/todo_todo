@@ -9,6 +9,8 @@ const PlannerCalender = ({ calenderdate, selectDate, setSelectDate }) => {
   const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
   const [modalVisible, setModalVisible] = useState(false);
 
+  console.log('calenderdate', calenderdate)
+
   const openModal = () => {
     setModalVisible(true);
   };

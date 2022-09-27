@@ -3,12 +3,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const accessToken = localStorage.getItem("accessToken");
-const config = {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-};
+
 
 const nickname = localStorage.getItem("nickname");
 
@@ -25,16 +20,24 @@ export const __getRankScoreData = createAsyncThunk(
   "__getRankScoreData",
   async (payload, thunkAPI) => {
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const lastWeekData = await axios.get(
         `${BASE_URL}/rank/lastweek/member`,
         config
       );
       const weeklyData = await axios.get(
-        `${BASE_URL}/rank/weekly/member/${nickname}`,
+        `${BASE_URL}/rank/weekly/member/${payload}`,
         config
       );
       const monthlyData = await axios.get(
-        `${BASE_URL}/rank/monthly/member/${nickname}`,
+        `${BASE_URL}/rank/monthly/member/${payload}`,
         config
       );
       console.log("lastWeekData.data", lastWeekData.data);
@@ -57,6 +60,13 @@ export const __getLineChartData = createAsyncThunk(
   async (payload, thunkAPI) => {
     // console.log("payload", payload);
     try {
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(
         `${BASE_URL}/todo/achievement/thisweek`,
         config
@@ -74,6 +84,14 @@ export const __getHeatMapData = createAsyncThunk(
   async (payload, thunkAPI) => {
     // console.log("payload", payload);
     try {
+
+      let accessToken = localStorage.getItem("accessToken");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
       const data = await axios.get(
         `${BASE_URL}/todo/achievement/dayly`,
         config

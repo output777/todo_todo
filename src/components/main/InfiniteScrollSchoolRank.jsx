@@ -68,7 +68,7 @@ const InfiniteScrollSchoolRank = () => {
           <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
         </StRankingBox>
       ))}
-      <StRefDiv ref={targetRef}>{error}</StRefDiv>
+      <StRefDiv ref={targetRef}></StRefDiv>
     </Stdiv>
   );
 };

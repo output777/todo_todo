@@ -61,7 +61,7 @@ const FollowerList = () => {
         <StFollowBox
           key={member.id}
           onClick={() => {
-            if (member.nickname == nickname) {
+            if (member.nickname === nickname) {
               navigate("/my");
             } else {
               navigate(`/othermy/${member.nickname}`);
@@ -73,7 +73,7 @@ const FollowerList = () => {
             <StFollowNickname>{member.nickname}</StFollowNickname>
           </div>
 
-          {nickname == member.nickname ? (
+          {nickname === member.nickname ? (
             <div></div>
           ) : nickname !== member.nickname &&
             myfollowingList?.find((v) => v.nickname === member.nickname) ? (
@@ -84,7 +84,7 @@ const FollowerList = () => {
               }}
             >
               팔로잉
-              <img src={follwingcheck} alt='' />
+              <img src={follwingcheck} alt='follwingcheckImg' />
             </StFollowingBtn>
           ) : (
             <StNotFollowBtn
