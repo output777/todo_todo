@@ -29,6 +29,7 @@ const Calendar = ({ selectDate, setSelectDate }) => {
         locale='Korean'
         formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'
+        tileContent
         tileClassName={({ date, view }) => {
           if (
             marks.find((x) => {
@@ -130,6 +131,7 @@ const StDiv = styled.div`
   .react-calendar__navigation button {
     min-width: 44px;
     background: none;
+    color: #ff8f27;
   }
   .react-calendar__navigation button:disabled {
     background-color: #f0f0f0;
@@ -138,6 +140,7 @@ const StDiv = styled.div`
   .react-calendar__navigation button:enabled:focus {
     background-color: #ff8f2740;
   }
+  //월~토 표기 부분
   .react-calendar__month-view__weekdays {
     text-align: center;
     text-transform: uppercase;
@@ -155,7 +158,7 @@ const StDiv = styled.div`
     font-weight: bold;
   }
   .react-calendar__month-view__days__day--weekend {
-    color: black;
+    color: red;
   }
   .react-calendar__month-view__days__day--neighboringMonth {
     color: #d7d5d5;
@@ -177,33 +180,41 @@ const StDiv = styled.div`
   }
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background-color: #e6e6e6;
+    width: 50px;
+    height: 50px;
+    background: #e6e6e6;
+    border-radius: 50%;
+    color: white;
   }
   .react-calendar__tile--now {
+    width: 50px;
+    height: 50px;
     background: #ff8f27;
     border-radius: 50%;
     color: white;
   }
   .react-calendar__tile--now:enabled:hover,
   .react-calendar__tile--now:enabled:focus {
-    background: #ffffa9;
   }
   .react-calendar__tile--hasActive {
     background: #ff8f2780;
   }
   .react-calendar__tile--hasActive:enabled:hover,
   .react-calendar__tile--hasActive:enabled:focus {
-    background: #ff8f2780;
   }
   .react-calendar__tile--active {
     background: #ff8f2780;
     color: white;
     border-radius: 50%;
+    width: 50px;
+    height: 50px;
   }
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
     background: #ff8f2780;
     border-radius: 50%;
+    width: 50px;
+    height: 50px;
   }
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;

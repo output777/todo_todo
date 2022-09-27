@@ -18,7 +18,6 @@ export const __getCategory = createAsyncThunk(
   "getCategory",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -39,7 +38,6 @@ export const __postCategory = createAsyncThunk(
   "postCategory",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -48,7 +46,11 @@ export const __postCategory = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post(`${BASE_URL}/todo/category`, payload, config);
+      const { data } = await axios.post(
+        `${BASE_URL}/todo/category`,
+        payload,
+        config
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,7 +62,6 @@ export const __deleteCategory = createAsyncThunk(
   "__deleteCategory",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -81,13 +82,10 @@ export const __deleteCategory = createAsyncThunk(
   }
 );
 
-
 export const __updateCategory = createAsyncThunk(
   "__updateCategory",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -101,7 +99,7 @@ export const __updateCategory = createAsyncThunk(
         payload.title,
         config
       );
-      console.log("data", data);
+      console.log("payload", payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -109,13 +107,10 @@ export const __updateCategory = createAsyncThunk(
   }
 );
 
-
 export const __getTodoCount = createAsyncThunk(
   "getTodoCount",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -142,8 +137,6 @@ export const __getTodayTodo = createAsyncThunk(
   "getTodayTodo",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -152,10 +145,7 @@ export const __getTodayTodo = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
-        `${BASE_URL}/todo/today`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/todo/today`, config);
       console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -168,10 +158,8 @@ export const __getTodayTodo = createAsyncThunk(
 export const __getTodo = createAsyncThunk(
   "getTodo",
   async (payload, thunkAPI) => {
-    console.log('payload!!!!!!!', payload);
+    console.log("payload!!!!!!!", payload);
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -196,8 +184,6 @@ export const __postTodo = createAsyncThunk(
   "todo/postTodo",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -219,8 +205,6 @@ export const __updateTodo = createAsyncThunk(
   "todo/updateTodo",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -247,10 +231,8 @@ export const __updateTodo = createAsyncThunk(
 export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    console.log("payload", payload);
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -275,8 +257,6 @@ export const __completeTodo = createAsyncThunk(
   "todo/completeTodo",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -369,7 +349,7 @@ export const plannerSlice = createSlice({
     },
     [__getTodayTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload!!!', action.payload)
+      console.log("action.payload!!!", action.payload);
       state.todos = action.payload;
     },
     [__getTodayTodo.rejected]: (state, action) => {
@@ -382,7 +362,7 @@ export const plannerSlice = createSlice({
     },
     [__getTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload***', action.payload)
+      console.log("action.payload***", action.payload);
       // state.todos = action.payload;
       state.dateTodo = action.payload.data;
       state.date = action.payload.date;
