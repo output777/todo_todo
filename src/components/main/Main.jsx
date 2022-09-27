@@ -70,7 +70,6 @@ const Main = () => {
   };
 
   useEffect(() => {
-
     // 무한스크롤을 처음 로딩할 때 바로 불러오면 아래와 같은 에러가 발생
     // Objects are not valid as a React child (found: object with keys {message, name, code, config, request, response}). If you meant to render a collection of children, use an array instead.
     // 그래서 시간차를 줌
@@ -87,13 +86,12 @@ const Main = () => {
     // }
   }, []);
 
-
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname == "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -121,22 +119,30 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate[0] === undefined ? 0 : thisMonthRate} %</div>
+              <div>
+                {thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]} %
+              </div>
             </StGaugeText>
 
             <StProgressBarBox>
-              <StProgressBar width={thisMonthRate}></StProgressBar>
+              <StProgressBar
+                width={thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]}
+              ></StProgressBar>
             </StProgressBarBox>
           </StthisMonthGauge>
 
-          <StTotalGauge totalRate={totalRate}>
+          <StTotalGauge
+            totalRate={totalRate[0] === undefined ? 0 : totalRate[0]}
+          >
             <StGaugeText>
               플래너 총 달성률
               <div>{totalRate[0] == undefined ? 0 : totalRate} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
-              <StProgressBar width={totalRate}></StProgressBar>
+              <StProgressBar
+                width={totalRate[0] === undefined ? 0 : totalRate[0]}
+              ></StProgressBar>
             </StProgressBarBox>
           </StTotalGauge>
         </StAchievementsBottomBox>
@@ -149,18 +155,18 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="80%"
-          height="22rem"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(17, 17, 17, 0.6)"
+          width='80%'
+          height='22rem'
+          radius='48px'
+          top='40%'
+          backgroundcolor='rgba(17, 17, 17, 0.6)'
         >
           <StModalTop>
             <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
           <Swiper
             // modules={[Navigation, Pagination, Scrollbar, A11y]}
-            className="banner"
+            className='banner'
             spaceBetween={50}
             slidesPerView={1}
             // navigation
@@ -212,7 +218,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
           <img src={trophy} />
           <span>랭킹</span>
@@ -249,7 +255,6 @@ const Main = () => {
           )}
         </StRankingBtnBox>
 
-
         {weekly ? <InfiniteScroll /> : null}
         {month ? <InfiniteScrollMonthly /> : null}
         {school ? <InfiniteScrollSchoolRank /> : null}
@@ -269,7 +274,12 @@ const StProgressBarBox = styled.div`
 
 const StProgressBar = styled.div`
   ${({ width }) => {
-    if (width < 33) {
+    if (width === 0) {
+      return css`
+        width: ${width}%;
+        background-color: none;
+      `;
+    } else if (width < 33) {
       return css`
         width: ${width}%;
         background-color: #d34c4c;
@@ -378,44 +388,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 

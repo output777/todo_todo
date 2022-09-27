@@ -21,9 +21,18 @@ const PlannerCategoryDate = () => {
   const [categoryTodoList, setCategoryTodoList] = useState([]);
   const [categoryTodoComplete, setCategoryTodoComplete] = useState({});
   const [display, setDisplay] = useState(false);
-  const [selectedCategoryName, setSelectedCategoryName] = useState('');
+  const [selectedCategoryName, setSelectedCategoryName] = useState("");
 
-  console.log('dateTodo', dateTodo, 'date', date, 'selectDate', selectDate, 'calenderdate', calenderdate);
+  console.log(
+    "dateTodo",
+    dateTodo,
+    "date",
+    date,
+    "selectDate",
+    selectDate,
+    "calenderdate",
+    calenderdate
+  );
 
   const onClickAddCategoryHandler = () => {
     navigate("/planner/category");
@@ -32,8 +41,8 @@ const PlannerCategoryDate = () => {
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { title } = e.currentTarget;
     setSelectedCategoryName(title);
-    setDisplay(true)
-  }
+    setDisplay(true);
+  };
 
   useEffect(() => {
     console.log("dateTodo", dateTodo, "date", date);
@@ -65,15 +74,15 @@ const PlannerCategoryDate = () => {
   useEffect(() => {
     console.log(date);
     if (date !== null) {
-      setCalenderdate(dayjs(date).format("YYYY-MM-DD"))
+      setCalenderdate(dayjs(date).format("YYYY-MM-DD"));
     }
-  }, [date])
+  }, [date]);
 
   useEffect(() => {
-    console.log('localStorage.getItem', localStorage.getItem('date'))
-    let date = localStorage.getItem('date');
+    console.log("localStorage.getItem", localStorage.getItem("date"));
+    let date = localStorage.getItem("date");
     dispatch(__getTodo(dayjs(date).format("YYYY-MM-DD")));
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <>
@@ -107,7 +116,7 @@ const PlannerCategoryDate = () => {
                   {categoryTodoList.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
                       {categoryTodoComplete[`${categoryTodoList[index]}`] ===
-                        undefined
+                      undefined
                         ? 0
                         : categoryTodoComplete[`${categoryTodoList[index]}`]}
                       /{dateTodoObj[`${categoryTodoList[index]}`]}
@@ -119,12 +128,12 @@ const PlannerCategoryDate = () => {
                     width={
                       isNaN(
                         categoryTodoComplete[`${categoryTodoList[index]}`] /
-                        dateTodoObj[`${categoryTodoList[index]}`]
+                          dateTodoObj[`${categoryTodoList[index]}`]
                       )
                         ? 0
                         : (categoryTodoComplete[`${categoryTodoList[index]}`] /
-                          dateTodoObj[`${categoryTodoList[index]}`]) *
-                        100
+                            dateTodoObj[`${categoryTodoList[index]}`]) *
+                          100
                     }
                     backgroundColor='#74E272'
                   ></StProgressBar>
@@ -133,8 +142,13 @@ const PlannerCategoryDate = () => {
             ))}
         </StCategoryContainer>
       </StDiv>
-      <Navbar />
-      <PlannerDate selectedCategoryName={selectedCategoryName} dateTodo={dateTodo} display={display} setDisplay={setDisplay} />
+      <Navbar planner={true} />
+      <PlannerDate
+        selectedCategoryName={selectedCategoryName}
+        dateTodo={dateTodo}
+        display={display}
+        setDisplay={setDisplay}
+      />
     </>
   );
 };
@@ -223,8 +237,8 @@ const StProgressBar = styled.div`
     }
   }};
   /* transition: all 0.3s; */
-  height:13px;
-  border-radius:10px;
-`
+  height: 13px;
+  border-radius: 10px;
+`;
 
 export default PlannerCategoryDate;
