@@ -10,25 +10,12 @@ import { useNavigate } from "react-router-dom";
 const Calendar = ({ selectDate, setSelectDate }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const marks = [
-    { achievementRate: 15, addDate: "2022-09-01" },
-    { achievementRate: 25, addDate: "2022-09-02" },
-    { achievementRate: 55, addDate: "2022-09-03" },
-    { achievementRate: 90, addDate: "2022-09-04" },
-    { achievementRate: 23, addDate: "2022-09-05" },
-    { achievementRate: 30, addDate: "2022-09-06" },
-    { achievementRate: 55, addDate: "2022-09-07" },
-    { achievementRate: 49, addDate: "2022-09-08" },
-    { achievementRate: 70, addDate: "2022-09-09" },
-    { achievementRate: 27, addDate: "2022-09-10" },
-    { achievementRate: 100, addDate: "2022-09-11" },
-  ];
-
+  const marks = [];
 
   const selectDateHandler = async (date) => {
-    setSelectDate(date)
+    setSelectDate(date);
     await dispatch(__getTodo(date));
-    navigate('/planner/date');
+    navigate("/planner/date");
   };
 
   return (
