@@ -37,7 +37,11 @@ export const __postCategory = createAsyncThunk(
   "postCategory",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(`${BASE_URL}/todo/category`, payload, config);
+      const { data } = await axios.post(
+        `${BASE_URL}/todo/category`,
+        payload,
+        config
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -61,7 +65,6 @@ export const __deleteCategory = createAsyncThunk(
   }
 );
 
-
 export const __updateCategory = createAsyncThunk(
   "__updateCategory",
   async (payload, thunkAPI) => {
@@ -71,14 +74,13 @@ export const __updateCategory = createAsyncThunk(
         payload.title,
         config
       );
-      console.log("data", data);
+      console.log("payload", payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 
 export const __getTodoCount = createAsyncThunk(
   "getTodoCount",
@@ -102,10 +104,7 @@ export const __getTodayTodo = createAsyncThunk(
   "getTodayTodo",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `${BASE_URL}/todo/today`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/todo/today`, config);
       console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -118,7 +117,7 @@ export const __getTodayTodo = createAsyncThunk(
 export const __getTodo = createAsyncThunk(
   "getTodo",
   async (payload, thunkAPI) => {
-    console.log('payload!!!!!!!', payload);
+    console.log("payload!!!!!!!", payload);
     try {
       const data = await axios.get(
         `${BASE_URL}/todo?date=${dayjs(payload).format("YYYY-MM-DD")}`,
@@ -167,7 +166,7 @@ export const __updateTodo = createAsyncThunk(
 export const __deleteTodo = createAsyncThunk(
   "todo/deleteTodo",
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    console.log("payload", payload);
     try {
       const { data } = await axios.delete(
         `${BASE_URL}/todo/${payload}`,
@@ -269,7 +268,7 @@ export const plannerSlice = createSlice({
     },
     [__getTodayTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload!!!', action.payload)
+      console.log("action.payload!!!", action.payload);
       state.todos = action.payload;
     },
     [__getTodayTodo.rejected]: (state, action) => {
@@ -282,7 +281,7 @@ export const plannerSlice = createSlice({
     },
     [__getTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload***', action.payload)
+      console.log("action.payload***", action.payload);
       // state.todos = action.payload;
       state.dateTodo = action.payload.data;
       state.date = action.payload.date;
