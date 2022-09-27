@@ -249,7 +249,11 @@ const ProfileEdit = () => {
           <img
             style={{ width: "6em", height: "6em", borderRadius: "100px" }}
             id="preview-image"
-            src={userInfo?.profileImage}
+            src={
+              userInfo?.profileImage === undefined
+                ? profileImgSvg
+                : userInfo?.profileImage
+            }
             onError={handleImgError}
           />
           <input

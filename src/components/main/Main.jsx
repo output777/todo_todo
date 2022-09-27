@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
+import bigTrophy from "../../assets/img/mainpage/bigTrophy.svg";
+import schoolSvg from "../../assets/img/mainpage/school.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
@@ -155,18 +157,17 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width='80%'
-          height='22rem'
-          radius='48px'
-          top='40%'
-          backgroundcolor='rgba(17, 17, 17, 0.6)'
+          width="80%"
+          height="23rem"
+          radius="48px"
+          top="40%"
+          backgroundcolor="rgba(17, 17, 17, 0.6)"
         >
           <StModalTop>
             <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
           <Swiper
-            // modules={[Navigation, Pagination, Scrollbar, A11y]}
-            className='banner'
+            className="banner"
             spaceBetween={50}
             slidesPerView={1}
             // navigation
@@ -174,46 +175,33 @@ const Main = () => {
           >
             <SwiperSlide>
               <StModalBottom>
-                <StModalExplainTop>
+                <StModalExplainDiv>
                   <span>주간/월간 랭킹</span>
-                  <img src={trophy} />
+                  <img src={bigTrophy} />
                   <div>
-                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                    랭킹은 매달 며칠에
+                    주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
+                    순으로 순위가 결정됩니다.
                   </div>
-                </StModalExplainTop>
-
-                <StCloseBtnContainer>
-                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
-                </StCloseBtnContainer>
+                </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide>
             <SwiperSlide>
               <StModalBottom>
-                <StModalExplainTop>
-                  <span>실시간 랭킹</span>
-                  <img src={trophy} />
+                <StModalExplainDiv>
+                  <span>학교 랭킹</span>
+                  <img src={schoolSvg} />
                   <div>
-                    실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                    랭킹은 매달 며칠에
+                    학교 랭킹은 같은 학교에 소속돼 있는 학생들의 한달 간 측정한
+                    투두 달성률의 평균이 높은 순으로 순위가 결정됩니다.
                   </div>
-                </StModalExplainTop>
-
-                <StModalExplainBottom>
-                  <span>주간 랭킹</span>
-                  <img src={trophy} />
-                </StModalExplainBottom>
-                <div>
-                  실시간 랭킹은 매달 며칠에 실시간 랭킹은 매달 며칠에 실시간
-                  랭킹은 매달 며칠에
-                </div>
-
-                <StCloseBtnContainer>
-                  {/* <StModalCloseBtn onClick={closeModal}>닫기</StModalCloseBtn> */}
-                </StCloseBtnContainer>
+                </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide>
           </Swiper>
+
+          <StCloseBtnContainer>
+            <StModalCloseBtn onClick={closeModal}>확인</StModalCloseBtn>
+          </StCloseBtnContainer>
         </Modal>
       )}
 
@@ -525,21 +513,35 @@ const StModalTop = styled.div`
 
 const StModalBottom = styled.div`
   width: 90%;
-  height: 15rem;
+  height: 16rem;
   margin: 5% 0 0 5%;
   span {
     font-size: 1rem;
   }
 `;
-const StModalExplainTop = styled.div``;
+const StModalExplainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
-const StModalExplainBottom = styled.div`
-  margin-top: 5%;
+  span {
+    font-weight: bold;
+  }
+
+  div {
+    width: 80%;
+    text-align: center;
+  }
 `;
 
 const StCloseBtnContainer = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  height: 6rem;
 `;
 
 const StModalCloseBtn = styled.button`
@@ -547,16 +549,17 @@ const StModalCloseBtn = styled.button`
   justify-content: center;
   width: 93px;
   border: none;
-  background-color: white;
-  color: #ff8f27;
-  margin-top: 5%;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 1.2rem;
+  padding: 1em;
 `;
 
 const StScrollDiv = styled.div`
   background-color: #fafafa;
-  /* height: 40%; */
-  /* overflow: scroll; */
-  /* ::-webkit-scrollbar {
+  height: 40%;
+  overflow: scroll;
+  ::-webkit-scrollbar {
     width: 10px;
     height: 150px;
     border-radius: 0px;
@@ -565,5 +568,5 @@ const StScrollDiv = styled.div`
   ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: #d1d1d1;
-  } */
+  }
 `;
