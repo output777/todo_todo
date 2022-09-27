@@ -95,7 +95,7 @@ const Main = () => {
           <StthisMonthGauge thisMonthRate={thisMonthRate}>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{thisMonthRate} %</div>
+              <div>{thisMonthRate[0] == undefined ? 0 : thisMonthRate} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
@@ -106,7 +106,7 @@ const Main = () => {
           <StTotalGauge totalRate={totalRate}>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate} %</div>
+              <div>{totalRate[0] == undefined ? 0 : totalRate} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
