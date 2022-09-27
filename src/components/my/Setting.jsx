@@ -11,9 +11,7 @@ const Setting = () => {
       <StLine></StLine>
       <StLogout
         onClick={() => {
-          // localStorage.removeItem("accessToken");
-          // localStorage.removeItem("refreshToken");
-          // localStorage.removeItem("nickname");
+          localStorage.clear();
           navigate("/login");
         }}
       >

@@ -20,6 +20,7 @@ export const __kakaoLogin = createAsyncThunk(
       const { data } = await axios.get(`${KAKAO_BASE_URL}?code=${payload}`);
       console.log(data);
 
+      localStorage.setItem('nickname', data.nickname)
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       return thunkAPI.fulfillWithValue(data);
@@ -130,7 +131,7 @@ export const loginSlice = createSlice({
     },
     [__kakaoLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.nickname = action.payload.nickname;
+      state.user = action.payload;
       state.token = true;
     },
     [__kakaoLogin.rejected]: (state, action) => {

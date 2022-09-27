@@ -3,9 +3,9 @@ import styled from "styled-components";
 import logo from "../../assets/img/loginPage/logo.svg";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import Naver from "./Naver";
-import "bootstrap/dist/css/bootstrap.min.css";
 import kakaoUnion from "../../assets/img/loginPage/kakaoUnion.svg";
 import googleUnion from "../../assets/img/loginPage/googleUnion.svg";
+
 
 const Login = () => {
   //카카오 로그인

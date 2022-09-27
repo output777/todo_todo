@@ -17,6 +17,7 @@ import ProfileEdit from "../components/my/ProfileEdit";
 import Planner from "../components/planner/Planner";
 import PlannerCategoryDate from "../components/planner/PlannerCategoryDate";
 import OtherMyPage from "../pages/OtherMyPage";
+import Loading from "../components/login/Loading";
 
 const Router = () => {
   let token = localStorage.getItem("accessToken");
@@ -41,7 +42,7 @@ const Router = () => {
         <Route path='/planner/category' element={<PlannerCategoryAdd />} />
         <Route path='/planner/category/todolist' element={<Planner />} />
         <Route path='/statistics' element={<StatisticsPage />} />
-        <Route path='/profileinfo' element={<ProfileInfoPage />} />
+        <Route path='/profileinfo' element={token !== null ? <Navigate replace to="/" /> : <ProfileInfoPage />} />
         <Route path='/user/kakao/callback' element={<KakaoLogin />} />
         <Route path='/user/google/callback' element={<GoogleLogin />} />
         <Route path='/user/naver/callback' element={<NaverLogin />} />

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import { useState } from "react";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 import { useEffect } from "react";
