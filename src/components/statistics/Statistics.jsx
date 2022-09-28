@@ -42,7 +42,7 @@ const Statistics = () => {
     rankScoreData[2].ranking === undefined ? "-" : rankScoreData[2].ranking;
 
   useEffect(() => {
-    let nickname = localStorage.getItem('nickname');
+    let nickname = localStorage.getItem("nickname");
     dispatch(__getRankScoreData(nickname));
   }, []);
 
@@ -84,8 +84,8 @@ const Statistics = () => {
         </div>
         <StScoreChangeBoxDiv>
           <div>
-            <span className='lastweek'>저번주 </span>
-            <span className='thisweek'> 이번주</span> <br />
+            <span className="lastweek">저번주 </span>
+            <span className="thisweek"> 이번주</span> <br />
             주간 랭킹 점수 변화
           </div>
 
@@ -110,13 +110,13 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width='350px'
+          width="350px"
           height={
             modal === "score" ? "22em" : modal === "rank" ? "20em" : "21em"
           }
-          radius='48px'
-          top='40%'
-          backgroundcolor='#11111180 '
+          radius="48px"
+          top="40%"
+          backgroundcolor="#11111180 "
         >
           <StModalTop>
             {modal === "score" ? (
@@ -222,6 +222,7 @@ const StHeader = styled.div`
   background-color: white;
   position: sticky;
   top: 0;
+  z-index: 1;
   border-bottom: 1px solid #f1f3f5;
 `;
 
