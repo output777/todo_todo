@@ -85,17 +85,17 @@ const PlannerCategory = () => {
   return (
     <>
       <StDiv>
-        <div className="header">
+        <div className='header'>
           <PlannerCalender
             calenderdate={calenderdate}
             selectDate={selectDate}
             setSelectDate={setSelectDate}
           />
-          <div className="categoryBox">
+          <div className='categoryBox'>
             <img
-              className="category"
+              className='category'
               src={categorySvg}
-              alt="categoryIcon"
+              alt='categoryIcon'
               onClick={onClickAddCategoryHandler}
             />
           </div>
@@ -106,10 +106,10 @@ const PlannerCategory = () => {
             category.map((data, index) => (
               <StCategoryItem key={data.id} id={data.id} name={data.title}>
                 <div
-                  className="top"
+                  className='top'
                   onClick={onClickSelectCategoryToTodoListHandler}
                 >
-                  <p className="title">{data.title}</p>
+                  <p className='title'>{data.title}</p>
                   {categoryTodoList.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
                       {
