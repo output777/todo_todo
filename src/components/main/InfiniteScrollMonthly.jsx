@@ -62,7 +62,7 @@ const InfiniteScrollMonthly = () => {
             </div>
           </div>
 
-          <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
+          <StRankingScore>{(each.achievementRate).toFixed(2)}</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}></StRefDiv>

@@ -363,6 +363,7 @@ const StDiv = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   overflow-y: scroll;
 
+
   & .header {
     width: 100%;
     height: 100px;
@@ -371,6 +372,7 @@ const StDiv = styled.div`
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
+    box-sizing:border-box;
   }
 `;
 

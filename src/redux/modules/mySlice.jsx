@@ -37,7 +37,9 @@ export const __getMyInfo = createAsyncThunk(
       console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -63,7 +65,9 @@ export const __getOtherInfo = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -91,8 +95,9 @@ export const __postProfileImg = createAsyncThunk(
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data); // data 는 수정완료 메세지
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -118,8 +123,9 @@ export const __getImages = createAsyncThunk(
       console.log("boast", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -142,7 +148,9 @@ export const __postImages = createAsyncThunk(
       console.log("postImages data", data);
       // return thunkAPI.fulfillWithValue(data); // data는 완료 메세지, images에 반영됨
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -168,7 +176,9 @@ export const __deleteImages = createAsyncThunk(
       console.log("data", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -193,7 +203,9 @@ export const __getFollowInfo = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -217,7 +229,9 @@ export const __getFollowingList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -241,7 +255,9 @@ export const __getOtherFollowingList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );
@@ -265,7 +281,9 @@ export const __getFollowerList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      console.log(error)
+      console.log(error.response.data.errorMessage)
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
 );

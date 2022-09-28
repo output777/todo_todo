@@ -40,11 +40,6 @@ const InfiniteScroll = () => {
     };
   }, [mainRankList]);
 
-  const data = mainRankList.map((data) => {
-    console.log(data);
-  });
-  console.log("data********", data);
-
   return (
     <Stdiv>
       {mainRankList.length > 0 &&
@@ -67,7 +62,7 @@ const InfiniteScroll = () => {
               </div>
             </div>
 
-            <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
+            <StRankingScore>{each.achievementRate.toFixed(2)}</StRankingScore>
           </StRankingBox>
         ))}
       <StRefDiv ref={targetRef}></StRefDiv>
