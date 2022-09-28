@@ -159,8 +159,8 @@ const StDiv = styled.div`
   font-family: "SUIT-Regular", sans-serif;
 
   & div.header {
-    width: 100%;
-    height: 100px;
+    /* width: 100%; */
+    height: 50px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;

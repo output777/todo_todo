@@ -82,20 +82,20 @@ const ProfilePhotos = () => {
   return (
     <>
       <StContainer>
-        {images &&
+        {images.errorMessage === undefined &&
           images.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
-              <img id={data.id} src={data.imageUrl} alt="boast" />
+              <img id={data.id} src={data.imageUrl} alt='boast' />
             </StImg>
           ))}
       </StContainer>
       {fullScreen ? (
         <StFullScreen>
-          <div className="header">
-            <div className="cancelBox" onClick={onClickFullScreenCloseHandler}>
-              <img src={cancelSvg} alt="cancelBtn" />
+          <div className='header'>
+            <div className='cancelBox' onClick={onClickFullScreenCloseHandler}>
+              <img src={cancelSvg} alt='cancelBtn' />
             </div>
-            <div className="imgCount">
+            <div className='imgCount'>
               {images && (
                 <span>
                   {images.indexOf(
@@ -105,39 +105,39 @@ const ProfilePhotos = () => {
                 </span>
               )}
             </div>
-            <div className="optionBox">
+            <div className='optionBox'>
               <img
                 src={wastebasketSvg}
-                alt="optionBtn"
+                alt='optionBtn'
                 onClick={onClicOptionModalOpenHandler}
               />
             </div>
           </div>
-          <div className="StSliderBoxParent">
+          <div className='StSliderBoxParent'>
             <StSliderBox>
-              <div className="imgBox" key={selectImgId}>
+              <div className='imgBox' key={selectImgId}>
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) == 0 ? null : (
                   <button
-                    className="prev"
+                    className='prev'
                     onClick={() => onClickPrevHandler(selectImgId)}
                   >
-                    <div className="prevArrow"></div>
+                    <div className='prevArrow'></div>
                   </button>
                 )}
 
-                <img src={selectImg} alt="img" id={selectImgId} />
+                <img src={selectImg} alt='img' id={selectImgId} />
 
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
                 images.length - 1 ? null : (
                   <button
-                    className="next"
+                    className='next'
                     onClick={() => onClickNextHandler(selectImgId)}
                   >
-                    <div className="nextArrow"></div>
+                    <div className='nextArrow'></div>
                   </button>
                 )}
               </div>
@@ -154,21 +154,21 @@ const ProfilePhotos = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            radius="48px"
-            top="40%"
-            width="90%"
-            height="230px"
-            backgroundcolor="#46464624"
+            radius='48px'
+            top='40%'
+            width='90%'
+            height='230px'
+            backgroundcolor='#46464624'
           >
             <StModalTop>
-              <div className="title">사진을 삭제하시겠습니까?</div>
+              <div className='title'>사진을 삭제하시겠습니까?</div>
               <div>삭제하면 다시 불러올 수 없습니다.</div>
             </StModalTop>
             <StModalBottom>
-              <div className="cancel" onClick={closeModal}>
+              <div className='cancel' onClick={closeModal}>
                 취소
               </div>
-              <div className="confirm" onClick={onClickDeleteImgHandler}>
+              <div className='confirm' onClick={onClickDeleteImgHandler}>
                 확인
               </div>
             </StModalBottom>
