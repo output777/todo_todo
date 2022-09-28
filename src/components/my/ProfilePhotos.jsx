@@ -82,7 +82,7 @@ const ProfilePhotos = () => {
   return (
     <>
       <StContainer>
-        {images &&
+        {images.errorMessage === undefined &&
           images.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
               <img id={data.id} src={data.imageUrl} alt="boast" />
