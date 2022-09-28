@@ -5,8 +5,6 @@ import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-
-
 const initialState = {
   follower: null,
   otherfollowing: null,
@@ -23,7 +21,6 @@ export const __getMyInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
 
       const config = {
@@ -37,8 +34,8 @@ export const __getMyInfo = createAsyncThunk(
       console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -48,7 +45,6 @@ export const __getOtherInfo = createAsyncThunk(
   "getMyInfo",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
 
       const config = {
@@ -58,15 +54,13 @@ export const __getOtherInfo = createAsyncThunk(
         },
       };
 
-
-
       const data = await axios.get(`${BASE_URL}/member/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -95,8 +89,8 @@ export const __postProfileImg = createAsyncThunk(
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data); // data 는 수정완료 메세지
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -107,7 +101,6 @@ export const __getImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("getImages payload", payload);
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -120,11 +113,12 @@ export const __getImages = createAsyncThunk(
         `${BASE_URL}/image/boast/${payload}`,
         config
       );
-      console.log("boast", data.data);
+      console.log("__getImages", data.data);
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -135,7 +129,6 @@ export const __postImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -148,8 +141,8 @@ export const __postImages = createAsyncThunk(
       console.log("postImages data", data);
       // return thunkAPI.fulfillWithValue(data); // data는 완료 메세지, images에 반영됨
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -160,7 +153,6 @@ export const __deleteImages = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload, typeof payload);
     try {
-
       let accessToken = localStorage.getItem("accessToken");
       const config = {
         headers: {
@@ -176,8 +168,8 @@ export const __deleteImages = createAsyncThunk(
       console.log("data", data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -187,9 +179,7 @@ export const __getFollowInfo = createAsyncThunk(
   "getFollowInfo",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
-
 
       const config = {
         headers: {
@@ -203,8 +193,8 @@ export const __getFollowInfo = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -214,7 +204,6 @@ export const __getFollowingList = createAsyncThunk(
   "__getFollowingList",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
 
       const config = {
@@ -229,8 +218,8 @@ export const __getFollowingList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -240,7 +229,6 @@ export const __getOtherFollowingList = createAsyncThunk(
   "__getOtherFollowingList",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
 
       const config = {
@@ -255,8 +243,8 @@ export const __getOtherFollowingList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -266,7 +254,6 @@ export const __getFollowerList = createAsyncThunk(
   "getFollowerList",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
 
       const config = {
@@ -281,8 +268,8 @@ export const __getFollowerList = createAsyncThunk(
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.errorMessage)
+      console.log(error);
+      console.log(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
   }
@@ -420,5 +407,5 @@ export const mySlice = createSlice({
   },
 });
 
-export const { } = mySlice.actions;
+export const {} = mySlice.actions;
 export default mySlice.reducer;

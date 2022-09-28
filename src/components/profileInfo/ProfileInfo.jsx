@@ -27,12 +27,14 @@ const ProfileInfo = () => {
   // 고등학교 검색
   const [highschoolInput, setHighschoolInput] = useState("");
   const [highschoolResult, setHighschoolResult] = useState([]);
+  const [highschoolResultClick, setHighschoolResultClick] = useState(false);
 
   const nicknameRef = useRef(null);
   const oneRef = useRef(null);
   const twoRef = useRef(null);
   const threeRef = useRef(null);
   const startButton = useRef(null);
+  const highSchoolSearchInput = useRef(null);
 
   const onChangeNicknameHandler = (e) => {
     const { value } = e.target;
@@ -99,11 +101,18 @@ const ProfileInfo = () => {
     console.log(typeof val, val);
     setHighschoolInput(val);
     debouncedSearch(val);
+    setHighschoolResultClick(false);
+    if (value.length > 0) {
+      highSchoolSearchInput.current.classList.add("active");
+    } else {
+      highSchoolSearchInput.current.classList.remove("active");
+    }
   };
 
   const onClickSelectHandler = (e) => {
     setHighschoolInput(e.target.textContent);
     setHighschoolResult([]);
+    setHighschoolResultClick(true);
   };
 
   const onClickSearchCancelHandler = () => {
@@ -138,10 +147,16 @@ const ProfileInfo = () => {
 
   console.log("highschoolResult", highschoolResult);
   console.log(isNicknameCheck);
+  console.log(nicknameCheck);
+  console.log(nicknameCheck?.includes("가능"));
   console.log(startButton.current);
 
   // 닉네임 중복확인, 학년, 학교 입력시 버튼 컬러 변화
-  if (isNicknameCheck && grade !== null && highschoolInput) {
+  if (
+    nicknameCheck?.includes("가능") &&
+    grade !== null &&
+    highschoolResultClick
+  ) {
     startButton.current?.classList.add("active");
     startButton.current?.classList.remove("inactive");
   } else {
@@ -185,7 +200,7 @@ const ProfileInfo = () => {
             </>
           )}
         </form>
-        <span>{isNicknameCheck ? nicknameCheck : "사용불가"}</span>
+        <span>{isNicknameCheck ? nicknameCheck : ""}</span>
       </StInfoNicknameBox>
       <StHighschoolBox>
         <p>고등학교</p>
@@ -206,6 +221,7 @@ const ProfileInfo = () => {
             placeholder="고등학교를 검색해주세요"
             value={highschoolInput}
             onChange={onChangeSearchHandler}
+            ref={highSchoolSearchInput}
           />
           {highschoolInput.length > 0 ? (
             <button onClick={onClickSearchCancelHandler}>
@@ -240,7 +256,7 @@ const ProfileInfo = () => {
         <button
           ref={startButton}
           disabled={
-            isNicknameCheck && grade !== null && highschoolInput
+            isNicknameCheck && grade !== null && highschoolResultClick
               ? false
               : "disabled"
           }
@@ -342,8 +358,10 @@ const StInfoNicknameBox = styled.div`
   & span {
     display: inline-block;
     font-size: 0.8rem;
-    height: 32px;
-    margin: 0;
+    font-weight: bold;
+    color: #ff7b00;
+    height: 2rem;
+    margin: 0.5rem 0 0 0.3rem;
   }
 `;
 
@@ -402,6 +420,10 @@ const StHighschoolBox = styled.div`
       font-size: 0.9rem;
       background-color: #fff;
       color: #ff7b00;
+    }
+
+    .active {
+      border: 1px solid #ff8f27;
     }
   }
 `;
