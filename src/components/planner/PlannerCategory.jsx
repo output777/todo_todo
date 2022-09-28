@@ -149,7 +149,7 @@ const StDiv = styled.div`
   }
 
   & div.header {
-    width: 100%;
+    /* width: 100%; */
     height: 100px;
     display: flex;
     background-color: #ffffff;

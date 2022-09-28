@@ -77,6 +77,8 @@ export default InfiniteScrollSchoolRank;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
+  padding-left: 1rem;
+  padding-right: 1rem;
   /* background-color: gray; */
   /* height: 35vh; */
   /* overflow: scroll; */

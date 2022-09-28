@@ -8,11 +8,9 @@ import { useNavigate } from "react-router-dom";
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [rankList, setRankList] = useState([])
+  const [rankList, setRankList] = useState([]);
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
-
-  console.log('mainRankList', mainRankList)
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
@@ -42,31 +40,31 @@ const InfiniteScroll = () => {
     };
   }, [mainRankList]);
 
-
   return (
     <Stdiv>
-      {mainRankList.length > 0 && mainRankList.map((each) => (
-        <StRankingBox
-          key={each.id}
-          onClick={() => {
-            if (nickname === each.nickname) {
-              navigate(`/my`);
-            } else {
-              navigate(`/othermy/${each.nickname}`);
-            }
-          }}
-        >
-          <div>
-            <StRankingNumber>{each.rank}</StRankingNumber>
+      {mainRankList.length > 0 &&
+        mainRankList.map((each) => (
+          <StRankingBox
+            key={each.id}
+            onClick={() => {
+              if (nickname === each.nickname) {
+                navigate(`/my`);
+              } else {
+                navigate(`/othermy/${each.nickname}`);
+              }
+            }}
+          >
             <div>
-              <StRankingProfile src={profileImgSvg} alt='profileImg' />
-              <StRankingNickname>{each.nickname}</StRankingNickname>
+              <StRankingNumber>{each.rank}</StRankingNumber>
+              <div>
+                <StRankingProfile src={profileImgSvg} alt="profileImg" />
+                <StRankingNickname>{each.nickname}</StRankingNickname>
+              </div>
             </div>
-          </div>
 
-          <StRankingScore>{(each.achievementRate).toFixed(2)}</StRankingScore>
-        </StRankingBox>
-      ))}
+            <StRankingScore>{each.achievementRate.toFixed(2)}</StRankingScore>
+          </StRankingBox>
+        ))}
       <StRefDiv ref={targetRef}></StRefDiv>
     </Stdiv>
   );
@@ -76,6 +74,8 @@ export default InfiniteScroll;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
+  padding-left: 1rem;
+  padding-right: 1rem;
   /* background-color: gray; */
   /* height: 35vh; */
   /* overflow: scroll; */

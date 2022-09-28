@@ -32,6 +32,7 @@ const ProfileInfo = () => {
   const oneRef = useRef(null);
   const twoRef = useRef(null);
   const threeRef = useRef(null);
+  const startButton = useRef(null);
 
   const onChangeNicknameHandler = (e) => {
     const { value } = e.target;
@@ -88,14 +89,14 @@ const ProfileInfo = () => {
   console.log("grade", grade);
 
   const debouncedSearch = debounce(async (val) => {
-    const { data } = await axios.get(`${BASE_URL}/school?search=${val}`)
+    const { data } = await axios.get(`${BASE_URL}/school?search=${val}`);
     setHighschoolResult(data);
   }, 500);
 
   const onChangeSearchHandler = (e) => {
     const { value } = e.target;
     let val = value.trim();
-    console.log(typeof val, val)
+    console.log(typeof val, val);
     setHighschoolInput(val);
     debouncedSearch(val);
   };
@@ -110,22 +111,21 @@ const ProfileInfo = () => {
     setHighschoolResult([]);
   };
 
-
   const onSubmitRegisterHandler = async (e) => {
     e.preventDefault();
-    localStorage.setItem('nickname', nickname);
+    localStorage.setItem("nickname", nickname);
     const newUserInfoRegister = {
       nickname: nickname,
       highschool: highschoolInput,
       grade: grade,
     };
     await dispatch(__userInfoRegister(newUserInfoRegister));
-    let accessToken = localStorage.getItem('accessToken');
-    let refreshToken = localStorage.getItem('refreshToken');
+    let accessToken = localStorage.getItem("accessToken");
+    let refreshToken = localStorage.getItem("refreshToken");
     const token = {
       accessToken,
-      refreshToken
-    }
+      refreshToken,
+    };
     // await dispatch(__loginReissue(token))
     navigate("/");
   };
@@ -134,9 +134,20 @@ const ProfileInfo = () => {
     if (highschoolInput.length === 0) {
       setHighschoolResult([]);
     }
-  }, [highschoolInput])
+  }, [highschoolInput]);
 
-  console.log('highschoolResult', highschoolResult)
+  console.log("highschoolResult", highschoolResult);
+  console.log(isNicknameCheck);
+  console.log(startButton.current);
+
+  // 닉네임 중복확인, 학년, 학교 입력시 버튼 컬러 변화
+  if (isNicknameCheck && grade !== null && highschoolInput) {
+    startButton.current?.classList.add("active");
+    startButton.current?.classList.remove("inactive");
+  } else {
+    startButton.current?.classList.add("inactive");
+    startButton.current?.classList.remove("active");
+  }
 
   return (
     <div
@@ -174,7 +185,7 @@ const ProfileInfo = () => {
             </>
           )}
         </form>
-        <span>{isNicknameCheck ? nicknameCheck : '사용불가'}</span>
+        <span>{isNicknameCheck ? nicknameCheck : "사용불가"}</span>
       </StInfoNicknameBox>
       <StHighschoolBox>
         <p>고등학교</p>
@@ -210,22 +221,32 @@ const ProfileInfo = () => {
       <StHighschoolSearchBox>
         {highschoolInput.length > 0
           ? highschoolResult.length > 0 &&
-          highschoolResult.map((data, index) => (
-            <div className="content" key={index}>
-              <div className="school" onClick={onClickSelectHandler}>
-                {data.schoolName}
+            highschoolResult.map((data, index) => (
+              <div className="content" key={index}>
+                <div className="school" onClick={onClickSelectHandler}>
+                  {data.schoolName}
+                </div>
+                <div className="region">
+                  <img src={regionSvg} alt="addressIcon" />
+                  {data.address}
+                </div>
               </div>
-              <div className="region">
-                <img src={regionSvg} alt='addressIcon' />
-                {data.address
-                }
-              </div>
-            </div>
-          ))
+            ))
           : null}
       </StHighschoolSearchBox>
+
+      {/* 버튼 기능 활성/비활성 */}
       <StBtnBox onSubmit={onSubmitRegisterHandler}>
-        <button>투두투두 시작하기!</button>
+        <button
+          ref={startButton}
+          disabled={
+            isNicknameCheck && grade !== null && highschoolInput
+              ? false
+              : "disabled"
+          }
+        >
+          투두투두 시작하기!
+        </button>
       </StBtnBox>
     </div>
   );
@@ -349,8 +370,8 @@ const StHighschoolBox = styled.div`
 
     div.active {
       border: 1px solid #ff8f27;
-      background-color: #ffe9d4;
-      color: #ff8f27;
+      background-color: #ff8f27;
+      color: white;
     }
   }
 
@@ -415,7 +436,18 @@ const StBtnBox = styled.form`
   margin: 0 0 0.5rem 0;
   height: 8%;
 
-  & button {
+  .inactive {
+    background-color: #e8e8e8;
+    color: #9f9e9e;
+    border: none;
+    width: 280px;
+    height: 50px;
+    font-size: 1rem;
+    border-radius: 12px;
+    margin: 0;
+  }
+
+  .active {
     background-color: #ff8f27;
     border: none;
     width: 280px;
