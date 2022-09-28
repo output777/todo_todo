@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+const nickname = localStorage.getItem("nickname");
+
 const initialState = {
   todoCount: [],
   todos: [],
@@ -26,7 +28,10 @@ export const __getCategory = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`${BASE_URL}/todo/category`, config);
+      const { data } = await axios.get(
+        `${BASE_URL}/todo/category/${nickname}`,
+        config
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -145,7 +150,10 @@ export const __getTodayTodo = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`${BASE_URL}/todo/today`, config);
+      const { data } = await axios.get(
+        `${BASE_URL}/todo/today/${nickname}`,
+        config
+      );
       console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -169,7 +177,9 @@ export const __getTodo = createAsyncThunk(
       };
 
       const data = await axios.get(
-        `${BASE_URL}/todo?date=${dayjs(payload).format("YYYY-MM-DD")}`,
+        `${BASE_URL}/todo?date=${dayjs(payload).format(
+          "YYYY-MM-DD"
+        )}/${nickname}`,
         config
       );
       console.log("data", data.data);
