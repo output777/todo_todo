@@ -5,7 +5,7 @@ import Calendar from "../utils/Calendar";
 import dayjs from "dayjs";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
 
-const PlannerCalender = ({ calenderdate, selectDate, setSelectDate }) => {
+const PlannerCalender = ({ calenderdate, setCalenderdate, selectDate, setSelectDate }) => {
   const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,7 +31,7 @@ const PlannerCalender = ({ calenderdate, selectDate, setSelectDate }) => {
           width='350px'
           top='30%'
         >
-          <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
+          <Calendar setCalenderdate={setCalenderdate} selectDate={selectDate} setSelectDate={setSelectDate} />
         </Modal>
       )}
     </StDateDiv>

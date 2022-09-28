@@ -45,7 +45,8 @@ export const __googleLogin = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
-      console.log("error", `${GOOGLE_BASE_URL}?code=${payload}`);
+      window.alert('로그인에 실패하였습니다.')
+      console.log('error', `${GOOGLE_BASE_URL}?code=${payload}`);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -187,5 +188,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const {} = loginSlice.actions;
+export const { } = loginSlice.actions;
 export default loginSlice.reducer;

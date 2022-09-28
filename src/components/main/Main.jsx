@@ -38,7 +38,7 @@ const Main = () => {
   console.log("thisMonthRate", thisMonthRate, "totalRate", totalRate);
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
-  const [school, setSchool] = useState(false);
+  // const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [day, setDay] = useState(true);
 
@@ -49,20 +49,20 @@ const Main = () => {
   const onClickWeekly = () => {
     setWeekly(true);
     setMonth(false);
-    setSchool(false);
+    // setSchool(false);
   };
 
   const onClickMonth = () => {
     setWeekly(false);
     setMonth(true);
-    setSchool(false);
+    // setSchool(false);
   };
 
-  const onClickSchoolRank = () => {
-    setWeekly(false);
-    setMonth(false);
-    setSchool(true);
-  };
+  // const onClickSchoolRank = () => {
+  //   setWeekly(false);
+  //   setMonth(false);
+  //   setSchool(true);
+  // };
 
   const openModal = () => {
     setModalVisible(true);
@@ -232,7 +232,8 @@ const Main = () => {
               <span>월간 랭킹</span>
             </StMonthRankingBtn2nd>
           )}
-          {school ? (
+
+          {/* {school ? (
             <StMonthRankingBtn onClick={onClickSchoolRank}>
               <span>학교 랭킹</span>
             </StMonthRankingBtn>
@@ -240,12 +241,13 @@ const Main = () => {
             <StMonthRankingBtn2nd onClick={onClickSchoolRank}>
               <span>학교 랭킹</span>
             </StMonthRankingBtn2nd>
-          )}
+          )} */}
+
         </StRankingBtnBox>
 
         {weekly ? <InfiniteScroll /> : null}
         {month ? <InfiniteScrollMonthly /> : null}
-        {school ? <InfiniteScrollSchoolRank /> : null}
+        {/* {school ? <InfiniteScrollSchoolRank /> : null} */}
       </div>
     </StMainContainer>
   );
@@ -377,44 +379,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 

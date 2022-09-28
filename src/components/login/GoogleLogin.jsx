@@ -34,7 +34,7 @@ const GoogleLogin = () => {
 
   useEffect(() => {
     dispatch(__googleLogin(GOOGLE_CODE));
-  }, [dispatch]);
+  }, []);
 
   return (
     <StLoadingContainer>

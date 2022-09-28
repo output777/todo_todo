@@ -59,6 +59,9 @@ const Planner = ({ x, setX }) => {
   };
 
   const onClickTodoAddHandler = async () => {
+
+    let nickname = localStorage.getItem("nickname");
+
     if (todo.length > 0) {
       const newTodo = {
         content: todo,
@@ -66,7 +69,7 @@ const Planner = ({ x, setX }) => {
         isComplete: false,
       };
       await dispatch(__postTodo(newTodo));
-      await dispatch(__getTodayTodo());
+      await dispatch(__getTodayTodo(nickname));
       setTodo("");
     }
   };

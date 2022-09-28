@@ -17,7 +17,6 @@ import { useDropzone } from "react-dropzone";
 import imageCompression from "browser-image-compression";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const nickname = localStorage.getItem("nickname");
 
 const ProfileEdit = () => {
   const { profileImage } = useSelector((state) => state.my);
@@ -29,7 +28,7 @@ const ProfileEdit = () => {
   const [saveStatus, setSaveStatus] = useState(false);
   const [modalView, setModalView] = useState(false);
   const [profileImageState, setProfileImageState] = useState();
-  const [mottoInput, setMottoInput] = useState(userInfo?.myMotto);
+  const [mottoInput, setMottoInput] = useState('');
   const profileUploadRef = useRef(null);
 
   let formData = new FormData();
@@ -39,8 +38,15 @@ const ProfileEdit = () => {
     console.log(key, formData.get(key));
   }
 
+  useEffect(() => {
+    if (userInfo !== null) {
+      setMottoInput(userInfo.myMotto)
+    }
+  }, [userInfo])
+
   // 완료버튼 클릭
   const onClickProfileEditComplete = () => {
+    let nickname = localStorage.getItem("nickname");
     formData.append("multipartFile", profileImageState);
     formData.append(
       "dto",
@@ -61,6 +67,7 @@ const ProfileEdit = () => {
   };
 
   useEffect(() => {
+    let nickname = localStorage.getItem("nickname");
     dispatch(__getMyInfo(nickname));
   }, [dispatch]);
 
@@ -73,6 +80,7 @@ const ProfileEdit = () => {
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
   };
+
 
   const readImage = (input) => {
     // 인풋 태그에 파일이 있는 경우

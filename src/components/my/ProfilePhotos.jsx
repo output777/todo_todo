@@ -40,7 +40,7 @@ const ProfilePhotos = () => {
   };
 
   const onClickPrevHandler = (id) => {
-    let a = images.find((data) => data.id == id);
+    let a = images.find((data) => data.id === id);
     const prevData = images[images.indexOf(a) - 1];
     console.log(prevData);
     setSelectImgId(prevData.id);
@@ -48,7 +48,7 @@ const ProfilePhotos = () => {
   };
 
   const onClickNextHandler = (id) => {
-    let a = images.find((data) => data.id == id);
+    let a = images.find((data) => data.id === id);
     const nextData = images[images.indexOf(a) + 1];
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
@@ -132,7 +132,7 @@ const ProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                images.length - 1 ? null : (
+                  images.length - 1 ? null : (
                   <button
                     className='next'
                     onClick={() => onClickNextHandler(selectImgId)}

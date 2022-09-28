@@ -7,79 +7,81 @@ import { useDispatch } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
 import { useNavigate } from "react-router-dom";
 
-const Calendar = ({ selectDate, setSelectDate }) => {
+const Calendar = ({ setCalenderdate, selectDate, setSelectDate }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const marks = [];
 
   const selectDateHandler = async (date) => {
-    console.log('date', date);
-    localStorage.setItem('date', date);
-    setSelectDate(date)
-    await dispatch(__getTodo(date));
+    const newDate = dayjs(date).format("YYYY-MM-DD")
+    let nickname = localStorage.getItem("nickname");
+    localStorage.setItem('date', newDate);
+    // setCalenderdate(() => newDate)
+    // setSelectDate(newDate)
+    await dispatch(__getTodo({ date: newDate, nickname }));
     navigate("/planner/date");
   };
 
   return (
     <StDiv>
       <ReactCalendar
-        onChange={setSelectDate}
+        // onChange={setSelectDate}
         onClickDay={selectDateHandler}
-        value={selectDate}
+        // value={selectDate}
         locale='Korean'
         formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'
-        tileContent
-        tileClassName={({ date, view }) => {
-          if (
-            marks.find((x) => {
-              if (
-                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-                x.achievementRate < 25
-              ) {
-                return x;
-              }
-            })
-          ) {
-            return "highlight1";
-          }
-          if (
-            marks.find((x) => {
-              if (
-                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-                x.achievementRate >= 25 &&
-                x.achievementRate < 50
-              ) {
-                return x;
-              }
-            })
-          ) {
-            return "highlight2";
-          }
-          if (
-            marks.find((x) => {
-              if (
-                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-                x.achievementRate >= 50 &&
-                x.achievementRate < 75
-              )
-                return x;
-            })
-          ) {
-            return "highlight3";
-          }
-          if (
-            marks.find((x) => {
-              if (
-                x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-                x.achievementRate >= 75
-              )
-                return x;
-            })
-          ) {
-            return "highlight4";
-          }
-        }}
+      // tileContent
+      // tileClassName={({ date, view }) => {
+      //   if (
+      //     marks.find((x) => {
+      //       if (
+      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
+      //         x.achievementRate < 25
+      //       ) {
+      //         return x;
+      //       }
+      //     })
+      //   ) {
+      //     return "highlight1";
+      //   }
+      //   if (
+      //     marks.find((x) => {
+      //       if (
+      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
+      //         x.achievementRate >= 25 &&
+      //         x.achievementRate < 50
+      //       ) {
+      //         return x;
+      //       }
+      //     })
+      //   ) {
+      //     return "highlight2";
+      //   }
+      //   if (
+      //     marks.find((x) => {
+      //       if (
+      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
+      //         x.achievementRate >= 50 &&
+      //         x.achievementRate < 75
+      //       )
+      //         return x;
+      //     })
+      //   ) {
+      //     return "highlight3";
+      //   }
+      //   if (
+      //     marks.find((x) => {
+      //       if (
+      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
+      //         x.achievementRate >= 75
+      //       )
+      //         return x;
+      //     })
+      //   ) {
+      //     return "highlight4";
+      //   }
+      // }}
       />
     </StDiv>
   );

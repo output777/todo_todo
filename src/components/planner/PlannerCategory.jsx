@@ -78,8 +78,9 @@ const PlannerCategory = () => {
   console.log("categoryTodoComplete", categoryTodoComplete);
 
   useEffect(() => {
-    dispatch(__getCategory());
-    dispatch(__getTodayTodo());
+    let nickname = localStorage.getItem("nickname");
+    dispatch(__getCategory(nickname));
+    dispatch(__getTodayTodo(nickname));
   }, [dispatch]);
 
   return (

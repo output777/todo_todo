@@ -48,12 +48,13 @@ const PlannerCategoryAdd = () => {
   };
 
   const onClickCategoryAddHandler = async () => {
+    let nickname = localStorage.getItem("nickname");
     if (categoryName.length > 0) {
       const newCategory = {
         title: categoryName,
       };
       await dispatch(__postCategory(newCategory));
-      await dispatch(__getCategory());
+      await dispatch(__getCategory(nickname));
       setCategoryName("");
     }
   };
@@ -97,13 +98,14 @@ const PlannerCategoryAdd = () => {
   };
 
   const onClickEditCategoryNameHandler = async () => {
+    let nickname = localStorage.getItem("nickname");
     const editCategoryName = {
       title: categoryName,
     };
     await dispatch(
       __updateCategory({ id: categoryId, title: editCategoryName })
     );
-    await dispatch(__getCategory());
+    await dispatch(__getCategory(nickname));
     setDeleteCategoryCheckModalVisible(false);
     setEditModalVisible(false);
     setEditCategoryName(false);
@@ -111,7 +113,8 @@ const PlannerCategoryAdd = () => {
   };
 
   useEffect(() => {
-    dispatch(__getCategory());
+    let nickname = localStorage.getItem("nickname");
+    dispatch(__getCategory(nickname));
   }, [dispatch]);
 
   return (

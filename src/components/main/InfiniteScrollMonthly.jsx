@@ -5,6 +5,9 @@ import { __getMainRankMonthly } from "../../redux/modules/mainSlice";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const InfiniteScrollMonthly = () => {
   const { mainRankListMonthly } = useSelector((state) => state.main);
@@ -14,6 +17,7 @@ const InfiniteScrollMonthly = () => {
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(1); // 페이지
+  const [month, setMonth] = useState(null);
 
   let nickname = localStorage.getItem("nickname");
 
@@ -30,6 +34,17 @@ const InfiniteScrollMonthly = () => {
     },
     [dispatch, isLoaded, page]
   );
+
+  const monthFunc = async () => {
+    const { data } = await axios.get(`${BASE_URL}/month`)
+    console.log('data', data)
+    setMonth(() => data)
+  }
+
+  useEffect(() => {
+    monthFunc();
+
+  }, [])
 
   useEffect(() => {
     let observer;
@@ -62,7 +77,7 @@ const InfiniteScrollMonthly = () => {
             </div>
           </div>
 
-          <StRankingScore>{(each.achievementRate).toFixed(2)}</StRankingScore>
+          <StRankingScore>{((each.achievementRate / month) * 10).toFixed(2)}</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}></StRefDiv>

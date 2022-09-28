@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getTotalRate } from "../../redux/modules/mainSlice";
+import { __getTotalRate, __reset } from "../../redux/modules/mainSlice";
 import {
   __getOtherInfo,
   __getFollowInfo,
@@ -27,6 +27,7 @@ const OtherProfile = () => {
     dispatch(__getRankScoreData(params.id));
     dispatch(__getTotalRate(params.id));
     dispatch(__getFollowingList(nickname));
+    dispatch(__reset());
   }, []);
 
   const user = useSelector((state) => state.my?.userInfo);

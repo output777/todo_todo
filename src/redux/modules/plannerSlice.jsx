@@ -28,10 +28,7 @@ export const __getCategory = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
-        `${BASE_URL}/todo/category/${nickname}`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/todo/category/${payload}`, config);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -150,10 +147,7 @@ export const __getTodayTodo = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
-        `${BASE_URL}/todo/today/${nickname}`,
-        config
-      );
+      const { data } = await axios.get(`${BASE_URL}/todo/today/${payload}`, config);
       console.log("data=====", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -177,14 +171,13 @@ export const __getTodo = createAsyncThunk(
       };
 
       const data = await axios.get(
-        `${BASE_URL}/todo?date=${dayjs(payload).format(
-          "YYYY-MM-DD"
-        )}/${nickname}`,
+        `${BASE_URL}/todo/${payload.nickname}?date=${payload.date}`,
         config
       );
-      console.log("data", data.data);
-      return thunkAPI.fulfillWithValue({ data: data.data, date: payload });
+      console.log("data", data, 'payload.date', payload.date);
+      return thunkAPI.fulfillWithValue({ data: data.data, date: payload.date });
     } catch (error) {
+      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
