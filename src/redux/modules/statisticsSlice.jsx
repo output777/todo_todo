@@ -74,7 +74,7 @@ export const __getLineChartData = createAsyncThunk(
       console.log("linechart", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.code);
     }
   }
 );

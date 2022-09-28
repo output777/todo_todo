@@ -12,6 +12,7 @@ const InfiniteScroll = () => {
   const { mainRankList } = useSelector((state) => state.main);
   const { error } = useSelector((state) => state.main);
 
+  console.log('mainRankList', mainRankList)
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
@@ -41,8 +42,6 @@ const InfiniteScroll = () => {
     };
   }, [mainRankList]);
 
-  const data = mainRankList.map((data) => { console.log(data) });
-  console.log('data********', data)
 
   return (
     <Stdiv>
@@ -65,7 +64,7 @@ const InfiniteScroll = () => {
             </div>
           </div>
 
-          <StRankingScore>{Math.round(each.achievementRate)}</StRankingScore>
+          <StRankingScore>{(each.achievementRate).toFixed(2)}</StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}></StRefDiv>

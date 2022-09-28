@@ -71,7 +71,7 @@ const HeatMapSample = () => {
         width: "90%",
         height: "25em",
         boxSizing: "border-box",
-        padding: "10px 20px 20px 0",
+        padding: "10px 25px 30px 0px",
         backgroundColor: "white",
         boxShadow: "0px 4px 15px rgba(17, 17, 17, 0.05)",
       }}
@@ -85,7 +85,7 @@ const HeatMapSample = () => {
         // yLabelsVisibility={yLabelsVisibility}
         xLabelWidth={25}
         yLabelWidth={15}
-        data={heatMapDataRate.length > 0 && heatMapDataRate}
+        data={heatMapDataRate.length > 0 ? heatMapDataRate : null}
         squares
         height={30}
         cellStyle={(background, value, min, max, data, x, y) => ({

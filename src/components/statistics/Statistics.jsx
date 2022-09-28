@@ -17,7 +17,7 @@ const Statistics = () => {
   const [modal, setModal] = useState(null);
   const dispatch = useDispatch();
   const { rankScoreData } = useSelector((state) => state.statistics);
-  // console.log("rankScoreData", rankScoreData);
+  console.log("rankScoreData", rankScoreData);
   const modalToggleHandler = (parameter) => {
     setModalView(!modalView);
     setModal(parameter);
@@ -29,10 +29,10 @@ const Statistics = () => {
   //   ? 0
   //   : Math.round(rankScoreData[0].score);
 
-  let weeklyScore = rankScoreData[1].score;
-  let weeklyScore2 = isNaN(weeklyScore) ? 0 : (weeklyScore / 7).toFixed(2);
+  let weeklyScore = rankScoreData[1].score / 7;
+  let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore.toFixed(2);
 
-  let monthlyScore = rankScoreData[2].score;
+  let monthlyScore = rankScoreData[2].score / rankScoreData[2].lengthOfMonth;
   let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
 
   let weeklyRank =
@@ -56,7 +56,7 @@ const Statistics = () => {
       <StBackground>
         <StTopSubjectDiv>
           <div>나의 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("score")} />
+          <img src={info} onClick={() => modalToggleHandler("score")} alt='infoImg' />
         </StTopSubjectDiv>
         <div
           style={{
@@ -93,12 +93,12 @@ const Statistics = () => {
         </StScoreChangeBoxDiv>
         <StTopSubjectDiv>
           <div>주간 랭킹 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("rank")} />
+          <img src={info} onClick={() => modalToggleHandler("rank")} alt='infoImg' />
         </StTopSubjectDiv>
         <LineChart />
         <StTopSubjectDiv>
           <div>나의 투두 달성률</div>
-          <img src={info} onClick={() => modalToggleHandler("heatMap")} />
+          <img src={info} onClick={() => modalToggleHandler("heatMap")} alt='infoImg' />
         </StTopSubjectDiv>
         <HeatmapSample />
       </StBackground>
@@ -142,7 +142,7 @@ const Statistics = () => {
                       gap: "3%",
                     }}
                   >
-                    <img src={trophy} /> 주간점수
+                    <img src={trophy} alt='trophyImg' /> 주간점수
                   </span>
                   <div>
                     이번주에 쌓은 점수입니다.
@@ -152,7 +152,7 @@ const Statistics = () => {
                 </StModalExplainTop>
                 <StModalExplainBottom>
                   <span>
-                    <img src={trophy} /> 월간 점수
+                    <img src={trophy} alt='trophyImg' /> 월간 점수
                   </span>
                   <div>
                     이번 달에 쌓은 점수입니다.
