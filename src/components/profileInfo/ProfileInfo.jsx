@@ -33,6 +33,7 @@ const ProfileInfo = () => {
   const twoRef = useRef(null);
   const threeRef = useRef(null);
   const startButton = useRef(null);
+  const highSchoolSearchInput = useRef(null);
 
   const onChangeNicknameHandler = (e) => {
     const { value } = e.target;
@@ -99,6 +100,11 @@ const ProfileInfo = () => {
     console.log(typeof val, val);
     setHighschoolInput(val);
     debouncedSearch(val);
+    if (value.length > 0) {
+      highSchoolSearchInput.current.classList.add("active");
+    } else {
+      highSchoolSearchInput.current.classList.remove("active");
+    }
   };
 
   const onClickSelectHandler = (e) => {
@@ -185,7 +191,7 @@ const ProfileInfo = () => {
             </>
           )}
         </form>
-        <span>{isNicknameCheck ? nicknameCheck : "사용불가"}</span>
+        <span>{isNicknameCheck ? nicknameCheck : ""}</span>
       </StInfoNicknameBox>
       <StHighschoolBox>
         <p>고등학교</p>
@@ -206,6 +212,7 @@ const ProfileInfo = () => {
             placeholder="고등학교를 검색해주세요"
             value={highschoolInput}
             onChange={onChangeSearchHandler}
+            ref={highSchoolSearchInput}
           />
           {highschoolInput.length > 0 ? (
             <button onClick={onClickSearchCancelHandler}>
@@ -402,6 +409,10 @@ const StHighschoolBox = styled.div`
       font-size: 0.9rem;
       background-color: #fff;
       color: #ff7b00;
+    }
+
+    .active {
+      border: 1px solid #ff8f27;
     }
   }
 `;
