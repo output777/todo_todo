@@ -111,6 +111,7 @@ const PlannerCategory = () => {
                   onClick={onClickSelectCategoryToTodoListHandler}
                 >
                   <p className='title'>{data.title}</p>
+                  {/* filter undefined 에러 확인하기 */}
                   {categoryTodoList.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
                       {
