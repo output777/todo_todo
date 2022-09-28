@@ -27,6 +27,7 @@ const ProfileInfo = () => {
   // 고등학교 검색
   const [highschoolInput, setHighschoolInput] = useState("");
   const [highschoolResult, setHighschoolResult] = useState([]);
+  const [highschoolResultClick, setHighschoolResultClick] = useState(false);
 
   const nicknameRef = useRef(null);
   const oneRef = useRef(null);
@@ -100,6 +101,7 @@ const ProfileInfo = () => {
     console.log(typeof val, val);
     setHighschoolInput(val);
     debouncedSearch(val);
+    setHighschoolResultClick(false);
     if (value.length > 0) {
       highSchoolSearchInput.current.classList.add("active");
     } else {
@@ -110,6 +112,7 @@ const ProfileInfo = () => {
   const onClickSelectHandler = (e) => {
     setHighschoolInput(e.target.textContent);
     setHighschoolResult([]);
+    setHighschoolResultClick(true);
   };
 
   const onClickSearchCancelHandler = () => {
@@ -144,10 +147,16 @@ const ProfileInfo = () => {
 
   console.log("highschoolResult", highschoolResult);
   console.log(isNicknameCheck);
+  console.log(nicknameCheck);
+  console.log(nicknameCheck?.includes("가능"));
   console.log(startButton.current);
 
   // 닉네임 중복확인, 학년, 학교 입력시 버튼 컬러 변화
-  if (isNicknameCheck && grade !== null && highschoolInput) {
+  if (
+    nicknameCheck?.includes("가능") &&
+    grade !== null &&
+    highschoolResultClick
+  ) {
     startButton.current?.classList.add("active");
     startButton.current?.classList.remove("inactive");
   } else {
@@ -247,7 +256,7 @@ const ProfileInfo = () => {
         <button
           ref={startButton}
           disabled={
-            isNicknameCheck && grade !== null && highschoolInput
+            isNicknameCheck && grade !== null && highschoolResultClick
               ? false
               : "disabled"
           }
@@ -349,8 +358,10 @@ const StInfoNicknameBox = styled.div`
   & span {
     display: inline-block;
     font-size: 0.8rem;
-    height: 32px;
-    margin: 0;
+    font-weight: bold;
+    color: #ff7b00;
+    height: 2rem;
+    margin: 0.5rem 0 0 0.3rem;
   }
 `;
 
