@@ -19,7 +19,7 @@ import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
 import Dday from "./Dday";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
 // import "swiper/css/bundle";
 import "swiper/css/navigation";
@@ -242,7 +242,6 @@ const Main = () => {
               <span>학교 랭킹</span>
             </StMonthRankingBtn2nd>
           )} */}
-
         </StRankingBtnBox>
 
         {weekly ? <InfiniteScroll /> : null}
@@ -264,7 +263,6 @@ const StProgressBarBox = styled.div`
 
 const StProgressBar = styled.div`
   ${({ width }) => {
-    console.log("width", width);
     if (width === 0) {
       return css`
         width: ${width}%;
@@ -379,44 +377,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 

@@ -3,7 +3,6 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-
 const nickname = localStorage.getItem("nickname");
 
 const initialState = {
@@ -21,9 +20,8 @@ export const __getThisMonthRate = createAsyncThunk(
   "getThisMonthRate",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -47,9 +45,8 @@ export const __getTotalRate = createAsyncThunk(
   "getTotalRate",
   async (payload, thunkAPI) => {
     try {
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -72,12 +69,9 @@ export const __getTotalRate = createAsyncThunk(
 export const __getMainRank = createAsyncThunk(
   "getMainRank",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
-
     try {
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -103,10 +97,8 @@ export const __getMainRankMonthly = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+      console.log("accessToken!!!!!!!!!!", accessToken);
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -130,10 +122,8 @@ export const __getDday = createAsyncThunk(
   "getDday",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -141,7 +131,7 @@ export const __getDday = createAsyncThunk(
       };
 
       const data = await axios.get(`${BASE_URL}/d-day`, config);
-      console.log('data', data);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -149,39 +139,31 @@ export const __getDday = createAsyncThunk(
   }
 );
 
+export const __reset = createAsyncThunk("reset", async (payload, thunkAPI) => {
+  try {
+    let accessToken = localStorage.getItem("accessToken");
+    console.log("accessToken!!!!!!!!!!", accessToken);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
 
-export const __reset = createAsyncThunk(
-  "reset",
-  async (payload, thunkAPI) => {
-    try {
-
-
-      let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-
-      const data = await axios.get(`${BASE_URL}/reset`, config);
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+    const data = await axios.get(`${BASE_URL}/reset`, config);
+    console.log(data);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
 
 export const __getMainRankSchool = createAsyncThunk(
   "getMainRankSchool",
   async (payload, thunkAPI) => {
     console.log("payload", payload);
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+      console.log("accessToken!!!!!!!!!!", accessToken);
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -205,16 +187,13 @@ export const __updateDday = createAsyncThunk(
   "updateDday",
   async (payload, thunkAPI) => {
     try {
-
-
       let accessToken = localStorage.getItem("accessToken");
-      console.log('accessToken!!!!!!!!!!', accessToken);
+      console.log("accessToken!!!!!!!!!!", accessToken);
       const config = {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       };
-
 
       const data = await axios.put(`${BASE_URL}/d-day`, payload, config);
       console.log("data", data);

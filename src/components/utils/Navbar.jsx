@@ -15,7 +15,7 @@ import { __getDday } from "../../redux/modules/mainSlice";
 const Navbar = (props) => {
   const dispatch = useDispatch();
   const dday = useSelector((state) => state.main);
-  console.log(dday)
+
   const [home, setHome] = useState(props.home);
   const [statistics, setStatistics] = useState(props.statistics);
   const [planner, setPlanner] = useState(props.planner);
