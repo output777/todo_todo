@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Modal from "../utils/Modal";
 import dayjs from "dayjs";
 import calendarSvg from "../../assets/img/calendarSvg.svg";
-import ProfileCalender from "./ProfileCalender";
+import OtherProfileCalender from "./OtherProfileCalender";
 
-const MypageCalender = ({
+const OtherPageCalender = ({
   calenderdate,
   setCalenderdate,
   setFirstCheck,
@@ -48,7 +48,7 @@ const MypageCalender = ({
           width='350px'
           top='30%'
         >
-          <ProfileCalender
+          <OtherProfileCalender
             setFirstCheck={setFirstCheck}
             setCalenderdate={setCalenderdate}
             selectDate={selectDate}
@@ -60,7 +60,7 @@ const MypageCalender = ({
   );
 };
 
-export default MypageCalender;
+export default OtherPageCalender;
 
 const StDateDiv = styled.div`
   display: flex;

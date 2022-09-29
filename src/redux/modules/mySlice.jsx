@@ -10,6 +10,7 @@ const initialState = {
   otherfollowing: null,
   following: null,
   userInfo: null,
+  otherUserInfo: null,
   images: [],
   profileImage: [], //주의
   isLoading: false,
@@ -407,5 +408,5 @@ export const mySlice = createSlice({
   },
 });
 
-export const {} = mySlice.actions;
+export const { } = mySlice.actions;
 export default mySlice.reducer;

@@ -15,6 +15,7 @@ import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
 
 const OtherProfile = () => {
+  const params = useParams();
   const nickname = localStorage.getItem("nickname");
 
   const [follow, setFollow] = useState();
@@ -39,7 +40,6 @@ const OtherProfile = () => {
   const userRate = useSelector((state) => state.main?.totalRate);
   console.log(userRate);
 
-  const params = useParams();
   console.log(params.id);
 
   const followingList = useSelector((state) => state.my.following);

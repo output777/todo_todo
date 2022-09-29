@@ -100,12 +100,13 @@ const Planner = ({ x, setX }) => {
   };
 
   const onClickEditTodoHandler = async () => {
+    let nickname = localStorage.getItem("nickname");
     const editTodo = {
       content: todo,
       isComplete: todoComplete,
     };
     await dispatch(__updateTodo({ todoId, editTodo }));
-    await dispatch(__getTodayTodo());
+    await dispatch(__getTodayTodo(nickname));
     setModalVisible(false);
     setEditModalVisible(false);
     setEditTodoName(false);
@@ -123,6 +124,7 @@ const Planner = ({ x, setX }) => {
   };
 
   const onClickTodoCompleteHandler = async (e) => {
+    let nickname = localStorage.getItem("nickname");
     console.dir(e.target.parentElement.parentElement.id);
     const { id } = e.target.parentElement.parentElement;
     const data = todoList.filter((data) => data.todoId === Number(id));
@@ -135,7 +137,7 @@ const Planner = ({ x, setX }) => {
       isComplete: !data[0].complete,
     };
     await dispatch(__updateTodo({ todoId: id, editTodo: completeTodo }));
-    await dispatch(__getTodayTodo());
+    await dispatch(__getTodayTodo(nickname));
   };
 
   console.log("selectTodo", selectTodo);
@@ -159,9 +161,12 @@ const Planner = ({ x, setX }) => {
   console.log("todoRate", todoRate);
 
   useEffect(() => {
-    setCategoryName(localStorage.getItem("category"));
-    setCategoryId(localStorage.getItem("categoryId"));
-    dispatch(__getTodayTodo());
+    let category = localStorage.getItem("category");
+    let categoryId = localStorage.getItem("categoryId");
+    let nickname = localStorage.getItem("nickname");
+    setCategoryName(category);
+    setCategoryId(categoryId);
+    dispatch(__getTodayTodo(nickname));
   }, [dispatch]);
 
   return (

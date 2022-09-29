@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
 import { useNavigate } from "react-router-dom";
 
-const ProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelectDate }) => {
+const OtherProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelectDate }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const marks = [];
@@ -35,7 +35,7 @@ const ProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelect
   );
 };
 
-export default ProfileCalender;
+export default OtherProfileCalender;
 
 const StDiv = styled.div`
   .react-calendar {
