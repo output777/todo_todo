@@ -118,6 +118,7 @@ const ProfileInfo = () => {
   const onClickSearchCancelHandler = () => {
     setHighschoolInput("");
     setHighschoolResult([]);
+    setHighschoolResultClick(false);
   };
 
   const onSubmitRegisterHandler = async (e) => {
@@ -256,7 +257,9 @@ const ProfileInfo = () => {
         <button
           ref={startButton}
           disabled={
-            isNicknameCheck && grade !== null && highschoolResultClick
+            nicknameCheck?.includes("가능") &&
+            grade !== null &&
+            highschoolResultClick
               ? false
               : "disabled"
           }
