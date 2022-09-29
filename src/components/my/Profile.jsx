@@ -70,22 +70,20 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                  userInfo?.profileImage == "null"
+                userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
-              alt='profileImage'
+              alt="profileImage"
               onError={handleImgError}
             />
           </StImg>
           <StInfo>
-
             <div className="nextToPicture">
               <span className="count">
-                {images === null ? 0 : images.length}
+                {images === null || images === undefined ? 0 : images.length}
               </span>
               <span className="text">사진</span>
-
             </div>
             <div
               className="nextToPicture"
