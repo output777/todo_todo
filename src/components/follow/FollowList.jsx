@@ -6,6 +6,7 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  __getOtherFollowingList,
   __getFollowingList,
   __getFollowerList,
   __getFollowInfo,
@@ -38,7 +39,7 @@ const FollowList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getFollowingList(params.id));
+    dispatch(__getOtherFollowingList(params.id));
     dispatch(__getFollowingList(nickname));
   }, [dispatch]);
 
@@ -68,7 +69,11 @@ const FollowList = () => {
           }}
         >
           <div>
-            <StFollowProfile src={member.profileImage} />
+            <StFollowProfile
+              src={
+                member.profileImage === "" ? profileImgSvg : member.profileImage
+              }
+            />
             <StFollowNickname>{member.nickname}</StFollowNickname>
           </div>
 

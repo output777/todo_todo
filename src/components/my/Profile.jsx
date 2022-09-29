@@ -53,7 +53,7 @@ const Profile = () => {
   return (
     <>
       <StProfileContainer>
-        <div className="title">
+        <div className='title'>
           <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
             마이페이지
           </h3>
@@ -74,39 +74,41 @@ const Profile = () => {
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
-              alt="profileImage"
+              alt='profileImage'
               onError={handleImgError}
             />
           </StImg>
           <StInfo>
-            <div className="nextToPicture">
-              <span className="count">
-                {images === null || images === undefined ? 0 : images.length}
+            <div className='nextToPicture'>
+              <span className='count'>
+                {images === null || images.errorMessage !== undefined
+                  ? 0
+                  : images.length}
               </span>
-              <span className="text">사진</span>
+              <span className='text'>사진</span>
             </div>
             <div
-              className="nextToPicture"
+              className='nextToPicture'
               onClick={() => {
                 navigate(`/follower/${nickname}`);
               }}
             >
-              <span className="count">{userInfo?.followersCnt}</span>
-              <span className="text">팔로워</span>
+              <span className='count'>{userInfo?.followersCnt}</span>
+              <span className='text'>팔로워</span>
             </div>
             <div
-              className="nextToPicture"
+              className='nextToPicture'
               onClick={() => {
                 navigate(`/following/${nickname}`);
               }}
             >
-              <span className="count">{userInfo?.followingsCnt}</span>
-              <span className="text">팔로잉</span>
+              <span className='count'>{userInfo?.followingsCnt}</span>
+              <span className='text'>팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-          <div className="userName">
+          <div className='userName'>
             {nickname == null || nickname === "null" ? "" : nickname}
           </div>
           <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
@@ -126,6 +128,8 @@ const Profile = () => {
 
 const StStatusDiv = styled.div`
   width: 90%;
+  padding-top: 10px;
+  padding-left: 5%;
   margin: 0.3em auto 0 auto;
   .userName {
     font-weight: 1000;

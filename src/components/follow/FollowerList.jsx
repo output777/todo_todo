@@ -20,7 +20,7 @@ const FollowerList = () => {
   const navigate = useNavigate();
 
   const followerList = useSelector((state) => state.my?.follower);
-  // console.log(followerList);
+  console.log(followerList);
 
   const myfollowingList = useSelector((state) => state.my?.following);
   // console.log(myfollowingList);
@@ -40,7 +40,7 @@ const FollowerList = () => {
   useEffect(() => {
     dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, [__getFollowerList()]);
+  }, [dispatch]);
 
   return (
     <Stdiv>
@@ -68,7 +68,11 @@ const FollowerList = () => {
           }}
         >
           <div>
-            <StFollowProfile src={member.profileImage} />
+            <StFollowProfile
+              src={
+                member.profileImage === "" ? profileImgSvg : member.profileImage
+              }
+            />
             <StFollowNickname>{member.nickname}</StFollowNickname>
           </div>
 
