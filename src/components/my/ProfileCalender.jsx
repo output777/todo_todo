@@ -1,141 +1,173 @@
-import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components';
+import React from "react";
+import ReactCalendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import dayjs from "dayjs";
+import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { __getTodo } from "../../redux/modules/plannerSlice";
+import { useNavigate } from "react-router-dom";
 
-const ProfileCalender = () => {
-  const [day, setDay] = useState('');
-  const [weeklist, setWeeklist] = useState([]);
-  const days = ['일', '월', '화', '수', '목', '금', '토']
+const ProfileCalender = ({ setCalenderdate, selectDate, setSelectDate }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const marks = [];
 
-  let now = new Date();
-  let date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  console.log(day)
-  console.log(typeof day)
-  const makeWeekArr = (data) => {
-    let day = data.getDay();
-    let week = [];
-    for (let i = 0; i <= 6; i++) {
-      let newDate = new Date(data.valueOf() + 86400000 * (i - day));
-      week.push([i, newDate]);
-    }
-    setWeeklist(week);
-    return week;
-  }
-
-
-  const onPressArrowLeft = () => {
-    let newDate = new Date(day.valueOf() - 86400000 * 7);
-    console.log(newDate);
-    let newWeek = makeWeekArr(newDate);
-    setDay(newDate);
-    setWeeklist(newWeek)
-  }
-
-  const onPressArrowRight = () => {
-    let newDate = new Date(day.valueOf() + 86400000 * 7);
-    console.log(newDate);
-    console.log(typeof newDate);
-    let newWeek = makeWeekArr(newDate);
-    setDay(newDate);
-    setWeeklist(newWeek)
-  }
-
-  console.log(weeklist.map((data) => {
-    console.log(data[1].getTime() === date.getTime());
-  }))
-
-  console.log(Math.random().toFixed(2));
-
-  useEffect(() => {
-    setDay(date);
-    makeWeekArr(date);
-  }, [])
+  const selectDateHandler = async (date) => {
+    const newDate = dayjs(date).format("YYYY-MM-DD");
+    let nickname = localStorage.getItem("nickname");
+    localStorage.setItem("date", newDate);
+    // setCalenderdate(() => newDate)
+    // setSelectDate(newDate)
+    await dispatch(__getTodo({ date: newDate, nickname }));
+    navigate("/my/planner");
+  };
 
   return (
-    <>
-      <StYearMonth>
-        <button onClick={onPressArrowLeft}>⬅</button>
-        <p className='year'>{day && day.getFullYear()}년</p>
-        <p className='month'>{day && day.getMonth() + 1}월</p>
-        <button onClick={onPressArrowRight}>➡</button>
-      </StYearMonth>
-      <StDays>
-        {weeklist && weeklist.map((data, index) => (
-          <div className='date' key={index} >
-            <div>
-              {data[1].getTime() === date.getTime()
-                ?
-                <div className='today'>
-                  <p>{days[data[0]]}</p>
-                  <StAchievementRate opacity={Math.random().toFixed(2)}>{data[1].getDate()}</StAchievementRate>
-                </div>
-                :
-                <div>
-                  <p>{days[data[0]]}</p>
-                  <StAchievementRate opacity={Math.random().toFixed(2)}>{data[1].getDate()}</StAchievementRate>
-                </div>
-              }
-            </div>
-          </div>
-        ))}
-      </StDays>
-    </>
-  )
-}
+    <StDiv>
+      <ReactCalendar
+        // onChange={setSelectDate}
+        onClickDay={selectDateHandler}
+        // value={selectDate}
+        locale='Korean'
+        formatDay={(locale, date) => dayjs(date).format("DD")}
+        calendarType='US'
+      />
+    </StDiv>
+  );
+};
 
-const StYearMonth = styled.div`
-  display: flex;
-  justify-content:center;
+export default ProfileCalender;
 
-  & button {
-    border: none;
+const StDiv = styled.div`
+  .react-calendar {
+    width: 350px;
+    max-width: 100%;
+    background: white;
+    border: 1px solid #a0a096;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+  }
+  .react-calendar--doubleView {
+    width: 700px;
+  }
+  .react-calendar--doubleView .react-calendar__viewContainer {
+    display: flex;
+    margin: -0.5em;
+  }
+  .react-calendar--doubleView .react-calendar__viewContainer > * {
+    width: 50%;
+    margin: 0.5em;
+  }
+  .react-calendar,
+  .react-calendar *,
+  .react-calendar *:before,
+  .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .react-calendar button {
+    margin: 0;
+    border: 0;
     outline: none;
-    background-color: inherit;
-    margin: 0 1rem;
   }
-
-  .year {
-    font-size: 1.5rem;
-    padding-right: 0.2rem;
+  .react-calendar button:enabled:hover {
+    cursor: pointer;
   }
-  .month {
-    font-size: 1.5rem;
+  .react-calendar__navigation {
+    display: flex;
+    height: 44px;
+    margin-bottom: 1em;
   }
-`
-const StDays = styled.div`
-  display:flex;
-
-  & .date {
-    width: 50px;
+  .react-calendar__navigation button {
+    min-width: 44px;
+    background: none;
+    color: #ff8f27;
+  }
+  .react-calendar__navigation button:disabled {
+    background-color: #f0f0f0;
+  }
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #ff8f2740;
+  }
+  //월~토 표기 부분
+  .react-calendar__month-view__weekdays {
     text-align: center;
-    margin:auto;
-    } 
-
-  & .date {
-
-    .today  {
-      background: #d7d5d5;
-      border-radius: 20px;
-
-      p {
-        margin: 0;
-        }
-    }
-  & p {
-      margin: 0;
-    }
-
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.75em;
   }
-`
-
-const StAchievementRate = styled.div`
-  background: rgba(255,143,39, ${props => props.opacity});
-  z-index:2;
-  height: 50px;
-  border-radius: 20px;
-  display: flex;
-  align-items:center;
-  justify-content:center;
-  `
-
-export default ProfileCalender
+  .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+  }
+  .react-calendar__month-view__weekNumbers .react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
+  .react-calendar__month-view__days__day--weekend {
+    color: red;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: #d7d5d5;
+  }
+  .react-calendar__year-view .react-calendar__tile,
+  .react-calendar__decade-view .react-calendar__tile,
+  .react-calendar__century-view .react-calendar__tile {
+    padding: 2em 0.5em;
+  }
+  .react-calendar__tile {
+    max-width: 100%;
+    padding: 10px 6.6667px;
+    background: none;
+    text-align: center;
+    line-height: 16px;
+  }
+  .react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+  }
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    width: 50px;
+    height: 50px;
+    background: #e6e6e6;
+    border-radius: 50%;
+    color: white;
+  }
+  .react-calendar__tile--now {
+    width: 50px;
+    height: 50px;
+    background: #ff8f27;
+    border-radius: 50%;
+    color: white;
+  }
+  .react-calendar__tile--now:enabled:hover,
+  .react-calendar__tile--now:enabled:focus {
+  }
+  .react-calendar__tile--hasActive {
+    background: #ff8f2780;
+  }
+  .react-calendar__tile--hasActive:enabled:hover,
+  .react-calendar__tile--hasActive:enabled:focus {
+  }
+  .react-calendar__tile--active {
+    background: #ff8f2780;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: #ff8f2780;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  .react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #e6e6e6;
+  }
+`;

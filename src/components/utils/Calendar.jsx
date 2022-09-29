@@ -13,9 +13,9 @@ const Calendar = ({ setCalenderdate, selectDate, setSelectDate }) => {
   const marks = [];
 
   const selectDateHandler = async (date) => {
-    const newDate = dayjs(date).format("YYYY-MM-DD")
+    const newDate = dayjs(date).format("YYYY-MM-DD");
     let nickname = localStorage.getItem("nickname");
-    localStorage.setItem('date', newDate);
+    localStorage.setItem("date", newDate);
     // setCalenderdate(() => newDate)
     // setSelectDate(newDate)
     await dispatch(__getTodo({ date: newDate, nickname }));
@@ -31,57 +31,6 @@ const Calendar = ({ setCalenderdate, selectDate, setSelectDate }) => {
         locale='Korean'
         formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'
-      // tileContent
-      // tileClassName={({ date, view }) => {
-      //   if (
-      //     marks.find((x) => {
-      //       if (
-      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-      //         x.achievementRate < 25
-      //       ) {
-      //         return x;
-      //       }
-      //     })
-      //   ) {
-      //     return "highlight1";
-      //   }
-      //   if (
-      //     marks.find((x) => {
-      //       if (
-      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-      //         x.achievementRate >= 25 &&
-      //         x.achievementRate < 50
-      //       ) {
-      //         return x;
-      //       }
-      //     })
-      //   ) {
-      //     return "highlight2";
-      //   }
-      //   if (
-      //     marks.find((x) => {
-      //       if (
-      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-      //         x.achievementRate >= 50 &&
-      //         x.achievementRate < 75
-      //       )
-      //         return x;
-      //     })
-      //   ) {
-      //     return "highlight3";
-      //   }
-      //   if (
-      //     marks.find((x) => {
-      //       if (
-      //         x.addDate === dayjs(date).format("YYYY-MM-DD") &&
-      //         x.achievementRate >= 75
-      //       )
-      //         return x;
-      //     })
-      //   ) {
-      //     return "highlight4";
-      //   }
-      // }}
       />
     </StDiv>
   );

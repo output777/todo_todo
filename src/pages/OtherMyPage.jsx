@@ -7,7 +7,7 @@ const MyPage = () => {
   return (
     <StContainer>
       <OtherProfile />
-      {/* <OtherProfileTabs /> */}
+      <OtherProfileTabs />
     </StContainer>
   );
 };

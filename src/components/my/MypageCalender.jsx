@@ -1,15 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Modal from "../utils/Modal";
-import Calendar from "../utils/Calendar";
-import calendarSvg from "../../assets/img/calendarSvg.svg";
 import dayjs from "dayjs";
+import calendarSvg from "../../assets/img/calendarSvg.svg";
+import ProfileCalender from "./ProfileCalender";
 
-const MypageCalender = () => {
+const MypageCalender = ({
+  calenderdate,
+  setCalenderdate,
+  selectDate,
+  setSelectDate,
+}) => {
+  const days = [
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일",
+  ];
   const [modalVisible, setModalVisible] = useState(false);
-  const [calenderdate, setCalenderdate] = useState(
-    dayjs(Date.now()).format("YYYY-MM-DD")
-  );
+
+  console.log("calenderdate", calenderdate);
 
   const openModal = () => {
     setModalVisible(true);
@@ -17,10 +30,14 @@ const MypageCalender = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
   return (
     <StDateDiv>
-      <StSpan>{dayjs(calenderdate).format("YYYY-MM-DD")}</StSpan>
-      <img src={calendarSvg} onClick={openModal} />
+      <StSpan>
+        {dayjs(calenderdate).month() + 1}월 {dayjs(calenderdate).date()}일{" "}
+        {days[dayjs(calenderdate).day()]}
+      </StSpan>
+      <img src={calendarSvg} onClick={openModal} alt='calendarIcon' />
       {modalVisible && (
         <Modal
           visible={modalVisible}
@@ -28,9 +45,13 @@ const MypageCalender = () => {
           maskClosable={true}
           onClose={closeModal}
           width='350px'
-          top='20%'
+          top='30%'
         >
-          <Calendar setCalenderdate={setCalenderdate} />
+          <ProfileCalender
+            setCalenderdate={setCalenderdate}
+            selectDate={selectDate}
+            setSelectDate={setSelectDate}
+          />
         </Modal>
       )}
     </StDateDiv>
