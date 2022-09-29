@@ -156,6 +156,7 @@ const ProfileInfo = () => {
 
   // 닉네임 중복확인, 학년, 학교 입력시 버튼 컬러 변화
   if (
+    isNicknameCheck &&
     nicknameCheck?.includes("가능") &&
     grade !== null &&
     highschoolResultClick
@@ -259,6 +260,7 @@ const ProfileInfo = () => {
         <button
           ref={startButton}
           disabled={
+            isNicknameCheck &&
             nicknameCheck?.includes("가능") &&
             grade !== null &&
             highschoolResultClick
