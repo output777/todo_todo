@@ -117,6 +117,8 @@ const ProfileInfo = () => {
 
   const onClickSearchCancelHandler = () => {
     setHighschoolInput("");
+    highSchoolSearchInput.current.classList.remove("active");
+
     setHighschoolResult([]);
     setHighschoolResultClick(false);
   };
@@ -181,7 +183,7 @@ const ProfileInfo = () => {
         <p>닉네임</p>
 
         <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
-          {isNicknameCheck ? (
+          {isNicknameCheck && nicknameCheck?.includes("가능") ? (
             <input
               type="text"
               placeholder="2-12자의 영문,한글,숫자 사용 가능"
@@ -225,7 +227,7 @@ const ProfileInfo = () => {
             ref={highSchoolSearchInput}
           />
           {highschoolInput.length > 0 ? (
-            <button onClick={onClickSearchCancelHandler}>
+            <button onClick={onClickSearchCancelHandler} className="cancelSvg">
               <img src={cancelSvg} alt="search" />
             </button>
           ) : (
@@ -322,7 +324,7 @@ const StInfoNicknameBox = styled.div`
     border-left: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 54px;
+    height: 56px;
     width: 25%;
     font-size: 0.9rem;
     background-color: #fff;
@@ -418,15 +420,18 @@ const StHighschoolBox = styled.div`
       border-left: none;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      padding: 0.8rem 0rem;
-      width: 10%;
-      font-size: 0.9rem;
       background-color: #fff;
-      color: #ff7b00;
+      padding-right: 1rem;
     }
 
     .active {
       border: 1px solid #ff8f27;
+      border-right: none;
+    }
+
+    .cancelSvg {
+      border: 1px solid #ff8f27;
+      border-left: none;
     }
   }
 `;
