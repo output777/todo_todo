@@ -214,8 +214,8 @@ export const __getFollowingList = createAsyncThunk(
       };
 
       const data = await axios.get(`${BASE_URL}/followings/${payload}`, config);
-      console.log("data", data.data);
-      console.log("payload", payload);
+      // console.log("data", data.data);
+      // console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -264,8 +264,8 @@ export const __getFollowerList = createAsyncThunk(
       };
 
       const data = await axios.get(`${BASE_URL}/followers/${payload}`, config);
-      console.log("data", data.data);
-      console.log("payload", payload);
+      // console.log("data", data.data);
+      // console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
