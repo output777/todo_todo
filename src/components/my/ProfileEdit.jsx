@@ -28,7 +28,7 @@ const ProfileEdit = () => {
   const [saveStatus, setSaveStatus] = useState(false);
   const [modalView, setModalView] = useState(false);
   const [profileImageState, setProfileImageState] = useState();
-  const [mottoInput, setMottoInput] = useState('');
+  const [mottoInput, setMottoInput] = useState("");
   const profileUploadRef = useRef(null);
 
   let formData = new FormData();
@@ -40,9 +40,12 @@ const ProfileEdit = () => {
 
   useEffect(() => {
     if (userInfo !== null) {
-      setMottoInput(userInfo.myMotto)
+      setMottoInput(userInfo.myMotto);
     }
-  }, [userInfo])
+    if (userInfo?.myMotto == null) {
+      setMottoInput("");
+    }
+  }, [userInfo]);
 
   // 완료버튼 클릭
   const onClickProfileEditComplete = () => {
@@ -80,7 +83,6 @@ const ProfileEdit = () => {
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
   };
-
 
   const readImage = (input) => {
     // 인풋 태그에 파일이 있는 경우
