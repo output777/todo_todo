@@ -59,11 +59,6 @@ const OtherProfile = () => {
     }
   }, [followingList]);
 
-  // let followcheck = localStorage.getItem("follow");
-  // console.log(typeof followcheck);
-
-  //followingList.findIndex((element) => element.nickname == params.id)
-
   const followerBtnHandler = async () => {
     await dispatch(__getFollowInfo(user.id));
     await dispatch(__getOtherInfo(params.id));

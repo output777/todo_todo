@@ -9,7 +9,6 @@ import {
   __getFollowerList,
   __getFollowingList,
   __getFollowInfo,
-  __getOtherInfo,
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
@@ -21,10 +20,10 @@ const FollowerList = () => {
   const navigate = useNavigate();
 
   const followerList = useSelector((state) => state.my?.follower);
-  console.log(followerList);
+  // console.log(followerList);
 
   const myfollowingList = useSelector((state) => state.my?.following);
-  console.log(myfollowingList);
+  // console.log(myfollowingList);
 
   const params = useParams();
 
@@ -41,7 +40,7 @@ const FollowerList = () => {
   useEffect(() => {
     dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, []);
+  }, [__getFollowerList()]);
 
   return (
     <Stdiv>

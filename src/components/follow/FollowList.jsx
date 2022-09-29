@@ -6,7 +6,6 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  __getOtherFollowingList,
   __getFollowingList,
   __getFollowerList,
   __getFollowInfo,
@@ -21,10 +20,10 @@ const FollowList = () => {
   const navigate = useNavigate();
 
   const followingList = useSelector((state) => state.my.following);
-  console.log(followingList);
+  // console.log(followingList);
 
   const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
-  console.log(OtherfollowingList);
+  // console.log(OtherfollowingList);
 
   const params = useParams();
 
@@ -39,9 +38,9 @@ const FollowList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getOtherFollowingList(params.id));
+    dispatch(__getFollowingList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Stdiv>
@@ -76,8 +75,7 @@ const FollowList = () => {
           {nickname == member.nickname ? (
             <div></div>
           ) : nickname !== member.nickname &&
-            followingList?.find((v) => v.nickname === member.nickname) &&
-            follow === false ? (
+            followingList?.find((v) => v.nickname === member.nickname) ? (
             <StFollowingBtn
               onClick={(event) => {
                 event.stopPropagation();
