@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import ProfilePhotos from "../my/ProfilePhotos";
-import ProfilePlanner from "../my/ProfilePlanner";
+import OtherProfilePhotos from "../othermy/OtherProfilePhotos";
+import OtherProfilePlanner from "../othermy/OtherProfilePlanner";
 
 const OtherProfileTabs = () => {
   const [change, setChange] = useState(true);
@@ -36,10 +36,10 @@ const OtherProfileTabs = () => {
       </StTabsTitle>
       {change ? (
         <>
-          <ProfilePhotos />
+          <OtherProfilePhotos />
         </>
       ) : (
-        <ProfilePlanner />
+        <OtherProfilePlanner />
       )}
     </>
   );

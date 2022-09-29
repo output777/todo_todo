@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import PlannerCalender from "../planner/PlannerCalender";
 import categorySvg from "../../assets/img/categorySvg.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +9,7 @@ import {
 } from "../../redux/modules/plannerSlice";
 import dayjs from "dayjs";
 import { __getDday } from "../../redux/modules/mainSlice";
+import MypageCalender from "./MypageCalender";
 
 const ProfilePlanner = () => {
   const dispatch = useDispatch();
@@ -85,7 +85,7 @@ const ProfilePlanner = () => {
     <>
       <StDiv>
         <div className='header'>
-          <PlannerCalender
+          <MypageCalender
             calenderdate={calenderdate}
             selectDate={selectDate}
             setSelectDate={setSelectDate}

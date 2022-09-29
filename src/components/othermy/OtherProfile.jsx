@@ -17,7 +17,7 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 const OtherProfile = () => {
   const nickname = localStorage.getItem("nickname");
 
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
