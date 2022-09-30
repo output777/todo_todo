@@ -10,7 +10,7 @@ import {
 import dayjs from "dayjs";
 import { __getDday } from "../../redux/modules/mainSlice";
 import MypageCalender from "./MypageCalender";
-import toggleSvg from '../../assets/img/toggleSvg.svg'
+import toggleSvg from "../../assets/img/toggleSvg.svg";
 import ProfilePlannerDate from "./ProfilePlannerDate";
 import doneSvg from "../../assets/img/doneSvg.svg";
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
@@ -33,7 +33,6 @@ const ProfilePlanner = () => {
     (state) => state.planner
   );
 
-
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { innerText } = e.target.children[0];
     const { id } = e.target.parentElement;
@@ -43,14 +42,16 @@ const ProfilePlanner = () => {
   };
 
   const onClickShowTodoHandler = (e) => {
-    if (e.currentTarget.childNodes[2].style.display === 'block') {
-      e.currentTarget.childNodes[1].childNodes[1].style.transform = 'rotate(0deg)';
-      e.currentTarget.childNodes[2].style.display = 'none';
+    if (e.currentTarget.childNodes[2].style.display === "block") {
+      e.currentTarget.childNodes[1].childNodes[1].style.transform =
+        "rotate(0deg)";
+      e.currentTarget.childNodes[2].style.display = "none";
     } else {
-      e.currentTarget.childNodes[1].childNodes[1].style.transform = 'rotate(-180deg)';
-      e.currentTarget.childNodes[2].style.display = 'block';
+      e.currentTarget.childNodes[1].childNodes[1].style.transform =
+        "rotate(-180deg)";
+      e.currentTarget.childNodes[2].style.display = "block";
     }
-  }
+  };
 
   useEffect(() => {
     const arr = [];
@@ -74,38 +75,40 @@ const ProfilePlanner = () => {
     setCategoryTodoList(arr);
   }, [category, todos]);
 
-
   useEffect(() => {
     let nickname = localStorage.getItem("nickname");
     dispatch(__getCategory(nickname));
     dispatch(__getTodayTodo(nickname));
   }, []);
 
-
   return (
     <>
       <StDiv>
-        <div className='header'>
+        <div className="header">
           <MypageCalender
             calenderdate={calenderdate}
             setCalenderdate={setCalenderdate}
             setFirstCheck={setFirstCheck}
             selectDate={selectDate}
             setSelectDate={setSelectDate}
-
           />
         </div>
 
-        {firstCheck ?
+        {firstCheck ? (
           <StCategoryContainer>
             {category.length > 0 &&
               category.map((data, index) => (
-                <StCategoryItem key={data.id} id={data.id} name={data.title} onClick={onClickShowTodoHandler}>
+                <StCategoryItem
+                  key={data.id}
+                  id={data.id}
+                  name={data.title}
+                  onClick={onClickShowTodoHandler}
+                >
                   <div
-                    className='top'
+                    className="top"
                     onClick={onClickSelectCategoryToTodoListHandler}
                   >
-                    <p className='title'>{data.title}</p>
+                    <p className="title">{data.title}</p>
 
                     {categoryTodoList.length > 0 && (
                       <p onClick={(e) => e.stopPropagation()}>
@@ -141,16 +144,18 @@ const ProfilePlanner = () => {
                           .filter((data) => data.complete === false)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
-                              <div className='top' id={data.todoId}>
+                              <div className="top" id={data.todoId}>
                                 <div
-                                  className='content'
-                                  style={{ display: "flex", alignItems: "center" }}
+                                  className="content"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
                                 >
-                                  <img
-                                    src={notDoneSvg}
-                                    alt='notDoneIcon'
-                                  />
-                                  <StTodoTitle className='title'>{data.content}</StTodoTitle>
+                                  <img src={notDoneSvg} alt="notDoneIcon" />
+                                  <StTodoTitle className="title">
+                                    {data.content}
+                                  </StTodoTitle>
                                 </div>
                               </div>
                             </StTodoItem>
@@ -163,16 +168,19 @@ const ProfilePlanner = () => {
                           .filter((data) => data.complete === true)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
-                              <div className='top' id={data.todoId}>
+                              <div className="top" id={data.todoId}>
                                 <div
-                                  className='content'
-                                  style={{ display: "flex", alignItems: "center" }}
+                                  className="content"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
                                 >
-                                  <img
-                                    src={doneSvg}
-                                    alt='doneIcon'
-                                  />
-                                  <StTodoTitle className='title' color='#E8E8E8'>
+                                  <img src={doneSvg} alt="doneIcon" />
+                                  <StTodoTitle
+                                    className="title"
+                                    color="#E8E8E8"
+                                  >
                                     {data.content}
                                   </StTodoTitle>
                                 </div>
@@ -181,13 +189,12 @@ const ProfilePlanner = () => {
                           ))}
                     </StTodoContainer>
                   </StTodoToggleBox>
-
                 </StCategoryItem>
               ))}
           </StCategoryContainer>
-          :
+        ) : (
           <ProfilePlannerDate />
-        }
+        )}
       </StDiv>
       {/* <Planner x={x} setX={setX} /> */}
     </>
@@ -195,10 +202,12 @@ const ProfilePlanner = () => {
 };
 
 const StDiv = styled.div`
+  position: relative;
+  z-index: 5;
   background-color: #fafafa;
   height: auto;
-  min-height:70vh;
-  padding-bottom:50px;
+  min-height: 70vh;
+  padding-bottom: 50px;
   font-family: "SUIT-Regular", sans-serif;
 
   & div {
@@ -289,25 +298,23 @@ const StProgressBar = styled.div`
 `;
 
 const StToggleBox = styled.div`
-  display:flex;
-  align-items:center;
-`
+  display: flex;
+  align-items: center;
+`;
 
 const StToggleImgBox = styled.div`
-  width:30px;
-  height:30px;
+  width: 30px;
+  height: 30px;
   display: flex;
-  justify-content:center;
-  align-items:center;
-  margin-left:10px;
-  transition:all 0.3s;
-`
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  transition: all 0.3s;
+`;
 
 const StTodoToggleBox = styled.div`
-display: none;
-`
-
-
+  display: none;
+`;
 
 const StTodoContainer = styled.div`
   padding: 20px;

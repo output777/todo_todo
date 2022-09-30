@@ -324,7 +324,7 @@ const StSliderBox = styled.div`
 
 const StFullScreen = styled.div`
   position: fixed;
-  z-index: 5;
+  z-index: 6;
   top: 0;
   bottom: 0;
   left: 0;

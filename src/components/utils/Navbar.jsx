@@ -85,7 +85,7 @@ export default Navbar;
 
 const StNav = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 5;
   width: 100%;
   max-width: 412px;
   min-width: 360px;
