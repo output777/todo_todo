@@ -169,118 +169,130 @@ const ProfileInfo = () => {
   }
 
   return (
-    <div
-      style={{
-        padding: "1rem 1rem 0.5rem 1rem",
-        height: "100%",
-        background: "#fff",
-        fontFamily: "SUIT-Regular, sans-serif",
-      }}
-    >
+    <>
       <StInfoTitle>
-        <p style={{ margin: 0 }}>회원 정보를 입력해주세요</p>
+        <div>
+          <p>회원 정보를 입력해주세요</p>
+        </div>
       </StInfoTitle>
-      <StInfoNicknameBox>
-        <p>닉네임</p>
+      <div
+        style={{
+          padding: "0rem 1rem 0rem 1rem",
+          height: "99%",
+          background: "#fff",
+          fontFamily: "SUIT-Regular, sans-serif",
+        }}
+      >
+        <StInfoNicknameBox>
+          <p>닉네임</p>
 
-        <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
-          {isNicknameCheck && nicknameCheck?.includes("가능") ? (
-            <input
-              type="text"
-              placeholder="2-12자의 영문,한글,숫자 사용 가능"
-              value={nickname}
-              onChange={onChangeNicknameHandler}
-              className="checkedInput"
-            />
-          ) : (
-            <>
+          <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
+            {isNicknameCheck && nicknameCheck?.includes("가능") ? (
               <input
                 type="text"
                 placeholder="2-12자의 영문,한글,숫자 사용 가능"
                 value={nickname}
                 onChange={onChangeNicknameHandler}
+                className="checkedInput"
               />
-              <button>중복 확인</button>
-            </>
-          )}
-        </form>
-        <span>{isNicknameCheck ? nicknameCheck : ""}</span>
-      </StInfoNicknameBox>
-      <StHighschoolBox>
-        <p>고등학교</p>
-        <div className="gradeBox">
-          <div ref={oneRef} onClick={onClickOneRefHandler}>
-            1학년
+            ) : (
+              <>
+                <input
+                  type="text"
+                  placeholder="2-12자의 영문,한글,숫자 사용 가능"
+                  value={nickname}
+                  onChange={onChangeNicknameHandler}
+                />
+                <button>중복 확인</button>
+              </>
+            )}
+          </form>
+          <span>{isNicknameCheck ? nicknameCheck : ""}</span>
+        </StInfoNicknameBox>
+        <StHighschoolBox>
+          <p>고등학교</p>
+          <div className="gradeBox">
+            <div ref={oneRef} onClick={onClickOneRefHandler}>
+              1학년
+            </div>
+            <div ref={twoRef} onClick={onClickTwoRefHandler}>
+              2학년
+            </div>
+            <div ref={threeRef} onClick={onClickThreeRefHandler}>
+              3학년
+            </div>
           </div>
-          <div ref={twoRef} onClick={onClickTwoRefHandler}>
-            2학년
+          <div className="inputBox" style={{ display: "flex" }}>
+            <input
+              type="text"
+              placeholder="고등학교를 검색해주세요"
+              value={highschoolInput}
+              onChange={onChangeSearchHandler}
+              ref={highSchoolSearchInput}
+            />
+            {highschoolInput.length > 0 ? (
+              <button
+                onClick={onClickSearchCancelHandler}
+                className="cancelSvg"
+              >
+                <img src={cancelSvg} alt="search" />
+              </button>
+            ) : (
+              <button>
+                <img src={searchSvg} alt="search" />
+              </button>
+            )}
           </div>
-          <div ref={threeRef} onClick={onClickThreeRefHandler}>
-            3학년
-          </div>
-        </div>
-        <div className="inputBox" style={{ display: "flex" }}>
-          <input
-            type="text"
-            placeholder="고등학교를 검색해주세요"
-            value={highschoolInput}
-            onChange={onChangeSearchHandler}
-            ref={highSchoolSearchInput}
-          />
-          {highschoolInput.length > 0 ? (
-            <button onClick={onClickSearchCancelHandler} className="cancelSvg">
-              <img src={cancelSvg} alt="search" />
-            </button>
-          ) : (
-            <button>
-              <img src={searchSvg} alt="search" />
-            </button>
-          )}
-        </div>
-      </StHighschoolBox>
-      <StHighschoolSearchBox>
-        {highschoolInput.length > 0
-          ? highschoolResult.length > 0 &&
-            highschoolResult.map((data, index) => (
-              <div className="content" key={index}>
-                <div className="school" onClick={onClickSelectHandler}>
-                  {data.schoolName}
+        </StHighschoolBox>
+        <StHighschoolSearchBox>
+          {highschoolInput.length > 0
+            ? highschoolResult.length > 0 &&
+              highschoolResult.map((data, index) => (
+                <div className="content" key={index}>
+                  <div className="school" onClick={onClickSelectHandler}>
+                    {data.schoolName}
+                  </div>
+                  <div className="region">
+                    <img src={regionSvg} alt="addressIcon" />
+                    {data.address}
+                  </div>
                 </div>
-                <div className="region">
-                  <img src={regionSvg} alt="addressIcon" />
-                  {data.address}
-                </div>
-              </div>
-            ))
-          : null}
-      </StHighschoolSearchBox>
+              ))
+            : null}
+        </StHighschoolSearchBox>
 
-      {/* 버튼 기능 활성/비활성 */}
-      <StBtnBox onSubmit={onSubmitRegisterHandler}>
-        <button
-          ref={startButton}
-          disabled={
-            isNicknameCheck &&
-            nicknameCheck?.includes("가능") &&
-            grade !== null &&
-            highschoolResultClick
-              ? false
-              : "disabled"
-          }
-        >
-          투두투두 시작하기!
-        </button>
-      </StBtnBox>
-    </div>
+        {/* 버튼 기능 활성/비활성 */}
+        <StBtnBox onSubmit={onSubmitRegisterHandler}>
+          <button
+            ref={startButton}
+            disabled={
+              isNicknameCheck &&
+              nicknameCheck?.includes("가능") &&
+              grade !== null &&
+              highschoolResultClick
+                ? false
+                : "disabled"
+            }
+          >
+            투두투두 시작하기!
+          </button>
+        </StBtnBox>
+      </div>
+    </>
   );
 };
 
 const StInfoTitle = styled.div`
   font-size: 1.4rem;
+  font-weight: bold;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
-  height: 8%;
-  border-bottom: 1px solid #ffe9d4;
+  height: 72px;
+  border-bottom: 1px solid #f1f3f5;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const StInfoNicknameBox = styled.div`
@@ -290,6 +302,7 @@ const StInfoNicknameBox = styled.div`
 
   & p {
     margin-bottom: 5px;
+    font-weight: bold;
   }
 
   & form {
@@ -329,6 +342,7 @@ const StInfoNicknameBox = styled.div`
     height: 56px;
     width: 25%;
     font-size: 0.9rem;
+    font-weight: bold;
     background-color: #fff;
     color: #ff7b00;
   }
@@ -379,6 +393,7 @@ const StHighschoolBox = styled.div`
 
   & p {
     margin-bottom: 0.5rem;
+    font-weight: bold;
   }
 
   & .gradeBox {
@@ -468,9 +483,14 @@ const StBtnBox = styled.form`
   margin: 0 0 0.5rem 0;
   height: 8%;
 
+  button {
+    font-weight: bold;
+  }
+
   .inactive {
     background-color: #e8e8e8;
     color: #9f9e9e;
+
     border: none;
     width: 280px;
     height: 50px;
