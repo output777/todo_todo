@@ -9,7 +9,6 @@ import {
   __getFollowerList,
   __getFollowingList,
   __getFollowInfo,
-  __getOtherFollowingList,
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
@@ -23,8 +22,8 @@ const FollowerList = () => {
   const followerList = useSelector((state) => state.my?.follower);
   console.log(followerList);
 
-  const myfollowingList = useSelector((state) => state.my?.following);
-  // console.log(myfollowingList);
+  const followingList = useSelector((state) => state.my?.following);
+  // console.log(followingList);
 
   const params = useParams();
 
@@ -39,9 +38,9 @@ const FollowerList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getOtherFollowingList(params.id));
+    dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, [dispatch, follow]);
+  }, [follow]);
 
   return (
     <Stdiv>
@@ -80,7 +79,7 @@ const FollowerList = () => {
           {nickname === member.nickname ? (
             <div></div>
           ) : nickname !== member.nickname &&
-            myfollowingList?.find((v) => v.nickname === member.nickname) ? (
+            followingList?.find((v) => v.nickname === member.nickname) ? (
             <StFollowingBtn
               onClick={(event) => {
                 event.stopPropagation();
@@ -111,6 +110,7 @@ export default FollowerList;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
+  height: 100vh;
 `;
 
 const StFollowBox = styled.div`
