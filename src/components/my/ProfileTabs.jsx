@@ -38,7 +38,6 @@ const ProfileTabs = () => {
       {change ? (
         <>
           <ProfilePhotos />
-          {/* <UploadPhoto /> */}
         </>
       ) : (
         <ProfilePlanner />
