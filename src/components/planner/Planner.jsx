@@ -59,7 +59,6 @@ const Planner = ({ x, setX }) => {
   };
 
   const onClickTodoAddHandler = async () => {
-
     let nickname = localStorage.getItem("nickname");
 
     if (todo.length > 0) {
@@ -371,7 +370,6 @@ const StDiv = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   overflow-y: scroll;
 
-
   & .header {
     width: 100%;
     height: 100px;
@@ -380,7 +378,7 @@ const StDiv = styled.div`
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
-    box-sizing:border-box;
+    box-sizing: border-box;
   }
 `;
 
@@ -497,7 +495,7 @@ const StModalBtnBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
+    width: 240px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
   }
