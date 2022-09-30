@@ -178,7 +178,7 @@ const ProfileInfo = () => {
       <div
         style={{
           padding: "0rem 1rem 0rem 1rem",
-          height: "99%",
+          height: "100%",
           background: "#fff",
           fontFamily: "SUIT-Regular, sans-serif",
         }}
@@ -461,9 +461,9 @@ const StHighschoolBox = styled.div`
 const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
-  overflow-y: scroll;
+  overflow: scroll;
+  height: 22.3rem;
   border-radius: 10px;
-  height: 40%;
 
   & .content {
     align-items: center;
@@ -485,7 +485,8 @@ const StBtnBox = styled.form`
   display: flex;
   justify-content: center;
   background-color: #fafafa;
-  margin: 0 0 0.5rem 0;
+  /* margin: 0 0 0.5rem 0; */
+  padding: 0 0 1rem 0;
   height: 8%;
 
   button {

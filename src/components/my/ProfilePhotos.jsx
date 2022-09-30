@@ -77,7 +77,14 @@ const ProfilePhotos = () => {
   }, [dispatch]);
 
   return (
-    <div style={{ backgroundColor: '#f8f8f8', height: 'auto', minHeight: '100vh', position: 'relative' }}>
+    <div
+      style={{
+        backgroundColor: "#f8f8f8",
+        height: "auto",
+        minHeight: "100vh",
+        position: "relative",
+      }}
+    >
       <StContainer>
         {images.errorMessage === undefined &&
           images.map((data) => (
@@ -86,7 +93,7 @@ const ProfilePhotos = () => {
             </StImg>
           ))}
       </StContainer>
-      <UploadPhoto />
+
       {fullScreen ? (
         <StFullScreen>
           <div className="header">
@@ -316,17 +323,17 @@ const StSliderBox = styled.div`
 `;
 
 const StFullScreen = styled.div`
-  width: 100%;
-  max-width:412px;
-  min-width: 360px;
-  height: 100vh;
-  background-color: #111111;
-  z-index: 10;
   position: fixed;
+  z-index: 6;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  max-width: 412px;
+  min-width: 360px;
+  height: 100vh;
+  background-color: #111111;
   margin: 0 auto;
 
   .StSliderBoxParent {

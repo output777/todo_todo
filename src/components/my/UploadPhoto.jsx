@@ -64,16 +64,20 @@ const UploadPhoto = () => {
 };
 
 const StUploadPhoto = styled.div`
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1rem;
+  z-index: 4;
+
   width: 58px;
   height: 58px;
   background-color: #ff8f27;
   border-radius: 50%;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 18px;
-  top: 7px;
+  /* right: 18px; */
+  /* top: 7px; */
   cursor: pointer;
 
   & input {

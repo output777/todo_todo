@@ -7,18 +7,20 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { __reset } from "../redux/modules/mainSlice";
 import Layout from "../components/utils/Layout";
+import UploadPhoto from "../components/my/UploadPhoto";
 
 const MyPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__reset())
-  }, [])
+    dispatch(__reset());
+  }, []);
 
   return (
     <StContainer>
       <Profile />
       <ProfileTabs />
+      <UploadPhoto />
       <Navbar myPage={true} />
     </StContainer>
   );
