@@ -365,7 +365,7 @@ const StNotFollowBtn = styled.button`
   height: 40px;
   background: #ff8f27;
   border-radius: 16px;
-  margin: 15px auto 0rem auto;
+  margin: 20px auto 0rem auto;
   span {
     padding: 0 0 4px 4px;
     font-size: 20px;
@@ -384,7 +384,7 @@ const StFollowingBtn = styled.button`
   height: 40px;
   background: #fff3e8;
   border-radius: 16px;
-  margin: 15px auto 0rem auto;
+  margin: 20px auto 0rem auto;
   img {
     padding: 0 0 0px 4px;
     font-size: 16px;
