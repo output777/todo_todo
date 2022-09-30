@@ -79,8 +79,9 @@ const Profile = () => {
             />
           </StImg>
           <StInfo>
-            <div className='nextToPicture'>
-              <span className='count'>
+
+            <div className="nextToPicture">
+              <span className="count">
                 {images === null || images.errorMessage !== undefined
                   ? 0
                   : images.length}
