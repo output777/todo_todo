@@ -14,13 +14,13 @@ import {
 const FollowerList = () => {
   const nickname = localStorage.getItem("nickname");
 
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const followerList = useSelector((state) => state.my?.follower);
-  // console.log(followerList);
+  console.log(followerList);
 
   const myfollowingList = useSelector((state) => state.my?.following);
   // console.log(myfollowingList);
@@ -40,7 +40,7 @@ const FollowerList = () => {
   useEffect(() => {
     dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, [__getFollowerList()]);
+  }, [dispatch, follow]);
 
   return (
     <Stdiv>
@@ -68,7 +68,11 @@ const FollowerList = () => {
           }}
         >
           <div>
-            <StFollowProfile src={member.profileImage} />
+            <StFollowProfile
+              src={
+                member.profileImage === "" ? profileImgSvg : member.profileImage
+              }
+            />
             <StFollowNickname>{member.nickname}</StFollowNickname>
           </div>
 

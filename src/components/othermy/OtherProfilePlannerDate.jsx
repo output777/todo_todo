@@ -7,7 +7,7 @@ import { __getTodo } from "../../redux/modules/plannerSlice";
 import Navbar from "../utils/Navbar";
 import dayjs from "dayjs";
 import PlannerDate from "../planner/PlannerDate";
-import toggleSvg from '../../assets/img/toggleSvg.svg'
+import toggleSvg from "../../assets/img/toggleSvg.svg";
 import doneSvg from "../../assets/img/doneSvg.svg";
 import notDoneSvg from "../../assets/img/notDoneSvg.svg";
 import { useParams } from "react-router-dom";
@@ -39,7 +39,6 @@ const OtherProfilePlannerDate = () => {
     calenderdate
   );
 
-
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { title } = e.currentTarget;
     setSelectedCategoryName(title);
@@ -47,14 +46,16 @@ const OtherProfilePlannerDate = () => {
   };
 
   const onClickShowTodoHandler = (e) => {
-    if (e.currentTarget.childNodes[2].style.display === 'block') {
-      e.currentTarget.childNodes[1].childNodes[1].style.transform = 'rotate(0deg)';
-      e.currentTarget.childNodes[2].style.display = 'none';
+    if (e.currentTarget.childNodes[2].style.display === "block") {
+      e.currentTarget.childNodes[1].childNodes[1].style.transform =
+        "rotate(0deg)";
+      e.currentTarget.childNodes[2].style.display = "none";
     } else {
-      e.currentTarget.childNodes[1].childNodes[1].style.transform = 'rotate(-180deg)';
-      e.currentTarget.childNodes[2].style.display = 'block';
+      e.currentTarget.childNodes[1].childNodes[1].style.transform =
+        "rotate(-180deg)";
+      e.currentTarget.childNodes[2].style.display = "block";
     }
-  }
+  };
 
   useEffect(() => {
     console.log("dateTodo", dateTodo, "date", date);
@@ -78,15 +79,15 @@ const OtherProfilePlannerDate = () => {
     }
 
     arr = Object.keys(obj);
-    console.log('arr', arr)
+    console.log("arr", arr);
 
     for (let i = 0; i < arr.length; i++) {
       const newData = dateTodo.filter((data) => data.category === arr[i]);
-      console.log('data', newData)
+      console.log("data", newData);
       newArr.push(newData);
     }
 
-    console.log('newArr', newArr)
+    console.log("newArr", newArr);
     setCategory(arr);
     setCategoryTodoComplete(arrComplete);
     setCategoryTodoList(newArr);
@@ -96,17 +97,17 @@ const OtherProfilePlannerDate = () => {
   console.log("dateTodoObj", dateTodoObj, "categoryTodoList", categoryTodoList);
 
   useEffect(() => {
-    let date = localStorage.getItem('date');
+    let date = localStorage.getItem("date");
     setCalenderdate(date);
   }, [date]);
 
-  console.log('calenderdate', calenderdate, 'selectDate', selectDate)
+  console.log("calenderdate", calenderdate, "selectDate", selectDate);
 
   useEffect(() => {
     console.log("localStorage.getItem", localStorage.getItem("date"));
     let date = localStorage.getItem("date");
     let nickname = localStorage.getItem("nickname");
-    console.log('date', date, 'nickname', nickname);
+    console.log("date", date, "nickname", nickname);
 
     dispatch(__getTodo({ date: date, nickname: params.id }));
   }, [dispatch]);
@@ -117,7 +118,11 @@ const OtherProfilePlannerDate = () => {
         <StCategoryContainer>
           {category.length > 0 &&
             category.map((data, index) => (
-              <StCategoryItem key={index} id={index} onClick={onClickShowTodoHandler}>
+              <StCategoryItem
+                key={index}
+                id={index}
+                onClick={onClickShowTodoHandler}
+              >
                 <div
                   className='top'
                   title={data}
@@ -126,8 +131,7 @@ const OtherProfilePlannerDate = () => {
                   <p className='title'>{data}</p>
                   {category.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
-                      {categoryTodoComplete[`${category[index]}`] ===
-                        undefined
+                      {categoryTodoComplete[`${category[index]}`] === undefined
                         ? 0
                         : categoryTodoComplete[`${category[index]}`]}
                       /{dateTodoObj[`${category[index]}`]}
@@ -140,55 +144,74 @@ const OtherProfilePlannerDate = () => {
                       width={
                         isNaN(
                           categoryTodoComplete[`${category[index]}`] /
-                          dateTodoObj[`${category[index]}`]
+                            dateTodoObj[`${category[index]}`]
                         )
                           ? 0
                           : (categoryTodoComplete[`${category[index]}`] /
-                            dateTodoObj[`${category[index]}`]) *
-                          100
+                              dateTodoObj[`${category[index]}`]) *
+                            100
                       }
                       backgroundColor='#74E272'
                     ></StProgressBar>
                   </StProgressBarBox>
                   <StToggleImgBox>
-                    <img src={toggleSvg} alt="toggleIcon" />
+                    <img src={toggleSvg} alt='toggleIcon' />
                   </StToggleImgBox>
                 </StToggleBox>
 
-
                 <StTodoToggleBox>
                   <StTodoContainer>
-                    {categoryTodoList.length > 0 && categoryTodoList[index].filter((data) => data.complete === false).map((data) => (
-                      <StTodoItem key={data.todoId} name={data.title}>
-                        <div className='top' id={data.todoId}>
-                          <div className="content" style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={notDoneSvg} alt="notDoneIcon" />
-                            <StTodoTitle className='title'>{data.content}</StTodoTitle>
-                          </div>
-                        </div>
-                      </StTodoItem>
-                    ))}
+                    {categoryTodoList.length > 0 &&
+                      categoryTodoList[index]
+                        .filter((data) => data.complete === false)
+                        .map((data) => (
+                          <StTodoItem key={data.todoId} name={data.title}>
+                            <div className='top' id={data.todoId}>
+                              <div
+                                className='content'
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img src={notDoneSvg} alt='notDoneIcon' />
+                                <StTodoTitle className='title'>
+                                  {data.content}
+                                </StTodoTitle>
+                              </div>
+                            </div>
+                          </StTodoItem>
+                        ))}
                   </StTodoContainer>
 
                   <StTodoContainer>
-                    {categoryTodoList.length > 0 && categoryTodoList[index].filter((data) => data.complete === true).map((data) => (
-                      <StTodoItem key={data.todoId} name={data.title}>
-                        <div className='top' id={data.todoId}>
-                          <div className="content" style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={doneSvg} alt="doneIcon" />
-                            <StTodoTitle className='title' color='#E8E8E8'>{data.content}</StTodoTitle>
-                          </div>
-                        </div>
-                      </StTodoItem>
-                    ))}
+                    {categoryTodoList.length > 0 &&
+                      categoryTodoList[index]
+                        .filter((data) => data.complete === true)
+                        .map((data) => (
+                          <StTodoItem key={data.todoId} name={data.title}>
+                            <div className='top' id={data.todoId}>
+                              <div
+                                className='content'
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <img src={doneSvg} alt='doneIcon' />
+                                <StTodoTitle className='title' color='#E8E8E8'>
+                                  {data.content}
+                                </StTodoTitle>
+                              </div>
+                            </div>
+                          </StTodoItem>
+                        ))}
                   </StTodoContainer>
                 </StTodoToggleBox>
-
               </StCategoryItem>
             ))}
         </StCategoryContainer>
       </StDiv>
-      <Navbar planner={true} />
 
       {/* 
       <PlannerDate
@@ -197,8 +220,6 @@ const OtherProfilePlannerDate = () => {
         display={display}
         setDisplay={setDisplay}
       /> */}
-
-
     </>
   );
 };
@@ -292,25 +313,23 @@ const StProgressBar = styled.div`
 `;
 
 const StToggleBox = styled.div`
-  display:flex;
-  align-items:center;
-`
+  display: flex;
+  align-items: center;
+`;
 
 const StToggleImgBox = styled.div`
-  width:20px;
-  height:20px;
+  width: 20px;
+  height: 20px;
   display: flex;
-  justify-content:center;
-  align-items:center;
-  margin-left:10px;
-  transition:all 0.3s;
-`
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  transition: all 0.3s;
+`;
 
 const StTodoToggleBox = styled.div`
-display: none;
-`
-
-
+  display: none;
+`;
 
 const StTodoContainer = styled.div`
   padding: 20px;

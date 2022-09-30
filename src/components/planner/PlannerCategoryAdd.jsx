@@ -305,7 +305,7 @@ const StModalBtnBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
+    width: 240px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
   }
