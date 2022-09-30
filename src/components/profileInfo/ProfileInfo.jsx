@@ -458,7 +458,7 @@ const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
   overflow: scroll;
-  height: 20rem;
+  height: 22.3rem;
   border-radius: 10px;
 
   & .content {
