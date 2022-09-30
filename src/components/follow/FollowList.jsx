@@ -32,11 +32,13 @@ const FollowList = () => {
 
   const followerBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
+    dispatch(__getFollowingList(nickname));
     setFollow(() => false);
   };
 
   const followBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
+    dispatch(__getFollowingList(nickname));
     setFollow(() => true);
   };
 
@@ -79,7 +81,7 @@ const FollowList = () => {
             <StFollowNickname>{member.nickname}</StFollowNickname>
           </div>
 
-          {nickname == member.nickname ? (
+          {nickname !== params.id ? (
             <div></div>
           ) : nickname !== member.nickname &&
             followingList?.find((v) => v.nickname === member.nickname) ? (
