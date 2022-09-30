@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getDday, __getTotalRate, __reset } from "../../redux/modules/mainSlice";
+import {
+  __getDday,
+  __getTotalRate,
+  __reset,
+} from "../../redux/modules/mainSlice";
 import {
   __getOtherInfo,
   __getFollowInfo,
@@ -16,7 +20,6 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 
 const OtherProfile = () => {
   const params = useParams();
@@ -81,14 +84,14 @@ const OtherProfile = () => {
   }, [dispatch]);
 
   const monthFunc = async () => {
-    const { data } = await axios.get(`${BASE_URL}/month`)
-    console.log('data', data)
-    setMonth(() => data)
-  }
+    const { data } = await axios.get(`${BASE_URL}/month`);
+    console.log("data", data);
+    setMonth(() => data);
+  };
 
   useEffect(() => {
     monthFunc();
-  }, [])
+  }, []);
 
   if (!user) {
     return <div></div>;
@@ -149,14 +152,23 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking === undefined ? '순위없음 ' : `${userRank[1].ranking}위`}
-              {userRank[1].score === undefined ? '0' : (userRank[1].score / 7).toFixed(2)}점<div>주간 점수</div>
+              {userRank[1].ranking === undefined
+                ? "순위없음 "
+                : `${userRank[1].ranking}위`}
+              {userRank[1].score === undefined
+                ? "0"
+                : (userRank[1].score / 7).toFixed(2)}
+              점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking === undefined ? '순위없음 ' : `${userRank[2].ranking}위`}
-              {userRank[2].score === undefined ? '0' : (userRank[2].score / month).toFixed(2)}점
-              <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
+              {userRank[2].ranking === undefined
+                ? "순위없음 "
+                : `${userRank[2].ranking}위`}
+              {userRank[2].score === undefined
+                ? "0"
+                : (userRank[2].score / month).toFixed(2)}
+              점<StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>
@@ -200,7 +212,7 @@ const StProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 380px;
-  background-color:#fff;
+  background-color: #fff;
   box-sizing: border-box;
 
   .title {
@@ -303,73 +315,6 @@ const StInfo = styled.div`
       font-weight: 7000;
     }
   }
-`;
-
-const StTextBox = styled.div`
-  margin-top: 10px;
-
-  /* height: 90px; */
-  /* p {
-    color: #111;
-    font-size: 2rem;
-  }
-
-  & p.text {
-    margin-top: 5px;
-    width: 90%;
-    font-size: 0.9rem;
-    display: none;
-  }
-
-  & p.text.show {
-    margin-top: 5px;
-    width: 90%;
-    font-size: 0.9rem;
-    display: block;
-  }
-
-  & div.editText {
-    margin-top: 5px;
-    position: relative;
-    height: 30px;
-    border-bottom: 1px solid #ececec;
-    display: flex;
-
-    form {
-      width: 100%;
-      display: none;
-    }
-
-    form.show {
-      display: block;
-
-      input {
-        border: 1px solid red;
-        width: 80%;
-        border: none;
-        outline: none;
-      }
-    }
-
-    button {
-      width: 10%;
-      font-size: 1rem;
-      border: none;
-      background-color: #fff;
-    }
-
-    img {
-      width: 20px;
-      height: 20px;
-      display: none;
-    }
-
-    img.show {
-      width: 20px;
-      height: 20px;
-      display: block;
-    }
-  } */
 `;
 
 const StNotFollowBtn = styled.button`

@@ -6,7 +6,6 @@ import follwingcheck from "../../assets/img/followingcheck.svg";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  __getOtherFollowingList,
   __getFollowingList,
   __getFollowerList,
   __getFollowInfo,
@@ -23,23 +22,26 @@ const FollowList = () => {
   const followingList = useSelector((state) => state.my.following);
   // console.log(followingList);
 
-  const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
+  const followerList = useSelector((state) => state.my?.follower);
+  console.log(followerList);
+
+  // const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
   // console.log(OtherfollowingList);
 
   const params = useParams();
 
   const followerBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
-    setFollow(() => true);
+    setFollow(() => false);
   };
 
   const followBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
-    setFollow(() => false);
+    setFollow(() => true);
   };
 
   useEffect(() => {
-    dispatch(__getOtherFollowingList(params.id));
+    dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
   }, [follow, dispatch]);
 
@@ -57,7 +59,7 @@ const FollowList = () => {
         </div>
       </StFollowtopBox>
 
-      {OtherfollowingList?.map((member) => (
+      {followingList?.map((member) => (
         <StFollowBox
           key={member.id}
           onClick={() => {
@@ -111,6 +113,7 @@ export default FollowList;
 
 const Stdiv = styled.div`
   background-color: #fafafa;
+  height: 100vh;
 `;
 
 const StFollowBox = styled.div`
