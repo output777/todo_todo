@@ -49,8 +49,8 @@ const ProfileTabs = () => {
 const StTabsTitle = styled.div`
   display: flex;
   height: 45px;
-
   position: sticky;
+  z-index: 10;
   top: 0;
   background-color: white;
 `;
