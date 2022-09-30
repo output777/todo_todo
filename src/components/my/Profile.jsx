@@ -81,7 +81,9 @@ const Profile = () => {
           <StInfo>
             <div className="nextToPicture">
               <span className="count">
-                {images === null || images === undefined ? 0 : images.length}
+                {images === null || images.errorMessage !== undefined
+                  ? 0
+                  : images.length}
               </span>
               <span className="text">사진</span>
             </div>
