@@ -146,7 +146,7 @@ const StProfileContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 350px;
   box-sizing: border-box;
 
   .title {
@@ -250,7 +250,7 @@ const StInfo = styled.div`
 
 const StBtn = styled.button`
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   left: 25%;
   width: 50%;
   height: 40px;

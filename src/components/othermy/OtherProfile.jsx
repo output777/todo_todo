@@ -94,9 +94,7 @@ const OtherProfile = () => {
         <StImgInfoBox>
           <StImg>
             <img
-              src={
-                user.profileImage == null ? profileImgSvg : user.profileImage
-              }
+              src={user.profileImage == "" ? profileImgSvg : user.profileImage}
               alt='profile'
             />
           </StImg>
@@ -131,7 +129,7 @@ const OtherProfile = () => {
         <StNameAndScore>
           <StStatusDiv>
             <div className='userName'>{user.nickname}</div>
-            <div>{user.mymotto}</div>
+            <div>{user.myMotto}</div>
           </StStatusDiv>
           <StScoreBox>
             <span>
@@ -183,7 +181,7 @@ const StLine = styled.div`
 const StProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 380px;
+  height: 400px;
   box-sizing: border-box;
 
   .title {
@@ -201,7 +199,7 @@ const StProfileContainer = styled.div`
 
 const StImgInfoBox = styled.div`
   width: 90%;
-  margin: 1em auto 0 auto;
+  margin: 0 auto 0 auto;
   height: 30%;
   display: flex;
   justify-content: space-between;
