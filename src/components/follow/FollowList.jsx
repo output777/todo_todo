@@ -15,7 +15,7 @@ import {
 const FollowList = () => {
   const nickname = localStorage.getItem("nickname");
 
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const FollowList = () => {
   useEffect(() => {
     dispatch(__getOtherFollowingList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, [dispatch]);
+  }, [follow, dispatch]);
 
   return (
     <Stdiv>
