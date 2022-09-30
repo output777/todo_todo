@@ -40,6 +40,7 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) =>
           <div className="categoryTitle">
             <p>{selectedCategoryName}</p>
           </div>
+          <div></div>
         </StHeaderBox>
         <StCategoryProgressContainer>
           <div className='top'>
@@ -86,18 +87,25 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) =>
 
 const StDiv = styled.div`
   width:100%;
+  max-width:412px;
+  min-width: 360px;
   background-color: #fafafa;
   height: 100vh;
-  position:fixed;
+  position:absolute;
   top: 0;
   left: 0;
+  right:0;
+  bottom:0;
   display: ${(props) => props.display ? 'block' : 'none'};
   font-family: "SUIT-Regular", sans-serif;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 
   & .header {
     width:100%;
-    height:100px;
+    max-width:412px;
+    min-width: 360px;
+    height:110px;
+    box-sizing:border-box;
     position:fixed;
     background-color:#FFFFFF;
     display:flex;
@@ -109,28 +117,31 @@ const StDiv = styled.div`
 
 const StHeaderBox = styled.div`
   display: flex;
+  width:100%;
+  height:50px;
+  justify-content: space-between;
+  align-items:center;
 
+  & div {
+    flex:1;
+  }
   & .iconBox {
-      padding:10px;
-      width:40%;
-      height:100%;
-      position:relative;
+      
+      padding-left:10px;
 
       img {
-        position:absolute;
-        bottom:0px;
-        transform:translateY(-50%)
+        /* position:absolute; */
+        /* bottom:0px; */
+        /* transform:translateY(-50%) */
       }
     }
 
   & .categoryTitle {
-      width:60%;
+      text-align: center;
+      transform: translateX(-5px);
     }
 
-    p {
-      margin-top:15px;
-      margin-bottom:5px;
-    }
+
 `
 
 const StCategoryProgressContainer = styled.div`
@@ -140,8 +151,7 @@ const StCategoryProgressContainer = styled.div`
   display: flex;
   flex-direction:column;
   box-sizing:border-box;
-  margin-bottom:16px;
-  padding: 15px 30px;
+  padding: 0px 30px 20px 30px;
 
 
   & .top {
@@ -187,19 +197,6 @@ const StProgressBar = styled.div`
   border-radius:10px;
 `
 
-const StPlusBtnBox = styled.div`
-  width: 55px;
-  height: 55px;
-  border-radius:75px;
-  background-color: #FF8F27;
-  position:fixed;
-  top:545px;
-  left: 281px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-`
 
 const StModalBtnBox = styled.div`
   width:100%;

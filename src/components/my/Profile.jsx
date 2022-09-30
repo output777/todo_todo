@@ -62,6 +62,7 @@ const Profile = () => {
             onClick={() => {
               navigate("/setting");
             }}
+            alt='settingImg'
           />
         </div>
         <StLine></StLine>
@@ -70,7 +71,7 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                userInfo?.profileImage == "null"
+                  userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -149,14 +150,16 @@ const StProfileContainer = styled.div`
   flex-direction: column;
   height: 350px;
   box-sizing: border-box;
+  background-color:#fff;
 
   .title {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-right: 1.5em;
+    padding-right: 1.5em;
     height: 72px;
+    background-color:#fff;
   }
 `;
 
@@ -167,6 +170,7 @@ const StImgInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 `;
 
 const StImg = styled.div`
@@ -251,7 +255,7 @@ const StInfo = styled.div`
 
 const StBtn = styled.button`
   position: absolute;
-  bottom: 10px;
+  bottom: 11px;
   left: 25%;
   width: 50%;
   height: 40px;
@@ -259,6 +263,7 @@ const StBtn = styled.button`
   border-radius: 16px;
   border: none;
   margin: 15px auto 0rem auto;
+
 `;
 
 export default Profile;

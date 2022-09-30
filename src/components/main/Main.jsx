@@ -25,6 +25,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import Navbar from "../utils/Navbar";
 SwiperCore.use([Navigation, Pagination]);
 
 // 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
@@ -185,7 +186,7 @@ const Main = () => {
                 </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide>
-            <SwiperSlide>
+            {/* <SwiperSlide>
               <StModalBottom>
                 <StModalExplainDiv>
                   <span>학교 랭킹</span>
@@ -196,7 +197,7 @@ const Main = () => {
                   </div>
                 </StModalExplainDiv>
               </StModalBottom>
-            </SwiperSlide>
+            </SwiperSlide> */}
           </Swiper>
 
           <StCloseBtnContainer>
@@ -292,8 +293,28 @@ const StProgressBar = styled.div`
 
 const StMainContainer = styled.div`
   background-color: #fafafa;
-  height: 95vh;
+  height: 850px;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
   font-family: "SUIT-Regular", sans-serif;
+  @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  }
 `;
 
 const StPhrasesbox = styled.div`
@@ -377,44 +398,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
+    if (thisMonthRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
+    }
+    if (thisMonthRate >= 30 && thisMonthRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
+    }
+    if (thisMonthRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
+    if (totalRate < 30) {
+      return css`
           background-color: #d34c4c;
         `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
+    }
+    if (totalRate >= 30 && totalRate < 70) {
+      return css`
           background-color: #ffdb80;
         `;
-      }
-      if (totalRate >= 70) {
-        return css`
+    }
+    if (totalRate >= 70) {
+      return css`
           background-color: #74e272;
         `;
-      }
-    }}
+    }
+  }}
   }
 `;
 

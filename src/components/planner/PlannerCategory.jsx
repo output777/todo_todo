@@ -143,22 +143,22 @@ const PlannerCategory = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100vh;
+  height: auto;
+  min-height:120vh;
   font-family: "SUIT-Regular", sans-serif;
 
-  & div {
-    box-sizing:border-box;
-  }
 
-  & div.header {
-    /* width: 100%; */
-    height: 100px;
+
+  & .header {
+    width: 100%;
+    height: 71px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;
-    align-items: flex-end;
-    padding: 1rem;
+    /* align-items: center; */
+    padding: 10px;
     border-bottom: 1px solid #f1f3f5;
+    box-sizing:border-box;
     
 
     .categoryBox {

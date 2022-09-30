@@ -196,7 +196,9 @@ const ProfilePlanner = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100vh;
+  height: auto;
+  min-height:70vh;
+  padding-bottom:50px;
   font-family: "SUIT-Regular", sans-serif;
 
   & div {
@@ -205,7 +207,7 @@ const StDiv = styled.div`
 
   & div.header {
     /* width: 100%; */
-    height: 100px;
+    height: 80px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;

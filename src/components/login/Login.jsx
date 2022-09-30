@@ -57,6 +57,23 @@ const StLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   font-family: "SUIT-Regular", sans-serif;
+  height:850px;
+  background-color:#fff;
+
+  @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  }
 `;
 
 const StLogobox = styled.div``;
@@ -79,8 +96,9 @@ const StLogoPencil = styled.img`
 const StPhrases = styled.div`
   width: 180px;
   height: 20px;
-  margin-top: 180px;
-  margin-bottom: 16px;
+  padding-top: 180px;
+  padding-bottom: 16px;
+  box-sizing:border-box;
   /* position: relative;
   top: 150px; */
 `;
@@ -132,5 +150,5 @@ const StGoogleBtnImg = styled.img`
 const StGoogleBtnFont = styled.span`
   margin-top: 100px;
   position: relative;
-  left: px;
+  /* left: px; */
 `;

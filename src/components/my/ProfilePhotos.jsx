@@ -8,6 +8,7 @@ import cancelSvg from "../../assets/img/cancelSvg.svg";
 import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import wastebasketSvg from "../../assets/img/myPage/wastebasket.svg";
 import Modal from "../utils/Modal";
+import UploadPhoto from "./UploadPhoto";
 
 const ProfilePhotos = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const ProfilePhotos = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div style={{ backgroundColor: '#f8f8f8', height: 'auto', minHeight: '100vh', position: 'relative' }}>
       <StContainer>
         {images.errorMessage === undefined &&
           images.map((data) => (
@@ -85,6 +86,7 @@ const ProfilePhotos = () => {
             </StImg>
           ))}
       </StContainer>
+      <UploadPhoto />
       {fullScreen ? (
         <StFullScreen>
           <div className="header">
@@ -171,7 +173,7 @@ const ProfilePhotos = () => {
           </Modal>
         ) : null}
       </StModalBox>
-    </>
+    </div>
   );
 };
 
@@ -214,8 +216,7 @@ const StModalBottom = styled.div`
 
 const StContainer = styled.div`
   width: 100%;
-  height: 80vh;
-  background-color: #f8f8f8;
+  height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-auto-rows: 100px;
@@ -316,6 +317,8 @@ const StSliderBox = styled.div`
 
 const StFullScreen = styled.div`
   width: 100%;
+  max-width:412px;
+  min-width: 360px;
   height: 100vh;
   background-color: #111111;
   z-index: 10;
@@ -324,6 +327,7 @@ const StFullScreen = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  margin: 0 auto;
 
   .StSliderBoxParent {
     background-color: #111111;

@@ -6,6 +6,7 @@ import Navbar from "../components/utils/Navbar";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { __reset } from "../redux/modules/mainSlice";
+import Layout from "../components/utils/Layout";
 
 const MyPage = () => {
   const dispatch = useDispatch();

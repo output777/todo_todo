@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Setting = () => {
   const navigate = useNavigate();
   return (
-    <>
+    <div style={{ backgroundColor: "#fff" }}>
       <StArrow onClick={() => navigate("/my")} />
       <StTitle>설정</StTitle>
       <StLine></StLine>
@@ -18,7 +18,7 @@ const Setting = () => {
         로그아웃
       </StLogout>
       <StBackground></StBackground>
-    </>
+    </div>
   );
 };
 

@@ -204,7 +204,8 @@ const ProfilePlannerDate = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100vh;
+  height: auto;
+  min-height:45vh;
   font-family: "SUIT-Regular", sans-serif;
 
   & div.header {

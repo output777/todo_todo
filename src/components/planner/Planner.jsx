@@ -182,6 +182,7 @@ const Planner = ({ x, setX }) => {
           <div className='categoryTitle'>
             <p>{categoryName}</p>
           </div>
+          <div></div>
         </StHeaderBox>
         <StCategoryProgressContainer>
           <div className='top'>
@@ -364,15 +365,19 @@ const Planner = ({ x, setX }) => {
 };
 
 const StDiv = styled.div`
-  width: 100%;
+  width:100%;
+  max-width:412px;
+  min-width: 360px;
   background-color: #fafafa;
   height: 100vh;
   font-family: "SUIT-Regular", sans-serif;
-  overflow-y: scroll;
+  position:relative;
 
   & .header {
     width: 100%;
-    height: 100px;
+    max-width:412px;
+    min-width: 360px;
+    height:110px;
     position: fixed;
     background-color: #ffffff;
     display: flex;
@@ -384,27 +389,30 @@ const StDiv = styled.div`
 
 const StHeaderBox = styled.div`
   display: flex;
+  height:50px;
+  justify-content: space-between;
+  align-items:center;
+
+
+  & div {
+    flex:1;
+  }
 
   & .iconBox {
-    padding: 10px;
-    width: 40%;
-    height: 100%;
-    position: relative;
+    padding-left: 10px;
 
     img {
-      position: absolute;
+      /* position: absolute;
       bottom: 0px;
-      transform: translateY(-50%);
+      transform: translateY(-50%); */
     }
   }
 
   & .categoryTitle {
-    width: 60%;
+    text-align: center;
+      transform: translateX(-5px);
   }
 
-  p {
-    margin: 15px 0 5px 25px;
-  }
 `;
 
 const StCategoryProgressContainer = styled.div`
@@ -414,8 +422,8 @@ const StCategoryProgressContainer = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  margin-bottom: 16px;
-  padding: 15px 30px;
+  /* margin-bottom: 16px; */
+  padding: 0px 30px;
 
   & .top {
     display: flex;
@@ -465,7 +473,7 @@ const StPlusBtnBox = styled.div`
   height: 58px;
   border-radius: 50%;
   background-color: #ff8f27;
-  position: fixed;
+  position: absolute;
   bottom: 100px;
   right: 26px;
   display: flex;
@@ -488,7 +496,6 @@ const StModalBtnBox = styled.div`
     width: 100%;
     margin: 0;
     text-align: center;
-    padding: 5px;
   }
 
   & p.updatetitle {

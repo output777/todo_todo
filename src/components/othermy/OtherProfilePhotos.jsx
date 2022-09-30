@@ -75,13 +75,13 @@ const OtherProfilePhotos = () => {
     setModalVisible(false);
   };
 
-  const nickname = localStorage.getItem("nickname");
-  // console.log("nickname", nickname);
+
 
   useEffect(() => {
     dispatch(__getImages(params.id));
   }, [dispatch]);
-  // console.log("selectImg", selectImg);
+
+
   return (
     <>
       <StContainer>
@@ -108,13 +108,14 @@ const OtherProfilePhotos = () => {
                 </span>
               )}
             </div>
-            <div className='optionBox'>
+            <div></div>
+            {/* <div className='optionBox'>
               <img
                 src={wastebasketSvg}
                 alt='optionBtn'
                 onClick={onClicOptionModalOpenHandler}
               />
-            </div>
+            </div> */}
           </div>
           <div className='StSliderBoxParent'>
             <StSliderBox>
@@ -135,7 +136,7 @@ const OtherProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                images.length - 1 ? null : (
+                  images.length - 1 ? null : (
                   <button
                     className='next'
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -221,7 +222,8 @@ const StModalBottom = styled.div`
 
 const StContainer = styled.div`
   width: 100%;
-  height: 80vh;
+  height: auto;
+  min-height:40vh;
   background-color: #f8f8f8;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

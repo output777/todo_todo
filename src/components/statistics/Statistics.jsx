@@ -47,7 +47,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div style={{ fontFamily: "SUIT-Regular, sans-serif" }}>
+    <StContainer >
       <StHeader>
         <span style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
           통계
@@ -100,7 +100,9 @@ const Statistics = () => {
           <div>나의 투두 달성률</div>
           <img src={info} onClick={() => modalToggleHandler("heatMap")} alt='infoImg' />
         </StTopSubjectDiv>
-        <HeatmapSample />
+        <div style={{ paddingBottom: '80px' }}>
+          <HeatmapSample />
+        </div>
       </StBackground>
 
       {/* ------------------- 모달창 ------------------ */}
@@ -211,10 +213,33 @@ const Statistics = () => {
           </StModalBottom>
         </Modal>
       )}
-    </div>
+    </StContainer>
   );
 };
 export default Statistics;
+
+const StContainer = styled.div`
+  font-family: SUIT-Regular, sans-serif;
+  background-color: #fafafa;
+  height: 850px;
+  
+  @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  }
+
+`
+
 const StHeader = styled.div`
   display: flex;
   align-items: center;
@@ -255,8 +280,17 @@ const StLine = styled.div`
 
 const StBackground = styled.div`
   background-color: #fafafa;
+  margin-top:10px;
+  /* overflow-y:scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  } */
   /* background-color: gray; */
-  height: 110vh;
+  /* height: auto;
+  min-height:100vh; */
 `;
 
 const StTopSubjectDiv = styled.div`
@@ -266,7 +300,7 @@ const StTopSubjectDiv = styled.div`
   align-items: center;
   gap: 2%;
   margin: 0 0 3% 8%;
-  padding-top: 5%;
+  padding-top: 20px;
   div {
     font-size: 1em;
     font-weight: bold;

@@ -5,11 +5,12 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const OtherProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelectDate }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const params = useParams();
+
   const marks = [];
 
   const selectDateHandler = async (date) => {
@@ -17,7 +18,7 @@ const OtherProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setS
     let nickname = localStorage.getItem("nickname");
     localStorage.setItem("date", newDate);
     setCalenderdate(newDate);
-    await dispatch(__getTodo({ date: newDate, nickname }));
+    await dispatch(__getTodo({ date: newDate, nickname: params.id }));
     setFirstCheck(false);
   };
 

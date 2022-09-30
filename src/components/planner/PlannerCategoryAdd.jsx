@@ -262,12 +262,13 @@ const StDiv = styled.div`
 
   & div.header {
     /* width: 100%; */
-    height: 100px;
+    height: 71px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;
     align-items: flex-end;
     padding: 1rem;
+    box-sizing:border-box;
     border-bottom: 1px solid #f1f3f5;
 
     .iconBox {
@@ -298,7 +299,7 @@ const StModalBtnBox = styled.div`
     width: 100%;
     margin: 0;
     text-align: center;
-    padding: 5px;
+    /* padding: 5px; */
   }
 
   & p.updatetitle {

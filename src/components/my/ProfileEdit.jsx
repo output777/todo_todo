@@ -135,7 +135,7 @@ const ProfileEdit = () => {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: '#fff', height: '100vh' }}>
       <StTitle>
         <div
           className="arrow"
@@ -164,6 +164,7 @@ const ProfileEdit = () => {
                 : userInfo?.profileImage
             }
             onError={handleImgError}
+            alt='previewImg'
           />
           <input
             style={{ display: "none" }}
@@ -230,7 +231,7 @@ const ProfileEdit = () => {
           </StModalBottom>
         </Modal>
       ) : null}
-    </>
+    </div>
   );
 };
 
@@ -288,6 +289,10 @@ const StMotto = styled.div`
     border-radius: 20px;
     width: 90%;
     height: 10em;
+    outline:none;
+    resize:none;
+    padding:10px;
+    box-sizing:border-box;
   }
 
   .mottoInputCount {
@@ -343,7 +348,7 @@ const StImg = styled.img`
 `;
 
 const StTitle = styled.div`
-  width: 90%;
+  width: 100%;
   margin: auto;
   height: 72px;
   font-weight: bold;
@@ -353,6 +358,7 @@ const StTitle = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
 
   .title {
     position: relative;
@@ -373,7 +379,7 @@ const StTitle = styled.div`
   }
   .arrow::after {
     position: absolute;
-    left: 0;
+    left: 0.5em;
     top: -0.3em;
     content: "";
     width: 0.7em;

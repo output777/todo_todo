@@ -76,7 +76,6 @@ const OtherProfilePlanner = () => {
 
 
   useEffect(() => {
-    let nickname = localStorage.getItem("nickname");
     dispatch(__getCategory(params.id));
     dispatch(__getTodayTodo(params.id));
   }, []);
@@ -107,16 +106,14 @@ const OtherProfilePlanner = () => {
                   >
                     <p className='title'>{data.title}</p>
 
-                    {categoryTodoList.length > 0 && (
-                      <p onClick={(e) => e.stopPropagation()}>
-                        {
-                          categoryTodoList[index].filter(
-                            (data) => data.complete === true
-                          ).length
-                        }
-                        /{categoryTodoList[index].length}
-                      </p>
-                    )}
+                    <p onClick={(e) => e.stopPropagation()}>
+                      {
+                        categoryTodoList.length > 0 && categoryTodoList[index].filter(
+                          (data) => data.complete === true
+                        ).length
+                      }
+                      /{categoryTodoList.length > 0 && categoryTodoList[index].length}
+                    </p>
                   </div>
 
                   <StToggleBox>
@@ -196,7 +193,8 @@ const OtherProfilePlanner = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100vh;
+  height: auto;
+  min-height:50vh;
   font-family: "SUIT-Regular", sans-serif;
 
   & div {
@@ -205,7 +203,7 @@ const StDiv = styled.div`
 
   & div.header {
     /* width: 100%; */
-    height: 100px;
+    height: 80px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;

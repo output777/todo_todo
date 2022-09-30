@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import categorySvg from "../../assets/img/categorySvg.svg";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTodo } from "../../redux/modules/plannerSlice";
 import Navbar from "../utils/Navbar";
@@ -14,7 +12,6 @@ import { useParams } from "react-router-dom";
 
 const OtherProfilePlannerDate = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const params = useParams();
   const [selectDate, setSelectDate] = useState(null);
 
@@ -25,25 +22,13 @@ const OtherProfilePlannerDate = () => {
   const [category, setCategory] = useState([]);
   const [categoryTodoList, setCategoryTodoList] = useState([]);
   const [categoryTodoComplete, setCategoryTodoComplete] = useState({});
-  const [display, setDisplay] = useState(false);
-  const [selectedCategoryName, setSelectedCategoryName] = useState("");
+  // const [selectedCategoryName, setSelectedCategoryName] = useState("");
 
-  console.log(
-    "dateTodo",
-    dateTodo,
-    "date",
-    date,
-    "selectDate",
-    selectDate,
-    "calenderdate",
-    calenderdate
-  );
 
-  const onClickSelectCategoryToTodoListHandler = (e) => {
-    const { title } = e.currentTarget;
-    setSelectedCategoryName(title);
-    // setDisplay(true);
-  };
+  // const onClickSelectCategoryToTodoListHandler = (e) => {
+  //   const { title } = e.currentTarget;
+  //   setSelectedCategoryName(title);
+  // };
 
   const onClickShowTodoHandler = (e) => {
     if (e.currentTarget.childNodes[2].style.display === "block") {
@@ -126,7 +111,6 @@ const OtherProfilePlannerDate = () => {
                 <div
                   className='top'
                   title={data}
-                  onClick={onClickSelectCategoryToTodoListHandler}
                 >
                   <p className='title'>{data}</p>
                   {category.length > 0 && (
@@ -144,12 +128,12 @@ const OtherProfilePlannerDate = () => {
                       width={
                         isNaN(
                           categoryTodoComplete[`${category[index]}`] /
-                            dateTodoObj[`${category[index]}`]
+                          dateTodoObj[`${category[index]}`]
                         )
                           ? 0
                           : (categoryTodoComplete[`${category[index]}`] /
-                              dateTodoObj[`${category[index]}`]) *
-                            100
+                            dateTodoObj[`${category[index]}`]) *
+                          100
                       }
                       backgroundColor='#74E272'
                     ></StProgressBar>

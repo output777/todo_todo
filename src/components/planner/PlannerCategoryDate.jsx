@@ -145,14 +145,15 @@ const PlannerCategoryDate = () => {
               </StCategoryItem>
             ))}
         </StCategoryContainer>
+        <PlannerDate
+          selectedCategoryName={selectedCategoryName}
+          dateTodo={dateTodo}
+          display={display}
+          setDisplay={setDisplay}
+        />
       </StDiv>
       <Navbar planner={true} />
-      <PlannerDate
-        selectedCategoryName={selectedCategoryName}
-        dateTodo={dateTodo}
-        display={display}
-        setDisplay={setDisplay}
-      />
+
     </>
   );
 };
@@ -161,15 +162,17 @@ const StDiv = styled.div`
   background-color: #fafafa;
   height: 100vh;
   font-family: "SUIT-Regular", sans-serif;
+  position:relative;
 
-  & div.header {
+  & .header {
     /* width: 100%; */
-    height: 50px;
+    height: 71px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;
-    align-items: flex-end;
-    padding: 1rem;
+    /* align-items: center; */
+    padding: 10px;
+    box-sizing:border-box;
     border-bottom: 1px solid #f1f3f5;
 
     .categoryBox {

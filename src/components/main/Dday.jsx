@@ -151,6 +151,8 @@ const StInputbox = styled.div`
     height: 50px;
     border: 1px solid #e8e8e8;
     border-radius: 16px;
+    padding-left:10px;
+    box-sizing:border-box;
   }
 `;
 
@@ -166,6 +168,8 @@ const StDateInput = styled.input`
   margin-top: 8px;
   width: 170px;
   height: 50px;
+  padding:0 10px;
+    box-sizing:border-box;
 `;
 
 const StModalBottom = styled.div`

@@ -9,6 +9,7 @@ import {
   __getFollowerList,
   __getFollowingList,
   __getFollowInfo,
+  __getOtherFollowingList,
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
@@ -38,7 +39,7 @@ const FollowerList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getFollowerList(params.id));
+    dispatch(__getOtherFollowingList(params.id));
     dispatch(__getFollowingList(nickname));
   }, [dispatch, follow]);
 

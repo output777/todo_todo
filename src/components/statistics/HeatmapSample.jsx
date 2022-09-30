@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import HeatMap from "react-heatmap-grid";
 import { __getHeatMapData } from "../../redux/modules/statisticsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
 const HeatMapSample = () => {
   const [heatMapDataRate, setHeatMapDataRate] = useState([
@@ -59,23 +60,7 @@ const HeatMapSample = () => {
   }, [dispatch]);
 
   return (
-    <div
-      style={{
-        fontSize: "10px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: "12px",
-        margin: "auto",
-        width: "90%",
-        height: "25em",
-        boxSizing: "border-box",
-        padding: "10px 25px 30px 0px",
-        backgroundColor: "white",
-        boxShadow: "0px 4px 15px rgba(17, 17, 17, 0.05)",
-      }}
-    >
+    <StContainer>
       <HeatMap
         xLabels={xLabels}
         yLabels={yLabels}
@@ -107,8 +92,23 @@ const HeatMapSample = () => {
         })}
       // cellRender={(value) => value && <div>{value}%</div>}
       />
-    </div>
+    </StContainer>
   );
 };
+
+const StContainer = styled.div`
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin: auto;
+    width: 90%;
+    box-sizing: border-box;
+    padding: 15px 25px 15px 0px;
+    background-color: white;
+    box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
+`
 
 export default HeatMapSample;

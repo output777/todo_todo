@@ -68,12 +68,12 @@ const StUploadPhoto = styled.div`
   height: 58px;
   background-color: #ff8f27;
   border-radius: 50%;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 26px;
-  bottom: 100px;
+  right: 18px;
+  top: 7px;
   cursor: pointer;
 
   & input {

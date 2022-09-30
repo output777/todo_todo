@@ -46,7 +46,7 @@ const StDateDiv = styled.div`
   align-items: center;
   gap: 7px;
 
-  margin-left: 3%;
+  margin-left: 15px;
   padding: 10px;
   font-size: 18px;
 `;

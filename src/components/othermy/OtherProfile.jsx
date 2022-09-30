@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getTotalRate, __reset } from "../../redux/modules/mainSlice";
+import { __getDday, __getTotalRate, __reset } from "../../redux/modules/mainSlice";
 import {
   __getOtherInfo,
   __getFollowInfo,
@@ -13,12 +13,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import arrow from "../../assets/img/arrow.svg";
 import follwingcheck from "../../assets/img/followingcheck.svg";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 
 const OtherProfile = () => {
   const params = useParams();
   const nickname = localStorage.getItem("nickname");
 
   const [follow, setFollow] = useState();
+  const [month, setMonth] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -75,6 +80,16 @@ const OtherProfile = () => {
     dispatch(__getOtherInfo(params.id));
   }, [dispatch]);
 
+  const monthFunc = async () => {
+    const { data } = await axios.get(`${BASE_URL}/month`)
+    console.log('data', data)
+    setMonth(() => data)
+  }
+
+  useEffect(() => {
+    monthFunc();
+  }, [])
+
   if (!user) {
     return <div></div>;
   }
@@ -88,6 +103,7 @@ const OtherProfile = () => {
             onClick={() => {
               navigate("/");
             }}
+            alt='arrowImg'
           />
         </div>
         <StLine />
@@ -133,16 +149,18 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking}위 {userRank[1].score}점<div>주간 점수</div>
+              {userRank[1].ranking === undefined ? '순위없음 ' : `${userRank[1].ranking}위`}
+              {userRank[1].score === undefined ? '0' : (userRank[1].score / 7).toFixed(2)}점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking}위 {userRank[2].score}점
+              {userRank[2].ranking === undefined ? '순위없음 ' : `${userRank[2].ranking}위`}
+              {userRank[2].score === undefined ? '0' : (userRank[2].score / month).toFixed(2)}점
               <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>
-              <StuserRate>{userRate}%</StuserRate>
+              <StuserRate>{userRate.length > 0 ? userRate[0] : 0}%</StuserRate>
               <StAverageText>평균 달성률</StAverageText>
             </span>
           </StScoreBox>
@@ -181,7 +199,8 @@ const StLine = styled.div`
 const StProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 400px;
+  height: 380px;
+  background-color:#fff;
   box-sizing: border-box;
 
   .title {
