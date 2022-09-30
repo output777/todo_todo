@@ -19,6 +19,8 @@ import PlannerCategoryDate from "../components/planner/PlannerCategoryDate";
 import OtherMyPage from "../pages/OtherMyPage";
 import Loading from "../components/login/Loading";
 import ProfilePlanner from "../components/my/ProfilePlanner";
+import Layout from "../components/utils/Layout";
+import styled from "styled-components";
 
 const Router = () => {
   let token = localStorage.getItem("accessToken");
@@ -26,32 +28,61 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path='/login'
-          element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
-        />
-        <Route path='/' element={<MainPage />} />
-        <Route path='/my' element={<MyPage />} />
-        <Route path='/my/planner' element={<ProfilePlanner />} />
-        <Route path='/othermy/:id' element={<OtherMyPage />} />
-        <Route path='/follower/:id' element={<FollowerPage />} />
-        <Route path='/following/:id' element={<FollowingPage />} />
-        <Route path='/profileedit' element={<ProfileEdit />} />
-        <Route path='/setting' element={<Setting />} />
-        <Route path='/planner' element={<PlannerPage />} />
-        <Route path='/planner/date' element={<PlannerCategoryDate />} />
-        <Route path='/planner/category' element={<PlannerCategoryAdd />} />
-        <Route path='/planner/category/todolist' element={<Planner />} />
-        <Route path='/statistics' element={<StatisticsPage />} />
-        {/* <Route path='/profileinfo' element={token !== null ? <Navigate replace to="/" /> : <ProfileInfoPage />} /> */}
-        <Route path='/profileinfo' element={<ProfileInfoPage />} />
-        <Route path='/user/kakao/callback' element={<KakaoLogin />} />
-        <Route path='/user/google/callback' element={<GoogleLogin />} />
-        <Route path='/user/naver/callback' element={<NaverLogin />} />
-      </Routes>
+      <StContainer>
+        <Layout>
+          <Routes>
+            <Route
+              path='/login'
+              element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
+            />
+            <Route path='/' element={<MainPage />} />
+            <Route path='/my' element={<MyPage />} />
+            <Route path='/my/planner' element={<ProfilePlanner />} />
+            <Route path='/othermy/:id' element={<OtherMyPage />} />
+            <Route path='/follower/:id' element={<FollowerPage />} />
+            <Route path='/following/:id' element={<FollowingPage />} />
+            <Route path='/profileedit' element={<ProfileEdit />} />
+            <Route path='/setting' element={<Setting />} />
+            <Route path='/planner' element={<PlannerPage />} />
+            <Route path='/planner/date' element={<PlannerCategoryDate />} />
+            <Route path='/planner/category' element={<PlannerCategoryAdd />} />
+            <Route path='/planner/category/todolist' element={<Planner />} />
+            <Route path='/statistics' element={<StatisticsPage />} />
+            {/* <Route path='/profileinfo' element={token !== null ? <Navigate replace to="/" /> : <ProfileInfoPage />} /> */}
+            <Route path='/profileinfo' element={<ProfileInfoPage />} />
+            <Route path='/user/kakao/callback' element={<KakaoLogin />} />
+            <Route path='/user/google/callback' element={<GoogleLogin />} />
+            <Route path='/user/naver/callback' element={<NaverLogin />} />
+          </Routes>
+        </Layout>
+      </StContainer>
     </BrowserRouter>
   );
 };
+
+const StContainer = styled.div`
+  width:100vw;
+  height:850px;
+  display: flex;
+  /* background-color: #fafafa; */
+  justify-content:center;
+  box-sizing:border-box;
+
+
+  @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  }
+`
 
 export default Router;

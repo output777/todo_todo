@@ -86,8 +86,8 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) =>
 
 
 const StDiv = styled.div`
-  width:100%;
-  max-width:412px;
+  width:414px;;
+  /* max-width:414px; */
   min-width: 360px;
   background-color: #fafafa;
   height: 100vh;
@@ -100,24 +100,31 @@ const StDiv = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   /* overflow-y: scroll; */
 
+  @media screen and (min-width: 768px) {
+    width:600px;
+  }
+
   & .header {
     width:100%;
-    max-width:412px;
     min-width: 360px;
     height:110px;
-    box-sizing:border-box;
     position:fixed;
     background-color:#FFFFFF;
     display:flex;
     flex-direction:column;
     border-bottom: 1px solid #F1F3F5;
+    box-sizing:border-box;
+
+    @media screen and (min-width: 768px) {
+    width:600px;
+  }
 
   }
 `;
 
 const StHeaderBox = styled.div`
   display: flex;
-  width:100%;
+  /* width:100%; */
   height:50px;
   justify-content: space-between;
   align-items:center;
@@ -151,7 +158,7 @@ const StCategoryProgressContainer = styled.div`
   display: flex;
   flex-direction:column;
   box-sizing:border-box;
-  padding: 0px 30px 20px 30px;
+  padding: 0px 30px;
 
 
   & .top {

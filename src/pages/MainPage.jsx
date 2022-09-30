@@ -7,12 +7,14 @@ import styled from "styled-components";
 
 const MainPage = () => {
   return (
-    <StContainer>
-      <Layout>
-        <Main />
-        <Navbar home={true} />
-      </Layout>
-    </StContainer>
+    // <StContainer>
+    // <Layout>
+    <>
+      <Main />
+      <Navbar home={true} />
+    </>
+    // </Layout>
+    // </StContainer>
   );
 };
 
@@ -21,6 +23,7 @@ const StContainer = styled.div`
   width:100vw;
   height:850px;
   display: flex;
+  background-color: #fafafa;
   justify-content:center;
   box-sizing:border-box;
 

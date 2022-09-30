@@ -135,12 +135,12 @@ const ProfileEdit = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#fff', height: '100vh' }}>
+    <div style={{ backgroundColor: '#fff', height: '100%' }}>
       <StTitle>
         <div
           className="arrow"
           onClick={() => {
-            if (saveStatus == false) {
+            if (saveStatus === false) {
               setModalView(true);
             } else {
               navigate("/my");

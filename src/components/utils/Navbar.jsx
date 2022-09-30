@@ -87,7 +87,6 @@ const StNav = styled.div`
   position: fixed;
   z-index: 5;
   width: 100%;
-  max-width: 412px;
   min-width: 360px;
   height: 71px;
   /* top:790px; */
@@ -99,6 +98,12 @@ const StNav = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+
+
+
+  @media screen and (min-width: 768px) {
+    width:600px;
+  }
 `;
 
 const StHome = styled.img`

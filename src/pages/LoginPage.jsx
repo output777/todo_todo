@@ -1,22 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import Login from "../components/login/Login";
-import Layout from "../components/utils/Layout";
 
 const LoginPage = () => {
   return (
     <StContainer>
-      <Layout>
-        <Login />
-      </Layout>
+      <Login />
     </StContainer>
   );
 };
 
 const StContainer = styled.div`
-  width:100vw;
+  width:416px;
   height:850px;
   display: flex;
+  background-color: #fff;
   justify-content:center;
   box-sizing:border-box;
 

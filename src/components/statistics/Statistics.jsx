@@ -220,23 +220,9 @@ export default Statistics;
 
 const StContainer = styled.div`
   font-family: SUIT-Regular, sans-serif;
-  background-color: #fafafa;
-  height: 850px;
+  height: 100%;
   
-  @media screen and (min-height: 850px) {
-  height:1180px;
-  }
 
-  @media screen and (min-height: 915px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1180px;
-  }
-  @media screen and (min-height: 1180px) {
-  height:1366px;
-  }
 
 `
 

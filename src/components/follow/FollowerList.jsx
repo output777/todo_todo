@@ -109,8 +109,6 @@ const FollowerList = () => {
 export default FollowerList;
 
 const Stdiv = styled.div`
-  background-color: #fafafa;
-  height: 100vh;
 `;
 
 const StFollowBox = styled.div`

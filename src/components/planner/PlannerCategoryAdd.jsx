@@ -404,17 +404,19 @@ const StEditBtnbox = styled.div`
 `;
 
 const StCategoryBox = styled.div`
-  width: 320px;
-  height: 52px;
+  width: 90%;
+  height: auto;
   border-radius: 16px;
-  padding: 0 16px 0 24px;
+  /* padding: 0 16px 0 24px; */
   background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 16px auto;
+  padding: 10px;
   -webkit-box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
   box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+  box-sizing:border-box;
 
   & p {
     margin: 0;

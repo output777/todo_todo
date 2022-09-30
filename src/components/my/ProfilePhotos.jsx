@@ -77,14 +77,7 @@ const ProfilePhotos = () => {
   }, [dispatch]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#f8f8f8",
-        height: "auto",
-        minHeight: "100vh",
-        position: "relative",
-      }}
-    >
+    <StPhotoContainer>
       <StContainer>
         {images.errorMessage === undefined &&
           images.map((data) => (
@@ -122,8 +115,8 @@ const ProfilePhotos = () => {
             <StSliderBox>
               <div className="imgBox" key={selectImgId}>
                 {images.indexOf(
-                  images.find((data) => data.id == selectImgId)
-                ) == 0 ? null : (
+                  images.find((data) => data.id === selectImgId)
+                ) === 0 ? null : (
                   <button
                     className="prev"
                     onClick={() => onClickPrevHandler(selectImgId)}
@@ -137,7 +130,7 @@ const ProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                images.length - 1 ? null : (
+                  images.length - 1 ? null : (
                   <button
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -180,9 +173,16 @@ const ProfilePhotos = () => {
           </Modal>
         ) : null}
       </StModalBox>
-    </div>
+    </StPhotoContainer>
   );
 };
+
+const StPhotoContainer = styled.div`
+  /* background-color: #f8f8f8; */
+  height: auto;
+  /* border:1px solid red; */
+  position: relative;
+`
 
 const StModalTop = styled.div`
   height: 75%;

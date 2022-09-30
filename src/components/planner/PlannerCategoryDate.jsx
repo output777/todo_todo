@@ -151,8 +151,8 @@ const PlannerCategoryDate = () => {
           display={display}
           setDisplay={setDisplay}
         />
+        <Navbar planner={true} />
       </StDiv>
-      <Navbar planner={true} />
 
     </>
   );
@@ -160,12 +160,42 @@ const PlannerCategoryDate = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
+  width:100%;
+  min-width: 360px;
   height: 100vh;
+  height: 850px;
+  margin:0 auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
   font-family: "SUIT-Regular", sans-serif;
+
+  @media screen and (min-width: 768px) {
+    width:600px;
+  }
+
+  /* @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  } */
   position:relative;
 
   & .header {
-    /* width: 100%; */
+    width:100%;
+    min-width: 360px;
     height: 71px;
     display: flex;
     background-color: #ffffff;
@@ -174,6 +204,10 @@ const StDiv = styled.div`
     padding: 10px;
     box-sizing:border-box;
     border-bottom: 1px solid #f1f3f5;
+
+    @media screen and (min-width: 768px) {
+    width:600px;
+  }
 
     .categoryBox {
       padding: 10px;

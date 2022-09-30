@@ -25,14 +25,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import Navbar from "../utils/Navbar";
 SwiperCore.use([Navigation, Pagination]);
 
-// 월간 랭킹, 주간 랭킹 부분을 클릭하면 렌더링이 일어남
-// 월간 랭킹 리스트, 주간 랭킹 리스트를 보여줄 때 useState가 필요한지 확인
-// 필요 없으면 useRef로 css 변경하려고 함
-
-// 메인 전체 페이지 살짝 스크롤 되는거 수정해야함
 const Main = () => {
   const dispatch = useDispatch();
   const { thisMonthRate, totalRate } = useSelector((state) => state.main);
@@ -41,11 +35,8 @@ const Main = () => {
   const [weekly, setWeekly] = useState(true);
   // const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [day, setDay] = useState(true);
 
   const nickname = localStorage.getItem("nickname");
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
 
   const onClickWeekly = () => {
     setWeekly(true);
@@ -73,20 +64,9 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // 무한스크롤을 처음 로딩할 때 바로 불러오면 아래와 같은 에러가 발생
-    // Objects are not valid as a React child (found: object with keys {message, name, code, config, request, response}). If you meant to render a collection of children, use an array instead.
-    // 그래서 시간차를 줌
-    // const weeklyTimer = setTimeout(() => {
-    //   setWeekly(true)
-    // }, 100)
-
     dispatch(__getMyInfo(nickname));
     dispatch(__getThisMonthRate());
     dispatch(__getTotalRate(nickname));
-
-    // return () => {
-    //   clearTimeout(weeklyTimer)
-    // }
   }, []);
 
   return (
@@ -178,7 +158,7 @@ const Main = () => {
               <StModalBottom>
                 <StModalExplainDiv>
                   <span>주간/월간 랭킹</span>
-                  <img src={bigTrophy} />
+                  <img src={bigTrophy} alt='bigTrophyImg' />
                   <div>
                     주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
                     순으로 순위가 결정됩니다.
@@ -209,9 +189,9 @@ const Main = () => {
       {/* -------------------- 랭킹 --------------------*/}
       <div className="rank">
         <StRankingPhrases>
-          <img src={trophy} />
+          <img src={trophy} alt='trophyImg' />
           <span>랭킹</span>
-          <img src={info} onClick={openModal} />
+          <img src={info} onClick={openModal} alt='infoImg' />
         </StRankingPhrases>
 
         <StRankingBtnBox>
@@ -292,8 +272,7 @@ const StProgressBar = styled.div`
 `;
 
 const StMainContainer = styled.div`
-  background-color: #fafafa;
-  height: 850px;
+  height: 100%;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -301,20 +280,7 @@ const StMainContainer = styled.div`
     background: rgba(255, 255, 255, 0.4);
   }
   font-family: "SUIT-Regular", sans-serif;
-  @media screen and (min-height: 850px) {
-  height:1180px;
-  }
 
-  @media screen and (min-height: 915px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1180px;
-  }
-  @media screen and (min-height: 1180px) {
-  height:1366px;
-  }
 `;
 
 const StPhrasesbox = styled.div`

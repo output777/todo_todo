@@ -128,6 +128,7 @@ const Profile = () => {
   );
 };
 
+
 const StStatusDiv = styled.div`
   width: 90%;
   padding-top: 10px;

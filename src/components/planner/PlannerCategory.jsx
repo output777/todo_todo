@@ -142,10 +142,17 @@ const PlannerCategory = () => {
 };
 
 const StDiv = styled.div`
-  background-color: #fafafa;
-  height: auto;
-  min-height:120vh;
+  /* background-color: #fafafa; */
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
   font-family: "SUIT-Regular", sans-serif;
+
+
 
 
 

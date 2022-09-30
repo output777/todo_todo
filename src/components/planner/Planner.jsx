@@ -366,16 +366,35 @@ const Planner = ({ x, setX }) => {
 
 const StDiv = styled.div`
   width:100%;
-  max-width:412px;
   min-width: 360px;
   background-color: #fafafa;
-  height: 100vh;
+  height: 100%;
   font-family: "SUIT-Regular", sans-serif;
   position:relative;
+  margin:0 auto;
+  box-sizing:border-box;
+
+  @media screen and (min-width: 768px) {
+    width:600px;
+  }
+
+  /* @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  } */
 
   & .header {
-    width: 100%;
-    max-width:412px;
+    width:100%;
     min-width: 360px;
     height:110px;
     position: fixed;
@@ -384,6 +403,11 @@ const StDiv = styled.div`
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
+
+    @media screen and (min-width: 768px) {
+    width:600px;
+  }
+
   }
 `;
 
