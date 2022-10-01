@@ -144,113 +144,107 @@ const PlannerCategoryAdd = () => {
           </StCategoryBox>
         ))}
 
-      {editModalVisible && (
-        <Modal
-          visible={editModalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='250px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <StModalBtnBox>
-            <p className='title'>{selectCategory.title}</p>
-            {!editCategoryName ? (
-              <StEditBtnBox>
-                <p className='updatetitle' onClick={onClickEditCategoryName}>
-                  이름 변경
-                </p>
-                <div className='btnBox'>
-                  <StModalDeleteBtn onClick={onClickCategoryDeleteHandler}>
-                    삭제
-                  </StModalDeleteBtn>
-                </div>
-              </StEditBtnBox>
-            ) : (
-              <>
-                <StCategoryInput
-                  type='text'
-                  value={categoryName}
-                  onChange={onChangeInputHandler}
-                />
-                <StEditBtnbox>
-                  <StModalCancelBtn onClick={onClickEditCategoryNameCancel}>
-                    취소
-                  </StModalCancelBtn>
-                  <StModalAddBtn onClick={onClickEditCategoryNameHandler}>
-                    확인
-                  </StModalAddBtn>
-                </StEditBtnbox>
-              </>
-            )}
-          </StModalBtnBox>
-        </Modal>
-      )}
-
-      {deleteCategoryCheckModalVisible && (
-        <Modal
-          visible={deleteCategoryCheckModalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='250px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <StModalBtnBox>
-            <p className='title'>'{selectCategory.title}'을 삭제하겠습니까?</p>
-            <p>삭제하면 연결돼있는 투두가</p>
-            <p>모두 사라집니다.</p>
-            <div className='btnBox'>
-              <StModalCancelBtn onClick={onClickEditCategoryNameDeleteCancel}>
-                취소
-              </StModalCancelBtn>
-              <StModalAddBtn onClick={onClickEditCategoryNameDeleteCheck}>
-                확인
-              </StModalAddBtn>
-            </div>
-          </StModalBtnBox>
-        </Modal>
-      )}
-
-      {modalVisible && (
-        <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='250px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <div>
-            <StModalBtnBox>
-              <p className='title'>과목 생성</p>
-              {/* props로 입력할 때 마다 border 색 변경하기 */}
+      <Modal
+        visible={editModalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='250px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <StModalBtnBox>
+          <p className='title'>{selectCategory.title}</p>
+          {!editCategoryName ? (
+            <StEditBtnBox>
+              <p className='updatetitle' onClick={onClickEditCategoryName}>
+                이름 변경
+              </p>
+              <div className='btnBox'>
+                <StModalDeleteBtn onClick={onClickCategoryDeleteHandler}>
+                  삭제
+                </StModalDeleteBtn>
+              </div>
+            </StEditBtnBox>
+          ) : (
+            <>
               <StCategoryInput
                 type='text'
                 value={categoryName}
                 onChange={onChangeInputHandler}
-                placeholder='과목 이름을 입력해주세요.(2-15자)'
               />
-            </StModalBtnBox>
+              <StEditBtnbox>
+                <StModalCancelBtn onClick={onClickEditCategoryNameCancel}>
+                  취소
+                </StModalCancelBtn>
+                <StModalAddBtn onClick={onClickEditCategoryNameHandler}>
+                  확인
+                </StModalAddBtn>
+              </StEditBtnbox>
+            </>
+          )}
+        </StModalBtnBox>
+      </Modal>
 
-            <StbuttonSet>
-              <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
-              <StModalAddBtn onClick={onClickCategoryAddHandler}>
-                추가
-              </StModalAddBtn>
-            </StbuttonSet>
+      <Modal
+        visible={deleteCategoryCheckModalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='250px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <StModalBtnBox>
+          <p className='title'>'{selectCategory.title}'을 삭제하겠습니까?</p>
+          <p>삭제하면 연결돼있는 투두가</p>
+          <p>모두 사라집니다.</p>
+          <div className='btnBox'>
+            <StModalCancelBtn onClick={onClickEditCategoryNameDeleteCancel}>
+              취소
+            </StModalCancelBtn>
+            <StModalAddBtn onClick={onClickEditCategoryNameDeleteCheck}>
+              확인
+            </StModalAddBtn>
           </div>
-        </Modal>
-      )}
+        </StModalBtnBox>
+      </Modal>
+
+      <Modal
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='250px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <div>
+          <StModalBtnBox>
+            <p className='title'>과목 생성</p>
+            {/* props로 입력할 때 마다 border 색 변경하기 */}
+            <StCategoryInput
+              type='text'
+              value={categoryName}
+              onChange={onChangeInputHandler}
+              placeholder='과목 이름을 입력해주세요.(2-15자)'
+            />
+          </StModalBtnBox>
+
+          <StbuttonSet>
+            <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
+            <StModalAddBtn onClick={onClickCategoryAddHandler}>
+              추가
+            </StModalAddBtn>
+          </StbuttonSet>
+        </div>
+      </Modal>
     </StDiv>
   );
 };
@@ -321,6 +315,7 @@ const StModalBtnBox = styled.div`
     display: flex;
   }
 `;
+
 const StCategoryInput = styled.input`
   // props로 입력할 때 마다 border 색 변경하기
   border: 1px solid #d7d5d5;
