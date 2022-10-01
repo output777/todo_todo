@@ -43,7 +43,7 @@ const OtherProfilePhotos = () => {
   };
 
   const onClickPrevHandler = (id) => {
-    let a = images.find((data) => data.id === id);
+    let a = images.find((data) => data.id === Number(id));
     const prevData = images[images.indexOf(a) - 1];
     console.log(prevData);
     setSelectImgId(prevData.id);
@@ -51,7 +51,7 @@ const OtherProfilePhotos = () => {
   };
 
   const onClickNextHandler = (id) => {
-    let a = images.find((data) => data.id === id);
+    let a = images.find((data) => data.id === Number(id));
     const nextData = images[images.indexOf(a) + 1];
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
@@ -75,12 +75,9 @@ const OtherProfilePhotos = () => {
     setModalVisible(false);
   };
 
-
-
   useEffect(() => {
     dispatch(__getImages(params.id));
   }, [dispatch]);
-
 
   return (
     <>
@@ -136,7 +133,7 @@ const OtherProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                  images.length - 1 ? null : (
+                images.length - 1 ? null : (
                   <button
                     className='next'
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -223,7 +220,7 @@ const StModalBottom = styled.div`
 const StContainer = styled.div`
   width: 100%;
   height: auto;
-  min-height:40vh;
+  min-height: 40vh;
   background-color: #f8f8f8;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

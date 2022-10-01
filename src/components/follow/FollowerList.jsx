@@ -12,7 +12,6 @@ import {
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
-
   let nickname = localStorage.getItem("nickname");
   const [follow, setFollow] = useState();
 
@@ -208,11 +207,12 @@ const StFollowtopBox = styled.div`
 const StarrowImg = styled.img`
   position: relative;
   top: 20px;
-  right: 100px;
+  right: 130px;
 `;
 
 const StTopText = styled.span`
   font-weight: bold;
   position: relative;
   top: 20px;
+  right: 7px;
 `;

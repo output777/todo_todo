@@ -142,21 +142,20 @@ const PlannerCategory = () => {
 };
 
 const StDiv = styled.div`
-  /* background-color: #fafafa; */
-  height: 100%;
+  background-color: #fafafa;
+  height: 100;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.4);
+    /* background: rgba(255, 255, 255, 0.4); */
   }
   font-family: "SUIT-Regular", sans-serif;
 
-
-
-
-
   & .header {
+    position: sticky;
+    top: 0;
+
     width: 100%;
     height: 71px;
     display: flex;
@@ -165,8 +164,7 @@ const StDiv = styled.div`
     /* align-items: center; */
     padding: 10px;
     border-bottom: 1px solid #f1f3f5;
-    box-sizing:border-box;
-    
+    box-sizing: border-box;
 
     .categoryBox {
       padding: 10px;

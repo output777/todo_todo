@@ -84,7 +84,7 @@ const ProfilePlanner = () => {
   return (
     <>
       <StDiv>
-        <div className="header">
+        <div className='header'>
           <MypageCalender
             calenderdate={calenderdate}
             setCalenderdate={setCalenderdate}
@@ -105,19 +105,22 @@ const ProfilePlanner = () => {
                   onClick={onClickShowTodoHandler}
                 >
                   <div
-                    className="top"
+                    className='top'
                     onClick={onClickSelectCategoryToTodoListHandler}
                   >
-                    <p className="title">{data.title}</p>
+                    <p className='title'>{data.title}</p>
 
                     {categoryTodoList.length > 0 && (
                       <p onClick={(e) => e.stopPropagation()}>
-                        {
-                          categoryTodoList[index].filter(
-                            (data) => data.complete === true
-                          ).length
-                        }
-                        /{categoryTodoList[index].length}
+                        {categoryTodoList[index] === undefined
+                          ? 0
+                          : categoryTodoList[index].filter(
+                              (data) => data.complete === true
+                            ).length}
+                        /
+                        {categoryTodoList[index] === undefined
+                          ? 0
+                          : categoryTodoList[index].length}
                       </p>
                     )}
                   </div>
@@ -133,7 +136,7 @@ const ProfilePlanner = () => {
                       ></StProgressBar>
                     </StProgressBarBox>
                     <StToggleImgBox>
-                      <img src={toggleSvg} alt="toggleIcon" />
+                      <img src={toggleSvg} alt='toggleIcon' />
                     </StToggleImgBox>
                   </StToggleBox>
 
@@ -144,16 +147,16 @@ const ProfilePlanner = () => {
                           .filter((data) => data.complete === false)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
-                              <div className="top" id={data.todoId}>
+                              <div className='top' id={data.todoId}>
                                 <div
-                                  className="content"
+                                  className='content'
                                   style={{
                                     display: "flex",
                                     alignItems: "center",
                                   }}
                                 >
-                                  <img src={notDoneSvg} alt="notDoneIcon" />
-                                  <StTodoTitle className="title">
+                                  <img src={notDoneSvg} alt='notDoneIcon' />
+                                  <StTodoTitle className='title'>
                                     {data.content}
                                   </StTodoTitle>
                                 </div>
@@ -168,18 +171,18 @@ const ProfilePlanner = () => {
                           .filter((data) => data.complete === true)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
-                              <div className="top" id={data.todoId}>
+                              <div className='top' id={data.todoId}>
                                 <div
-                                  className="content"
+                                  className='content'
                                   style={{
                                     display: "flex",
                                     alignItems: "center",
                                   }}
                                 >
-                                  <img src={doneSvg} alt="doneIcon" />
+                                  <img src={doneSvg} alt='doneIcon' />
                                   <StTodoTitle
-                                    className="title"
-                                    color="#E8E8E8"
+                                    className='title'
+                                    color='#E8E8E8'
                                   >
                                     {data.content}
                                   </StTodoTitle>
