@@ -330,12 +330,30 @@ const StFullScreen = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  max-width: 412px;
+  width:100%;
   min-width: 360px;
   height: 100vh;
   background-color: #111111;
   margin: 0 auto;
+
+  @media screen and (min-width: 768px) {
+    width:600px;
+  }
+
+  @media screen and (min-height: 850px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1180px;
+  }
+  @media screen and (min-height: 1180px) {
+  height:1366px;
+  }
 
   .StSliderBoxParent {
     background-color: #111111;

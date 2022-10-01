@@ -16,7 +16,7 @@ const InfiniteScrollMonthly = () => {
   const navigate = useNavigate();
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(1); // 페이지
+  const [page, setPage] = useState(0); // 페이지
   const [month, setMonth] = useState(null);
 
   let nickname = localStorage.getItem("nickname");

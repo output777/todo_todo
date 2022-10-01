@@ -30,7 +30,6 @@ const Planner = ({ x, setX }) => {
   const [editTodoName, setEditTodoName] = useState(false);
   const [deleteTodoCheckModalVisible, setDeleteTodoCheckModalVisible] =
     useState(false);
-  const [todoComplete, setTodoComplete] = useState(false);
   const [todoRate, setTodoRate] = useState(0);
 
   const { todos } = useSelector((state) => state.planner);
@@ -81,7 +80,7 @@ const Planner = ({ x, setX }) => {
     setSelectTodo(...data);
     setEditModalVisible(true);
     setTodoId(id);
-    setTodo(data[0].content);
+    setTodo(data[0]?.content);
   };
 
   const onClickEditTodoName = () => {
@@ -98,11 +97,11 @@ const Planner = ({ x, setX }) => {
     setEditTodoName(false);
   };
 
-  const onClickEditTodoHandler = async () => {
+  const onClickEditTodoHandler = async (e) => {
     let nickname = localStorage.getItem("nickname");
     const editTodo = {
       content: todo,
-      isComplete: todoComplete,
+      isComplete: false,
     };
     await dispatch(__updateTodo({ todoId, editTodo }));
     await dispatch(__getTodayTodo(nickname));
@@ -128,9 +127,7 @@ const Planner = ({ x, setX }) => {
     const { id } = e.target.parentElement.parentElement;
     const data = todoList.filter((data) => data.todoId === Number(id));
     console.log("data", data);
-    setTodoComplete(!data[0].complete);
     setTodoId(id);
-    console.log("todoComplte", todoComplete);
     const completeTodo = {
       content: data[0].content,
       isComplete: !data[0].complete,
@@ -305,7 +302,7 @@ const Planner = ({ x, setX }) => {
           <StModalBtnBox>
             {!editTodoName ? (
               <StEditBtnBox>
-                <p className='title'>{selectTodo.content}</p>
+                <p className='title'>{selectTodo?.content}</p>
                 <p onClick={onClickEditTodoName} className='updatetitle'>
                   이름 변경
                 </p>

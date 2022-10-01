@@ -33,6 +33,8 @@ const ProfilePlanner = () => {
     (state) => state.planner
   );
 
+  console.log('categoryTodoList', categoryTodoList)
+
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { innerText } = e.target.children[0];
     const { id } = e.target.parentElement;
@@ -112,15 +114,12 @@ const ProfilePlanner = () => {
 
                     {categoryTodoList.length > 0 && (
                       <p onClick={(e) => e.stopPropagation()}>
-                        {categoryTodoList[index] === undefined
-                          ? 0
-                          : categoryTodoList[index].filter(
-                              (data) => data.complete === true
-                            ).length}
-                        /
-                        {categoryTodoList[index] === undefined
-                          ? 0
-                          : categoryTodoList[index].length}
+                        {
+                          categoryTodoList[index] === undefined ? 0 : categoryTodoList[index].filter(
+                            (data) => data.complete === true
+                          ).length
+                        }
+                        /{categoryTodoList[index] === undefined ? 0 : categoryTodoList[index].length}
                       </p>
                     )}
                   </div>
@@ -144,7 +143,7 @@ const ProfilePlanner = () => {
                     <StTodoContainer>
                       {categoryTodoList.length > 0 &&
                         categoryTodoList[index]
-                          .filter((data) => data.complete === false)
+                          ?.filter((data) => data.complete === false)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
                               <div className='top' id={data.todoId}>
@@ -168,7 +167,7 @@ const ProfilePlanner = () => {
                     <StTodoContainer>
                       {categoryTodoList.length > 0 &&
                         categoryTodoList[index]
-                          .filter((data) => data.complete === true)
+                          ?.filter((data) => data.complete === true)
                           .map((data) => (
                             <StTodoItem key={data.todoId} name={data.title}>
                               <div className='top' id={data.todoId}>
