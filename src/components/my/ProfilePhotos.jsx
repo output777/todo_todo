@@ -130,7 +130,7 @@ const ProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                  images.length - 1 ? null : (
+                images.length - 1 ? null : (
                   <button
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -182,7 +182,7 @@ const StPhotoContainer = styled.div`
   height: auto;
   /* border:1px solid red; */
   position: relative;
-`
+`;
 
 const StModalTop = styled.div`
   height: 75%;
@@ -229,8 +229,9 @@ const StContainer = styled.div`
   grid-auto-rows: 100px;
   grid-gap: 5px;
   padding-bottom: 70px;
+  background-color: white;
 
-  /* overflow-y: scroll; */
+  /* overflow: scroll; */
 `;
 
 const StImg = styled.div`
