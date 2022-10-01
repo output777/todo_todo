@@ -203,7 +203,7 @@ const ProfilePlanner = () => {
 
 const StDiv = styled.div`
   position: relative;
-  z-index: 5;
+  z-index: 4;
   background-color: #fafafa;
   height: auto;
   min-height: 70vh;

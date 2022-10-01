@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getDday } from "../../redux/modules/mainSlice";
 import UploadPhoto from "../my/UploadPhoto";
+import { displayNone } from "../../redux/modules/mySlice";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const Navbar = (props) => {
     setStatistics(false);
     setPlanner(false);
     setMypage(false);
+    dispatch(displayNone("flex"));
   };
   const onClickStatisticsMenu = async () => {
     navigate("/statistics");
@@ -36,6 +38,7 @@ const Navbar = (props) => {
     setStatistics(true);
     setPlanner(false);
     setMypage(false);
+    dispatch(displayNone("flex"));
   };
 
   const onClickPlannerMenu = async () => {
@@ -44,6 +47,7 @@ const Navbar = (props) => {
     setPlanner(true);
     setMypage(false);
     navigate("/planner");
+    dispatch(displayNone("flex"));
   };
   const onClickMypageMenu = async () => {
     setHome(false);
