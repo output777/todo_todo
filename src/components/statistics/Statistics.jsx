@@ -219,9 +219,9 @@ const Statistics = () => {
 export default Statistics;
 
 const StContainer = styled.div`
-  font-family: SUIT-Regular, sans-serif;
+  font-family: "SUIT-Regular", sans-serif;
   height: 100%;
-  
+  overflow:hidden auto;
 
 
 `

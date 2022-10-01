@@ -273,6 +273,7 @@ const StProgressBar = styled.div`
 
 const StMainContainer = styled.div`
   height: 100%;
+  overflow:hidden auto;
   font-family: "SUIT-Regular", sans-serif;
 
 `;

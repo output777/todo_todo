@@ -27,8 +27,6 @@ const layoutShow = keyframes`
     opacity:1;
   }
 `
-
-
 const StLayout = styled.div`
 width:100%;
   /* width:416px; */
@@ -42,12 +40,21 @@ width:100%;
   /* border:1px solid #ccc; */
   animation: ${layoutShow} 1s 5s alternate ease both;
 
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
     width:600px;
   }
 
-  @media screen and (min-height: 668px) {
-  height:668px;
+  @media screen and (min-height: 667px) {
+  height:667px;
+  }
+  @media screen and (min-height: 736px) {
+  height:736px;
   }
 
   @media screen and (min-height: 740px) {

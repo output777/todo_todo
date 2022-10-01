@@ -1,29 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import Profile from "../components/my/Profile";
-import ProfileTabs from "../components/my/ProfileTabs";
-import Navbar from "../components/utils/Navbar";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { __reset } from "../redux/modules/mainSlice";
-import Layout from "../components/utils/Layout";
-import UploadPhoto from "../components/my/UploadPhoto";
+import React from 'react'
+import styled from 'styled-components'
+import PlannerCategoryDate from '../components/planner/PlannerCategoryDate'
+import Navbar from '../components/utils/Navbar'
 
-const MyPage = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__reset());
-  }, []);
-
+const PlannerDatePage = () => {
   return (
     <StContainer>
-      <Profile />
-      {/* <ProfileTabs /> */}
-      <Navbar myPage={true} />
+      <PlannerCategoryDate />
+      <Navbar planner={true} />
     </StContainer>
-  );
-};
+  )
+}
 
 const StContainer = styled.div`
   width:100%;
@@ -41,7 +28,7 @@ const StContainer = styled.div`
     width:600px;
   }
 
-  /* @media screen and (min-height: 667px) {
+  @media screen and (min-height: 667px) {
   height:667px;
   }
   @media screen and (min-height: 736px) {
@@ -86,7 +73,7 @@ const StContainer = styled.div`
 
   @media screen and (min-height: 1366px) {
   height:1366px;
-  } */
+  }
 `
 
-export default MyPage;
+export default PlannerDatePage

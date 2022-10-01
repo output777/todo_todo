@@ -22,18 +22,16 @@ const PlannerCalender = ({ calenderdate, setCalenderdate, selectDate, setSelectD
     <StDateDiv>
       <StSpan>{dayjs(calenderdate).month() + 1}월 {dayjs(calenderdate).date()}일 {days[dayjs(calenderdate).day()]}</StSpan>
       <img src={calendarSvg} onClick={openModal} alt='calendarIcon' />
-      {modalVisible && (
-        <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='350px'
-          top='30%'
-        >
-          <Calendar setCalenderdate={setCalenderdate} selectDate={selectDate} setSelectDate={setSelectDate} />
-        </Modal>
-      )}
+      <Modal
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='350px'
+        top='30%'
+      >
+        <Calendar setCalenderdate={setCalenderdate} selectDate={selectDate} setSelectDate={setSelectDate} />
+      </Modal>
     </StDateDiv>
   );
 };
