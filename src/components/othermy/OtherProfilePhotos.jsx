@@ -43,7 +43,7 @@ const OtherProfilePhotos = () => {
   };
 
   const onClickPrevHandler = (id) => {
-    let a = images.find((data) => data.id === id);
+    let a = images.find((data) => data.id === Number(id));
     const prevData = images[images.indexOf(a) - 1];
     console.log(prevData);
     setSelectImgId(prevData.id);
@@ -51,7 +51,7 @@ const OtherProfilePhotos = () => {
   };
 
   const onClickNextHandler = (id) => {
-    let a = images.find((data) => data.id === id);
+    let a = images.find((data) => data.id === Number(id));
     const nextData = images[images.indexOf(a) + 1];
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
@@ -75,12 +75,9 @@ const OtherProfilePhotos = () => {
     setModalVisible(false);
   };
 
-
-
   useEffect(() => {
     dispatch(__getImages(params.id));
   }, [dispatch]);
-
 
   return (
     <>
@@ -88,17 +85,17 @@ const OtherProfilePhotos = () => {
         {images.errorMessage === undefined &&
           images.map((data) => (
             <StImg key={data.id} onClick={onClickFullScreenImgsHandler}>
-              <img id={data.id} src={data.imageUrl} alt='boast' />
+              <img id={data.id} src={data.imageUrl} alt="boast" />
             </StImg>
           ))}
       </StContainer>
       {fullScreen ? (
         <StFullScreen>
-          <div className='header'>
-            <div className='cancelBox' onClick={onClickFullScreenCloseHandler}>
-              <img src={cancelSvg} alt='cancelBtn' />
+          <div className="header">
+            <div className="cancelBox" onClick={onClickFullScreenCloseHandler}>
+              <img src={cancelSvg} alt="cancelBtn" />
             </div>
-            <div className='imgCount'>
+            <div className="imgCount">
               {images && (
                 <span>
                   {images.indexOf(
@@ -117,31 +114,31 @@ const OtherProfilePhotos = () => {
               />
             </div> */}
           </div>
-          <div className='StSliderBoxParent'>
+          <div className="StSliderBoxParent">
             <StSliderBox>
-              <div className='imgBox' key={selectImgId}>
+              <div className="imgBox" key={selectImgId}>
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) == 0 ? null : (
                   <button
-                    className='prev'
+                    className="prev"
                     onClick={() => onClickPrevHandler(selectImgId)}
                   >
-                    <div className='prevArrow'></div>
+                    <div className="prevArrow"></div>
                   </button>
                 )}
 
-                <img src={selectImg} alt='img' id={selectImgId} />
+                <img src={selectImg} alt="img" id={selectImgId} />
 
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                  images.length - 1 ? null : (
+                images.length - 1 ? null : (
                   <button
-                    className='next'
+                    className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
                   >
-                    <div className='nextArrow'></div>
+                    <div className="nextArrow"></div>
                   </button>
                 )}
               </div>
@@ -158,21 +155,21 @@ const OtherProfilePhotos = () => {
             closable={true}
             maskClosable={true}
             onClose={closeModal}
-            radius='48px'
-            top='40%'
-            width='90%'
-            height='230px'
-            backgroundcolor='#46464624'
+            radius="48px"
+            top="40%"
+            width="90%"
+            height="230px"
+            backgroundcolor="#46464624"
           >
             <StModalTop>
-              <div className='title'>사진을 삭제하시겠습니까?</div>
+              <div className="title">사진을 삭제하시겠습니까?</div>
               <div>삭제하면 다시 불러올 수 없습니다.</div>
             </StModalTop>
             <StModalBottom>
-              <div className='cancel' onClick={closeModal}>
+              <div className="cancel" onClick={closeModal}>
                 취소
               </div>
-              <div className='confirm' onClick={onClickDeleteImgHandler}>
+              <div className="confirm" onClick={onClickDeleteImgHandler}>
                 확인
               </div>
             </StModalBottom>
@@ -223,7 +220,7 @@ const StModalBottom = styled.div`
 const StContainer = styled.div`
   width: 100%;
   height: auto;
-  min-height:40vh;
+  min-height: 40vh;
   background-color: #f8f8f8;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
