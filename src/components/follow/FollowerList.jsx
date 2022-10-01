@@ -12,8 +12,8 @@ import {
 } from "../../redux/modules/mySlice";
 
 const FollowerList = () => {
-  const nickname = localStorage.getItem("nickname");
 
+  let nickname = localStorage.getItem("nickname");
   const [follow, setFollow] = useState();
 
   const dispatch = useDispatch();
@@ -29,20 +29,23 @@ const FollowerList = () => {
 
   const followerBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
-    dispatch(__getFollowingList(nickname));
+    await dispatch(__getFollowingList(nickname));
+    await dispatch(__getFollowerList(params.id));
     setFollow(() => false);
   };
 
   const followBtnHandler = async (id) => {
     await dispatch(__getFollowInfo(id));
-    dispatch(__getFollowingList(nickname));
+    await dispatch(__getFollowingList(nickname));
+    await dispatch(__getFollowerList(params.id));
     setFollow(() => true);
   };
 
   useEffect(() => {
+    // const nickname = localStorage.getItem("nickname");
     dispatch(__getFollowerList(params.id));
     dispatch(__getFollowingList(nickname));
-  }, [follow]);
+  }, [dispatch]);
 
   return (
     <Stdiv>

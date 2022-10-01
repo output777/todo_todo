@@ -1,20 +1,24 @@
 import React from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Setting = () => {
+const Setting = ({ setToken }) => {
   const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.clear();
+    setToken(null);
+    navigate("/login");
+  }
+
+
   return (
     <div style={{ backgroundColor: "#fff" }}>
       <StArrow onClick={() => navigate("/my")} />
       <StTitle>설정</StTitle>
       <StLine></StLine>
-      <StLogout
-        onClick={() => {
-          localStorage.clear();
-          navigate("/login");
-        }}
-      >
+      <StLogout onClick={logoutHandler}>
         로그아웃
       </StLogout>
       <StBackground></StBackground>

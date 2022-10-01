@@ -34,6 +34,8 @@ const OtherProfilePlanner = () => {
   );
 
 
+  console.log('categoryTodoList', categoryTodoList, 'category', category)
+
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { innerText } = e.target.children[0];
     const { id } = e.target.parentElement;
@@ -108,11 +110,11 @@ const OtherProfilePlanner = () => {
 
                     <p onClick={(e) => e.stopPropagation()}>
                       {
-                        categoryTodoList.length > 0 && categoryTodoList[index].filter(
+                        categoryTodoList[index] === undefined ? 0 : categoryTodoList[index].filter(
                           (data) => data.complete === true
                         ).length
                       }
-                      /{categoryTodoList.length > 0 && categoryTodoList[index].length}
+                      /{categoryTodoList[index] === undefined ? 0 : categoryTodoList[index].length}
                     </p>
                   </div>
 
@@ -133,7 +135,7 @@ const OtherProfilePlanner = () => {
 
                   <StTodoToggleBox>
                     <StTodoContainer>
-                      {categoryTodoList.length > 0 &&
+                      {categoryTodoList[index] === undefined ? null :
                         categoryTodoList[index]
                           .filter((data) => data.complete === false)
                           .map((data) => (
@@ -155,7 +157,7 @@ const OtherProfilePlanner = () => {
                     </StTodoContainer>
 
                     <StTodoContainer>
-                      {categoryTodoList.length > 0 &&
+                      {categoryTodoList[index] === undefined ? null :
                         categoryTodoList[index]
                           .filter((data) => data.complete === true)
                           .map((data) => (

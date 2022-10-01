@@ -5,7 +5,7 @@ import { __kakaoLogin } from '../../redux/modules/loginSlice';
 import Loading from './Loading';
 
 
-const KakaoLogin = () => {
+const KakaoLogin = ({ token, setToken }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,7 +25,9 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     if (user) {
-      nicknameCheck(user)
+      let token = localStorage.getItem("accessToken");
+      nicknameCheck(user);
+      setToken(token);
     }
   }, [user])
 

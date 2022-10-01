@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import logo from "../../assets/img/loginPage/logo.svg";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import Naver from "./Naver";
 import kakaoUnion from "../../assets/img/loginPage/kakaoUnion.svg";
 import googleUnion from "../../assets/img/loginPage/googleUnion.svg";
 import { useState } from "react";
+import Layout from "../utils/Layout";
 
 const Login = () => {
 
@@ -27,38 +28,78 @@ const Login = () => {
   };
 
   return (
-    <StLoginContainer>
-      {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
-      <StPhrases>고등학생을 위한 투두리스트</StPhrases>
-      <StLogobox>
-        <StLogo src={logo} />
-        <StLogoPencil src={logoPencil} />
-      </StLogobox>
+    <Layout>
+      <StLoginContainer>
+        {/* 고등학생을 위한 투두리스트 텍스트로 변경하기 */}
+        <StPhrases>고등학생을 위한 투두리스트</StPhrases>
+        <StLogobox>
+          <StLogo src={logo} />
+          <StLogoPencil src={logoPencil} />
+        </StLogobox>
 
-      <StLoginBtnbox>
-        <StKakaoBtn onClick={onKakaoLoginHandler}>
-          <StKakaoBtnImg src={kakaoUnion} />
-          <StKakaoBtnFont>카카오 로그인</StKakaoBtnFont>
-        </StKakaoBtn>
-        {/* <Naver /> */}
-        <StGoogleBtn onClick={onGoogleLoginHandler}>
-          <StGoogleBtnImg src={googleUnion} />
-          <StGoogleBtnFont>구글 로그인</StGoogleBtnFont>
-        </StGoogleBtn>
-      </StLoginBtnbox>
-    </StLoginContainer>
+        <StLoginBtnbox>
+          <StKakaoBtn onClick={onKakaoLoginHandler}>
+            <StBtnBox>
+              <div>
+                <StKakaoBtnImg src={kakaoUnion} alt='kakaoUnionIcon' />
+              </div>
+              <StKakaoBtnFont>카카오 로그인</StKakaoBtnFont>
+            </StBtnBox>
+          </StKakaoBtn>
+          {/* <Naver /> */}
+          <StGoogleBtn onClick={onGoogleLoginHandler}>
+            <StBtnBox>
+              <div>
+                <StGoogleBtnImg src={googleUnion} alt='googleUnionIcon' />
+              </div>
+              <StGoogleBtnFont>구글 로그인</StGoogleBtnFont>
+            </StBtnBox>
+          </StGoogleBtn>
+        </StLoginBtnbox>
+      </StLoginContainer>
+    </Layout>
   );
 };
 
 export default Login;
 
+const layoutShow = keyframes`
+  0% {
+    display:block;
+    opacity:0;
+  }
+  25% {
+    display:block;
+    opacity:0.25;
+  }
+  50% {
+    display:block;
+    opacity:0.5;
+  }
+  75% {
+    display:block;
+    opacity:0.75;
+  }
+  100% {
+    display:block;
+    opacity:1;
+  }
+`
+
 const StLoginContainer = styled.div`
+  width:100%;
+  /* min-width: 360px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "SUIT-Regular", sans-serif;
   height:850px;
   background-color:#fff;
+  /* opacity:0; */
+  /* animation: ${layoutShow} 1s 5s alternate ease both; */
+
+  
+
 
   @media screen and (min-height: 850px) {
   height:1180px;
@@ -74,6 +115,8 @@ const StLoginContainer = styled.div`
   @media screen and (min-height: 1180px) {
   height:1366px;
   }
+
+
 `;
 
 const StLogobox = styled.div``;
@@ -125,8 +168,10 @@ const StKakaoBtnImg = styled.img`
 `;
 
 const StKakaoBtnFont = styled.span`
+  font-family: "SUIT-Regular", sans-serif;
   position: relative;
   left: 5px;
+  font-size: 16px;
 `;
 const StNaverBtn = styled.button`
   margin-bottom: 5%;
@@ -140,15 +185,25 @@ const StGoogleBtn = styled.button`
   border: 1px solid #e8e8e8;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
+  vertical-align:center;
 `;
+
+const StBtnBox = styled.div`
+  display: flex;
+  justify-content:center;
+  align-items:center;
+
+`
 
 const StGoogleBtnImg = styled.img`
   position: relative;
-  right: 18px;
+  right: 15px;
+  vertical-align:center;
 `;
 
 const StGoogleBtnFont = styled.span`
-  margin-top: 100px;
+  font-family: "SUIT-Regular", sans-serif;
   position: relative;
-  /* left: px; */
+  left: 5px;
+  font-size: 16px;
 `;

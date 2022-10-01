@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import HeatMap from "react-heatmap-grid";
 import { __getHeatMapData } from "../../redux/modules/statisticsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import HeatMap from 'react-heatmap-grid';
 
 const HeatMapSample = () => {
   const [heatMapDataRate, setHeatMapDataRate] = useState([
@@ -53,6 +53,8 @@ const HeatMapSample = () => {
     setHeatMapDataRate(heatmapArr);
   }, [heatmapData]);
 
+  console.log('heatMapDataRate', heatMapDataRate)
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,15 +67,18 @@ const HeatMapSample = () => {
         xLabels={xLabels}
         yLabels={yLabels}
         // xLabelsLocation={"top"}
-        // yLabelsLocation={"left"}
+        // yLabelsLocation={"top"}
         // xLabelsVisibility={xLabelsVisibility}
         // yLabelsVisibility={yLabelsVisibility}
-        xLabelWidth={25}
-        yLabelWidth={15}
+        // xLabelWidth={30}
+        yLabelWidth={30}
         data={heatMapDataRate.length > 0 ? heatMapDataRate : null}
         squares
+        // width={30}
         height={30}
-        cellStyle={(background, value, min, max, data, x, y) => ({
+        cellStyle={(background, value) => ({
+          width: '30px',
+          margigLeft: '1.5px',
           background:
             value <= 25
               ? "#F3F3F3"
@@ -84,11 +89,6 @@ const HeatMapSample = () => {
                   : value > 75
                     ? "#FF8F27"
                     : "null",
-          color: "#111",
-          fontSize: "1px",
-          // height: "20em",
-          // width: "30em",
-          // margin: "0px",
         })}
       // cellRender={(value) => value && <div>{value}%</div>}
       />
@@ -97,16 +97,17 @@ const HeatMapSample = () => {
 };
 
 const StContainer = styled.div`
-    font-size: 10px;
+    font-size: 11px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 12px;
     margin: auto;
-    width: 90%;
+    width:90%;
+    height:270px;
     box-sizing: border-box;
-    padding: 15px 25px 15px 0px;
+    padding-right: 50px;
     background-color: white;
     box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
 `

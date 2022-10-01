@@ -21,10 +21,11 @@ import Loading from "../components/login/Loading";
 import ProfilePlanner from "../components/my/ProfilePlanner";
 import Layout from "../components/utils/Layout";
 import styled from "styled-components";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Router = () => {
-  let token = localStorage.getItem("accessToken");
-  let nickname = localStorage.getItem("nickname");
+  const [token, setToken] = useState(null);
 
   return (
     <BrowserRouter>
@@ -35,23 +36,23 @@ const Router = () => {
               path='/login'
               element={token !== null ? <Navigate replace to='/' /> : <LoginPage />}
             />
-            <Route path='/' element={<MainPage />} />
-            <Route path='/my' element={<MyPage />} />
-            <Route path='/my/planner' element={<ProfilePlanner />} />
-            <Route path='/othermy/:id' element={<OtherMyPage />} />
-            <Route path='/follower/:id' element={<FollowerPage />} />
-            <Route path='/following/:id' element={<FollowingPage />} />
-            <Route path='/profileedit' element={<ProfileEdit />} />
-            <Route path='/setting' element={<Setting />} />
-            <Route path='/planner' element={<PlannerPage />} />
-            <Route path='/planner/date' element={<PlannerCategoryDate />} />
-            <Route path='/planner/category' element={<PlannerCategoryAdd />} />
-            <Route path='/planner/category/todolist' element={<Planner />} />
-            <Route path='/statistics' element={<StatisticsPage />} />
+            <Route path='/' element={token === null ? <Navigate replace to='/login' /> : <MainPage />} />
+            <Route path='/my' element={token === null ? <Navigate replace to='/login' /> : <MyPage />} />
+            <Route path='/my/planner' element={token === null ? <Navigate replace to='/login' /> : <ProfilePlanner />} />
+            <Route path='/othermy/:id' element={token === null ? <Navigate replace to='/login' /> : <OtherMyPage />} />
+            <Route path='/follower/:id' element={token === null ? <Navigate replace to='/login' /> : <FollowerPage />} />
+            <Route path='/following/:id' element={token === null ? <Navigate replace to='/login' /> : <FollowingPage />} />
+            <Route path='/profileedit' element={token === null ? <Navigate replace to='/login' /> : <ProfileEdit />} />
+            <Route path='/setting' element={token === null ? <Navigate replace to='/login' /> : <Setting setToken={setToken} />} />
+            <Route path='/planner' element={token === null ? <Navigate replace to='/login' /> : <PlannerPage />} />
+            <Route path='/planner/date' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryDate />} />
+            <Route path='/planner/category' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryAdd />} />
+            <Route path='/planner/category/todolist' element={token === null ? <Navigate replace to='/login' /> : <Planner />} />
+            <Route path='/statistics' element={token === null ? <Navigate replace to='/login' /> : <StatisticsPage />} />
             {/* <Route path='/profileinfo' element={token !== null ? <Navigate replace to="/" /> : <ProfileInfoPage />} /> */}
             <Route path='/profileinfo' element={<ProfileInfoPage />} />
-            <Route path='/user/kakao/callback' element={<KakaoLogin />} />
-            <Route path='/user/google/callback' element={<GoogleLogin />} />
+            <Route path='/user/kakao/callback' element={<KakaoLogin setToken={setToken} />} />
+            <Route path='/user/google/callback' element={<GoogleLogin setToken={setToken} />} />
             <Route path='/user/naver/callback' element={<NaverLogin />} />
           </Routes>
         </Layout>

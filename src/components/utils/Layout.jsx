@@ -1,9 +1,33 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Layout = ({ children }) => {
   return <StLayout>{children}</StLayout>;
 };
+
+const layoutShow = keyframes`
+  0% {
+    display:block;
+    opacity:0;
+  }
+  25% {
+    display:block;
+    opacity:0.25;
+  }
+  50% {
+    display:block;
+    opacity:0.5;
+  }
+  75% {
+    display:block;
+    opacity:0.75;
+  }
+  100% {
+    display:block;
+    opacity:1;
+  }
+`
+
 
 const StLayout = styled.div`
 width:100%;
@@ -12,6 +36,9 @@ width:100%;
   height:850px;
   background-color: #fafafa;
   position:relative;
+  opacity:0;
+  /* border:1px solid #ccc; */
+  animation: ${layoutShow} 1s 5s alternate ease both;
 
   
 
@@ -21,7 +48,7 @@ width:100%;
     display: none; /* Chrome, Safari, Opera*/
 }
 
-  @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
     width:600px;
   }
 
@@ -39,6 +66,8 @@ width:100%;
   @media screen and (min-height: 1180px) {
   height:1366px;
   }
+
+
 
 `;
 

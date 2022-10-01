@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 
 // 구글 로그인만 렌더링 최적화 - useCallback, useEffect 적용
-const GoogleLogin = () => {
+const GoogleLogin = ({ setToken }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,7 +28,9 @@ const GoogleLogin = () => {
 
   useEffect(() => {
     if (user) {
-      nicknameCheck(user)
+      let token = localStorage.getItem("accessToken");
+      nicknameCheck(user);
+      setToken(token);
     }
   }, [user])
 
