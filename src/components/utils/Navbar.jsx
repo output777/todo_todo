@@ -11,6 +11,7 @@ import clickMypageSvg from "../../assets/img/clickMypageSvg.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getDday } from "../../redux/modules/mainSlice";
+import UploadPhoto from "../my/UploadPhoto";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -73,7 +74,10 @@ const Navbar = (props) => {
         <StPlanner src={plannerSvg} onClick={onClickPlannerMenu} />
       )}
       {mypage ? (
-        <StMypage src={clickMypageSvg} onClick={onClickMypageMenu} />
+        <>
+          <StMypage src={clickMypageSvg} onClick={onClickMypageMenu} />
+          <UploadPhoto />
+        </>
       ) : (
         <StMypage src={mypageSvg} onClick={onClickMypageMenu} />
       )}
@@ -99,10 +103,8 @@ const StNav = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-
-
   @media screen and (min-width: 768px) {
-    width:600px;
+    width: 600px;
   }
 `;
 
