@@ -16,6 +16,7 @@ const initialState = {
   isLoading: false,
   error: null,
   motto: null,
+  profilePhotoBtn: "flex",
 };
 
 export const __getMyInfo = createAsyncThunk(
@@ -279,7 +280,11 @@ export const __getFollowerList = createAsyncThunk(
 export const mySlice = createSlice({
   name: "mySlice",
   initialState,
-  reducers: {},
+  reducers: {
+    displayNone: (state, action) => {
+      state.profilePhotoBtn = action.payload;
+    },
+  },
   extraReducers: {
     //__getMyInfo
     [__getMyInfo.pending]: (state) => {
@@ -408,5 +413,5 @@ export const mySlice = createSlice({
   },
 });
 
-export const { } = mySlice.actions;
+export const { displayNone } = mySlice.actions;
 export default mySlice.reducer;

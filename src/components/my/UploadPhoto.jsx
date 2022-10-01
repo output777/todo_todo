@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import cameraSvg from "../../assets/img/cameraSvg.svg";
 
@@ -13,9 +13,9 @@ import imageCompression from "browser-image-compression";
 
 const UploadPhoto = () => {
   const dispatch = useDispatch();
-  const uploadRef = useRef(null);
+  const { profilePhotoBtn } = useSelector((state) => state.my);
   const nickname = localStorage.getItem("nickname");
-  console.log("nickname", nickname);
+  const uploadRef = useRef(null);
 
   const onClickUploadPhotoHandler = () => {
     uploadRef.current.click();
@@ -51,7 +51,10 @@ const UploadPhoto = () => {
   };
 
   return (
-    <StUploadPhoto onClick={onClickUploadPhotoHandler}>
+    <StUploadPhoto
+      onClick={onClickUploadPhotoHandler}
+      display={profilePhotoBtn}
+    >
       <input
         type="file"
         accept="image/*"
@@ -64,7 +67,7 @@ const UploadPhoto = () => {
 };
 
 const StUploadPhoto = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 5.5rem;
   right: 1rem;
   z-index: 4;
@@ -73,7 +76,7 @@ const StUploadPhoto = styled.div`
   height: 58px;
   background-color: #ff8f27;
   border-radius: 50%;
-  display: flex;
+  display: ${(props) => props.display};
   justify-content: center;
   align-items: center;
   /* right: 18px; */
