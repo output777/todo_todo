@@ -72,17 +72,17 @@ const PlannerCategoryDate = () => {
   console.log("dateTodoObj", dateTodoObj, "categoryTodoList", categoryTodoList);
 
   useEffect(() => {
-    let date = localStorage.getItem('date');
+    let date = localStorage.getItem("date");
     setCalenderdate(date);
   }, [date]);
 
-  console.log('calenderdate', calenderdate, 'selectDate', selectDate)
+  console.log("calenderdate", calenderdate, "selectDate", selectDate);
 
   useEffect(() => {
     console.log("localStorage.getItem", localStorage.getItem("date"));
     let date = localStorage.getItem("date");
     let nickname = localStorage.getItem("nickname");
-    console.log('date', date, 'nickname', nickname);
+    console.log("date", date, "nickname", nickname);
 
     dispatch(__getTodo({ date: date, nickname }));
   }, [dispatch]);
@@ -120,7 +120,7 @@ const PlannerCategoryDate = () => {
                   {categoryTodoList.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
                       {categoryTodoComplete[`${categoryTodoList[index]}`] ===
-                        undefined
+                      undefined
                         ? 0
                         : categoryTodoComplete[`${categoryTodoList[index]}`]}
                       /{dateTodoObj[`${categoryTodoList[index]}`]}
@@ -132,12 +132,12 @@ const PlannerCategoryDate = () => {
                     width={
                       isNaN(
                         categoryTodoComplete[`${categoryTodoList[index]}`] /
-                        dateTodoObj[`${categoryTodoList[index]}`]
+                          dateTodoObj[`${categoryTodoList[index]}`]
                       )
                         ? 0
                         : (categoryTodoComplete[`${categoryTodoList[index]}`] /
-                          dateTodoObj[`${categoryTodoList[index]}`]) *
-                        100
+                            dateTodoObj[`${categoryTodoList[index]}`]) *
+                          100
                     }
                     backgroundColor='#74E272'
                   ></StProgressBar>
@@ -153,28 +153,28 @@ const PlannerCategoryDate = () => {
         />
         <Navbar planner={true} />
       </StDiv>
-
     </>
   );
 };
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  width:100%;
+  width: 100%;
   min-width: 360px;
   height: 100vh;
   height: 850px;
-  margin:0 auto;
+  margin: 0 auto;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.4);
+    background-color: #fafafa;
+    /* background: rgba(255, 255, 255, 0.4); */
   }
   font-family: "SUIT-Regular", sans-serif;
 
   @media screen and (min-width: 768px) {
-    width:600px;
+    width: 600px;
   }
 
   /* @media screen and (min-height: 850px) {
@@ -191,10 +191,10 @@ const StDiv = styled.div`
   @media screen and (min-height: 1180px) {
   height:1366px;
   } */
-  position:relative;
+  position: relative;
 
   & .header {
-    width:100%;
+    width: 100%;
     min-width: 360px;
     height: 71px;
     display: flex;
@@ -202,12 +202,12 @@ const StDiv = styled.div`
     justify-content: space-between;
     /* align-items: center; */
     padding: 10px;
-    box-sizing:border-box;
+    box-sizing: border-box;
     border-bottom: 1px solid #f1f3f5;
 
     @media screen and (min-width: 768px) {
-    width:600px;
-  }
+      width: 600px;
+    }
 
     .categoryBox {
       padding: 10px;

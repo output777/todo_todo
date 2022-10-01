@@ -32,8 +32,8 @@ const Dday = () => {
   };
 
   const onSubmitHandler = async () => {
-    if (ddate.title.length > 8) {
-      alert("8자 이내로 입력해주세요.");
+    if (ddate.title.length == 0 || ddate.selectedDate.length == 0) {
+      alert("제목과 날짜 모두를 입력해주세요.");
     } else {
       await dispatch(
         __updateDday({
@@ -45,6 +45,7 @@ const Dday = () => {
       await dispatch(__getDday());
     }
   };
+  console.log(ddate);
   // console.log(Date.now());
   // console.log(ddate.selectedDate.replace(/\-/g, ""));
 
@@ -74,26 +75,26 @@ const Dday = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="350px"
-          height="330px"
-          top="45%"
-          radius="48px"
-          backgroundcolor="rgba(31, 31, 31, 0.116)"
+          width='350px'
+          height='330px'
+          top='45%'
+          radius='48px'
+          backgroundcolor='rgba(31, 31, 31, 0.116)'
         >
           <StModalTop>디데이</StModalTop>
           <StInputbox>
             <input
-              type="text"
-              maxLength="8"
-              placeholder="8자 이내로 입력해주세요."
+              type='text'
+              maxLength='8'
+              placeholder='8자 이내로 입력해주세요.'
               onChange={onChangeHandler}
             />
           </StInputbox>
           <StDate>날짜</StDate>
           <StDateInput
-            type={"date"}
-            min="2012-01-01"
-            max="2032-12-31"
+            type='date'
+            min='2012-01-01'
+            max='2032-12-31'
             onChange={onChangeDateHandler}
           ></StDateInput>
           <StModalBottom>
@@ -113,6 +114,8 @@ const Dday = () => {
         {dday.dday.title}
         {dday.dday.remaingDay > 0
           ? `+${dday.dday.remaingDay}`
+          : dday.dday.remaingDay === 0
+          ? ` D-DAY`
           : dday.dday.remaingDay}
       </StDdayBox>
     </div>
@@ -151,8 +154,8 @@ const StInputbox = styled.div`
     height: 50px;
     border: 1px solid #e8e8e8;
     border-radius: 16px;
-    padding-left:10px;
-    box-sizing:border-box;
+    padding-left: 10px;
+    box-sizing: border-box;
   }
 `;
 
@@ -168,8 +171,8 @@ const StDateInput = styled.input`
   margin-top: 8px;
   width: 170px;
   height: 50px;
-  padding:0 10px;
-    box-sizing:border-box;
+  padding: 0 10px;
+  box-sizing: border-box;
 `;
 
 const StModalBottom = styled.div`

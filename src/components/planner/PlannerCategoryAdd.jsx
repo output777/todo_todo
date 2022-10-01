@@ -238,7 +238,7 @@ const PlannerCategoryAdd = () => {
                 type='text'
                 value={categoryName}
                 onChange={onChangeInputHandler}
-                placeholder='과목 이름을 입력해주세요.'
+                placeholder='과목 이름을 입력해주세요.(2-15자)'
               />
             </StModalBtnBox>
 
@@ -257,7 +257,7 @@ const PlannerCategoryAdd = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100vh;
+  height: 100;
   font-family: "SUIT-Regular", sans-serif;
 
   & div.header {
@@ -268,7 +268,7 @@ const StDiv = styled.div`
     justify-content: space-between;
     align-items: flex-end;
     padding: 1rem;
-    box-sizing:border-box;
+    box-sizing: border-box;
     border-bottom: 1px solid #f1f3f5;
 
     .iconBox {
@@ -416,7 +416,7 @@ const StCategoryBox = styled.div`
   padding: 10px;
   -webkit-box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
   box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
-  box-sizing:border-box;
+  box-sizing: border-box;
 
   & p {
     margin: 0;

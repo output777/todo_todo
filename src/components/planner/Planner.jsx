@@ -273,6 +273,9 @@ const Planner = ({ x, setX }) => {
           <StModalBtnBox>
             <p className='title'>투두 추가</p>
             <StTodoInput
+              minLength='2'
+              maxLength='15'
+              placeholder='투두를 추가해주세요.(2-15자 이내)'
               type='text'
               value={todo}
               onChange={onChangeInputHandler}
@@ -365,17 +368,17 @@ const Planner = ({ x, setX }) => {
 };
 
 const StDiv = styled.div`
-  width:100%;
+  width: 100;
   min-width: 360px;
   background-color: #fafafa;
   height: 100%;
   font-family: "SUIT-Regular", sans-serif;
-  position:relative;
-  margin:0 auto;
-  box-sizing:border-box;
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
 
   @media screen and (min-width: 768px) {
-    width:600px;
+    width: 600px;
   }
 
   /* @media screen and (min-height: 850px) {
@@ -394,9 +397,9 @@ const StDiv = styled.div`
   } */
 
   & .header {
-    width:100%;
+    width: 100%;
     min-width: 360px;
-    height:110px;
+    height: 110px;
     position: fixed;
     background-color: #ffffff;
     display: flex;
@@ -405,21 +408,19 @@ const StDiv = styled.div`
     box-sizing: border-box;
 
     @media screen and (min-width: 768px) {
-    width:600px;
-  }
-
+      width: 600px;
+    }
   }
 `;
 
 const StHeaderBox = styled.div`
   display: flex;
-  height:50px;
+  height: 50px;
   justify-content: space-between;
-  align-items:center;
-
+  align-items: center;
 
   & div {
-    flex:1;
+    flex: 1;
   }
 
   & .iconBox {
@@ -434,9 +435,8 @@ const StHeaderBox = styled.div`
 
   & .categoryTitle {
     text-align: center;
-      transform: translateX(-5px);
+    transform: translateX(-5px);
   }
-
 `;
 
 const StCategoryProgressContainer = styled.div`
@@ -542,7 +542,7 @@ const StModalBtnBox = styled.div`
   }
 `;
 
-const StTodoInput = styled.textarea`
+const StTodoInput = styled.input`
   // props로 입력할 때 마다 border 색 변경하기
   border: 1px solid #d7d5d5;
   height: 75px;
@@ -682,6 +682,6 @@ const StEditBtnBox = styled.div`
 const StEditBtnbox = styled.div`
   display: flex;
   position: relative;
-  top: 15px;
+  top: 20px;
 `;
 export default Planner;
