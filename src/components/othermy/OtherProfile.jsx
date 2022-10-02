@@ -11,6 +11,7 @@ import {
   __getOtherInfo,
   __getFollowInfo,
   __getFollowingList,
+  __getFollowCnt,
 } from "../../redux/modules/mySlice";
 import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
 import { useNavigate, useParams } from "react-router-dom";
@@ -53,6 +54,8 @@ const OtherProfile = () => {
   const followingList = useSelector((state) => state.my.following);
   console.log(followingList);
 
+  const { followcnt } = useSelector((state) => state.my);
+
   useEffect(() => {
     if (followingList !== null && followingList.length > 0) {
       const followingListFunction = followingList.filter(
@@ -88,6 +91,10 @@ const OtherProfile = () => {
     console.log("data", data);
     setMonth(() => data);
   };
+
+  useEffect(() => {
+    dispatch(__getFollowCnt(user.id));
+  }, [dispatch]);
 
   useEffect(() => {
     monthFunc();
@@ -130,7 +137,7 @@ const OtherProfile = () => {
                 navigate(`/follower/${params.id}`);
               }}
             >
-              <span className='count'>{user.followersCnt}</span>
+              <span className='count'>{followcnt.followerCnt}</span>
               <span className='text'>팔로워</span>
             </div>
             <div
@@ -139,7 +146,7 @@ const OtherProfile = () => {
                 navigate(`/following/${params.id}`);
               }}
             >
-              <span className='count'>{user.followingsCnt}</span>
+              <span className='count'>{followcnt.followingCnt}</span>
               <span className='text'>팔로잉</span>
             </div>
           </StInfo>
