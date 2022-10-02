@@ -58,7 +58,7 @@ export const __getTotalRate = createAsyncThunk(
         config
       );
       console.log("data.data", data.data);
-      return thunkAPI.fulfillWithValue(data.data.achievementRate);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -229,7 +229,7 @@ export const mainSlice = createSlice({
     [__getTotalRate.fulfilled]: (state, action) => {
       console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.totalRate = [Math.round(action.payload)];
+      state.totalRate = action.payload;
     },
     [__getTotalRate.rejected]: (state, action) => {
       state.isLoading = false;

@@ -101,38 +101,34 @@ const Main = () => {
           </div>
           <div className="todoCnt">
             <img src={plannerCntSvg} />
-            <span>100</span>
+            <span>{totalRate.plannerCnt}</span>
             <img src={completeCntSvg} />
-            <span>50</span>
+            <span>{totalRate.completeCnt}</span>
           </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
-          <StthisMonthGauge thisMonthRate={thisMonthRate}>
+          <StthisMonthGauge>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>
-                {thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]} %
-              </div>
+              <div>{Math.round(thisMonthRate.achievementRate)} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
               <StProgressBar
-                width={thisMonthRate[0] === undefined ? 0 : thisMonthRate[0]}
+                width={Math.round(thisMonthRate.achievementRate)}
               ></StProgressBar>
             </StProgressBarBox>
           </StthisMonthGauge>
 
-          <StTotalGauge
-            totalRate={totalRate[0] === undefined ? 0 : totalRate[0]}
-          >
+          <StTotalGauge>
             <StGaugeText>
               플래너 총 달성률
-              <div>{totalRate[0] === undefined ? 0 : totalRate[0]} %</div>
+              <div>{Math.round(totalRate.achievementRate)} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
               <StProgressBar
-                width={totalRate[0] === undefined ? 0 : totalRate[0]}
+                width={Math.round(totalRate.achievementRate)}
               ></StProgressBar>
             </StProgressBarBox>
           </StTotalGauge>
@@ -281,7 +277,7 @@ const StProgressBar = styled.div`
 
 const StMainContainer = styled.div`
   height: 100%;
-  overflow:hidden auto;
+  overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
 `;
 
@@ -374,47 +370,9 @@ const StAchievementsBottomBox = styled.div`
 `;
 const StthisMonthGauge = styled.div`
   width: 90%;
-  .progress-bar {
-    ${({ thisMonthRate }) => {
-      if (thisMonthRate < 30) {
-        return css`
-          background-color: #d34c4c;
-        `;
-      }
-      if (thisMonthRate >= 30 && thisMonthRate < 70) {
-        return css`
-          background-color: #ffdb80;
-        `;
-      }
-      if (thisMonthRate >= 70) {
-        return css`
-          background-color: #74e272;
-        `;
-      }
-    }}
-  }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
-  .progress-bar {
-    ${({ totalRate }) => {
-      if (totalRate < 30) {
-        return css`
-          background-color: #d34c4c;
-        `;
-      }
-      if (totalRate >= 30 && totalRate < 70) {
-        return css`
-          background-color: #ffdb80;
-        `;
-      }
-      if (totalRate >= 70) {
-        return css`
-          background-color: #74e272;
-        `;
-      }
-    }}
-  }
 `;
 
 const StGaugeText = styled.div`
