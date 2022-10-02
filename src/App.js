@@ -38,28 +38,28 @@ const titleShow = keyframes`
   0% {
   }
   10% {
-    bottom:500px;
+    bottom:55%;
   }
   20% {
-    bottom:480px;
+    bottom:53%;
   }
   30% {
-    bottom:500px;
+    bottom:55%;
   }
   40% {
-    bottom:500px;
+    bottom:55%;
   }
   50% {
-    bottom:500px;
+    bottom:55%;
   }
   60% {
-    bottom:500px;
+    bottom:55%;
   }
   70% {
-    bottom:500px;
+    bottom:55%;
   }
   80% {
-    bottom:500px;
+    bottom:55%;
   }
   100% {
     bottom:1400px;
@@ -95,6 +95,54 @@ width:100vw;
 /* overflow:hidden; */
 background: #FF8F27;
 animation: ${backgroundChange} 1s 4s alternate both;
+
+@media screen and (min-height: 667px) {
+  height:667px;
+  }
+  
+  @media screen and (min-height: 736px) {
+  height:736px;
+  }
+  @media screen and (min-height: 740px) {
+  height:740px;
+  }
+
+  @media screen and (min-height: 800px) {
+  height:800px;
+  }
+
+  @media screen and (min-height: 812px) {
+  height:812px;
+  }
+
+  @media screen and (min-height: 844px) {
+  height:844px;
+  }
+
+  @media screen and (min-height: 851px) {
+  height:851px;
+  }
+
+@media screen and (min-height: 896px) {
+  height:896px;
+  }
+
+  @media screen and (min-height: 915px) {
+  height:915px;
+  }
+
+  @media screen and (min-height: 1024px) {
+  height:1024px;
+  }
+
+  @media screen and (min-height: 1180px) {
+  height:1180px;
+  }
+
+  @media screen and (min-height: 1366px) {
+  height:1366px;
+  }
+
 `
 
 const StTitleBox = styled.div`

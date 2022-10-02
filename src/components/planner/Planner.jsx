@@ -75,7 +75,7 @@ const Planner = ({ x, setX }) => {
   const onClickSelectToTodoHandler = (e) => {
     console.dir(e.target.parentElement.parentElement.id);
     const { id } = e.target.parentElement.parentElement;
-    const data = todoList.filter((data) => data.todoId === Number(id));
+    const data = todoList?.filter((data) => data.todoId === Number(id));
     console.log("data", data);
     setSelectTodo(...data);
     setEditModalVisible(true);
@@ -125,7 +125,7 @@ const Planner = ({ x, setX }) => {
     let nickname = localStorage.getItem("nickname");
     console.dir(e.target.parentElement.parentElement.id);
     const { id } = e.target.parentElement.parentElement;
-    const data = todoList.filter((data) => data.todoId === Number(id));
+    const data = todoList?.filter((data) => data.todoId === Number(id));
     console.log("data", data);
     setTodoId(id);
     const completeTodo = {
@@ -139,19 +139,24 @@ const Planner = ({ x, setX }) => {
   console.log("selectTodo", selectTodo);
 
   useEffect(() => {
-    const rate = (
-      (todoList.filter((data) => data.complete === true).length /
-        todoList.length) *
-      100
-    ).toFixed();
-    console.log("rate", rate);
-    setTodoRate(rate);
+    if (todoList.length > 0) {
+      const rate = (
+        (todoList?.filter((data) => data.complete === true).length /
+          todoList.length) *
+        100
+      ).toFixed();
+      console.log("rate", rate);
+      setTodoRate(rate);
+    }
   }, [todoList]);
 
   useEffect(() => {
-    const data = todos.filter((data) => data.category === categoryName);
-    console.log("data", data);
-    setTodoList([...data]);
+    console.log('todos', todos);
+    if (todos.length > 0) {
+      const data = todos.filter((data) => data.category === categoryName);
+      console.log("data", data);
+      setTodoList([...data]);
+    }
   }, [todos]);
 
   console.log("todoRate", todoRate);
@@ -184,7 +189,7 @@ const Planner = ({ x, setX }) => {
         <StCategoryProgressContainer>
           <div className='top'>
             <p className='title'>
-              {todoList.filter((data) => data.complete === true).length}/
+              {todoList.length === 0 ? 0 : todoList.filter((data) => data.complete === true).length}/
               {todoList.length}
             </p>
             <p>{isNaN(todoRate) ? 0 : todoRate}%</p>
@@ -204,7 +209,7 @@ const Planner = ({ x, setX }) => {
       <StTodoContainer>
         {todoList.length > 0 &&
           todoList
-            .filter((data) => data.complete === false)
+            ?.filter((data) => data.complete === false)
             .map((data) => (
               <StTodoItem key={data.todoId} name={data.title}>
                 <div className='top' id={data.todoId}>
@@ -230,7 +235,7 @@ const Planner = ({ x, setX }) => {
       <StTodoContainer>
         {todoList.length > 0 &&
           todoList
-            .filter((data) => data.complete === true)
+            ?.filter((data) => data.complete === true)
             .map((data) => (
               <StTodoItem key={data.todoId} name={data.title}>
                 <div className='top' id={data.todoId}>
@@ -255,111 +260,105 @@ const Planner = ({ x, setX }) => {
             ))}
       </StTodoContainer>
 
-      {modalVisible && (
-        <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='250px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <StModalBtnBox>
-            <p className='title'>투두 추가</p>
-            <StTodoInput
-              minLength='2'
-              maxLength='15'
-              placeholder='투두를 추가해주세요.(2-15자 이내)'
-              type='text'
-              value={todo}
-              onChange={onChangeInputHandler}
-            />
-            <StEditBtnbox>
-              <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
-              <StModalAddBtn onClick={onClickTodoAddHandler}>
-                추가
-              </StModalAddBtn>
-            </StEditBtnbox>
-          </StModalBtnBox>
-        </Modal>
-      )}
+      <Modal
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='250px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <StModalBtnBox>
+          <p className='title'>투두 추가</p>
+          <StTodoInput
+            minLength='2'
+            maxLength='15'
+            placeholder='투두를 추가해주세요.(2-15자 이내)'
+            type='text'
+            value={todo}
+            onChange={onChangeInputHandler}
+          />
+          <StEditBtnbox>
+            <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
+            <StModalAddBtn onClick={onClickTodoAddHandler}>
+              추가
+            </StModalAddBtn>
+          </StEditBtnbox>
+        </StModalBtnBox>
+      </Modal>
 
-      {editModalVisible && (
-        <Modal
-          visible={editModalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='250px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <StModalBtnBox>
-            {!editTodoName ? (
-              <StEditBtnBox>
-                <p className='title'>{selectTodo?.content}</p>
-                <p onClick={onClickEditTodoName} className='updatetitle'>
-                  이름 변경
-                </p>
-                <div className='btnBox'>
-                  <StModalDeleteBtn onClick={onClickTodoDeleteHandler}>
-                    삭제
-                  </StModalDeleteBtn>
-                </div>
-              </StEditBtnBox>
-            ) : (
-              <>
-                <p className='title'>투두 내용 변경</p>
-                <StTodoInput
-                  type='text'
-                  value={todo}
-                  onChange={onChangeInputHandler}
-                />
-                <StEditBtnbox>
-                  <StModalCancelBtn onClick={onClickEditTodoNameCancel}>
-                    취소
-                  </StModalCancelBtn>
-                  <StModalAddBtn onClick={onClickEditTodoHandler}>
-                    확인
-                  </StModalAddBtn>
-                </StEditBtnbox>
-              </>
-            )}
-          </StModalBtnBox>
-        </Modal>
-      )}
+      <Modal
+        visible={editModalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='250px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <StModalBtnBox>
+          {!editTodoName ? (
+            <StEditBtnBox>
+              <p className='title'>{selectTodo?.content}</p>
+              <p onClick={onClickEditTodoName} className='updatetitle'>
+                이름 변경
+              </p>
+              <div className='btnBox'>
+                <StModalDeleteBtn onClick={onClickTodoDeleteHandler}>
+                  삭제
+                </StModalDeleteBtn>
+              </div>
+            </StEditBtnBox>
+          ) : (
+            <>
+              <p className='title'>투두 내용 변경</p>
+              <StTodoInput
+                type='text'
+                value={todo}
+                onChange={onChangeInputHandler}
+              />
+              <StEditBtnbox>
+                <StModalCancelBtn onClick={onClickEditTodoNameCancel}>
+                  취소
+                </StModalCancelBtn>
+                <StModalAddBtn onClick={onClickEditTodoHandler}>
+                  확인
+                </StModalAddBtn>
+              </StEditBtnbox>
+            </>
+          )}
+        </StModalBtnBox>
+      </Modal>
 
-      {deleteTodoCheckModalVisible && (
-        <Modal
-          visible={deleteTodoCheckModalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width='260px'
-          height='150px'
-          radius='20px'
-          top='40%'
-          backgroundcolor='rgba(0, 0, 0, 0.2)'
-        >
-          <StModalBtnBox>
-            <p className='title'>투두를 삭제하시겠습니까?</p>
-            <p>삭제하면 다시 불러올 수 없습니다</p>
-            <StEditBtnbox>
-              <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
-                취소
-              </StModalCancelBtn>
-              <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
-                확인
-              </StModalAddBtn>
-            </StEditBtnbox>
-          </StModalBtnBox>
-        </Modal>
-      )}
+      <Modal
+        visible={deleteTodoCheckModalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width='260px'
+        height='150px'
+        radius='20px'
+        top='40%'
+        backgroundcolor='rgba(0, 0, 0, 0.2)'
+      >
+        <StModalBtnBox>
+          <p className='title'>투두를 삭제하시겠습니까?</p>
+          <p>삭제하면 다시 불러올 수 없습니다</p>
+          <StEditBtnbox>
+            <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
+              취소
+            </StModalCancelBtn>
+            <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
+              확인
+            </StModalAddBtn>
+          </StEditBtnbox>
+        </StModalBtnBox>
+      </Modal>
     </StDiv>
   );
 };

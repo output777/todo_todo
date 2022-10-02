@@ -147,9 +147,9 @@ export const __getTodayTodo = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`${BASE_URL}/todo/today/${payload}`, config);
+      const data = await axios.get(`${BASE_URL}/todo/today/${payload}`, config);
       console.log("data=====", data);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);

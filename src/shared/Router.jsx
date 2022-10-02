@@ -23,6 +23,7 @@ import Layout from "../components/utils/Layout";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useState } from "react";
+import PlannerDatePage from "../pages/PlannerDatePage";
 
 const Router = () => {
   const [token, setToken] = useState(null);
@@ -50,7 +51,7 @@ const Router = () => {
             <Route path='/profileedit' element={token === null ? <Navigate replace to='/login' /> : <ProfileEdit />} />
             <Route path='/setting' element={token === null ? <Navigate replace to='/login' /> : <Setting setToken={setToken} />} />
             <Route path='/planner' element={token === null ? <Navigate replace to='/login' /> : <PlannerPage />} />
-            <Route path='/planner/date' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryDate />} />
+            <Route path='/planner/date' element={token === null ? <Navigate replace to='/login' /> : <PlannerDatePage />} />
             <Route path='/planner/category' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryAdd />} />
             <Route path='/planner/category/todolist' element={token === null ? <Navigate replace to='/login' /> : <Planner />} />
             <Route path='/statistics' element={token === null ? <Navigate replace to='/login' /> : <StatisticsPage />} />
@@ -74,10 +75,13 @@ const StContainer = styled.div`
   box-sizing:border-box;
 
 
-  @media screen and (min-height: 668px) {
-  height:668px;
+  @media screen and (min-height: 667px) {
+  height:667px;
   }
-
+  
+  @media screen and (min-height: 736px) {
+  height:736px;
+  }
   @media screen and (min-height: 740px) {
   height:740px;
   }

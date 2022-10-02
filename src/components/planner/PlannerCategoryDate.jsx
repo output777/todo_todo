@@ -88,7 +88,7 @@ const PlannerCategoryDate = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <StContainer>
       <StDiv>
         <div className='header'>
           <PlannerCalender
@@ -120,7 +120,7 @@ const PlannerCategoryDate = () => {
                   {categoryTodoList.length > 0 && (
                     <p onClick={(e) => e.stopPropagation()}>
                       {categoryTodoComplete[`${categoryTodoList[index]}`] ===
-                      undefined
+                        undefined
                         ? 0
                         : categoryTodoComplete[`${categoryTodoList[index]}`]}
                       /{dateTodoObj[`${categoryTodoList[index]}`]}
@@ -132,12 +132,12 @@ const PlannerCategoryDate = () => {
                     width={
                       isNaN(
                         categoryTodoComplete[`${categoryTodoList[index]}`] /
-                          dateTodoObj[`${categoryTodoList[index]}`]
+                        dateTodoObj[`${categoryTodoList[index]}`]
                       )
                         ? 0
                         : (categoryTodoComplete[`${categoryTodoList[index]}`] /
-                            dateTodoObj[`${categoryTodoList[index]}`]) *
-                          100
+                          dateTodoObj[`${categoryTodoList[index]}`]) *
+                        100
                     }
                     backgroundColor='#74E272'
                   ></StProgressBar>
@@ -151,46 +151,25 @@ const PlannerCategoryDate = () => {
           display={display}
           setDisplay={setDisplay}
         />
-        <Navbar planner={true} />
       </StDiv>
-    </>
+    </StContainer>
   );
 };
+
+
+const StContainer = styled.div`
+  height:100%;
+`
 
 const StDiv = styled.div`
   background-color: #fafafa;
   width: 100%;
   min-width: 360px;
-  height: 100vh;
-  height: 850px;
+  /* height: 100%; */
+  /* height: 850px; */
+  height:calc(100% - 71px);
   margin: 0 auto;
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
-    background-color: #fafafa;
-    /* background: rgba(255, 255, 255, 0.4); */
-  }
   font-family: "SUIT-Regular", sans-serif;
-
-  @media screen and (min-width: 768px) {
-    width: 600px;
-  }
-
-  /* @media screen and (min-height: 850px) {
-  height:1180px;
-  }
-
-  @media screen and (min-height: 915px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1180px;
-  }
-  @media screen and (min-height: 1180px) {
-  height:1366px;
-  } */
   position: relative;
 
   & .header {
@@ -225,6 +204,7 @@ const StDiv = styled.div`
 
 const StCategoryContainer = styled.div`
   padding: 20px;
+  height:100%;
 `;
 
 const StCategoryItem = styled.div`

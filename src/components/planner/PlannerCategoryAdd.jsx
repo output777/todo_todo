@@ -17,7 +17,9 @@ const PlannerCategoryAdd = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { category } = useSelector((state) => state.planner);
+
   console.log("category", category);
+
   const [categoryName, setCategoryName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -62,11 +64,9 @@ const PlannerCategoryAdd = () => {
   const onClickModalEditHandler = (e) => {
     const { id } = e.target.parentElement;
     console.log(id, typeof id);
-    if (category.length > 0) {
-      const data = category.filter((data) => data.id === Number(id));
-      console.log("data", data);
-      setSelectCategory(...data);
-    }
+    const data = category?.filter((data) => data.id === Number(id));
+    console.log("data", data);
+    setSelectCategory(...data);
     setCategoryId(id);
     setEditModalVisible(true);
   };
@@ -132,8 +132,8 @@ const PlannerCategoryAdd = () => {
           <img src={plusSvg} alt='plusIcon' onClick={onClickCategorynHandler} />
         </div>
       </div>
-      {category.length > 0 &&
-        category.map((data) => (
+      {
+        category?.map((data) => (
           <StCategoryBox key={data.id} id={data.id}>
             <p>{data.title}</p>
             <img
@@ -156,7 +156,7 @@ const PlannerCategoryAdd = () => {
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>{selectCategory.title}</p>
+          <p className='title'>{selectCategory?.title}</p>
           {!editCategoryName ? (
             <StEditBtnBox>
               <p className='updatetitle' onClick={onClickEditCategoryName}>
@@ -200,7 +200,7 @@ const PlannerCategoryAdd = () => {
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>'{selectCategory.title}'을 삭제하겠습니까?</p>
+          <p className='title'>'{selectCategory?.title}'을 삭제하겠습니까?</p>
           <p>삭제하면 연결돼있는 투두가</p>
           <p>모두 사라집니다.</p>
           <div className='btnBox'>
@@ -251,7 +251,7 @@ const PlannerCategoryAdd = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100;
+  height: 100%;
   font-family: "SUIT-Regular", sans-serif;
 
   & div.header {

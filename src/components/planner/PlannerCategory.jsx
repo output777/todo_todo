@@ -37,8 +37,6 @@ const PlannerCategory = () => {
     date
   );
 
-  console.log(todos.length > 0 && todos[0].addDate === date);
-
   const onClickAddCategoryHandler = () => {
     navigate("/planner/category");
   };
@@ -56,18 +54,24 @@ const PlannerCategory = () => {
     const arrRate = [];
 
     // length를 구해놓고 for문을 돌리면 성능이 빨라짐 -> 코드 수정하기
-    for (let i = 0; i < category.length; i++) {
-      const data = todos.filter((data) => data.category === category[i].title);
-      arr.push(data);
+    if (todos.length > 0) {
+      for (let i = 0; i < category.length; i++) {
+        const data = todos.filter((data) => data.category === category[i].title);
+        arr.push(data);
+      }
     }
 
-    for (let i = 0; i < arr.length; i++) {
-      const rate = (
-        (arr[i].filter((data) => data.complete === true).length /
-          arr[i].length) *
-        100
-      ).toFixed();
-      arrRate.push(rate);
+    console.log('arr', arr)
+
+    if (arr.length > 0) {
+      for (let i = 0; i < arr.length; i++) {
+        const rate = (
+          (arr[i].filter((data) => data.complete === true).length /
+            arr[i].length) *
+          100
+        ).toFixed();
+        arrRate.push(rate);
+      }
     }
 
     setCategoryTodoComplete(arrRate);
@@ -143,13 +147,8 @@ const PlannerCategory = () => {
 
 const StDiv = styled.div`
   background-color: #fafafa;
-  height: 100;
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
-    /* background: rgba(255, 255, 255, 0.4); */
-  }
+  height: 100%;
+  overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
 
   & .header {

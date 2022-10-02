@@ -16,6 +16,7 @@ import settingSvg from "../../assets/img/myPage/settingSvg.svg";
 import defaultProfile from "../../assets/img/defaultProfile.jpg";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import Setting from "./Setting";
+import ProfileTabs from "./ProfileTabs";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const Profile = () => {
   };
 
   return (
-    <>
+    <StContainer>
       <StProfileContainer>
         <div className='title'>
           <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
@@ -124,10 +125,16 @@ const Profile = () => {
           프로필 편집
         </StBtn>
       </StProfileContainer>
-    </>
+      <ProfileTabs />
+    </StContainer>
   );
 };
 
+
+const StContainer = styled.div`
+  height:100%;
+  overflow: hidden auto;
+`
 
 const StStatusDiv = styled.div`
   width: 90%;
@@ -149,7 +156,7 @@ const StProfileContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 350px;
+  height: 300px;
   box-sizing: border-box;
   background-color:#fff;
 
