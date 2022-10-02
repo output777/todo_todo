@@ -57,7 +57,7 @@ export const __getTotalRate = createAsyncThunk(
         `${BASE_URL}/todo/achievement/total/${payload}`,
         config
       );
-      console.log("__getTotalRate data", data.data.achievementRate);
+      console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data.achievementRate);
     } catch (error) {
       console.log("error", error);

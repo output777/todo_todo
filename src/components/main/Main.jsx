@@ -5,6 +5,8 @@ import info from "../../assets/img/mainpage/info.svg";
 import trophy from "../../assets/img/mainpage/trophy.svg";
 import bigTrophy from "../../assets/img/mainpage/bigTrophy.svg";
 import schoolSvg from "../../assets/img/mainpage/school.svg";
+import plannerCntSvg from "../../assets/img/mainpage/plannerCntSvg.svg";
+import completeCntSvg from "../../assets/img/mainpage/completeCntSvg.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
@@ -92,10 +94,16 @@ const Main = () => {
       </StPhrasesbox>
       <StAchievementsBox>
         <StAchievementsTopBox>
-          <div>
+          <div className="nicknamePart">
             {nickname === null || nickname === "null"
               ? "닉네임이 미설정 상태입니다."
               : `${nickname}님의 업적`}
+          </div>
+          <div className="todoCnt">
+            <img src={plannerCntSvg} />
+            <span>100</span>
+            <img src={completeCntSvg} />
+            <span>50</span>
           </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
@@ -158,7 +166,7 @@ const Main = () => {
               <StModalBottom>
                 <StModalExplainDiv>
                   <span>주간/월간 랭킹</span>
-                  <img src={bigTrophy} alt='bigTrophyImg' />
+                  <img src={bigTrophy} alt="bigTrophyImg" />
                   <div>
                     주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
                     순으로 순위가 결정됩니다.
@@ -189,9 +197,9 @@ const Main = () => {
       {/* -------------------- 랭킹 --------------------*/}
       <div className="rank">
         <StRankingPhrases>
-          <img src={trophy} alt='trophyImg' />
+          <img src={trophy} alt="trophyImg" />
           <span>랭킹</span>
-          <img src={info} onClick={openModal} alt='infoImg' />
+          <img src={info} onClick={openModal} alt="infoImg" />
         </StRankingPhrases>
 
         <StRankingBtnBox>
@@ -274,7 +282,6 @@ const StProgressBar = styled.div`
 const StMainContainer = styled.div`
   height: 100%;
   font-family: "SUIT-Regular", sans-serif;
-
 `;
 
 const StPhrasesbox = styled.div`
@@ -333,14 +340,24 @@ const StAchievementsBox = styled.div`
 const StAchievementsTopBox = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 25%;
   font-weight: 700;
   border-radius: 12px 12px 0 0;
   background-color: #ffe9d5;
   div {
-    margin-left: 15px;
     color: #ff7b00;
+  }
+
+  .nicknamePart {
+    margin-left: 1rem;
+  }
+
+  .todoCnt {
+    display: flex;
+    gap: 0.3rem;
+    margin-right: 1rem;
   }
 `;
 
@@ -358,44 +375,44 @@ const StthisMonthGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ thisMonthRate }) => {
-    if (thisMonthRate < 30) {
-      return css`
+      if (thisMonthRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (thisMonthRate >= 30 && thisMonthRate < 70) {
-      return css`
+      }
+      if (thisMonthRate >= 30 && thisMonthRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (thisMonthRate >= 70) {
-      return css`
+      }
+      if (thisMonthRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 const StTotalGauge = styled.div`
   width: 90%;
   .progress-bar {
     ${({ totalRate }) => {
-    if (totalRate < 30) {
-      return css`
+      if (totalRate < 30) {
+        return css`
           background-color: #d34c4c;
         `;
-    }
-    if (totalRate >= 30 && totalRate < 70) {
-      return css`
+      }
+      if (totalRate >= 30 && totalRate < 70) {
+        return css`
           background-color: #ffdb80;
         `;
-    }
-    if (totalRate >= 70) {
-      return css`
+      }
+      if (totalRate >= 70) {
+        return css`
           background-color: #74e272;
         `;
-    }
-  }}
+      }
+    }}
   }
 `;
 
