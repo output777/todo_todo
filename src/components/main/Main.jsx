@@ -6,7 +6,7 @@ import trophy from "../../assets/img/mainpage/trophy.svg";
 import bigTrophy from "../../assets/img/mainpage/bigTrophy.svg";
 import schoolSvg from "../../assets/img/mainpage/school.svg";
 import plannerCntSvg from "../../assets/img/mainpage/plannerCntSvg.svg";
-import completeCntSvg from "../../assets/img/mainpage/completeCntSvg.svg";
+import todoCntSvg from "../../assets/img/mainpage/todoCntSvg.svg";
 import Modal from "../utils/Modal";
 import InfiniteScroll from "./InfiniteScroll";
 import InfiniteScrollMonthly from "./InfiniteScrollMonthly";
@@ -15,6 +15,7 @@ import {
   __getMainRank,
   __getThisMonthRate,
   __getTotalRate,
+  __getTotalTodo,
 } from "../../redux/modules/mainSlice";
 import { __getMyInfo } from "../../redux/modules/mySlice";
 import InfiniteScrollSchoolRank from "./InfiniteScrollSchoolRank";
@@ -31,8 +32,17 @@ SwiperCore.use([Navigation, Pagination]);
 
 const Main = () => {
   const dispatch = useDispatch();
-  const { thisMonthRate, totalRate } = useSelector((state) => state.main);
-  console.log("thisMonthRate", thisMonthRate, "totalRate", totalRate);
+  const { thisMonthRate, totalRate, totalTodo } = useSelector(
+    (state) => state.main
+  );
+  console.log(
+    "thisMonthRate",
+    thisMonthRate,
+    "totalRate",
+    totalRate,
+    "totalTodo",
+    totalTodo
+  );
   const [month, setMonth] = useState(false);
   const [weekly, setWeekly] = useState(true);
   // const [school, setSchool] = useState(false);
@@ -69,6 +79,7 @@ const Main = () => {
     dispatch(__getMyInfo(nickname));
     dispatch(__getThisMonthRate());
     dispatch(__getTotalRate(nickname));
+    dispatch(__getTotalTodo(nickname));
   }, []);
 
   return (
@@ -102,20 +113,24 @@ const Main = () => {
           <div className="todoCnt">
             <img src={plannerCntSvg} />
             <span>{totalRate.plannerCnt}</span>
-            <img src={completeCntSvg} />
-            <span>{totalRate.completeCnt}</span>
+            <img src={todoCntSvg} />
+            <span>{totalTodo.count}</span>
           </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
           <StthisMonthGauge>
             <StGaugeText>
               이번달 플래너 달성률
-              <div>{Math.round(thisMonthRate.achievementRate)} %</div>
+              <div>{Math.round(thisMonthRate?.achievementRate)} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
               <StProgressBar
-                width={Math.round(thisMonthRate.achievementRate)}
+                width={
+                  thisMonthRate?.achievementRate === undefined
+                    ? 0
+                    : Math.round(thisMonthRate?.achievementRate)
+                }
               ></StProgressBar>
             </StProgressBarBox>
           </StthisMonthGauge>
@@ -123,12 +138,16 @@ const Main = () => {
           <StTotalGauge>
             <StGaugeText>
               플래너 총 달성률
-              <div>{Math.round(totalRate.achievementRate)} %</div>
+              <div>{Math.round(totalRate?.achievementRate)} %</div>
             </StGaugeText>
 
             <StProgressBarBox>
               <StProgressBar
-                width={Math.round(totalRate.achievementRate)}
+                width={
+                  totalRate?.achievementRate === undefined
+                    ? 0
+                    : Math.round(totalRate?.achievementRate)
+                }
               ></StProgressBar>
             </StProgressBarBox>
           </StTotalGauge>
