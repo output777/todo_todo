@@ -49,15 +49,14 @@ const FollowerList = () => {
   return (
     <Stdiv>
       <StFollowtopBox>
-        <div>
-          <StarrowImg
-            src={arrow}
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-          <StTopText>팔로워 목록</StTopText>
-        </div>
+        <StarrowImg
+          src={arrow}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+        <StTopText>팔로워 목록</StTopText>
+        <div></div>
       </StFollowtopBox>
 
       {followerList?.map((member) => (
@@ -201,18 +200,15 @@ const StFollowtopBox = styled.div`
   height: 100px;
   display: flex;
   justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const StarrowImg = styled.img`
   position: relative;
-  top: 20px;
-  right: 130px;
+  left: 3%;
 `;
 
 const StTopText = styled.span`
   font-weight: bold;
-  position: relative;
-  top: 20px;
-  right: 7px;
 `;
