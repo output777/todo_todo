@@ -155,7 +155,7 @@ const Planner = ({ x, setX }) => {
 
   useEffect(() => {
     console.log("todos", todos);
-    if (todos !== '') {
+    if (todos !== "") {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
       setTodoList([...data]);
@@ -404,6 +404,7 @@ const StDiv = styled.div`
     min-width: 360px;
     height: 110px;
     position: fixed;
+    z-index: 1;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
