@@ -412,6 +412,7 @@ const StDiv = styled.div`
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
+    z-index:5;
 
     @media screen and (min-width: 768px) {
       width: 600px;

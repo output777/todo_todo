@@ -12,6 +12,7 @@ import {
   __postCategory,
   __updateCategory,
 } from "../../redux/modules/plannerSlice";
+import { useRef } from "react";
 
 const PlannerCategoryAdd = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const PlannerCategoryAdd = () => {
   const [editCategoryName, setEditCategoryName] = useState(false);
   const [deleteCategoryCheckModalVisible, setDeleteCategoryCheckModalVisible] =
     useState(false);
+
+
+  const categoryInput = useRef(null);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -58,6 +62,7 @@ const PlannerCategoryAdd = () => {
       await dispatch(__postCategory(newCategory));
       await dispatch(__getCategory(nickname));
       setCategoryName("");
+      categoryInput.current.focus();
     }
   };
 
@@ -134,16 +139,18 @@ const PlannerCategoryAdd = () => {
           <img src={plusSvg} alt="plusIcon" onClick={onClickCategorynHandler} />
         </div>
       </div>
-      {category?.map((data) => (
-        <StCategoryBox key={data.id} id={data.id}>
-          <p>{data.title}</p>
-          <img
-            src={threeDotSvg}
-            alt="threeDotIcon"
-            onClick={onClickModalEditHandler}
-          />
-        </StCategoryBox>
-      ))}
+      <div style={{ paddingBottom: '20px' }}>
+        {category?.map((data) => (
+          <StCategoryBox key={data.id} id={data.id}>
+            <p>{data.title}</p>
+            <img
+              src={threeDotSvg}
+              alt="threeDotIcon"
+              onClick={onClickModalEditHandler}
+            />
+          </StCategoryBox>
+        ))}
+      </div>
 
       <Modal
         visible={editModalVisible}
@@ -239,6 +246,7 @@ const PlannerCategoryAdd = () => {
               value={categoryName}
               onChange={onChangeInputHandler}
               placeholder="과목 이름을 입력해주세요.(1-15자)"
+              ref={categoryInput}
             />
           </StModalBtnBox>
 
