@@ -30,16 +30,17 @@ const Statistics = () => {
   //   : Math.round(rankScoreData[0].score);
 
   let weeklyScore = rankScoreData[1].score / 7;
+  console.log(weeklyScore);
   let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore.toFixed(2);
 
-  let monthlyScore = rankScoreData[2].score / rankScoreData[2].lengthOfMonth;
-  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
+  let monthlyScore = rankScoreData[2].score;
+  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore;
 
   let weeklyRank =
-    rankScoreData[1].ranking === undefined ? "-" : rankScoreData[1].ranking;
-
+    rankScoreData[1].ranking === 0 || "null" ? "-" : rankScoreData[1].ranking;
+  // console.log(weeklyRank.ranking);
   let monthlyRank =
-    rankScoreData[2].ranking === undefined ? "-" : rankScoreData[2].ranking;
+    rankScoreData[2].ranking === 0 || "null" ? "-" : rankScoreData[2].ranking;
 
   useEffect(() => {
     let nickname = localStorage.getItem("nickname");
@@ -47,7 +48,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <StContainer >
+    <StContainer>
       <StHeader>
         <span style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
           통계
@@ -56,7 +57,11 @@ const Statistics = () => {
       <StBackground>
         <StTopSubjectDiv>
           <div>나의 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("score")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("score")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
         <div
           style={{
@@ -84,8 +89,8 @@ const Statistics = () => {
         </div>
         <StScoreChangeBoxDiv>
           <div>
-            <span className="lastweek">저번주 </span>
-            <span className="thisweek"> 이번주</span> <br />
+            <span className='lastweek'>저번주 </span>
+            <span className='thisweek'> 이번주</span> <br />
             주간 랭킹 점수 변화
           </div>
 
@@ -93,14 +98,22 @@ const Statistics = () => {
         </StScoreChangeBoxDiv>
         <StTopSubjectDiv>
           <div>주간 랭킹 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("rank")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("rank")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
         <LineChart />
         <StTopSubjectDiv>
           <div>나의 투두 달성률</div>
-          <img src={info} onClick={() => modalToggleHandler("heatMap")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("heatMap")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
-        <div style={{ paddingBottom: '80px' }}>
+        <div style={{ paddingBottom: "80px" }}>
           <HeatmapSample />
         </div>
       </StBackground>
@@ -112,13 +125,13 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width="350px"
+          width='350px'
           height={
             modal === "score" ? "22em" : modal === "rank" ? "20em" : "21em"
           }
-          radius="48px"
-          top="40%"
-          backgroundcolor="#11111180 "
+          radius='48px'
+          top='40%'
+          backgroundcolor='#11111180 '
         >
           <StModalTop>
             {modal === "score" ? (
@@ -185,10 +198,12 @@ const Statistics = () => {
                     붉은색
                   </span>
                   은 상위랭커, */}
-                  <span style={{ color: "#618AF2", fontWeight: "bold" }}>
-                    파란색
-                  </span>
-                  선은 유저님의 이번주 점수 추이입니다.
+                  <div style={{ marginTop: "10px", width: "360px" }}>
+                    <span style={{ color: "#618AF2", fontWeight: "bold" }}>
+                      파란색
+                    </span>
+                    선은 유저님의 이번주 점수 추이입니다.
+                  </div>
                 </div>
               </StModalExplainTop>
             ) : (
@@ -203,9 +218,16 @@ const Statistics = () => {
                 </StTemp>
 
                 <div>
-                  나의 투두 달성률은 주차별(가로축), 요일별(세로축) 달성률에
-                  따라 색깔의 옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이
-                  진해집니다.
+                  <div> 나의 투두 달성률은 주차별(가로축), </div>
+                  요일별(세로축) 달성률에 따라 색깔의 옅고 진함을 표시합니다.
+                  <div
+                    style={{
+                      marginTop: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    달성률이 높을 수록 색깔이 진해집니다.
+                  </div>
                 </div>
               </StModalExplainTop>
             )}
@@ -221,10 +243,8 @@ export default Statistics;
 const StContainer = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   height: 100%;
-  overflow:hidden auto;
-
-
-`
+  overflow: hidden auto;
+`;
 
 const StHeader = styled.div`
   display: flex;
@@ -266,7 +286,7 @@ const StLine = styled.div`
 
 const StBackground = styled.div`
   background-color: #fafafa;
-  margin-top:10px;
+  margin-top: 10px;
   /* overflow-y:scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -379,7 +399,7 @@ const StModalExplainBottom = styled.div`
     gap: 3%;
   }
   div {
-    margin-top: 10%;
+    margin-top: 5%;
   }
 `;
 

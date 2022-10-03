@@ -85,9 +85,9 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname === "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -161,17 +161,17 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="80%"
-          height="23rem"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(17, 17, 17, 0.6)"
+          width='350px'
+          height='20em'
+          radius='48px'
+          top='40%'
+          backgroundcolor='rgba(17, 17, 17, 0.6)'
         >
           <StModalTop>
             <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
           <Swiper
-            className="banner"
+            className='banner'
             spaceBetween={50}
             slidesPerView={1}
             // navigation
@@ -210,7 +210,7 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
           <img src={trophy} alt="trophyImg" />
           <span>랭킹</span>
@@ -387,9 +387,11 @@ const StAchievementsBottomBox = styled.div`
   justify-content: center;
   gap: 15%;
 `;
+
 const StthisMonthGauge = styled.div`
   width: 90%;
 `;
+
 const StTotalGauge = styled.div`
   width: 90%;
 `;
@@ -491,8 +493,11 @@ const StModalTop = styled.div`
 `;
 
 const StModalBottom = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 90%;
-  height: 16rem;
+  height: 12em;
   margin: 5% 0 0 5%;
   span {
     font-size: 1rem;
