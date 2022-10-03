@@ -3,7 +3,9 @@ import Login from "../components/login/Login";
 
 const LoginPage = ({ token, setToken }) => {
   return (
-    <Login setToke={setToken} />
+    <>
+      <Login setToke={setToken} />
+    </>
   );
 };
 

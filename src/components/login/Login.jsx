@@ -88,12 +88,11 @@ const layoutShow = keyframes`
 
 const StLoginContainer = styled.div`
   width:100%;
-  /* min-width: 360px; */
+  height:100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "SUIT-Regular", sans-serif;
-  height:100%;
   background-color:#fff;
   /* opacity:0; */
   /* animation: ${layoutShow} 1s 5s alternate ease both; */
@@ -101,7 +100,7 @@ const StLoginContainer = styled.div`
   
 
 
-  @media screen and (min-height: 667px) {
+  /* @media screen and (min-height: 667px) {
   height:667px;
   }
   
@@ -146,7 +145,7 @@ const StLoginContainer = styled.div`
 
   @media screen and (min-height: 1366px) {
   height:1366px;
-  }
+  } */
 
 
 `;
