@@ -116,9 +116,12 @@ const Planner = ({ x, setX }) => {
     setDeleteTodoCheckModalVisible(false);
   };
 
-  const onClickEditTodoDeleteCheck = () => {
-    dispatch(__deleteTodo(todoId));
+  const onClickEditTodoDeleteCheck = async () => {
+    let nickname = localStorage.getItem("nickname");
+    await dispatch(__deleteTodo(todoId));
+    await dispatch(__getTodayTodo(nickname));
     setDeleteTodoCheckModalVisible(false);
+    setTodo("");
   };
 
   const onClickTodoCompleteHandler = async (e) => {
@@ -152,10 +155,12 @@ const Planner = ({ x, setX }) => {
 
   useEffect(() => {
     console.log("todos", todos);
-    if (todos.length > 0) {
+    if (todos !== '') {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
       setTodoList([...data]);
+    } else {
+      setTodoList([]);
     }
   }, [todos]);
 

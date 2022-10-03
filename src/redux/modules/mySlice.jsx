@@ -191,7 +191,7 @@ export const __getFollowInfo = createAsyncThunk(
         },
       };
 
-      const data = await axios.post(`${BASE_URL}/follow/${payload}`, config);
+      const data = await axios.post(`${BASE_URL}/follow/${payload}`, null, config);
       console.log("data", data.data);
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);

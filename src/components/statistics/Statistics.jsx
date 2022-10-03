@@ -11,11 +11,16 @@ import {
   __getRankScoreData,
   __getLineChartData,
 } from "../../redux/modules/statisticsSlice";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Statistics = () => {
+  const dispatch = useDispatch();
   const [modalView, setModalView] = useState(false);
   const [modal, setModal] = useState(null);
-  const dispatch = useDispatch();
+  const [month, setMonth] = useState(null);
+
   const { rankScoreData } = useSelector((state) => state.statistics);
   console.log("rankScoreData", rankScoreData);
   const modalToggleHandler = (parameter) => {
@@ -33,14 +38,25 @@ const Statistics = () => {
   console.log(weeklyScore);
   let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore.toFixed(2);
 
-  let monthlyScore = rankScoreData[2].score;
-  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore;
+  let monthlyScore = month !== null ? ((rankScoreData[2].score / month) * 10) : rankScoreData[2].score;
+  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
 
   let weeklyRank =
     rankScoreData[1].ranking === 0 || "null" ? "-" : rankScoreData[1].ranking;
   // console.log(weeklyRank.ranking);
   let monthlyRank =
     rankScoreData[2].ranking === 0 || "null" ? "-" : rankScoreData[2].ranking;
+
+
+  const monthFunc = async () => {
+    const { data } = await axios.get(`${BASE_URL}/month`)
+    console.log('data', data)
+    setMonth(() => data)
+  }
+
+  useEffect(() => {
+    monthFunc();
+  }, [])
 
   useEffect(() => {
     let nickname = localStorage.getItem("nickname");
@@ -244,6 +260,10 @@ const StContainer = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   height: 100%;
   overflow: hidden auto;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 `;
 
 const StHeader = styled.div`

@@ -67,7 +67,6 @@ const StDateDiv = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 7px;
-
   margin-left: 3%;
   padding: 10px;
   font-size: 18px;

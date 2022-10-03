@@ -28,7 +28,7 @@ const StContainer = styled.div`
     width:600px;
   }
 
-  @media screen and (min-height: 667px) {
+  /* @media screen and (min-height: 667px) {
   height:667px;
   }
   @media screen and (min-height: 736px) {
@@ -73,7 +73,7 @@ const StContainer = styled.div`
 
   @media screen and (min-height: 1366px) {
   height:1366px;
-  }
+  } */
 `
 
 export default PlannerDatePage

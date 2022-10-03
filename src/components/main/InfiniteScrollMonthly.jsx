@@ -43,7 +43,6 @@ const InfiniteScrollMonthly = () => {
 
   useEffect(() => {
     monthFunc();
-
   }, [])
 
   useEffect(() => {

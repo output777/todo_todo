@@ -92,11 +92,12 @@ const StContainer = styled.div`
 position:relative;
 width:100vw;
 /* height:auto; */
-/* overflow:hidden; */
+height:100vh;
+overflow:hidden;
 background: #FF8F27;
 animation: ${backgroundChange} 1s 4s alternate both;
 
-@media screen and (min-height: 667px) {
+/* @media screen and (min-height: 667px) {
   height:667px;
   }
   
@@ -128,20 +129,24 @@ animation: ${backgroundChange} 1s 4s alternate both;
   }
 
   @media screen and (min-height: 915px) {
+    border:1px solid red;
   height:915px;
   }
 
   @media screen and (min-height: 1024px) {
+    border:1px solid blue;
   height:1024px;
   }
 
   @media screen and (min-height: 1180px) {
+    border:1px solid yellow;
   height:1180px;
   }
 
   @media screen and (min-height: 1366px) {
+    border:1px solid green;
   height:1366px;
-  }
+  } */
 
 `
 

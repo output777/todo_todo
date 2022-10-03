@@ -20,10 +20,10 @@ const FollowList = () => {
   const navigate = useNavigate();
 
   const followingList = useSelector((state) => state.my.following);
-  // console.log(followingList);
+  console.log('followingList', followingList);
 
   const followerList = useSelector((state) => state.my?.follower);
-  console.log(followerList);
+  console.log('followerList', followerList);
 
   // const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
   // console.log(OtherfollowingList);

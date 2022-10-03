@@ -133,7 +133,7 @@ const OtherProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ==
-                images.length - 1 ? null : (
+                  images.length - 1 ? null : (
                   <button
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -227,8 +227,10 @@ const StContainer = styled.div`
   grid-auto-rows: 100px;
   grid-gap: 5px;
   padding-bottom: 70px;
-
-  /* overflow-y: scroll; */
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 `;
 
 const StImg = styled.div`

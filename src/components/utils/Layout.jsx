@@ -30,14 +30,17 @@ const layoutShow = keyframes`
 const StLayout = styled.div`
 width:100%;
   /* width:416px; */
-  overflow:hidden;
+  overflow:hidden auto;
   min-width: 360px;
-  height:100%;
+  height:100vh;
   background-color: #fafafa;
-  overflow-y:scroll;
   position:relative;
   opacity:0;
   /* border:1px solid #ccc; */
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
   animation: ${layoutShow} 1s 5s alternate ease both;
 
   -ms-overflow-style: none;
@@ -50,7 +53,7 @@ width:100%;
     width:600px;
   }
 
-  @media screen and (min-height: 667px) {
+  /* @media screen and (min-height: 667px) {
   height:667px;
   }
   @media screen and (min-height: 736px) {
@@ -95,7 +98,7 @@ width:100%;
 
   @media screen and (min-height: 1366px) {
   height:1366px;
-  }
+  } */
 
 
 

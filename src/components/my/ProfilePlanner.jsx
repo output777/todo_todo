@@ -33,6 +33,8 @@ const ProfilePlanner = () => {
     (state) => state.planner
   );
 
+  console.log('todos', todos);
+
   console.log('categoryTodoList', categoryTodoList)
 
   const onClickSelectCategoryToTodoListHandler = (e) => {
@@ -60,19 +62,22 @@ const ProfilePlanner = () => {
     const arrRate = [];
 
     // length를 구해놓고 for문을 돌리면 성능이 빨라짐 -> 코드 수정하기
-    for (let i = 0; i < category.length; i++) {
-      const data = todos.filter((data) => data.category === category[i].title);
-      arr.push(data);
+    if (todos !== '') {
+      for (let i = 0; i < category.length; i++) {
+        const data = todos.filter((data) => data.category === category[i].title);
+        arr.push(data);
+      }
+
+      for (let i = 0; i < arr.length; i++) {
+        const rate = (
+          (arr[i].filter((data) => data.complete === true).length /
+            arr[i].length) *
+          100
+        ).toFixed();
+        arrRate.push(rate);
+      }
     }
 
-    for (let i = 0; i < arr.length; i++) {
-      const rate = (
-        (arr[i].filter((data) => data.complete === true).length /
-          arr[i].length) *
-        100
-      ).toFixed();
-      arrRate.push(rate);
-    }
     setCategoryTodoComplete(arrRate);
     setCategoryTodoList(arr);
   }, [category, todos]);

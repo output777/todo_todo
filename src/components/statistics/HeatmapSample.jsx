@@ -31,7 +31,7 @@ const HeatMapSample = () => {
   // const xLabels = new Array(10).fill(0).map((_, i) => `${i + 1}주`);
   // const xLabelsVisibility = new Array(10).fill().map((_, i) => i + 1);
 
-  const yLabels = ["월", "화", "수", "목", "금", "토", "일"]; // 월, 화, 수, 목, 금, 토, 일
+  const yLabels = ["", "", "", "", "", "", ""]; // 월, 화, 수, 목, 금, 토, 일
   // const yLabelsVisibility = new Array(7).fill().map((_, i) => i + 1);
 
   useEffect(() => {
@@ -74,6 +74,15 @@ const HeatMapSample = () => {
 
   return (
     <StContainer>
+      <StDaysBox>
+        <p>월</p>
+        <p>화</p>
+        <p>수</p>
+        <p>목</p>
+        <p>금</p>
+        <p>토</p>
+        <p>일</p>
+      </StDaysBox>
       <HeatMap
         xLabels={xLabels}
         yLabels={yLabels}
@@ -82,7 +91,7 @@ const HeatMapSample = () => {
         // xLabelsVisibility={xLabelsVisibility}
         // yLabelsVisibility={yLabelsVisibility}
         // xLabelWidth={30}
-        yLabelWidth={30}
+        yLabelWidth={0}
         data={heatMapDataRate.length > 0 ? heatMapDataRate : null}
         squares
         // width={30}
@@ -94,14 +103,14 @@ const HeatMapSample = () => {
             value <= 25
               ? "#F3F3F3"
               : value <= 50
-              ? "#FF8F2740"
-              : value <= 75
-              ? "#FF8F2780"
-              : value > 75
-              ? "#FF8F27"
-              : "null",
+                ? "#FF8F2740"
+                : value <= 75
+                  ? "#FF8F2780"
+                  : value > 75
+                    ? "#FF8F27"
+                    : "null",
         })}
-        // cellRender={(value) => value && <div>{value}%</div>}
+      // cellRender={(value) => value && <div>{value}%</div>}
       />
     </StContainer>
   );
@@ -110,17 +119,25 @@ const HeatMapSample = () => {
 const StContainer = styled.div`
   font-size: 11px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  margin: auto;
+  margin: 0 auto;
   width: 90%;
   height: 270px;
   box-sizing: border-box;
-  padding-right: 50px;
   background-color: white;
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
 `;
+
+const StDaysBox = styled.div`
+  padding-top:13px;
+
+
+  & p {
+    margin:0;
+    padding: 8.5px 5px;
+  }
+`
 
 export default HeatMapSample;

@@ -247,17 +247,17 @@ const ProfileInfo = () => {
         <StHighschoolSearchBox>
           {highschoolInput.length > 0
             ? highschoolResult.length > 0 &&
-              highschoolResult.map((data, index) => (
-                <div className='content' key={index}>
-                  <div className='school' onClick={onClickSelectHandler}>
-                    {data.schoolName}
-                  </div>
-                  <div className='region'>
-                    <img src={regionSvg} alt='addressIcon' />
-                    {data.address}
-                  </div>
+            highschoolResult.map((data, index) => (
+              <div className='content' key={index}>
+                <div className='school' onClick={onClickSelectHandler}>
+                  {data.schoolName}
                 </div>
-              ))
+                <div className='region'>
+                  <img src={regionSvg} alt='addressIcon' />
+                  {data.address}
+                </div>
+              </div>
+            ))
             : null}
         </StHighschoolSearchBox>
 
@@ -267,9 +267,9 @@ const ProfileInfo = () => {
             ref={startButton}
             disabled={
               isNicknameCheck &&
-              nicknameCheck?.includes("가능") &&
-              grade !== null &&
-              highschoolResultClick
+                nicknameCheck?.includes("가능") &&
+                grade !== null &&
+                highschoolResultClick
                 ? false
                 : "disabled"
             }
@@ -283,7 +283,8 @@ const ProfileInfo = () => {
 };
 
 const StDiv = styled.div`
-  height: 100vh;
+  width:100%;
+  height: 100%;
 `;
 
 const StInfoTitle = styled.div`

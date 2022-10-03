@@ -41,7 +41,6 @@ const StDiv = styled.div`
   .react-calendar {
     width: 350px;
     max-width: 100%;
-    background: white;
     border: 1px solid #a0a096;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;

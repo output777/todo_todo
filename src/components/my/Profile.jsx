@@ -52,7 +52,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(__getFollowCnt(userInfo.id));
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
 
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
@@ -79,7 +79,7 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                userInfo?.profileImage == "null"
+                  userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -143,6 +143,10 @@ const Profile = () => {
 const StContainer = styled.div`
   height: 100%;
   overflow: hidden auto;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 `;
 
 const StStatusDiv = styled.div`

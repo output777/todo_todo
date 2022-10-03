@@ -116,16 +116,14 @@ const PlannerCategory = () => {
                 >
                   <p className='title'>{data.title}</p>
                   {/* filter undefined 에러 확인하기 */}
-                  {categoryTodoList.length > 0 && (
-                    <p onClick={(e) => e.stopPropagation()}>
-                      {
-                        categoryTodoList[index].filter(
-                          (data) => data.complete === true
-                        ).length
-                      }
-                      /{categoryTodoList[index].length}
-                    </p>
-                  )}
+                  <p onClick={(e) => e.stopPropagation()}>
+                    {
+                      categoryTodoList.length === 0 ? 0 : categoryTodoList[index].filter(
+                        (data) => data.complete === true
+                      ).length
+                    }
+                    /{categoryTodoList.length === 0 ? 0 : categoryTodoList[index].length}
+                  </p>
                 </div>
                 <StProgressBarBox onClick={(e) => e.stopPropagation()}>
                   <StProgressBar
@@ -150,6 +148,10 @@ const StDiv = styled.div`
   height: 100%;
   overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 
   & .header {
     position: sticky;

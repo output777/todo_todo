@@ -77,7 +77,6 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
-    dispatch(__getThisMonthRate());
     dispatch(__getTotalRate(nickname));
     dispatch(__getTotalTodo(nickname));
   }, []);
@@ -300,6 +299,10 @@ const StMainContainer = styled.div`
   height: 100%;
   overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 `;
 
 const StPhrasesbox = styled.div`

@@ -49,7 +49,7 @@ const PlannerCategoryDate = () => {
     const obj = {};
     let arr = [];
     const arrComplete = {};
-    if (dateTodo.length > 0) {
+    if (dateTodo !== '') {
       const completeTodo = dateTodo.filter((data) => data["complete"] === true);
 
       for (let i = 0; i < dateTodo.length; i++) {
@@ -88,16 +88,15 @@ const PlannerCategoryDate = () => {
   }, [dispatch]);
 
   return (
-    <StContainer>
-      <StDiv>
-        <div className='header'>
-          <PlannerCalender
-            calenderdate={calenderdate}
-            setCalenderdate={setCalenderdate}
-            selectDate={selectDate}
-            setSelectDate={setSelectDate}
-          />
-          {/* <div className='categoryBox'>
+    <StDiv>
+      <div className='header'>
+        <PlannerCalender
+          calenderdate={calenderdate}
+          setCalenderdate={setCalenderdate}
+          selectDate={selectDate}
+          setSelectDate={setSelectDate}
+        />
+        {/* <div className='categoryBox'>
             <img
               className='category'
               src={categorySvg}
@@ -105,72 +104,69 @@ const PlannerCategoryDate = () => {
               onClick={onClickAddCategoryHandler}
             />
           </div> */}
-        </div>
+      </div>
 
-        <StCategoryContainer>
-          {categoryTodoList.length > 0 &&
-            categoryTodoList.map((data, index) => (
-              <StCategoryItem key={index} id={index}>
-                <div
-                  className='top'
-                  title={data}
-                  onClick={onClickSelectCategoryToTodoListHandler}
-                >
-                  <p className='title'>{data}</p>
-                  {categoryTodoList.length > 0 && (
-                    <p onClick={(e) => e.stopPropagation()}>
-                      {categoryTodoComplete[`${categoryTodoList[index]}`] ===
-                        undefined
-                        ? 0
-                        : categoryTodoComplete[`${categoryTodoList[index]}`]}
-                      /{dateTodoObj[`${categoryTodoList[index]}`]}
-                    </p>
-                  )}
-                </div>
-                <StProgressBarBox onClick={(e) => e.stopPropagation()}>
-                  <StProgressBar
-                    width={
-                      isNaN(
-                        categoryTodoComplete[`${categoryTodoList[index]}`] /
-                        dateTodoObj[`${categoryTodoList[index]}`]
-                      )
-                        ? 0
-                        : (categoryTodoComplete[`${categoryTodoList[index]}`] /
-                          dateTodoObj[`${categoryTodoList[index]}`]) *
-                        100
-                    }
-                    backgroundColor='#74E272'
-                  ></StProgressBar>
-                </StProgressBarBox>
-              </StCategoryItem>
-            ))}
-        </StCategoryContainer>
-        <PlannerDate
-          selectedCategoryName={selectedCategoryName}
-          dateTodo={dateTodo}
-          display={display}
-          setDisplay={setDisplay}
-        />
-      </StDiv>
-    </StContainer>
+      <StCategoryContainer>
+        {categoryTodoList.length > 0 &&
+          categoryTodoList.map((data, index) => (
+            <StCategoryItem key={index} id={index}>
+              <div
+                className='top'
+                title={data}
+                onClick={onClickSelectCategoryToTodoListHandler}
+              >
+                <p className='title'>{data}</p>
+                {categoryTodoList.length > 0 && (
+                  <p onClick={(e) => e.stopPropagation()}>
+                    {categoryTodoComplete[`${categoryTodoList[index]}`] ===
+                      undefined
+                      ? 0
+                      : categoryTodoComplete[`${categoryTodoList[index]}`]}
+                    /{dateTodoObj[`${categoryTodoList[index]}`]}
+                  </p>
+                )}
+              </div>
+              <StProgressBarBox onClick={(e) => e.stopPropagation()}>
+                <StProgressBar
+                  width={
+                    isNaN(
+                      categoryTodoComplete[`${categoryTodoList[index]}`] /
+                      dateTodoObj[`${categoryTodoList[index]}`]
+                    )
+                      ? 0
+                      : (categoryTodoComplete[`${categoryTodoList[index]}`] /
+                        dateTodoObj[`${categoryTodoList[index]}`]) *
+                      100
+                  }
+                  backgroundColor='#74E272'
+                ></StProgressBar>
+              </StProgressBarBox>
+            </StCategoryItem>
+          ))}
+      </StCategoryContainer>
+      <PlannerDate
+        selectedCategoryName={selectedCategoryName}
+        dateTodo={dateTodo}
+        display={display}
+        setDisplay={setDisplay}
+      />
+    </StDiv>
   );
 };
 
 
-const StContainer = styled.div`
-  height:100%;
-`
-
 const StDiv = styled.div`
   background-color: #fafafa;
   width: 100%;
-  min-width: 360px;
-  /* height: 100%; */
-  /* height: 850px; */
-  height:calc(100% - 71px);
+  height: 100%;
+  overflow:hidden auto;
   margin: 0 auto;
   font-family: "SUIT-Regular", sans-serif;
   position: relative;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 
   & .header {
     width: 100%;

@@ -23,22 +23,14 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const OtherProfile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
   const nickname = localStorage.getItem("nickname");
 
   const [follow, setFollow] = useState();
   const [month, setMonth] = useState(null);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // dispatch(__getOtherInfo(params.id));
-    dispatch(__getRankScoreData(params.id));
-    dispatch(__getTotalRate(params.id));
-    dispatch(__getFollowingList(nickname));
-    dispatch(__reset());
-  }, []);
 
   const user = useSelector((state) => state.my?.userInfo);
   console.log(user);
@@ -55,6 +47,17 @@ const OtherProfile = () => {
   console.log(followingList);
 
   const { followcnt } = useSelector((state) => state.my);
+  console.log('followcnt', followcnt)
+
+  useEffect(() => {
+    // dispatch(__getOtherInfo(params.id));
+    dispatch(__getRankScoreData(params.id));
+    dispatch(__getTotalRate(params.id));
+    dispatch(__getFollowingList(nickname));
+    dispatch(__reset());
+  }, []);
+
+
 
   useEffect(() => {
     if (followingList !== null && followingList.length > 0) {
@@ -95,7 +98,7 @@ const OtherProfile = () => {
   useEffect(() => {
     dispatch(__getFollowCnt(user.id));
     console.log(followcnt);
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     monthFunc();

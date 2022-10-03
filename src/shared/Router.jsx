@@ -69,13 +69,13 @@ const Router = () => {
 
 const StContainer = styled.div`
   width:100vw;
-  height:100%;
+  height:100vh;
   display: flex;
   justify-content:center;
   box-sizing:border-box;
 
 
-  @media screen and (min-height: 667px) {
+  /* @media screen and (min-height: 667px) {
   height:667px;
   }
   
@@ -120,7 +120,7 @@ const StContainer = styled.div`
 
   @media screen and (min-height: 1366px) {
   height:1366px;
-  }
+  } */
 `
 
 export default Router;

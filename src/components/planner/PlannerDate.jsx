@@ -10,6 +10,8 @@ import doneSvg from '../../assets/img/doneSvg.svg';
 
 const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) => {
 
+  console.log('dateTodo', dateTodo)
+
   const [todoList, setTodoList] = useState([]);
   const [todoRate, setTodoRate] = useState(0);
 
@@ -25,9 +27,13 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) =>
 
 
   useEffect(() => {
-    const data = dateTodo.filter((data) => data.category === selectedCategoryName);
-    console.log('data', data)
-    setTodoList([...data]);
+    if (dateTodo !== '') {
+      const data = dateTodo.filter((data) => data.category === selectedCategoryName);
+      console.log('data', data)
+      setTodoList([...data]);
+    } else {
+      setTodoList([]);
+    }
   }, [selectedCategoryName, display])
 
   return (
