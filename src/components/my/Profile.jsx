@@ -143,8 +143,7 @@ const StContainer = styled.div`
 
 const StStatusDiv = styled.div`
   width: 90%;
-  padding-top: 10px;
-  padding-left: 5%;
+  padding: 10px auto;
   margin: 0.3em auto 0 auto;
   .userName {
     font-weight: 1000;
@@ -266,15 +265,12 @@ const StInfo = styled.div`
 `;
 
 const StBtn = styled.button`
-  position: absolute;
-  bottom: 11px;
-  left: 25%;
   width: 50%;
   height: 40px;
   background-color: #f8f8f8;
   border-radius: 16px;
   border: none;
-  margin: 15px auto 0rem auto;
+  margin: 15px auto;
 `;
 
 export default Profile;

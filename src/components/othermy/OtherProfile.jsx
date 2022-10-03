@@ -408,7 +408,7 @@ const StAverageText = styled.div`
 
 const StuserRate = styled.span`
   position: relative;
-  left: 20px;
+  left: 30px;
 `;
 
 const StMonthlyScoreText = styled.div`
