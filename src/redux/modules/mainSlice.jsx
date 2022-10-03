@@ -58,6 +58,7 @@ export const __getTotalRate = createAsyncThunk(
         `${BASE_URL}/todo/achievement/total/${payload}`,
         config
       );
+      console.log("data.data", data);
       console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -80,6 +81,7 @@ export const __getTotalTodo = createAsyncThunk(
       };
 
       const data = await axios.get(`${BASE_URL}/todo/total`, config);
+      console.log("data.data", data);
       console.log("data.data", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

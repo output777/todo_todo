@@ -238,7 +238,7 @@ const PlannerCategoryAdd = () => {
               type="text"
               value={categoryName}
               onChange={onChangeInputHandler}
-              placeholder="과목 이름을 입력해주세요.(2-15자)"
+              placeholder="과목 이름을 입력해주세요.(1-15자)"
             />
           </StModalBtnBox>
 

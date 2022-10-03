@@ -73,6 +73,7 @@ const PlannerDate = ({
         </StCategoryProgressContainer>
       </div>
 
+
       <StTodoContainer>
         {todoList.length > 0 &&
           todoList

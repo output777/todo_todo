@@ -59,6 +59,7 @@ const Router = () => {
             <Route path='/planner/category' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryAdd />} />
             <Route path='/planner/category/todolist' element={token === null ? <Navigate replace to='/login' /> : <TodolistPage />} />
             <Route path='/statistics' element={token === null ? <Navigate replace to='/login' /> : <StatisticsPage />} />
+            {/* <Route path='/profileinfo' element={<ProfileInfoPage />} /> */}
             <Route path='/profileinfo' element={nickname !== null ? <Navigate replace to='/' /> : <ProfileInfoPage />} />
             <Route path='/user/kakao/callback' element={<KakaoLogin setToken={setToken} />} />
             <Route path='/user/google/callback' element={<GoogleLogin setToken={setToken} />} />

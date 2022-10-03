@@ -111,12 +111,12 @@ const Main = () => {
               : `${nickname}님의 업적`}
           </div>
           <div className="todoCnt">
-            <img src={plannerCntSvg} />
+            <img src={plannerCntSvg} alt='todoCntSvgImg' />
             <span>
               {totalRate?.plannerCnt === null ? 0 : totalRate?.plannerCnt}
             </span>
-            <img src={todoCntSvg} />
-            <span>{totalTodo?.count === null ? 0 : totalTodo?.count}</span>
+            <img src={todoCntSvg} alt='todoCntSvgImg' />
+            <span>{totalTodo === '' ? 0 : totalTodo.count}</span>
           </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>

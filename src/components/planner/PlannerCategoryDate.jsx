@@ -176,7 +176,7 @@ const StDiv = styled.div`
     background-color: #ffffff;
     justify-content: space-between;
     /* align-items: center; */
-    padding: 10px;
+    /* padding: 10px; */
     box-sizing: border-box;
     border-bottom: 1px solid #f1f3f5;
 

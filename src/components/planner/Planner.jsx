@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import leftArrowSvg from "../../assets/img/leftArrowSvg.svg";
@@ -15,7 +15,6 @@ import {
   __updateTodo,
 } from "../../redux/modules/plannerSlice";
 import Modal from "../utils/Modal";
-import { useRef } from "react";
 
 const Planner = ({ modalVisible, setModalVisible }) => {
   const dispatch = useDispatch();
@@ -32,12 +31,11 @@ const Planner = ({ modalVisible, setModalVisible }) => {
   const [deleteTodoCheckModalVisible, setDeleteTodoCheckModalVisible] =
     useState(false);
   const [todoRate, setTodoRate] = useState(0);
+  const todoInputRef = useRef(null);
 
   const { todos } = useSelector((state) => state.planner);
   console.log("todos", todos);
   console.log("todoList", todoList);
-
-  const todoInputRef = useRef(null);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -56,9 +54,9 @@ const Planner = ({ modalVisible, setModalVisible }) => {
     navigate("/planner");
   };
 
-  // const onClickAddTodoModalHandler = () => {
-  //   setModalVisible(true);
-  // };
+  const onClickAddTodoModalHandler = () => {
+    setModalVisible(true);
+  };
 
   const onClickTodoAddHandler = async () => {
     let nickname = localStorage.getItem("nickname");
@@ -159,7 +157,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
 
   useEffect(() => {
     console.log("todos", todos);
-    if (todos !== "") {
+    if (todos !== '') {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
       setTodoList([...data]);
@@ -243,7 +241,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
             ))}
       </StTodoContainer>
 
-      <StTodoContainer>
+      <StTodoContainerComplete>
         {todoList.length > 0 &&
           todoList
             ?.filter((data) => data.complete === true)
@@ -269,7 +267,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
                 </div>
               </StTodoItem>
             ))}
-      </StTodoContainer>
+      </StTodoContainerComplete>
 
       <Modal
         visible={modalVisible}
@@ -406,10 +404,9 @@ const StDiv = styled.div`
 
   & .header {
     width: 100%;
-    min-width: 360px;
+    /* min-width: 360px; */
     height: 110px;
     position: fixed;
-    z-index: 1;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -424,6 +421,7 @@ const StDiv = styled.div`
 
 const StHeaderBox = styled.div`
   display: flex;
+  width:100%;
   height: 50px;
   justify-content: space-between;
   align-items: center;
@@ -583,9 +581,13 @@ const StModalBtn = styled.button`
 `;
 
 const StTodoContainer = styled.div`
-  padding: 20px;
+  padding: 10px 20px;
   transform: translateY(100px);
-  /* margin-top:20px; */
+`;
+
+const StTodoContainerComplete = styled.div`
+  padding: 10px 20px 71px 20px;
+  transform: translateY(100px);
 `;
 
 const StTodoItem = styled.div`
