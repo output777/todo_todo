@@ -94,13 +94,14 @@ const OtherProfile = () => {
 
   useEffect(() => {
     dispatch(__getFollowCnt(user.id));
+    console.log(followcnt);
   }, [dispatch]);
 
   useEffect(() => {
     monthFunc();
   }, []);
 
-  if (!user) {
+  if (!followcnt) {
     return <div></div>;
   }
 
