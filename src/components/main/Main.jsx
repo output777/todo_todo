@@ -108,7 +108,7 @@ const Main = () => {
           <div className="nicknamePart">
             {nickname === null || nickname === "null"
               ? "닉네임이 미설정 상태입니다."
-              : `${nickname}님의 업적`}
+              : `${nickname}님의 기록`}
           </div>
           <div className="todoCnt">
             <img src={plannerCntSvg} alt='todoCntSvgImg' />

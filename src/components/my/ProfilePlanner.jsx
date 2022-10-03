@@ -324,7 +324,7 @@ const StTodoToggleBox = styled.div`
 `;
 
 const StTodoContainer = styled.div`
-  padding: 20px;
+  width:100%;
 `;
 
 const StTodoItem = styled.div`
@@ -336,9 +336,7 @@ const StTodoItem = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   margin: 16px 0;
-  padding: 15px 20px;
-  -webkit-box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
-  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+  padding: 15px 0px;
 
   & .top {
     display: flex;

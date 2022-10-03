@@ -78,8 +78,8 @@ const Profile = () => {
           <StImg>
             <img
               src={
-                userInfo?.profileImage == null ||
-                  userInfo?.profileImage == "null"
+                userInfo?.profileImage === null ||
+                  userInfo?.profileImage === "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -202,7 +202,7 @@ const StImg = styled.div`
     width: 6em;
     height: 6em;
     border-radius: 100px;
-    /* object-fit: contain; */
+    object-fit: cover;
   }
 
   & div.rank {

@@ -230,9 +230,11 @@ const Statistics = () => {
                 <StTemp>
                   <span>낮음</span>
                   <div style={{ backgroundColor: "#F3F3F3" }}></div>
-                  <div style={{ backgroundColor: "#FF8F2740" }}></div>
-                  <div style={{ backgroundColor: "#FF8F2780" }}></div>
-                  <div style={{ backgroundColor: "#FF8F27" }}></div>
+                  <div style={{ backgroundColor: "rgba(255,143,39,.2)" }}></div>
+                  <div style={{ backgroundColor: "rgba(255,143,39,.4)" }}></div>
+                  <div style={{ backgroundColor: "rgba(255,143,39,.6)" }}></div>
+                  <div style={{ backgroundColor: "rgba(255,143,39,.8)" }}></div>
+                  <div style={{ backgroundColor: "rgba(255,143,39,1)" }}></div>
                   <span>높음</span>
                 </StTemp>
 

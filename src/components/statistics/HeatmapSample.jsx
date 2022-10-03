@@ -100,15 +100,19 @@ const HeatMapSample = () => {
           width: "30px",
           margigLeft: "1.5px",
           background:
-            value <= 25
+            value === 0
               ? "#F3F3F3"
-              : value <= 50
-                ? "#FF8F2740"
-                : value <= 75
-                  ? "#FF8F2780"
-                  : value > 75
-                    ? "#FF8F27"
-                    : "null",
+              : value <= 20
+                ? "rgba(255,143,39,.2)"
+                : value <= 40
+                  ? "rgba(255,143,39,.4)"
+                  : value <= 60
+                    ? "rgba(255,143,39,.6)"
+                    : value <= 80
+                      ? "rgba(255,143,39,.8)"
+                      : value <= 100
+                        ? "rgba(255,143,39,1)"
+                        : 'null',
         })}
       // cellRender={(value) => value && <div>{value}%</div>}
       />
