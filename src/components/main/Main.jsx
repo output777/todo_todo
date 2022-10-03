@@ -79,6 +79,7 @@ const Main = () => {
     dispatch(__getMyInfo(nickname));
     dispatch(__getTotalRate(nickname));
     dispatch(__getTotalTodo(nickname));
+    dispatch(__getThisMonthRate());
   }, []);
 
   return (
@@ -300,8 +301,8 @@ const StMainContainer = styled.div`
   overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar{
-  display:none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
