@@ -52,7 +52,7 @@ const PlannerDate = ({
               onClick={onClickBackPlannerHandler}
             />
           </div>
-          <div className="categoryTitle">
+          <div className='categoryTitle'>
             <p>{selectedCategoryName}</p>
           </div>
           <div></div>
@@ -148,6 +148,7 @@ const StDiv = styled.div`
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
+    z-index:1;
 
     @media screen and (min-width: 768px) {
       width: 600px;
@@ -161,11 +162,13 @@ const StHeaderBox = styled.div`
   height: 50px;
   justify-content: space-between;
   align-items: center;
+
   & div {
     flex: 1;
   }
   & .iconBox {
     padding-left: 10px;
+
 
     img {
       /* position:absolute; */
@@ -187,8 +190,8 @@ const StCategoryProgressContainer = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
   padding: 0rem 1rem;
+
   & .top {
     display: flex;
     justify-content: space-between;
@@ -232,61 +235,9 @@ const StProgressBar = styled.div`
   border-radius: 10px;
 `;
 
-const StModalBtnBox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  padding: 1rem;
-  box-sizing: border-box;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
 
-  & p {
-    width: 100%;
-    margin: 0;
-    text-align: center;
-    padding: 5px;
-  }
 
-  & p.title {
-    font-weight: 600;
-  }
 
-  & .btnBox {
-    display: flex;
-  }
-`;
-
-const StTodoInput = styled.textarea`
-  // props로 입력할 때 마다 border 색 변경하기
-  border: 1px solid #d7d5d5;
-  height: 75px;
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 16px;
-  outline: none;
-  resize: none;
-`;
-
-const StModalBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 50%;
-  outline: none;
-  border: none;
-  background-color: white;
-  color: #ff8f27;
-
-  margin-top: 5%;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
 
 const StTodoContainer = styled.div`
   padding: 20px;
