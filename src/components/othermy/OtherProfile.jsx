@@ -105,6 +105,10 @@ const OtherProfile = () => {
     return <div></div>;
   }
 
+  if (!user) {
+    return <div></div>;
+  }
+
   return (
     <>
       <StProfileContainer>
@@ -160,23 +164,21 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking === undefined
+              {userRank[1].ranking == 0 || "undefined"
                 ? "순위없음 "
                 : `${userRank[1].ranking}위`}
-              {userRank[1].score === undefined
+              {userRank[1].score == 0 || "NaN"
                 ? "0"
                 : (userRank[1].score / 7).toFixed(2)}
               점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking === undefined
+              {userRank[2].ranking == 0 || "undefined"
                 ? "순위없음 "
                 : `${userRank[2].ranking}위`}
-              {userRank[2].score === undefined
-                ? "0"
-                : (userRank[2].score / month).toFixed(2)}
-              점<StMonthlyScoreText>월간 점수</StMonthlyScoreText>
+              {userRank[2].score == 0 || "NaN" ? "0" : userRank[2].score}점
+              <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>

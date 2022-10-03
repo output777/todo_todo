@@ -38,10 +38,10 @@ const Statistics = () => {
   // let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
 
   let weeklyRank =
-    rankScoreData[1].ranking === undefined ? "-" : rankScoreData[1].ranking;
+    rankScoreData[1].ranking === 0 ? "-" : rankScoreData[1].ranking;
 
   let monthlyRank =
-    rankScoreData[2].ranking === undefined ? "-" : rankScoreData[2].ranking;
+    rankScoreData[2].ranking === 0 ? "-" : rankScoreData[2].ranking;
 
   useEffect(() => {
     let nickname = localStorage.getItem("nickname");
