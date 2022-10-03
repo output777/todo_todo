@@ -121,17 +121,17 @@ const PlannerCategoryAdd = () => {
 
   return (
     <StDiv>
-      <div className='header'>
-        <div className='iconBox'>
+      <div className="header">
+        <div className="iconBox">
           <img
             src={leftArrowSvg}
-            alt='leftArrowIcon'
+            alt="leftArrowIcon"
             onClick={onClickBackHandler}
           />
         </div>
         <p>과목 목록</p>
-        <div className='iconBox'>
-          <img src={plusSvg} alt='plusIcon' onClick={onClickCategorynHandler} />
+        <div className="iconBox">
+          <img src={plusSvg} alt="plusIcon" onClick={onClickCategorynHandler} />
         </div>
       </div>
       {category?.map((data) => (
@@ -139,7 +139,7 @@ const PlannerCategoryAdd = () => {
           <p>{data.title}</p>
           <img
             src={threeDotSvg}
-            alt='threeDotIcon'
+            alt="threeDotIcon"
             onClick={onClickModalEditHandler}
           />
         </StCategoryBox>
@@ -150,20 +150,20 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
-        top='40%'
-        backgroundcolor='rgba(0, 0, 0, 0.2)'
+        width="250px"
+        height="150px"
+        radius="20px"
+        top="40%"
+        backgroundcolor="rgba(0, 0, 0, 0.2)"
       >
         <StModalBtnBox>
-          <p className='title'>{selectCategory?.title}</p>
+          <p className="title">{selectCategory?.title}</p>
           {!editCategoryName ? (
             <StEditBtnBox>
-              <p className='updatetitle' onClick={onClickEditCategoryName}>
+              <p className="updatetitle" onClick={onClickEditCategoryName}>
                 이름 변경
               </p>
-              <div className='btnBox'>
+              <div className="btnBox">
                 <StModalDeleteBtn onClick={onClickCategoryDeleteHandler}>
                   삭제
                 </StModalDeleteBtn>
@@ -172,9 +172,9 @@ const PlannerCategoryAdd = () => {
           ) : (
             <>
               <StCategoryInput
-                minLength='2'
-                maxLength='15'
-                type='text'
+                minLength="2"
+                maxLength="15"
+                type="text"
                 value={categoryName}
                 onChange={onChangeInputHandler}
               />
@@ -196,14 +196,14 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
-        top='40%'
-        backgroundcolor='rgba(0, 0, 0, 0.2)'
+        width="250px"
+        height="150px"
+        radius="20px"
+        top="40%"
+        backgroundcolor="rgba(0, 0, 0, 0.2)"
       >
         <StModalBtnBox>
-          <p className='title'>'{selectCategory?.title}'을 삭제하시겠습니까?</p>
+          <p className="title">'{selectCategory?.title}'을 삭제하시겠습니까?</p>
           <p>삭제하면 연결돼있는 투두가</p>
           <p>모두 사라집니다.</p>
           <StDeleteBtnbox>
@@ -222,23 +222,23 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
-        top='40%'
-        backgroundcolor='rgba(0, 0, 0, 0.2)'
+        width="250px"
+        height="150px"
+        radius="20px"
+        top="40%"
+        backgroundcolor="rgba(0, 0, 0, 0.2)"
       >
         <div>
           <StModalBtnBox>
-            <p className='title'>과목 생성</p>
+            <p className="title">과목 생성</p>
             {/* props로 입력할 때 마다 border 색 변경하기 */}
             <StCategoryInput
-              minLength='2'
-              maxLength='15'
-              type='text'
+              minLength="2"
+              maxLength="15"
+              type="text"
               value={categoryName}
               onChange={onChangeInputHandler}
-              placeholder='과목 이름을 입력해주세요.(2-15자)'
+              placeholder="과목 이름을 입력해주세요.(2-15자)"
             />
           </StModalBtnBox>
 
@@ -269,6 +269,8 @@ const StDiv = styled.div`
     padding: 1rem;
     box-sizing: border-box;
     border-bottom: 1px solid #f1f3f5;
+    position: sticky;
+    top: 0;
 
     .iconBox {
       padding: 10px;
