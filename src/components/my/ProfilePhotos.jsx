@@ -115,7 +115,7 @@ const ProfilePhotos = () => {
             <StSliderBox>
               <div className="imgBox" key={selectImgId}>
                 {images.indexOf(
-                  images.find((data) => data.id === selectImgId)
+                  images.find((data) => data.id === Number(selectImgId))
                 ) === 0 ? null : (
                   <button
                     className="prev"
@@ -128,7 +128,7 @@ const ProfilePhotos = () => {
                 <img src={selectImg} alt="img" id={selectImgId} />
 
                 {images.indexOf(
-                  images.find((data) => data.id == selectImgId)
+                  images.find((data) => data.id === Number(selectImgId))
                 ) ==
                 images.length - 1 ? null : (
                   <button

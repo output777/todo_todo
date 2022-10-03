@@ -9,6 +9,7 @@ const initialState = {
   dday: [],
   thisMonthRate: [],
   totalRate: [],
+  totalTodo: [],
   mainRankList: [],
   mainRankListMonthly: [],
   mainRankListSchool: [],
@@ -32,8 +33,8 @@ export const __getThisMonthRate = createAsyncThunk(
         `${BASE_URL}/todo/achievement/thismonth`,
         config
       );
-      console.log("__getThisMonthRate data", data.data.achievementRate);
-      return thunkAPI.fulfillWithValue(data.data.achievementRate);
+      console.log("data.data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -57,8 +58,30 @@ export const __getTotalRate = createAsyncThunk(
         `${BASE_URL}/todo/achievement/total/${payload}`,
         config
       );
-      console.log("__getTotalRate data", data.data.achievementRate);
-      return thunkAPI.fulfillWithValue(data.data.achievementRate);
+      console.log("data.data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log("error", error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getTotalTodo = createAsyncThunk(
+  "getTotalTodo",
+  async (payload, thunkAPI) => {
+    try {
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      const data = await axios.get(`${BASE_URL}/todo/total`, config);
+      console.log("data.data", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -216,7 +239,7 @@ export const mainSlice = createSlice({
     [__getThisMonthRate.fulfilled]: (state, action) => {
       console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.thisMonthRate = [Math.round(action.payload)];
+      state.thisMonthRate = action.payload;
     },
     [__getThisMonthRate.rejected]: (state, action) => {
       state.isLoading = false;
@@ -229,13 +252,28 @@ export const mainSlice = createSlice({
     [__getTotalRate.fulfilled]: (state, action) => {
       console.log("action.payload", action.payload);
       state.isLoading = false;
-      state.totalRate = [Math.round(action.payload)];
+      state.totalRate = action.payload;
     },
     [__getTotalRate.rejected]: (state, action) => {
       state.isLoading = false;
       console.log("rejected action", action);
       state.error = action.payload.message;
     },
+
+    [__getTotalTodo.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getTotalTodo.fulfilled]: (state, action) => {
+      console.log("action.payload", action.payload);
+      state.isLoading = false;
+      state.totalTodo = action.payload;
+    },
+    [__getTotalTodo.rejected]: (state, action) => {
+      state.isLoading = false;
+      console.log("rejected action", action);
+      state.error = action.payload.message;
+    },
+
     [__getMainRank.pending]: (state) => {
       state.isLoading = true;
     },
