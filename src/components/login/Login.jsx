@@ -203,6 +203,7 @@ const StKakaoBtnFont = styled.span`
   position: relative;
   left: 5px;
   font-size: 16px;
+  color: #111;
 `;
 const StNaverBtn = styled.button`
   margin-bottom: 5%;

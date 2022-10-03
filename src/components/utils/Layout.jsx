@@ -30,7 +30,7 @@ const layoutShow = keyframes`
 const StLayout = styled.div`
   width:100%;
   min-width: 360px;
-  overflow:hidden auto;
+  /* overflow:hidden auto; */
   height:100vh;
   background-color: #fafafa;
   position:relative;
