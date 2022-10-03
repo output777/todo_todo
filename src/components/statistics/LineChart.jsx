@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import ECharts, { EChartsReactProps } from "echarts-for-react";
-import * as echarts from "echarts";
+import ECharts from "echarts-for-react";
 import { __getLineChartData } from "../../redux/modules/statisticsSlice";
 
 const LineChart = () => {
@@ -12,28 +11,6 @@ const LineChart = () => {
   const [lineDataRate, setLineDataRate] = useState([]);
 
   console.log("lineData", lineData);
-  //console.log(lineData.length > 0 && lineData[0].achievementRate);
-
-  // echarts.registerTheme("myTheme", {
-  //   backgroundColor: "#ffffff",
-
-  //   title: {
-  //     textStyle: {
-  //       color: "#ffffff",
-  //     },
-  //   },
-  //   legend: {
-  //     textStyle: {
-  //       color: "#ffffff",
-  //     },
-  //   },
-  //   dataZoom: {
-  //     textStyle: {
-  //       color: "#ffffff",
-  //     },
-  //     borderColor: "#b9beed",
-  //   },
-  // });
 
   const options = {
     legend: {
@@ -77,7 +54,7 @@ const LineChart = () => {
     const arr = [];
     console.log("lineData", lineData);
     if (lineData.length > 0) {
-      let len = lineData.length
+      let len = lineData.length;
       for (let i = 0; i < len; i++) {
         const data = (lineData[i].achievementRate / 7).toFixed(2);
         arr.push(data);
@@ -86,7 +63,6 @@ const LineChart = () => {
     console.log("arr", arr);
     setLineDataRate(arr);
   }, [lineData]);
-
 
   // console.log('lineDataRate', lineDataRate)
 

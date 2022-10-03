@@ -11,6 +11,7 @@ import {
   __getOtherInfo,
   __getFollowInfo,
   __getFollowingList,
+  __getFollowCnt,
 } from "../../redux/modules/mySlice";
 import { __getRankScoreData } from "../../redux/modules/statisticsSlice";
 import { useNavigate, useParams } from "react-router-dom";
@@ -53,6 +54,8 @@ const OtherProfile = () => {
   const followingList = useSelector((state) => state.my.following);
   console.log(followingList);
 
+  const { followcnt } = useSelector((state) => state.my);
+
   useEffect(() => {
     if (followingList !== null && followingList.length > 0) {
       const followingListFunction = followingList.filter(
@@ -90,8 +93,17 @@ const OtherProfile = () => {
   };
 
   useEffect(() => {
+    dispatch(__getFollowCnt(user.id));
+    console.log(followcnt);
+  }, [dispatch]);
+
+  useEffect(() => {
     monthFunc();
   }, []);
+
+  if (!followcnt) {
+    return <div></div>;
+  }
 
   if (!user) {
     return <div></div>;
@@ -130,7 +142,7 @@ const OtherProfile = () => {
                 navigate(`/follower/${params.id}`);
               }}
             >
-              <span className='count'>{user.followersCnt}</span>
+              <span className='count'>{followcnt.followerCnt}</span>
               <span className='text'>팔로워</span>
             </div>
             <div
@@ -139,7 +151,7 @@ const OtherProfile = () => {
                 navigate(`/following/${params.id}`);
               }}
             >
-              <span className='count'>{user.followingsCnt}</span>
+              <span className='count'>{followcnt.followingCnt}</span>
               <span className='text'>팔로잉</span>
             </div>
           </StInfo>
@@ -152,23 +164,21 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking === undefined
+              {userRank[1].ranking == 0 || "undefined"
                 ? "순위없음 "
                 : `${userRank[1].ranking}위`}
-              {userRank[1].score === undefined
+              {userRank[1].score == 0 || "NaN"
                 ? "0"
                 : (userRank[1].score / 7).toFixed(2)}
               점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking === undefined
+              {userRank[2].ranking == 0 || "undefined"
                 ? "순위없음 "
                 : `${userRank[2].ranking}위`}
-              {userRank[2].score === undefined
-                ? "0"
-                : (userRank[2].score / month).toFixed(2)}
-              점<StMonthlyScoreText>월간 점수</StMonthlyScoreText>
+              {userRank[2].score == 0 || "NaN" ? "0" : userRank[2].score}점
+              <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
             <span>

@@ -8,6 +8,7 @@ import {
   __getMyInfo,
   __postProfileImg,
   __postProfileMoto,
+  __getFollowCnt,
 } from "../../redux/modules/mySlice";
 import logoPencil from "../../assets/img/loginPage/logoPencil.svg";
 import { useRef } from "react";
@@ -27,6 +28,8 @@ const Profile = () => {
   console.log("userInfo", userInfo);
   const { profileImage } = useSelector((state) => state.my);
   const { motto } = useSelector((state) => state.my);
+  const { followcnt } = useSelector((state) => state.my);
+  console.log(followcnt);
 
   const [edit, setEdit] = useState(false);
   const [mottoInput, setmottoInput] = useState("");
@@ -46,6 +49,10 @@ const Profile = () => {
   useEffect(() => {
     dispatch(__getMyInfo(nickname));
   }, [profileImage]);
+
+  useEffect(() => {
+    dispatch(__getFollowCnt(userInfo.id));
+  }, [dispatch]);
 
   const handleImgError = (e) => {
     e.target.src = profileImgSvg;
@@ -72,7 +79,7 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage == null ||
-                  userInfo?.profileImage == "null"
+                userInfo?.profileImage == "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -81,9 +88,8 @@ const Profile = () => {
             />
           </StImg>
           <StInfo>
-
-            <div className="nextToPicture">
-              <span className="count">
+            <div className='nextToPicture'>
+              <span className='count'>
                 {images === null || images.errorMessage !== undefined
                   ? 0
                   : images.length}
@@ -96,7 +102,7 @@ const Profile = () => {
                 navigate(`/follower/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo?.followersCnt}</span>
+              <span className='count'>{followcnt?.followerCnt}</span>
               <span className='text'>팔로워</span>
             </div>
             <div
@@ -105,7 +111,7 @@ const Profile = () => {
                 navigate(`/following/${nickname}`);
               }}
             >
-              <span className='count'>{userInfo?.followingsCnt}</span>
+              <span className='count'>{followcnt?.followingCnt}</span>
               <span className='text'>팔로잉</span>
             </div>
           </StInfo>
@@ -130,11 +136,10 @@ const Profile = () => {
   );
 };
 
-
 const StContainer = styled.div`
-  height:100%;
+  height: 100%;
   overflow: hidden auto;
-`
+`;
 
 const StStatusDiv = styled.div`
   width: 90%;
@@ -158,7 +163,7 @@ const StProfileContainer = styled.div`
   flex-direction: column;
   height: 300px;
   box-sizing: border-box;
-  background-color:#fff;
+  background-color: #fff;
 
   .title {
     display: flex;
@@ -167,7 +172,7 @@ const StProfileContainer = styled.div`
     justify-content: space-between;
     padding-right: 1.5em;
     height: 72px;
-    background-color:#fff;
+    background-color: #fff;
   }
 `;
 
@@ -178,7 +183,6 @@ const StImgInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 `;
 
 const StImg = styled.div`
@@ -271,7 +275,6 @@ const StBtn = styled.button`
   border-radius: 16px;
   border: none;
   margin: 15px auto 0rem auto;
-
 `;
 
 export default Profile;

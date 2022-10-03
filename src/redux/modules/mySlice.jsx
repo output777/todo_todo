@@ -6,6 +6,7 @@ import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
+  followcnt: null,
   follower: null,
   otherfollowing: null,
   following: null,
@@ -190,7 +191,7 @@ export const __getFollowInfo = createAsyncThunk(
         },
       };
 
-      const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
+      const data = await axios.post(`${BASE_URL}/follow/${payload}`, config);
       console.log("data", data.data);
       console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
@@ -268,6 +269,31 @@ export const __getFollowerList = createAsyncThunk(
       const data = await axios.get(`${BASE_URL}/followers/${payload}`, config);
       // console.log("data", data.data);
       // console.log("payload", payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(error.response.data.errorMessage);
+    }
+  }
+);
+
+export const __getFollowCnt = createAsyncThunk(
+  "getFollowInfo",
+  async (payload, thunkAPI) => {
+    try {
+      let accessToken = localStorage.getItem("accessToken");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      const data = await axios.get(`${BASE_URL}/follow/${payload}`, config);
+      console.log("data", data.data);
+      console.log("payload", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -407,6 +433,18 @@ export const mySlice = createSlice({
       state.otherfollowing = action.payload;
     },
     [__getOtherFollowingList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // __getFollowCnt
+    [__getFollowCnt.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getFollowCnt.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.followcnt = action.payload;
+    },
+    [__getFollowCnt.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
