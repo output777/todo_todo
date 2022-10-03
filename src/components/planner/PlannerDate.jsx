@@ -43,12 +43,12 @@ const PlannerDate = ({
 
   return (
     <StDiv display={display}>
-      <div className='header'>
+      <div className="header">
         <StHeaderBox>
-          <div className='iconBox'>
+          <div className="iconBox">
             <img
               src={leftArrowSvg}
-              alt='leftArrowIcon'
+              alt="leftArrowIcon"
               onClick={onClickBackPlannerHandler}
             />
           </div>
@@ -58,8 +58,8 @@ const PlannerDate = ({
           <div></div>
         </StHeaderBox>
         <StCategoryProgressContainer>
-          <div className='top'>
-            <p className='title'>
+          <div className="top">
+            <p className="title">
               {todoList.filter((data) => data.complete === true).length}/
               {todoList.length}
             </p>
@@ -79,13 +79,13 @@ const PlannerDate = ({
             .filter((data) => data.complete === false)
             .map((data) => (
               <StTodoItem key={data.todoId} name={data.title}>
-                <div className='top' id={data.todoId}>
+                <div className="top" id={data.todoId}>
                   <div
-                    className='content'
+                    className="content"
                     style={{ display: "flex", alignItems: "center" }}
                   >
-                    <img src={notDoneSvg} alt='notDoneIcon' />
-                    <StTodoTitle className='title'>{data.content}</StTodoTitle>
+                    <img src={notDoneSvg} alt="notDoneIcon" />
+                    <StTodoTitle className="title">{data.content}</StTodoTitle>
                   </div>
                 </div>
               </StTodoItem>
@@ -98,13 +98,13 @@ const PlannerDate = ({
             .filter((data) => data.complete === true)
             .map((data) => (
               <StTodoItem key={data.todoId} name={data.title}>
-                <div className='top' id={data.todoId}>
+                <div className="top" id={data.todoId}>
                   <div
-                    className='content'
+                    className="content"
                     style={{ display: "flex", alignItems: "center" }}
                   >
-                    <img src={doneSvg} alt='doneIcon' />
-                    <StTodoTitle className='title' color='#E8E8E8'>
+                    <img src={doneSvg} alt="doneIcon" />
+                    <StTodoTitle className="title" color="#E8E8E8">
                       {data.content}
                     </StTodoTitle>
                   </div>
@@ -142,13 +142,13 @@ const StDiv = styled.div`
     width: 100%;
     min-width: 360px;
     height: 110px;
-    z-index: 1;
     position: fixed;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
+    z-index:1;
 
     @media screen and (min-width: 768px) {
       width: 600px;
@@ -168,6 +168,7 @@ const StHeaderBox = styled.div`
   }
   & .iconBox {
     padding-left: 10px;
+
 
     img {
       /* position:absolute; */
@@ -189,7 +190,7 @@ const StCategoryProgressContainer = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 0px 30px;
+  padding: 0rem 1rem;
 
   & .top {
     display: flex;
@@ -233,6 +234,10 @@ const StProgressBar = styled.div`
   height: 13px;
   border-radius: 10px;
 `;
+
+
+
+
 
 const StTodoContainer = styled.div`
   padding: 20px;
