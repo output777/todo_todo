@@ -48,7 +48,7 @@ const Main = () => {
   // const [school, setSchool] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const nickname = localStorage.getItem("nickname");
+  let nickname = localStorage.getItem("nickname");
 
   const onClickWeekly = () => {
     setWeekly(true);

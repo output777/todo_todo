@@ -15,14 +15,15 @@ import {
   __updateTodo,
 } from "../../redux/modules/plannerSlice";
 import Modal from "../utils/Modal";
+import { useRef } from "react";
 
-const Planner = ({ x, setX }) => {
+const Planner = ({ modalVisible, setModalVisible }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [categoryName, setCategoryName] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [modalVisible, setModalVisible] = useState(false);
   const [todo, setTodo] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [todoId, setTodoId] = useState(null);
@@ -35,6 +36,8 @@ const Planner = ({ x, setX }) => {
   const { todos } = useSelector((state) => state.planner);
   console.log("todos", todos);
   console.log("todoList", todoList);
+
+  const todoInputRef = useRef(null);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -53,9 +56,9 @@ const Planner = ({ x, setX }) => {
     navigate("/planner");
   };
 
-  const onClickAddTodoModalHandler = () => {
-    setModalVisible(true);
-  };
+  // const onClickAddTodoModalHandler = () => {
+  //   setModalVisible(true);
+  // };
 
   const onClickTodoAddHandler = async () => {
     let nickname = localStorage.getItem("nickname");
@@ -69,6 +72,7 @@ const Planner = ({ x, setX }) => {
       await dispatch(__postTodo(newTodo));
       await dispatch(__getTodayTodo(nickname));
       setTodo("");
+      todoInputRef.current.focus();
     }
   };
 
@@ -209,9 +213,9 @@ const Planner = ({ x, setX }) => {
           </StProgressBarBox>
         </StCategoryProgressContainer>
       </div>
-      <StPlusBtnBox onClick={onClickAddTodoModalHandler}>
+      {/* <StPlusBtnBox onClick={onClickAddTodoModalHandler}>
         <img src={whitePlusSvg} alt='plusBtnIcon' />
-      </StPlusBtnBox>
+      </StPlusBtnBox> */}
 
       <StTodoContainer>
         {todoList.length > 0 &&
@@ -287,6 +291,7 @@ const Planner = ({ x, setX }) => {
             type='text'
             value={todo}
             onChange={onChangeInputHandler}
+            ref={todoInputRef}
           />
           <StEditBtnbox>
             <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
@@ -371,7 +376,7 @@ const Planner = ({ x, setX }) => {
 };
 
 const StDiv = styled.div`
-  width: 100;
+  width: 100%;
   min-width: 360px;
   background-color: #fafafa;
   height: 100%;

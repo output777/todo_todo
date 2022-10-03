@@ -28,26 +28,23 @@ const layoutShow = keyframes`
   }
 `
 const StLayout = styled.div`
-width:100%;
-  /* width:416px; */
-  overflow:hidden auto;
+  width:100%;
   min-width: 360px;
+  overflow:hidden auto;
   height:100vh;
   background-color: #fafafa;
   position:relative;
   opacity:0;
-  /* border:1px solid #ccc; */
+  box-sizing:border-box;
+
   -ms-overflow-style: none;
+
   &::-webkit-scrollbar{
   display:none;
   }
+
   animation: ${layoutShow} 1s 5s alternate ease both;
 
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-  display: none;
-}
 
 @media screen and (min-width: 768px) {
     width:600px;

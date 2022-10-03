@@ -36,32 +36,42 @@ const titleFade = keyframes`
 `
 const titleShow = keyframes`
   0% {
+    opacity: 1;
   }
   10% {
+    opacity: 1;
     bottom:55%;
   }
   20% {
+    opacity: 1;
     bottom:53%;
   }
   30% {
+    opacity: 1;
     bottom:55%;
   }
   40% {
+    opacity: 1;
     bottom:55%;
   }
   50% {
+    opacity: 1;
     bottom:55%;
   }
   60% {
+    opacity: 1;
     bottom:55%;
   }
   70% {
+    opacity: 1;
     bottom:55%;
   }
   80% {
+    opacity: 1;
     bottom:55%;
   }
   100% {
+    opacity: 0;
     bottom:1400px;
   }
 `
@@ -170,8 +180,9 @@ const StImgBox1 = styled.div`
 
 
   & img {
+    opacity: 0;
     width:100%;
-    /* animation: ${titleShow} 4s 1s alternate ease both; */
+    animation: ${titleShow} 4s 1s alternate ease both;
     /* background-size: contain; */
   }
 

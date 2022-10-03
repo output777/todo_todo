@@ -285,6 +285,7 @@ const ProfileInfo = () => {
 const StDiv = styled.div`
   width:100%;
   height: 100%;
+  box-sizing:border-box;
 `;
 
 const StInfoTitle = styled.div`
@@ -302,8 +303,8 @@ const StInfoTitle = styled.div`
 `;
 
 const StInfoNicknameBox = styled.div`
-  padding: 0.5rem 0 1rem 0;
-  height: 100px;
+  padding: 14px 0 14px 0;
+  /* height: 100px; */
   box-sizing: border-box;
 
   & p {
@@ -393,13 +394,14 @@ const StInfoNicknameBox = styled.div`
 `;
 
 const StHighschoolBox = styled.div`
-  padding-top: 0.7rem;
-  height: 26%;
+  padding-top: 0;
+  height: 150px;
   box-sizing: border-box;
 
   & p {
     margin-bottom: 0.5rem;
     font-weight: bold;
+    margin-top:0;
   }
 
   & .gradeBox {
@@ -463,7 +465,7 @@ const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
   overflow: scroll;
-  height: 22.3rem;
+  height:40%;
   border-radius: 10px;
 
   & .content {

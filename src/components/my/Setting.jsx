@@ -10,6 +10,7 @@ const Setting = ({ setToken }) => {
     localStorage.clear();
     setToken(null);
     navigate("/login");
+    window.location.reload()
   }
 
 

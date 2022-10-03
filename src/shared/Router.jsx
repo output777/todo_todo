@@ -24,13 +24,17 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useState } from "react";
 import PlannerDatePage from "../pages/PlannerDatePage";
+import TodolistPage from "../pages/TodolistPage";
 
 const Router = () => {
   const [token, setToken] = useState(null);
+  const [nickname, setNickname] = useState(null);
 
   useEffect(() => {
     let token = localStorage.getItem('accessToken');
+    let nickname = localStorage.getItem('nickname');
     setToken(() => token);
+    setNickname(() => nickname)
   }, [])
 
   return (
@@ -53,10 +57,9 @@ const Router = () => {
             <Route path='/planner' element={token === null ? <Navigate replace to='/login' /> : <PlannerPage />} />
             <Route path='/planner/date' element={token === null ? <Navigate replace to='/login' /> : <PlannerDatePage />} />
             <Route path='/planner/category' element={token === null ? <Navigate replace to='/login' /> : <PlannerCategoryAdd />} />
-            <Route path='/planner/category/todolist' element={token === null ? <Navigate replace to='/login' /> : <Planner />} />
+            <Route path='/planner/category/todolist' element={token === null ? <Navigate replace to='/login' /> : <TodolistPage />} />
             <Route path='/statistics' element={token === null ? <Navigate replace to='/login' /> : <StatisticsPage />} />
-            {/* <Route path='/profileinfo' element={token !== null ? <Navigate replace to="/" /> : <ProfileInfoPage />} /> */}
-            <Route path='/profileinfo' element={<ProfileInfoPage />} />
+            <Route path='/profileinfo' element={nickname !== null ? <Navigate replace to='/' /> : <ProfileInfoPage />} />
             <Route path='/user/kakao/callback' element={<KakaoLogin setToken={setToken} />} />
             <Route path='/user/google/callback' element={<GoogleLogin setToken={setToken} />} />
             <Route path='/user/naver/callback' element={<NaverLogin />} />
@@ -74,53 +77,6 @@ const StContainer = styled.div`
   justify-content:center;
   box-sizing:border-box;
 
-
-  /* @media screen and (min-height: 667px) {
-  height:667px;
-  }
-  
-  @media screen and (min-height: 736px) {
-  height:736px;
-  }
-  @media screen and (min-height: 740px) {
-  height:740px;
-  }
-
-  @media screen and (min-height: 800px) {
-  height:800px;
-  }
-
-  @media screen and (min-height: 812px) {
-  height:812px;
-  }
-
-  @media screen and (min-height: 844px) {
-  height:844px;
-  }
-
-  @media screen and (min-height: 851px) {
-  height:851px;
-  }
-
-@media screen and (min-height: 896px) {
-  height:896px;
-  }
-
-  @media screen and (min-height: 915px) {
-  height:915px;
-  }
-
-  @media screen and (min-height: 1024px) {
-  height:1024px;
-  }
-
-  @media screen and (min-height: 1180px) {
-  height:1180px;
-  }
-
-  @media screen and (min-height: 1366px) {
-  height:1366px;
-  } */
 `
 
 export default Router;

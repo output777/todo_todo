@@ -132,7 +132,7 @@ const Statistics = () => {
             alt='infoImg'
           />
         </StTopSubjectDiv>
-        <div style={{ paddingBottom: "80px" }}>
+        <div style={{ paddingBottom: "20px" }}>
           <HeatmapSample />
         </div>
       </StBackground>
@@ -260,9 +260,10 @@ const Statistics = () => {
 export default Statistics;
 
 const StContainer = styled.div`
+  height:100%;
   font-family: "SUIT-Regular", sans-serif;
-  height: 100%;
   overflow: hidden auto;
+  box-sizing:border-box;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
@@ -308,18 +309,9 @@ const StLine = styled.div`
 `;
 
 const StBackground = styled.div`
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
+  /* height: 100%; */
   margin-top: 10px;
-  /* overflow-y:scroll;
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.4);
-  } */
-  /* background-color: gray; */
-  /* height: auto;
-  min-height:100vh; */
 `;
 
 const StTopSubjectDiv = styled.div`

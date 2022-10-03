@@ -27,6 +27,7 @@ const StContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: #fafafa;
+  /* border:1px solid red; */
   justify-content: center;
   box-sizing: border-box;
 

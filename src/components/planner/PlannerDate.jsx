@@ -92,8 +92,7 @@ const PlannerDate = ({ selectedCategoryName, dateTodo, display, setDisplay }) =>
 
 
 const StDiv = styled.div`
-  width:414px;;
-  /* max-width:414px; */
+  width: 100%;
   min-width: 360px;
   background-color: #fafafa;
   height: 100vh;
@@ -104,7 +103,11 @@ const StDiv = styled.div`
   bottom:0;
   display: ${(props) => props.display ? 'block' : 'none'};
   font-family: "SUIT-Regular", sans-serif;
-  /* overflow-y: scroll; */
+  overflow: hidden auto;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar{
+  display:none;
+  }
 
   @media screen and (min-width: 768px) {
     width:600px;
