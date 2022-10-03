@@ -34,14 +34,13 @@ const Statistics = () => {
   let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore.toFixed(2);
 
   let monthlyScore = rankScoreData[2].score;
-  // / rankScoreData[2].lengthOfMonth;
-  // let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
+  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore;
 
   let weeklyRank =
-    rankScoreData[1].ranking === 0 ? "-" : rankScoreData[1].ranking;
-
+    rankScoreData[1].ranking === 0 || "null" ? "-" : rankScoreData[1].ranking;
+  // console.log(weeklyRank.ranking);
   let monthlyRank =
-    rankScoreData[2].ranking === 0 ? "-" : rankScoreData[2].ranking;
+    rankScoreData[2].ranking === 0 || "null" ? "-" : rankScoreData[2].ranking;
 
   useEffect(() => {
     let nickname = localStorage.getItem("nickname");
@@ -84,7 +83,7 @@ const Statistics = () => {
           <StScoreBoxDiv>
             <div>월간점수</div>
             <div>
-              {monthlyScore}점 / <span>{monthlyRank} 위</span>
+              {monthlyScore2}점 / <span>{monthlyRank} 위</span>
             </div>
           </StScoreBoxDiv>
         </div>

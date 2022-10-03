@@ -9,10 +9,12 @@ const BarChart = () => {
 
   // ---------------- 점수 소수점 반올림 ----------------
   let lastweekScore = rankScoreData[0].score;
-  let lastweekScore2 = lastweekScore == 0 ? 0 : (lastweekScore / 7).toFixed(2);
+  let lastweekScore2 =
+    lastweekScore == 0 || "null" ? 0 : (lastweekScore / 7).toFixed(2);
 
   let weeklyScore = rankScoreData[1].score;
-  let weeklyScore2 = weeklyScore == 0 ? 0 : (weeklyScore / 7).toFixed(2);
+  let weeklyScore2 =
+    weeklyScore == 0 || "null" ? 0 : (weeklyScore / 7).toFixed(2);
 
   const options = {
     //State 일때는 왜 안되는지 파악하기

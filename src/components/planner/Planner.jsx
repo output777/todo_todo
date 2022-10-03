@@ -151,7 +151,7 @@ const Planner = ({ x, setX }) => {
   }, [todoList]);
 
   useEffect(() => {
-    console.log('todos', todos);
+    console.log("todos", todos);
     if (todos.length > 0) {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
@@ -189,8 +189,10 @@ const Planner = ({ x, setX }) => {
         <StCategoryProgressContainer>
           <div className='top'>
             <p className='title'>
-              {todoList.length === 0 ? 0 : todoList.filter((data) => data.complete === true).length}/
-              {todoList.length}
+              {todoList.length === 0
+                ? 0
+                : todoList.filter((data) => data.complete === true).length}
+              /{todoList.length}
             </p>
             <p>{isNaN(todoRate) ? 0 : todoRate}%</p>
           </div>
@@ -283,9 +285,7 @@ const Planner = ({ x, setX }) => {
           />
           <StEditBtnbox>
             <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
-            <StModalAddBtn onClick={onClickTodoAddHandler}>
-              추가
-            </StModalAddBtn>
+            <StModalAddBtn onClick={onClickTodoAddHandler}>추가</StModalAddBtn>
           </StEditBtnbox>
         </StModalBtnBox>
       </Modal>
@@ -318,6 +318,8 @@ const Planner = ({ x, setX }) => {
             <>
               <p className='title'>투두 내용 변경</p>
               <StTodoInput
+                minLength='2'
+                maxLength='15'
                 type='text'
                 value={todo}
                 onChange={onChangeInputHandler}
@@ -349,14 +351,14 @@ const Planner = ({ x, setX }) => {
         <StModalBtnBox>
           <p className='title'>투두를 삭제하시겠습니까?</p>
           <p>삭제하면 다시 불러올 수 없습니다</p>
-          <StEditBtnbox>
+          <StDeleteBtnbox>
             <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
               취소
             </StModalCancelBtn>
             <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
               확인
             </StModalAddBtn>
-          </StEditBtnbox>
+          </StDeleteBtnbox>
         </StModalBtnBox>
       </Modal>
     </StDiv>
@@ -541,7 +543,8 @@ const StModalBtnBox = styled.div`
 const StTodoInput = styled.input`
   // props로 입력할 때 마다 border 색 변경하기
   border: 1px solid #d7d5d5;
-  height: 75px;
+  margin-top:10px;
+  height: 25px;
   width: 100%;
   padding: 0.5rem;
   border-radius: 16px;
@@ -679,5 +682,11 @@ const StEditBtnbox = styled.div`
   display: flex;
   position: relative;
   top: 20px;
+`;
+
+const StDeleteBtnbox = styled.div`
+  display: flex;
+  position: relative;
+  top: 30px;
 `;
 export default Planner;

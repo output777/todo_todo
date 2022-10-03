@@ -117,6 +117,8 @@ const PlannerCategoryAdd = () => {
     dispatch(__getCategory(nickname));
   }, [dispatch]);
 
+  console.log(categoryName);
+
   return (
     <StDiv>
       <div className='header'>
@@ -132,17 +134,16 @@ const PlannerCategoryAdd = () => {
           <img src={plusSvg} alt='plusIcon' onClick={onClickCategorynHandler} />
         </div>
       </div>
-      {
-        category?.map((data) => (
-          <StCategoryBox key={data.id} id={data.id}>
-            <p>{data.title}</p>
-            <img
-              src={threeDotSvg}
-              alt='threeDotIcon'
-              onClick={onClickModalEditHandler}
-            />
-          </StCategoryBox>
-        ))}
+      {category?.map((data) => (
+        <StCategoryBox key={data.id} id={data.id}>
+          <p>{data.title}</p>
+          <img
+            src={threeDotSvg}
+            alt='threeDotIcon'
+            onClick={onClickModalEditHandler}
+          />
+        </StCategoryBox>
+      ))}
 
       <Modal
         visible={editModalVisible}
@@ -171,6 +172,8 @@ const PlannerCategoryAdd = () => {
           ) : (
             <>
               <StCategoryInput
+                minLength='2'
+                maxLength='15'
                 type='text'
                 value={categoryName}
                 onChange={onChangeInputHandler}
@@ -200,17 +203,17 @@ const PlannerCategoryAdd = () => {
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>'{selectCategory?.title}'을 삭제하겠습니까?</p>
+          <p className='title'>'{selectCategory?.title}'을 삭제하시겠습니까?</p>
           <p>삭제하면 연결돼있는 투두가</p>
           <p>모두 사라집니다.</p>
-          <div className='btnBox'>
+          <StDeleteBtnbox>
             <StModalCancelBtn onClick={onClickEditCategoryNameDeleteCancel}>
               취소
             </StModalCancelBtn>
             <StModalAddBtn onClick={onClickEditCategoryNameDeleteCheck}>
               확인
             </StModalAddBtn>
-          </div>
+          </StDeleteBtnbox>
         </StModalBtnBox>
       </Modal>
 
@@ -230,6 +233,8 @@ const PlannerCategoryAdd = () => {
             <p className='title'>과목 생성</p>
             {/* props로 입력할 때 마다 border 색 변경하기 */}
             <StCategoryInput
+              minLength='2'
+              maxLength='15'
               type='text'
               value={categoryName}
               onChange={onChangeInputHandler}
@@ -319,7 +324,8 @@ const StModalBtnBox = styled.div`
 const StCategoryInput = styled.input`
   // props로 입력할 때 마다 border 색 변경하기
   border: 1px solid #d7d5d5;
-  height: 40px;
+  height: 25px;
+  margin-top:10px;
   width: 100%;
   padding: 0.5rem;
   border-radius: 16px;
@@ -418,4 +424,9 @@ const StCategoryBox = styled.div`
   }
 `;
 
+const StDeleteBtnbox = styled.div`
+  display: flex;
+  position: relative;
+  top: 20px;
+`;
 export default PlannerCategoryAdd;
