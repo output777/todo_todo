@@ -218,6 +218,7 @@ const StDateInput = styled.input`
   height: 50px;
   padding: 0 10px;
   box-sizing: border-box;
+  font-family: "SUIT-Regular";
 `;
 
 const StModalBottom = styled.div`

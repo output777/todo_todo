@@ -199,10 +199,12 @@ const Statistics = () => {
                     붉은색
                   </span>
                   은 상위랭커, */}
-                  <span style={{ color: "#618AF2", fontWeight: "bold" }}>
-                    파란색
-                  </span>
-                  선은 유저님의 이번주 점수 추이입니다.
+                  <div style={{ marginTop: "10px", width: "360px" }}>
+                    <span style={{ color: "#618AF2", fontWeight: "bold" }}>
+                      파란색
+                    </span>
+                    선은 유저님의 이번주 점수 추이입니다.
+                  </div>
                 </div>
               </StModalExplainTop>
             ) : (
@@ -217,9 +219,16 @@ const Statistics = () => {
                 </StTemp>
 
                 <div>
-                  나의 투두 달성률은 주차별(가로축), 요일별(세로축) 달성률에
-                  따라 색깔의 옅고 진함을 표시합니다. 달성률이 높을 수록 색깔이
-                  진해집니다.
+                  <div> 나의 투두 달성률은 주차별(가로축), </div>
+                  요일별(세로축) 달성률에 따라 색깔의 옅고 진함을 표시합니다.
+                  <div
+                    style={{
+                      marginTop: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    달성률이 높을 수록 색깔이 진해집니다.
+                  </div>
                 </div>
               </StModalExplainTop>
             )}
@@ -391,7 +400,7 @@ const StModalExplainBottom = styled.div`
     gap: 3%;
   }
   div {
-    margin-top: 10%;
+    margin-top: 5%;
   }
 `;
 
