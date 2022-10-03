@@ -30,10 +30,12 @@ const Statistics = () => {
   //   : Math.round(rankScoreData[0].score);
 
   let weeklyScore = rankScoreData[1].score / 7;
+  console.log(weeklyScore);
   let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore.toFixed(2);
 
-  let monthlyScore = rankScoreData[2].score / rankScoreData[2].lengthOfMonth;
-  let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
+  let monthlyScore = rankScoreData[2].score;
+  // / rankScoreData[2].lengthOfMonth;
+  // let monthlyScore2 = isNaN(monthlyScore) ? 0 : monthlyScore.toFixed(2);
 
   let weeklyRank =
     rankScoreData[1].ranking === undefined ? "-" : rankScoreData[1].ranking;
@@ -47,7 +49,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <StContainer >
+    <StContainer>
       <StHeader>
         <span style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
           통계
@@ -56,7 +58,11 @@ const Statistics = () => {
       <StBackground>
         <StTopSubjectDiv>
           <div>나의 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("score")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("score")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
         <div
           style={{
@@ -78,14 +84,14 @@ const Statistics = () => {
           <StScoreBoxDiv>
             <div>월간점수</div>
             <div>
-              {monthlyScore2}점 / <span>{monthlyRank} 위</span>
+              {monthlyScore}점 / <span>{monthlyRank} 위</span>
             </div>
           </StScoreBoxDiv>
         </div>
         <StScoreChangeBoxDiv>
           <div>
-            <span className="lastweek">저번주 </span>
-            <span className="thisweek"> 이번주</span> <br />
+            <span className='lastweek'>저번주 </span>
+            <span className='thisweek'> 이번주</span> <br />
             주간 랭킹 점수 변화
           </div>
 
@@ -93,14 +99,22 @@ const Statistics = () => {
         </StScoreChangeBoxDiv>
         <StTopSubjectDiv>
           <div>주간 랭킹 점수</div>
-          <img src={info} onClick={() => modalToggleHandler("rank")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("rank")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
         <LineChart />
         <StTopSubjectDiv>
           <div>나의 투두 달성률</div>
-          <img src={info} onClick={() => modalToggleHandler("heatMap")} alt='infoImg' />
+          <img
+            src={info}
+            onClick={() => modalToggleHandler("heatMap")}
+            alt='infoImg'
+          />
         </StTopSubjectDiv>
-        <div style={{ paddingBottom: '80px' }}>
+        <div style={{ paddingBottom: "80px" }}>
           <HeatmapSample />
         </div>
       </StBackground>
@@ -112,13 +126,13 @@ const Statistics = () => {
           closable={true}
           maskClosable={true}
           onClose={modalToggleHandler}
-          width="350px"
+          width='350px'
           height={
             modal === "score" ? "22em" : modal === "rank" ? "20em" : "21em"
           }
-          radius="48px"
-          top="40%"
-          backgroundcolor="#11111180 "
+          radius='48px'
+          top='40%'
+          backgroundcolor='#11111180 '
         >
           <StModalTop>
             {modal === "score" ? (
@@ -221,10 +235,8 @@ export default Statistics;
 const StContainer = styled.div`
   font-family: "SUIT-Regular", sans-serif;
   height: 100%;
-  overflow:hidden auto;
-
-
-`
+  overflow: hidden auto;
+`;
 
 const StHeader = styled.div`
   display: flex;
@@ -266,7 +278,7 @@ const StLine = styled.div`
 
 const StBackground = styled.div`
   background-color: #fafafa;
-  margin-top:10px;
+  margin-top: 10px;
   /* overflow-y:scroll;
   &::-webkit-scrollbar {
     width: 8px;

@@ -10,6 +10,9 @@ const Dday = () => {
     title: "",
     selectedDate: "",
   });
+  const [complete, setComplete] = useState({
+    ok: false,
+  });
 
   //옵셔널 체이닝을 사용하여 데이터를 불러오느라 아직 없을 경우에는 에러가 아닌 null을, 데이터가 있으면 값을 불러옴
   // const dday = useSelector((state) => state.main?.dday);
@@ -32,26 +35,39 @@ const Dday = () => {
   };
 
   const onSubmitHandler = async () => {
-    if (ddate.title.length == 0 || ddate.selectedDate.length == 0) {
-      alert("제목과 날짜 모두를 입력해주세요.");
-    } else {
-      await dispatch(
-        __updateDday({
-          ...ddate,
-          title: ddate.title,
-          selectedDate: ddate.selectedDate,
-        })
-      );
-      await dispatch(__getDday());
-    }
+    await dispatch(
+      __updateDday({
+        ...ddate,
+        title: ddate.title,
+        selectedDate: ddate.selectedDate,
+      })
+    );
+    await dispatch(__getDday());
   };
   console.log(ddate);
   // console.log(Date.now());
   // console.log(ddate.selectedDate.replace(/\-/g, ""));
 
+  const onCompleteHandler = () => {
+    setComplete({
+      ...complete,
+      ok: true,
+    });
+  };
+  console.log(complete);
+
   useEffect(() => {
     dispatch(__getDday());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (ddate.title.length > 0 && ddate.selectedDate !== "") {
+      setComplete({
+        ...complete,
+        ok: false,
+      });
+    }
+  }, [ddate]);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -60,6 +76,15 @@ const Dday = () => {
   };
   const closeModal = () => {
     setModalVisible(false);
+    setDdate({
+      ...ddate,
+      title: "",
+      selectedDate: "",
+    });
+    setComplete({
+      ...complete,
+      ok: false,
+    });
   };
 
   //state를 불러오는중이라 null인 상태일때는 아래 if문을,response를 받게되면 원래의 return문 출력
@@ -97,16 +122,33 @@ const Dday = () => {
             max='2032-12-31'
             onChange={onChangeDateHandler}
           ></StDateInput>
+          {complete.ok === true ? (
+            <Stalert>입력하지 않은 항목이 있는지 확인해주세요!</Stalert>
+          ) : (
+            <div></div>
+          )}
+
           <StModalBottom>
             <StCancelBtn onClick={closeModal}>취소</StCancelBtn>
-            <StCompleteBtn
-              onClick={() => {
-                onSubmitHandler();
-                closeModal();
-              }}
-            >
-              완료
-            </StCompleteBtn>
+
+            {ddate.title.length == 0 || ddate.selectedDate.length == 0 ? (
+              <StNotCompleteBtn
+                onClick={() => {
+                  onCompleteHandler();
+                }}
+              >
+                완료
+              </StNotCompleteBtn>
+            ) : (
+              <StCompleteBtn
+                onClick={() => {
+                  onSubmitHandler();
+                  closeModal();
+                }}
+              >
+                완료
+              </StCompleteBtn>
+            )}
           </StModalBottom>
         </Modal>
       )}
@@ -126,12 +168,12 @@ const StDdayBox = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  width:100%;
+  width: 100%;
   min-width: 82px;
   height: 44px;
   background: #ffffff;
-  padding:8px 12px;
-  box-sizing:border-box;
+  padding: 8px 12px;
+  box-sizing: border-box;
   box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
     0px 4px 8px -2px rgba(16, 24, 40, 0.1);
   border-radius: 16px;
@@ -185,7 +227,7 @@ const StModalBottom = styled.div`
   justify-content: center;
   align-items: center;
   width: 350px;
-  height: 50px;
+  height: 55px;
   border-top: 1px solid #f1f3f5;
 `;
 
@@ -204,5 +246,21 @@ const StCompleteBtn = styled.div`
   width: 175px;
   height: 50px;
   color: #ff7b00;
+`;
+
+const StNotCompleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 175px;
+  height: 50px;
+  color: black;
+`;
+
+const Stalert = styled.div`
+  color: #ff7b00;
+  position: absolute;
+  margin-left: 25px;
+  padding-top: 10px;
 `;
 export default Dday;
