@@ -112,7 +112,9 @@ const Main = () => {
           </div>
           <div className="todoCnt">
             <img src={plannerCntSvg} />
-            <span>{totalRate.plannerCnt}</span>
+            <span>
+              {totalRate?.plannerCnt === null ? 0 : totalRate?.plannerCnt}
+            </span>
             <img src={todoCntSvg} />
             <span>{totalTodo?.count === null ? 0 : totalTodo?.count}</span>
           </div>
