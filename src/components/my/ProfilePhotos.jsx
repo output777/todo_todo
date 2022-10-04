@@ -130,7 +130,7 @@ const ProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id === Number(selectImgId))
                 ) ===
-                  images.length - 1 ? null : (
+                images.length - 1 ? null : (
                   <button
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -178,6 +178,7 @@ const ProfilePhotos = () => {
 };
 
 const StPhotoContainer = styled.div`
+  margin: 6px 6px 0 6px;
   /* background-color: #f8f8f8; */
   height: auto;
   /* border:1px solid red; */
@@ -222,26 +223,28 @@ const StModalBottom = styled.div`
 `;
 
 const StContainer = styled.div`
-  width: 100%;
+  width: 348px;
   /* height: auto; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* grid-auto-rows: 1fr; */
-  grid-gap: 5px;
+  grid-gap: 3px;
   /* padding-bottom: 70px; */
-  object-fit:cover;
+  object-fit: cover;
   /* background-color: white; */
 
   /* overflow: scroll; */
 
   &::after {
-      display: block;
-      content: "";
-      padding-bottom: 100%;
-    }
+    display: block;
+    content: "";
+    padding-bottom: 100%;
+  }
 `;
 
 const StImg = styled.div`
+  width: 114px;
+  height: 114px;
 
   & img {
     width: 100%;
@@ -277,10 +280,7 @@ const StSliderBox = styled.div`
       /* height: 350px; */
       /* background-size: contain; */
       /* border-radius: 30px; */
-      object-fit:cover;
-
-
-
+      object-fit: cover;
     }
 
     button {
