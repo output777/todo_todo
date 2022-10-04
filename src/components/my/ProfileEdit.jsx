@@ -278,9 +278,8 @@ const StModalBottom = styled.div`
 `;
 
 const StMotto = styled.div`
-  width: 320px;
-  margin: auto 20px;
-
+  width: 90%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
