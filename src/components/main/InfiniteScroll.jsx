@@ -57,12 +57,14 @@ const InfiniteScroll = () => {
             <div>
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
-                <StRankingProfile src={profileImgSvg} alt="profileImg" />
+                <StRankingProfile src={profileImgSvg} alt='profileImg' />
                 <StRankingNickname>{each.nickname}</StRankingNickname>
               </div>
             </div>
 
-            <StRankingScore>{(each.achievementRate / 7).toFixed(2)}</StRankingScore>
+            <StRankingScore>
+              {(each.achievementRate / 7).toFixed(2)}
+            </StRankingScore>
           </StRankingBox>
         ))}
       <StRefDiv ref={targetRef}></StRefDiv>
@@ -76,7 +78,7 @@ const Stdiv = styled.div`
   background-color: #fafafa;
   padding-left: 1rem;
   padding-right: 1rem;
-  height:100%;
+  height: 100%;
   /* background-color: gray; */
   /* height: 35vh;  */
   /* overflow: scroll; */
@@ -96,15 +98,14 @@ const StRankingBox = styled.div`
 
   width: 90%;
   margin: auto;
-  /* height: 70px; */
-  height: 4.5em;
+  height: 70px;
 
   background: #ffffff;
 
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
   border-radius: 19px;
 
-  margin-top: 12px;
+  margin-top: 32px;
   padding-left: 15px;
   padding-right: 15px;
 
@@ -136,7 +137,9 @@ const StRankingProfile = styled.img`
   object-fit: cover;
 `;
 
-const StRankingNickname = styled.div``;
+const StRankingNickname = styled.div`
+  margin-left: 8px;
+`;
 
 const StRankingScore = styled.div`
   font-weight: 700;

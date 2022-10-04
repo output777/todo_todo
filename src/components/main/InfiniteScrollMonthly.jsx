@@ -36,14 +36,14 @@ const InfiniteScrollMonthly = () => {
   );
 
   const monthFunc = async () => {
-    const { data } = await axios.get(`${BASE_URL}/month`)
-    console.log('data', data)
-    setMonth(() => data)
-  }
+    const { data } = await axios.get(`${BASE_URL}/month`);
+    console.log("data", data);
+    setMonth(() => data);
+  };
 
   useEffect(() => {
     monthFunc();
-  }, [])
+  }, []);
 
   useEffect(() => {
     let observer;
@@ -76,7 +76,9 @@ const InfiniteScrollMonthly = () => {
             </div>
           </div>
 
-          <StRankingScore>{((each.achievementRate / month) * 10).toFixed(2)}</StRankingScore>
+          <StRankingScore>
+            {((each.achievementRate / month) * 10).toFixed(2)}
+          </StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}></StRefDiv>
@@ -113,7 +115,7 @@ const StRankingBox = styled.div`
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
   border-radius: 19px;
 
-  margin-top: 12px;
+  margin-top: 32px;
   padding-left: 15px;
   padding-right: 15px;
 
@@ -145,7 +147,9 @@ const StRankingProfile = styled.img`
   object-fit: cover;
 `;
 
-const StRankingNickname = styled.div``;
+const StRankingNickname = styled.div`
+  margin-left: 8px;
+`;
 
 const StRankingScore = styled.div`
   font-weight: 700;

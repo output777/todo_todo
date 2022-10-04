@@ -164,7 +164,9 @@ const Dday = () => {
   );
 };
 
-const StDdayBox = styled.span`
+const StDdayBox = styled.div`
+  color: #ff8f27;
+  /* font-weight: 600; */
   display: flex;
   justify-content: center;
   align-items: center;
