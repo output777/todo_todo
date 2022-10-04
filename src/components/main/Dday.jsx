@@ -166,7 +166,7 @@ const Dday = () => {
 
 const StDdayBox = styled.div`
   color: #ff8f27;
-  /* font-weight: 600; */
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,6 +212,7 @@ const StDate = styled.div`
 `;
 
 const StDateInput = styled.input`
+  background-color: #ffffff;
   border: 1px solid #e8e8e8;
   border-radius: 16px;
   margin-left: 25px;

@@ -425,6 +425,8 @@ const StRankingBtnBox = styled.div`
 const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
   border-radius: 44px;

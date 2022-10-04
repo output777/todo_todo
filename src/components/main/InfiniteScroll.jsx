@@ -10,6 +10,7 @@ const InfiniteScroll = () => {
   const navigate = useNavigate();
   const [rankList, setRankList] = useState([]);
   const { mainRankList } = useSelector((state) => state.main);
+  console.log("mainRankList", mainRankList);
   const { error } = useSelector((state) => state.main);
 
   let nickname = localStorage.getItem("nickname");

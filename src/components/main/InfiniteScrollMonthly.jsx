@@ -11,6 +11,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const InfiniteScrollMonthly = () => {
   const { mainRankListMonthly } = useSelector((state) => state.main);
+  console.log("mainRankListMonthly", mainRankListMonthly);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
   const navigate = useNavigate();
