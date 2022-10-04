@@ -76,7 +76,7 @@ const InfiniteScrollMonthly = () => {
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>
-              <StRankingProfile src={mainRankListMonthly.profileImage} />
+              <StRankingProfile src={profileImgSvg} />
               <StRankingNickname>{each.nickname}</StRankingNickname>
             </div>
           </div>

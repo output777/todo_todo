@@ -77,7 +77,7 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage === null ||
-                userInfo?.profileImage === "null"
+                  userInfo?.profileImage === "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -173,7 +173,6 @@ const StProfileContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 375px;
   box-sizing: border-box;
   background-color: #fff;
 
@@ -183,9 +182,10 @@ const StProfileContainer = styled.div`
     align-items: flex-end;
     justify-content: space-between;
 
-    height: 120px;
+    height: 72px;
     background-color: #fff;
     color: black;
+    box-sizing:border-box;
     padding: 0 26.82px 0 22px;
 
     .title {

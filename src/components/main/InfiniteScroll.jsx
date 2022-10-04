@@ -5,6 +5,7 @@ import { __getMainRank } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import { useNavigate } from "react-router-dom";
 
+
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const InfiniteScroll = () => {
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
                 <StRankingProfile
-                  src={mainRankList.profileImage}
+                  src={profileImgSvg}
                   alt='profileImg'
                 />
                 <StRankingNickname>{each.nickname}</StRankingNickname>

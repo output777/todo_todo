@@ -31,13 +31,15 @@ const Statistics = () => {
     setModal(parameter);
   };
 
-  let lastweekScore = rankScoreData[0].score / 7;
-  let lastweekScore2 = isNaN(lastweekScore) ? 0 : lastweekScore;
+
+
+  let lastweekScore = rankScoreData[0].score;
+  let lastweekScore2 = lastweekScore === 0 ? 0 : lastweekScore / 7;
 
 
   let weeklyScore = rankScoreData[1].score / 7;
   console.log(weeklyScore);
-  let weeklyScore2 = isNaN(weeklyScore) ? 0 : weeklyScore;
+  let weeklyScore2 = weeklyScore === 0 ? 0 : weeklyScore / 7;
 
   let monthlyScore =
     month !== null
@@ -118,7 +120,7 @@ const Statistics = () => {
         <StThisWeekStatus>
           <div>
             {weeklyScore2 === 0 ? '이번 주도 시작해볼까요'
-              : lastweekScore2 > weeklyScore2 ? '이번 주도 화이팅이에요'
+              : lastweekScore2 > 0 ? '이번 주도 화이팅이에요'
                 : lastweekScore2 * 0.5 < weeklyScore2 ? '저번 주의 절반 이상 왔어요!'
                   : lastweekScore2 * 0.9 < weeklyScore2 ? '곧 저번 주 점수를 넘기겠어요!!'
                     : lastweekScore2 <= weeklyScore2 ? '저번 주 점수를 넘으셨어요!!!'
@@ -291,12 +293,13 @@ const StContainer = styled.div`
 const StHeader = styled.div`
   display: flex;
   align-items: flex-end;
-  height: 120px;
+  height: 72px;
   background-color: #fff;
   position: sticky;
   top: 0;
   z-index: 1;
   border-bottom: 1px solid #f1f3f5;
+  box-sizing: border-box;
 
   & span {
     font-weight:600;
