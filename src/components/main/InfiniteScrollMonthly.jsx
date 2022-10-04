@@ -11,6 +11,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const InfiniteScrollMonthly = () => {
   const { mainRankListMonthly } = useSelector((state) => state.main);
+  console.log("mainRankListMonthly", mainRankListMonthly);
   const { error } = useSelector((state) => state.main);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,27 +24,26 @@ const InfiniteScrollMonthly = () => {
 
   console.log("mainRankListMonthly", mainRankListMonthly);
 
-  const checkIntersect = useCallback(
-    ([entry], observer) => {
-      if (entry.isIntersecting && !isLoaded) {
-        dispatch(__getMainRankMonthly(page));
-
-        observer.unobserve(entry.target);
-        setPage((prev) => prev + 1);
-      }
-    },
-    [dispatch, isLoaded, page]
-  );
+  const checkIntersect = ([entry], observer) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      setPage((prev) => prev + 1);
+    }
+  };
 
   const monthFunc = async () => {
-    const { data } = await axios.get(`${BASE_URL}/month`)
-    console.log('data', data)
-    setMonth(() => data)
-  }
+    const { data } = await axios.get(`${BASE_URL}/month`);
+    console.log("data", data);
+    setMonth(() => data);
+  };
+
+  useEffect(() => {
+    dispatch(__getMainRankMonthly(page));
+  }, [page]);
 
   useEffect(() => {
     monthFunc();
-  }, [])
+  }, []);
 
   useEffect(() => {
     let observer;
@@ -53,6 +53,11 @@ const InfiniteScrollMonthly = () => {
       });
       observer.observe(targetRef.current);
     }
+
+    return () => {
+      observer && observer.disconnect();
+    };
+
   }, [mainRankListMonthly]);
 
   return (
@@ -76,7 +81,9 @@ const InfiniteScrollMonthly = () => {
             </div>
           </div>
 
-          <StRankingScore>{((each.achievementRate / month) * 10).toFixed(2)}</StRankingScore>
+          <StRankingScore>
+            {((each.achievementRate / month) * 10).toFixed(2)}
+          </StRankingScore>
         </StRankingBox>
       ))}
       <StRefDiv ref={targetRef}></StRefDiv>
@@ -113,7 +120,7 @@ const StRankingBox = styled.div`
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
   border-radius: 19px;
 
-  margin-top: 12px;
+  margin-bottom: 16px;
   padding-left: 15px;
   padding-right: 15px;
 
@@ -145,7 +152,12 @@ const StRankingProfile = styled.img`
   object-fit: cover;
 `;
 
-const StRankingNickname = styled.div``;
+const StRankingNickname = styled.div`
+  margin-left: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "SUIT-Regular";
+`;
 
 const StRankingScore = styled.div`
   font-weight: 700;

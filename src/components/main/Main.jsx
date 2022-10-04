@@ -85,9 +85,9 @@ const Main = () => {
   return (
     <StMainContainer>
       <StPhrasesbox>
-        <div className="mainTopSentenceBox">
+        <div className='mainTopSentenceBox'>
           <span>투두투두</span>
-          <div className="mainTopSentence">
+          <div className='mainTopSentence'>
             {nickname == null || nickname === "null" ? (
               "닉네임을 설정해주세요^^"
             ) : (
@@ -105,18 +105,18 @@ const Main = () => {
       </StPhrasesbox>
       <StAchievementsBox>
         <StAchievementsTopBox>
-          <div className="nicknamePart">
+          <div className='nicknamePart'>
             {nickname === null || nickname === "null"
               ? "닉네임이 미설정 상태입니다."
               : `${nickname}님의 기록`}
           </div>
-          <div className="todoCnt">
+          <div className='todoCnt'>
             <img src={plannerCntSvg} alt='todoCntSvgImg' />
             <span>
               {totalRate?.plannerCnt === null ? 0 : totalRate?.plannerCnt}
             </span>
             <img src={todoCntSvg} alt='todoCntSvgImg' />
-            <span>{totalTodo === '' ? 0 : totalTodo.count}</span>
+            <span>{totalTodo === "" ? 0 : totalTodo.count}</span>
           </div>
         </StAchievementsTopBox>
         <StAchievementsBottomBox>
@@ -163,17 +163,17 @@ const Main = () => {
           closable={true}
           maskClosable={true}
           onClose={closeModal}
-          width="350px"
-          height="20em"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(17, 17, 17, 0.6)"
+          width='290px'
+          height='320px'
+          radius='48px'
+          top='40%'
+          backgroundcolor='rgba(17, 17, 17, 0.6)'
         >
           <StModalTop>
             <span>투두투두 랭킹 산정 방법</span>
           </StModalTop>
           <Swiper
-            className="banner"
+            className='banner'
             spaceBetween={50}
             slidesPerView={1}
             // navigation
@@ -183,7 +183,7 @@ const Main = () => {
               <StModalBottom>
                 <StModalExplainDiv>
                   <span>주간/월간 랭킹</span>
-                  <img src={bigTrophy} alt="bigTrophyImg" />
+                  <img src={bigTrophy} alt='bigTrophyImg' />
                   <div>
                     주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
                     순으로 순위가 결정됩니다.
@@ -212,11 +212,11 @@ const Main = () => {
       )}
 
       {/* -------------------- 랭킹 --------------------*/}
-      <div className="rank">
+      <div className='rank'>
         <StRankingPhrases>
-          <img src={trophy} alt="trophyImg" />
+          <img src={trophy} alt='trophyImg' />
           <span>랭킹</span>
-          <img src={info} onClick={openModal} alt="infoImg" />
+          <img src={info} onClick={openModal} alt='infoImg' />
         </StRankingPhrases>
 
         <StRankingBtnBox>
@@ -307,53 +307,38 @@ const StMainContainer = styled.div`
 `;
 
 const StPhrasesbox = styled.div`
-  height: 10vh;
   width: 90%;
   margin: auto;
-  padding-top: 3%;
-  display: flex;
-  align-items: flex-start;
-  span {
-    color: #ff7b00;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  .mainTopSentenceBox {
-    margin-top: 0.7em;
-  }
-  .mainTopSentence {
-    margin-top: 0.3em;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  .DdayBox {
-    margin-top: 0.7em;
-    height: 80%;
-    width: 25%;
-    background-color: white;
-    box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
-    border-radius: 20px;
-    font-weight: bold;
-    color: #ff7b00;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
+  span {
+    color: #ff7b00;
+    font-weight: 700;
+    /* font-size: 14px; */
+    line-height: 16px;
+  }
+  .mainTopSentenceBox {
+  }
+  .mainTopSentence {
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
 `;
 
 const StPhrase = styled.div`
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 34px;
 `;
 
 const StAchievementsBox = styled.div`
   width: 90%;
-  margin: 12% auto 5% auto;
-  height: 13em;
+  margin: 32px auto 44px auto;
+  height: 220px;
   box-shadow: 0px 4px 15px 0px rgba(17, 17, 17, 0.05);
   border-radius: 16px;
   background-color: white;
@@ -364,7 +349,7 @@ const StAchievementsTopBox = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 25%;
+  height: 49px;
   font-weight: 700;
   border-radius: 12px 12px 0 0;
   background-color: #ffe9d5;
@@ -384,7 +369,7 @@ const StAchievementsTopBox = styled.div`
 `;
 
 const StAchievementsBottomBox = styled.div`
-  height: 75%;
+  height: 170px;
   width: 100%;
   font-weight: 600;
   display: flex;
@@ -403,9 +388,10 @@ const StTotalGauge = styled.div`
 `;
 
 const StGaugeText = styled.div`
-  margin-bottom: 2%;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  font-size: 16px;
 `;
 
 const StRankingPhrases = styled.div`
@@ -425,13 +411,15 @@ const StRankingPhrases = styled.div`
   position: sticky;
   top: 0;
   background-color: #fafafa;
-  padding: 1em 0 0 1.5em;
+  margin-left: 22px;
+  margin-bottom: 18px;
 `;
 
 const StRankingBtnBox = styled.div`
   font-weight: 600;
   background-color: #fafafa;
-  padding: 0.1em 0em 1em 1.5em;
+  margin-left: 22px;
+  margin-bottom: 32px;
   position: sticky;
   top: 2.6em;
 `;
@@ -439,6 +427,8 @@ const StRankingBtnBox = styled.div`
 const StWeeklyRankingBtn = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
   border-radius: 44px;
@@ -451,7 +441,9 @@ const StWeeklyRankingBtn = styled.button`
 const StMonthRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
-  margin: 10px 0 0 2%;
+  min-width: 77px;
+  min-height: 40px;
+  margin-left: 6px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
   border-radius: 44px;
@@ -463,7 +455,9 @@ const StMonthRankingBtn2nd = styled.button`
 const StMonthRankingBtn = styled.button`
   width: 77px;
   height: 40px;
-  margin: 10px 0 0 2%;
+  min-width: 77px;
+  min-height: 40px;
+  margin-left: 6px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
   border-radius: 44px;
@@ -476,6 +470,8 @@ const StMonthRankingBtn = styled.button`
 const StWeeklyRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
   border-radius: 44px;
@@ -494,8 +490,8 @@ const StModalTop = styled.div`
   border-radius: 48px 48px 0 0;
   background-color: #ffe9d5;
   color: #ff7b00;
-  font-weight: bold;
-  font-size: 1.2em;
+  font-weight: 600;
+  font-size: 17px;
 `;
 
 const StModalBottom = styled.div`
@@ -506,7 +502,7 @@ const StModalBottom = styled.div`
   height: 12em;
   margin: 5% 0 0 5%;
   span {
-    font-size: 1rem;
+    font-size: 16px;
   }
 `;
 const StModalExplainDiv = styled.div`
@@ -521,7 +517,7 @@ const StModalExplainDiv = styled.div`
   }
 
   div {
-    width: 80%;
+    width: 83%;
     text-align: center;
   }
 `;
@@ -531,7 +527,7 @@ const StCloseBtnContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 6rem;
+  height: 8rem;
 `;
 
 const StModalCloseBtn = styled.button`
@@ -541,7 +537,7 @@ const StModalCloseBtn = styled.button`
   border: none;
   background-color: transparent;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 16px;
   padding: 1em;
 `;
 

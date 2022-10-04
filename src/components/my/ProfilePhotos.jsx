@@ -178,6 +178,7 @@ const ProfilePhotos = () => {
 };
 
 const StPhotoContainer = styled.div`
+  margin: 6px 6px 0 6px;
   /* background-color: #f8f8f8; */
   height: auto;
   /* border:1px solid red; */
@@ -222,23 +223,17 @@ const StModalBottom = styled.div`
 `;
 
 const StContainer = styled.div`
-  width: 100%;
+  /* width: 348px; */
   /* height: auto; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* grid-auto-rows: 1fr; */
-  grid-gap: 5px;
+  grid-auto-rows: 114px;
+  grid-gap: 3px;
   /* padding-bottom: 70px; */
-  object-fit:cover;
   /* background-color: white; */
 
   /* overflow: scroll; */
 
-  &::after {
-      display: block;
-      content: "";
-      padding-bottom: 100%;
-    }
 `;
 
 const StImg = styled.div`
@@ -248,6 +243,8 @@ const StImg = styled.div`
     height: 100%;
     margin: auto;
     border-radius: 16px;
+    object-fit: cover;
+  background-position:center center;
   }
 `;
 
@@ -277,10 +274,7 @@ const StSliderBox = styled.div`
       /* height: 350px; */
       /* background-size: contain; */
       /* border-radius: 30px; */
-      object-fit:cover;
-
-
-
+      object-fit: cover;
     }
 
     button {

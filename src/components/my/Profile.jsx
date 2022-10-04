@@ -61,10 +61,8 @@ const Profile = () => {
   return (
     <StContainer>
       <StProfileContainer>
-        <div className="title">
-          <h3 style={{ fontSize: "22px", fontWeight: "bold", margin: "5% 7%" }}>
-            마이페이지
-          </h3>
+        <div className="titleDiv">
+          <div className="title">마이페이지</div>
           <img
             src={settingSvg}
             onClick={() => {
@@ -124,7 +122,9 @@ const Profile = () => {
           <div className="userName">
             {nickname == null || nickname === "null" ? "" : nickname}
           </div>
-          <div>{userInfo?.myMotto == null ? "" : userInfo?.myMotto}</div>
+          <div className="myMotto">
+            {userInfo?.myMotto == null ? "" : userInfo?.myMotto}
+          </div>
         </StStatusDiv>
 
         <StBtn
@@ -144,17 +144,22 @@ const StContainer = styled.div`
   height: 100%;
   overflow: hidden auto;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar{
-  display:none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
 const StStatusDiv = styled.div`
   width: 90%;
-  padding: 10px auto;
-  margin: 0.3em auto 0 auto;
+  padding: auto;
+  margin: 14px auto 0 22px;
   .userName {
-    font-weight: 1000;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .myMotto {
+    margin-top: 4px;
+    font-size: 14px;
   }
 `;
 
@@ -168,44 +173,57 @@ const StProfileContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 300px;
   box-sizing: border-box;
   background-color: #fff;
 
-  .title {
+  .titleDiv {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    padding-right: 1.5em;
+
     height: 72px;
     background-color: #fff;
+    color: black;
+    box-sizing:border-box;
+    padding: 0 26.82px 0 22px;
+
+    .title {
+      height: auto;
+      margin: 0px;
+      font-size: 24px;
+      font-weight: bold;
+      padding-bottom: 15px;
+    }
+    img {
+      width: 21.37px;
+      height: 20.62px;
+      padding-bottom: 22.21px;
+    }
   }
 `;
 
 const StImgInfoBox = styled.div`
-  width: 90%;
-  margin: 1em auto 0 auto;
-  height: 30%;
+  height: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const StImg = styled.div`
   width: auto;
-  height: auto;
+  height: 86px;
   border-radius: 100px;
   position: relative;
+  margin: 10px 0 0 22px;
 
-  & img {
-    width: 6em;
-    height: 6em;
+  img {
+    width: 86px;
+    height: 86px;
     border-radius: 100px;
     object-fit: cover;
   }
 
-  & div.rank {
+  /* & div.rank {
     width: 70px;
     height: 20px;
     background-color: #e2eaff;
@@ -218,9 +236,9 @@ const StImg = styled.div`
     position: absolute;
     bottom: -5px;
     left: 5px;
-  }
+  } */
 
-  & div.editBox {
+  /* & div.editBox {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -232,29 +250,25 @@ const StImg = styled.div`
     position: absolute;
     bottom: 0;
     left: 60px;
-  }
+  } */
 
-  & input {
+  /* & input {
     display: none;
-  }
+  } */
 `;
 
 const StInfo = styled.div`
-  width: 70%;
-  height: 80px;
-
+  width: 201px;
+  height: 60px;
   border-radius: 10px;
-  font-size: 0.9rem;
-  padding: 0.5rem 0.8rem;
-
+  margin-left: 31px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
 
   .nextToPicture {
-    width: 30%;
-    height: 90%;
+    width: 57px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -262,10 +276,11 @@ const StInfo = styled.div`
     text-align: center;
 
     .count {
-      font-size: 1.2em;
+      font-size: 15px;
       font-weight: bold;
     }
     .text {
+      font-size: 13px;
       color: gray;
       font-weight: 7000;
     }
@@ -273,12 +288,15 @@ const StInfo = styled.div`
 `;
 
 const StBtn = styled.button`
-  width: 50%;
-  height: 40px;
+  width: 140px;
+  height: 38px;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
   background-color: #f8f8f8;
   border-radius: 16px;
   border: none;
-  margin: 15px auto;
+  margin: 16px auto;
 `;
 
 export default Profile;

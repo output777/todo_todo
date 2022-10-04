@@ -45,8 +45,9 @@ const LineChart = () => {
     ],
 
     grid: {
-      left: "15%",
-      top: "12%",
+      // left: "15%",
+      // top: "12%",
+      bottom: '15%',
     },
   };
 
@@ -76,14 +77,14 @@ const LineChart = () => {
       // theme="myTheme"
       opts={{
         renderer: "",
-        height: "210em",
+        height: "169px",
         margin: "auto",
         color: "#91cc75",
       }}
       style={{
-        height: "11em",
-        width: "90%",
-        margin: "0px auto",
+        height: "169px",
+        width: "calc(100% - 44px)",
+        margin: "0px 22px",
         backgroundColor: "white",
         boxShadow: "0px 4px 15px rgba(17, 17, 17, 0.05)",
         borderRadius: "12px",
