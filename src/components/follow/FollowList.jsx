@@ -20,10 +20,10 @@ const FollowList = () => {
   const navigate = useNavigate();
 
   const followingList = useSelector((state) => state.my.following);
-  console.log('followingList', followingList);
+  console.log("followingList", followingList);
 
   const followerList = useSelector((state) => state.my?.follower);
-  console.log('followerList', followerList);
+  console.log("followerList", followerList);
 
   // const OtherfollowingList = useSelector((state) => state.my?.otherfollowing);
   // console.log(OtherfollowingList);
@@ -43,19 +43,14 @@ const FollowList = () => {
   };
 
   useEffect(() => {
-    dispatch(__getFollowerList(params.id));
-    dispatch(__getFollowingList(nickname));
+    dispatch(__getFollowerList(nickname));
+    dispatch(__getFollowingList(params.id));
   }, [follow, dispatch]);
 
   return (
     <Stdiv>
       <StFollowtopBox>
-        <StarrowImg
-          src={arrow}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
+        <StarrowImg src={arrow} onClick={() => navigate(-1)} />
         <StTopText>팔로잉 목록</StTopText>
         <div></div>
       </StFollowtopBox>

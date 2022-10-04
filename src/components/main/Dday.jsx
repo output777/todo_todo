@@ -164,7 +164,9 @@ const Dday = () => {
   );
 };
 
-const StDdayBox = styled.span`
+const StDdayBox = styled.div`
+  color: #ff8f27;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,6 +203,7 @@ const StInputbox = styled.div`
     border-radius: 16px;
     padding-left: 10px;
     box-sizing: border-box;
+    font-size: 15px;
   }
 `;
 
@@ -210,6 +213,7 @@ const StDate = styled.div`
 `;
 
 const StDateInput = styled.input`
+  background-color: #ffffff;
   border: 1px solid #e8e8e8;
   border-radius: 16px;
   margin-left: 25px;
@@ -219,6 +223,7 @@ const StDateInput = styled.input`
   padding: 0 10px;
   box-sizing: border-box;
   font-family: "SUIT-Regular";
+  font-size: 15px;
 `;
 
 const StModalBottom = styled.div`
