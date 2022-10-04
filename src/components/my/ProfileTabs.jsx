@@ -57,13 +57,16 @@ const StTabsTitle = styled.div`
   z-index: 1;
   top: 0;
   background-color: white;
+  font-size: 16px;
+  font-weight: 600;
+  color: #767676;
 `;
 const StTabPhoto = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid #e8e8e8;
+  border-top: 1px solid #e8e8e8;
   border-bottom: 2px solid #e8e8e8;
 
   &.active {
@@ -76,7 +79,7 @@ const StTabPlanner = styled.div`
   display: felx;
   justify-content: center;
   align-items: center;
-  border-top: 2px solid #e8e8e8;
+  border-top: 1px solid #e8e8e8;
   border-bottom: 2px solid #e8e8e8;
 
   &.active {

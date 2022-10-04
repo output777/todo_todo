@@ -69,11 +69,11 @@ const UploadPhoto = () => {
 const StUploadPhoto = styled.div`
   position: absolute;
   bottom: 5.5rem;
-  right: 1rem;
+  right: 24px;
   z-index: 4;
 
-  width: 58px;
-  height: 58px;
+  width: 55px;
+  height: 55px;
   background-color: #ff8f27;
   border-radius: 50%;
   display: ${(props) => props.display};
