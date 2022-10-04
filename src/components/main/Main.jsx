@@ -439,6 +439,8 @@ const StWeeklyRankingBtn = styled.button`
 const StMonthRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   margin-left: 6px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
@@ -451,6 +453,8 @@ const StMonthRankingBtn2nd = styled.button`
 const StMonthRankingBtn = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   margin-left: 6px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
@@ -464,6 +468,8 @@ const StMonthRankingBtn = styled.button`
 const StWeeklyRankingBtn2nd = styled.button`
   width: 77px;
   height: 40px;
+  min-width: 77px;
+  min-height: 40px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
   border-radius: 44px;
