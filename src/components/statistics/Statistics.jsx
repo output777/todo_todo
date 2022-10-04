@@ -57,6 +57,7 @@ const Statistics = () => {
     setMonth(() => data);
   };
 
+
   useEffect(() => {
     monthFunc();
   }, []);
@@ -107,12 +108,16 @@ const Statistics = () => {
 
           <StBarchartBox>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '25px', marginRight: '16px' }}>
-              <p className="lastScore">{lastweekScore2}</p>
-              <StLastWeekChart height={lastweekScore2}></StLastWeekChart>
+              <div className="barBox">
+                <p className="lastScore">{lastweekScore2.toFixed(0)}</p>
+                <StLastWeekChart height={parseInt(lastweekScore2.toFixed(2))}></StLastWeekChart>
+              </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '25px' }}>
-              <p className="thisScore">{weeklyScore2}</p>
-              <StThisWeekChart height={weeklyScore2}></StThisWeekChart>
+              <div className="barBox">
+                <p className="thisScore">{weeklyScore2.toFixed(0)}</p>
+                <StThisWeekChart height={parseInt(weeklyScore2.toFixed(0))}></StThisWeekChart>
+              </div>
             </div>
           </StBarchartBox>
         </StScoreChangeBoxDiv>
@@ -470,6 +475,15 @@ const StBarchartBox = styled.div`
   align-items:flex-end;
   padding-right:24px;
 
+  & .barBox {
+    width:100%;
+    height:80px;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+  }
+
   & div {
     p{
       width: 100%; 
@@ -501,9 +515,9 @@ const StThisWeekStatus = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 5px 10px;
+    padding: 5px;
     // 글씨 사이즈때문에 width값 조금 키움 
-    width: 180px;
+    width: 190px;
     height: 28px;
     background: #FFE9D5;
     border-radius: 49px;
@@ -518,14 +532,14 @@ const StThisWeekStatus = styled.div`
 
 const StLastWeekChart = styled.div`
   width:25px;
-  height: ${(props) => props.height !== 0 ? `${props.height}%` : '3px'};
+  height: ${(props) => `${props.height}%` || '3px'};
   background: #D9D9D9;
   border-radius: 6px 6px 0px 0px;
 
 `
 const StThisWeekChart = styled.div`
   width: 25px;
-  height: ${(props) => props.height !== 0 ? `${props.height}%` : '3px'};
+  height: ${(props) => `${props.height}%` || '3px'};
   background: #FF7B00;
   border-radius: 6px 6px 0px 0px;
 `
