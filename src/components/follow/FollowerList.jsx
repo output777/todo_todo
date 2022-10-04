@@ -49,12 +49,7 @@ const FollowerList = () => {
   return (
     <Stdiv>
       <StFollowtopBox>
-        <StarrowImg
-          src={arrow}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
+        <StarrowImg src={arrow} onClick={() => navigate(-1)} />
         <StTopText>팔로워 목록</StTopText>
         <div></div>
       </StFollowtopBox>

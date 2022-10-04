@@ -317,7 +317,7 @@ const StPhrasesbox = styled.div`
   span {
     color: #ff7b00;
     font-weight: 700;
-    /* font-size: 13px; */
+    /* font-size: 14px; */
     line-height: 16px;
   }
   .mainTopSentenceBox {
@@ -325,7 +325,7 @@ const StPhrasesbox = styled.div`
   .mainTopSentence {
     margin-top: 8px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 14px;
   }
 `;
 
@@ -349,7 +349,7 @@ const StAchievementsTopBox = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 25%;
+  height: 49px;
   font-weight: 700;
   border-radius: 12px 12px 0 0;
   background-color: #ffe9d5;
@@ -369,7 +369,7 @@ const StAchievementsTopBox = styled.div`
 `;
 
 const StAchievementsBottomBox = styled.div`
-  height: 75%;
+  height: 170px;
   width: 100%;
   font-weight: 600;
   display: flex;
@@ -391,6 +391,7 @@ const StGaugeText = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  font-size: 16px;
 `;
 
 const StRankingPhrases = styled.div`
@@ -418,6 +419,7 @@ const StRankingBtnBox = styled.div`
   font-weight: 600;
   background-color: #fafafa;
   margin-left: 22px;
+  margin-bottom: 32px;
   position: sticky;
   top: 2.6em;
 `;
@@ -489,7 +491,7 @@ const StModalTop = styled.div`
   background-color: #ffe9d5;
   color: #ff7b00;
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 17px;
 `;
 
 const StModalBottom = styled.div`
@@ -500,7 +502,7 @@ const StModalBottom = styled.div`
   height: 12em;
   margin: 5% 0 0 5%;
   span {
-    font-size: 1rem;
+    font-size: 16px;
   }
 `;
 const StModalExplainDiv = styled.div`
@@ -535,7 +537,7 @@ const StModalCloseBtn = styled.button`
   border: none;
   background-color: transparent;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 16px;
   padding: 1em;
 `;
 

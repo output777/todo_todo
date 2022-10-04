@@ -203,6 +203,7 @@ const StInputbox = styled.div`
     border-radius: 16px;
     padding-left: 10px;
     box-sizing: border-box;
+    font-size: 15px;
   }
 `;
 
@@ -222,6 +223,7 @@ const StDateInput = styled.input`
   padding: 0 10px;
   box-sizing: border-box;
   font-family: "SUIT-Regular";
+  font-size: 15px;
 `;
 
 const StModalBottom = styled.div`

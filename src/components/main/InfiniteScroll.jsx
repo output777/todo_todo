@@ -58,7 +58,10 @@ const InfiniteScroll = () => {
             <div>
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
-                <StRankingProfile src={profileImgSvg} alt='profileImg' />
+                <StRankingProfile
+                  src={mainRankList.profileImage}
+                  alt='profileImg'
+                />
                 <StRankingNickname>{each.nickname}</StRankingNickname>
               </div>
             </div>
@@ -106,7 +109,7 @@ const StRankingBox = styled.div`
   box-shadow: 0px 4px 15px rgba(17, 17, 17, 0.05);
   border-radius: 19px;
 
-  margin-top: 32px;
+  margin-bottom: 16px;
   padding-left: 15px;
   padding-right: 15px;
 
@@ -140,6 +143,9 @@ const StRankingProfile = styled.img`
 
 const StRankingNickname = styled.div`
   margin-left: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "SUIT-Regular";
 `;
 
 const StRankingScore = styled.div`
