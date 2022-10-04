@@ -60,7 +60,7 @@ const StTabsTitle = styled.div`
 `;
 const StTabPhoto = styled.div`
   flex: 1;
-  display: felx;
+  display: flex;
   justify-content: center;
   align-items: center;
   border-top: 2px solid #e8e8e8;
