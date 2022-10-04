@@ -10,11 +10,11 @@ const BarChart = () => {
   // ---------------- 점수 소수점 반올림 ----------------
   let lastweekScore = rankScoreData[0].score;
   let lastweekScore2 =
-    lastweekScore == 0 || "null" ? 0 : (lastweekScore / 7).toFixed(2);
+    lastweekScore === 0 || "null" ? 0 : (lastweekScore / 7).toFixed(2);
 
   let weeklyScore = rankScoreData[1].score;
   let weeklyScore2 =
-    weeklyScore == 0 || "null" ? 0 : (weeklyScore / 7).toFixed(2);
+    weeklyScore === 0 || "null" ? 0 : (weeklyScore / 7).toFixed(2);
 
   const options = {
     //State 일때는 왜 안되는지 파악하기
@@ -70,14 +70,18 @@ const BarChart = () => {
       // theme="myTheme"
       opts={{
         renderer: "",
-        height: "110px",
-        margin: "auto",
+        height: "90px",
+        // margin: "auto",
         color: "#91cc75",
       }}
       style={{
         height: "90px",
-        width: "40%",
+        // width: "40%",
         margin: "auto",
+        // display: 'flex',
+        // justifyContent: 'center',
+        // alignItems: 'flex-end',
+        border: '1px solid red',
         backgroundColor: "transparent",
       }}
     />

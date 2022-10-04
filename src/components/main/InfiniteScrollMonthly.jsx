@@ -24,23 +24,22 @@ const InfiniteScrollMonthly = () => {
 
   console.log("mainRankListMonthly", mainRankListMonthly);
 
-  const checkIntersect = useCallback(
-    ([entry], observer) => {
-      if (entry.isIntersecting && !isLoaded) {
-        dispatch(__getMainRankMonthly(page));
-
-        observer.unobserve(entry.target);
-        setPage((prev) => prev + 1);
-      }
-    },
-    [dispatch, isLoaded, page]
-  );
+  const checkIntersect = ([entry], observer) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      setPage((prev) => prev + 1);
+    }
+  };
 
   const monthFunc = async () => {
     const { data } = await axios.get(`${BASE_URL}/month`);
     console.log("data", data);
     setMonth(() => data);
   };
+
+  useEffect(() => {
+    dispatch(__getMainRankMonthly(page));
+  }, [page]);
 
   useEffect(() => {
     monthFunc();
@@ -54,6 +53,11 @@ const InfiniteScrollMonthly = () => {
       });
       observer.observe(targetRef.current);
     }
+
+    return () => {
+      observer && observer.disconnect();
+    };
+
   }, [mainRankListMonthly]);
 
   return (
