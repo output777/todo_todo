@@ -89,13 +89,13 @@ const OtherProfile = () => {
     monthFunc();
   }, []);
 
-  // if (!followcnt) {
-  //   return <div></div>;
-  // }
+  if (!followcnt) {
+    return <div></div>;
+  }
 
-  // if (!user) {
-  //   return <div></div>;
-  // }
+  if (!user) {
+    return <div></div>;
+  }
 
   return (
     <>
