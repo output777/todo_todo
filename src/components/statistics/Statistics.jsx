@@ -53,6 +53,7 @@ const Statistics = () => {
   let monthlyRank = isNaN(rankScoreData[2].ranking) ? 0 : rankScoreData[2].ranking;
 
 
+
   const monthFunc = async () => {
     const { data } = await axios.get(`${BASE_URL}/month`);
     console.log("data", data);
