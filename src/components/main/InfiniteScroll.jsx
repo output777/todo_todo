@@ -80,6 +80,7 @@ const InfiniteScroll = () => {
             <div>
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
+                {console.log('aaaa', allUser.filter((data) => data.nickname === each.nickname).length === 0)}
                 {allUser.filter((data) => data.nickname === each.nickname).length === 0
                   ?
                   <StRankingProfile
@@ -88,7 +89,10 @@ const InfiniteScroll = () => {
                   />
                   :
                   <StRankingProfile
-                    src={allUser.filter((data) => data.nickname === each.nickname)[0].profileImage}
+                    src={allUser.filter((data) => data.nickname === each.nickname)[0].profileImage === ''
+                      ? profileImgSvg
+                      : allUser.filter((data) => data.nickname === each.nickname)[0].profileImage
+                    }
                     alt='profileImg'
                   />
                 }
