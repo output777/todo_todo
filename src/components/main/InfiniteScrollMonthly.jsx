@@ -16,11 +16,13 @@ const InfiniteScrollMonthly = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const targetRef = useRef(null);
+  const [allUser, setAllUser] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
   const [page, setPage] = useState(0); // 페이지
   const [month, setMonth] = useState(null);
 
   let nickname = localStorage.getItem("nickname");
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   console.log("mainRankListMonthly", mainRankListMonthly);
 
@@ -36,6 +38,24 @@ const InfiniteScrollMonthly = () => {
     console.log("data", data);
     setMonth(() => data);
   };
+
+  const allUserFunc = async () => {
+    const arr = [];
+    try {
+      const { data } = await axios.get(`${BASE_URL}/member`);
+      console.log(data);
+      arr.push(...data);
+    } catch (error) {
+      console.log(error);
+    }
+    setAllUser(arr);
+  }
+
+  console.log('allUser', allUser)
+
+  useEffect(() => {
+    allUserFunc()
+  }, [])
 
   useEffect(() => {
     dispatch(__getMainRankMonthly(page));
@@ -76,7 +96,22 @@ const InfiniteScrollMonthly = () => {
           <div>
             <StRankingNumber>{each.rank}</StRankingNumber>
             <div>
-              <StRankingProfile src={profileImgSvg} />
+              {/* 영상 찍은 후 쓸데없는 코드 줄이기 */}
+              {allUser.filter((data) => data.nickname === each.nickname).length === 0
+                ?
+                <StRankingProfile
+                  src={profileImgSvg}
+                  alt='profileImg'
+                />
+                :
+                <StRankingProfile
+                  src={allUser.filter((data) => data.nickname === each.nickname)[0].profileImage === ''
+                    ? profileImgSvg
+                    : allUser.filter((data) => data.nickname === each.nickname)[0].profileImage
+                  }
+                  alt='profileImg'
+                />
+              }
               <StRankingNickname>{each.nickname}</StRankingNickname>
             </div>
           </div>
