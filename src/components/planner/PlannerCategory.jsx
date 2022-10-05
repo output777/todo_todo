@@ -111,13 +111,11 @@ const PlannerCategory = () => {
         <StCategoryContainer>
           {category.length > 0 &&
             category.map((data, index) => (
-              <StCategoryItem
-                key={data.id}
-                id={data.id}
-                name={data.title}
-                onClick={onClickSelectCategoryToTodoListHandler}
-              >
-                <div className='top'>
+              <StCategoryItem key={data.id} id={data.id} name={data.title}>
+                <div
+                  className='top'
+                  onClick={onClickSelectCategoryToTodoListHandler}
+                >
                   <p className='title' onClick={(e) => e.stopPropagation()}>
                     {data.title}
                   </p>
@@ -134,9 +132,7 @@ const PlannerCategory = () => {
                       : categoryTodoList[index].length}
                   </p>
                 </div>
-                <StProgressBarBox
-                //onClick={(e) => e.stopPropagation()}
-                >
+                <StProgressBarBox onClick={(e) => e.stopPropagation()}>
                   <StProgressBar
                     width={
                       categoryTodoComplete[index] === "NaN"
