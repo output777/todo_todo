@@ -258,12 +258,12 @@ const StImg = styled.div`
 `;
 
 const StInfo = styled.div`
-  width: 201px;
+  width: 70%;
   height: 60px;
   border-radius: 10px;
-  margin-left: 31px;
+  /* margin-left: 31px; */
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
 
   .nextToPicture {

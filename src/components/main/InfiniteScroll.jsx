@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { __getMainRank } from "../../redux/modules/mainSlice";
 import profileImgSvg from "../../assets/img/profileImgSvg.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const InfiniteScroll = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [rankList, setRankList] = useState([]);
+  const [allUser, setAllUser] = useState([]);
   const { mainRankList } = useSelector((state) => state.main);
   console.log("mainRankList", mainRankList);
   const { error } = useSelector((state) => state.main);
@@ -24,6 +27,24 @@ const InfiniteScroll = () => {
       setPage((prev) => prev + 1);
     }
   };
+
+  const allUserFunc = async () => {
+    const arr = [];
+    try {
+      const { data } = await axios.get(`${BASE_URL}/member`);
+      console.log(data);
+      arr.push(...data);
+    } catch (error) {
+      console.log(error);
+    }
+    setAllUser(arr);
+  }
+
+  console.log('allUser', allUser)
+
+  useEffect(() => {
+    allUserFunc()
+  }, [])
 
   useEffect(() => {
     dispatch(__getMainRank(page));
@@ -59,10 +80,18 @@ const InfiniteScroll = () => {
             <div>
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
-                <StRankingProfile
-                  src={profileImgSvg}
-                  alt='profileImg'
-                />
+                {allUser.filter((data) => data.nickname === each.nickname).length === 0
+                  ?
+                  <StRankingProfile
+                    src={profileImgSvg}
+                    alt='profileImg'
+                  />
+                  :
+                  <StRankingProfile
+                    src={allUser.filter((data) => data.nickname === each.nickname)[0].profileImage}
+                    alt='profileImg'
+                  />
+                }
                 <StRankingNickname>{each.nickname}</StRankingNickname>
               </div>
             </div>

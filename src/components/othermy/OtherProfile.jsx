@@ -128,14 +128,14 @@ const OtherProfile = () => {
         <StImgInfoBox>
           <StImg>
             <img
-              src={user.profileImage == "" ? profileImgSvg : user.profileImage}
+              src={user.profileImage === "" ? profileImgSvg : user.profileImage}
               alt='profile'
             />
           </StImg>
           <StInfo>
             <div className='nextToPicture'>
               <span className='count'>
-                {user.imgList == null ? 0 : user.imgList.length}
+                {user.imgList === null ? 0 : user.imgList.length}
               </span>
               <span className='text'>게시물</span>
             </div>
@@ -167,20 +167,20 @@ const OtherProfile = () => {
           </StStatusDiv>
           <StScoreBox>
             <span>
-              {userRank[1].ranking == 0 || "undefined"
-                ? "순위없음 "
-                : `${userRank[1].ranking}위`}
-              {userRank[1].score == 0 || "NaN"
-                ? "0"
+              {userRank[1].ranking === 0 || "undefined"
+                ? "-"
+                : `${userRank[1].ranking}`}위
+              {userRank[1].score === 0 || "NaN"
+                ? "-"
                 : (userRank[1].score / 7).toFixed(2)}
               점<div>주간 점수</div>
             </span>
 
             <span>
-              {userRank[2].ranking == 0 || "undefined"
-                ? "순위없음 "
-                : `${userRank[2].ranking}위`}
-              {userRank[2].score == 0 || "NaN" ? "0" : userRank[2].score}점
+              {userRank[2].ranking === 0 || "undefined"
+                ? "- "
+                : `${userRank[2].ranking}`}위
+              {userRank[2].score === 0 || "NaN" ? "-" : userRank[2].score}점
               <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
             </span>
 
@@ -306,7 +306,6 @@ const StInfo = styled.div`
 
   /* box-shadow: 0px 4px 15px 0px lightgray; */
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 

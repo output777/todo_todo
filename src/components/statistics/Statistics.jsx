@@ -34,10 +34,11 @@ const Statistics = () => {
 
 
   let lastweekScore = rankScoreData[0].score;
+
   let lastweekScore2 = lastweekScore === 0 ? 0 : lastweekScore / 7;
 
 
-  let weeklyScore = rankScoreData[1].score / 7;
+  let weeklyScore = rankScoreData[1].score;
   console.log(weeklyScore);
   let weeklyScore2 = weeklyScore === 0 ? 0 : weeklyScore / 7;
 
@@ -50,6 +51,7 @@ const Statistics = () => {
   let weeklyRank = isNaN(rankScoreData[1].ranking) ? 0 : rankScoreData[1].ranking;
   // console.log(weeklyRank.ranking);
   let monthlyRank = isNaN(rankScoreData[2].ranking) ? 0 : rankScoreData[2].ranking;
+
 
   const monthFunc = async () => {
     const { data } = await axios.get(`${BASE_URL}/month`);
