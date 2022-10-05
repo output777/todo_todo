@@ -322,7 +322,7 @@ const StInfoNicknameBox = styled.div`
   & form input {
     border: 1px solid #e8e8e8;
     height: 54px;
-    padding: 0 0.5rem;
+    padding: 0 0.8rem;
     width: 75%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -429,9 +429,10 @@ const StHighschoolBox = styled.div`
     margin-top: 1rem;
 
     input {
+      height: 54px;
       border: 1px solid #e8e8e8;
       border-right: none;
-      padding: 0.8rem;
+      padding: 0 0.8rem;
       width: 90%;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
