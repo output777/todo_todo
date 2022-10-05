@@ -82,7 +82,7 @@ const StDiv = styled.div`
   .react-calendar__navigation button {
     min-width: 44px;
     background: none;
-    color: #ff8f27;
+    color: black;
   }
   .react-calendar__navigation button:disabled {
     background-color: #f0f0f0;
