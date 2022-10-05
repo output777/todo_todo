@@ -419,7 +419,7 @@ const StRankingPhrases = styled.div`
 const StRankingBtnBox = styled.div`
   font-weight: 600;
   background-color: #fafafa;
-  margin-left: 22px;
+  padding-left: 22px;
   margin-bottom: 32px;
   position: sticky;
   z-index: 1;

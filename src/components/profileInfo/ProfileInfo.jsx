@@ -175,31 +175,24 @@ const ProfileInfo = () => {
           <p>회원 정보를 입력해주세요</p>
         </div>
       </StInfoTitle>
-      <div
-        style={{
-          padding: "0rem 1rem 0rem 1rem",
-          height: "100%",
-          background: "#fff",
-          fontFamily: "SUIT-Regular, sans-serif",
-        }}
-      >
+      <div className="infoBody">
         <StInfoNicknameBox>
           <p>닉네임</p>
 
           <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
             {isNicknameCheck && nicknameCheck?.includes("가능") ? (
               <input
-                type='text'
-                placeholder='2-12자의 영문,한글,숫자 사용 가능'
+                type="text"
+                placeholder="2-12자의 영문,한글,숫자 사용 가능"
                 value={nickname}
                 onChange={onChangeNicknameHandler}
-                className='checkedInput'
+                className="checkedInput"
               />
             ) : (
               <>
                 <input
-                  type='text'
-                  placeholder='2-12자의 영문,한글,숫자 사용 가능'
+                  type="text"
+                  placeholder="2-12자의 영문,한글,숫자 사용 가능"
                   value={nickname}
                   onChange={onChangeNicknameHandler}
                 />
@@ -211,7 +204,7 @@ const ProfileInfo = () => {
         </StInfoNicknameBox>
         <StHighschoolBox>
           <p>고등학교</p>
-          <div className='gradeBox'>
+          <div className="gradeBox">
             <div ref={oneRef} onClick={onClickOneRefHandler}>
               1학년
             </div>
@@ -222,10 +215,10 @@ const ProfileInfo = () => {
               3학년
             </div>
           </div>
-          <div className='inputBox' style={{ display: "flex" }}>
+          <div className="inputBox" style={{ display: "flex" }}>
             <input
-              type='text'
-              placeholder='고등학교를 검색해주세요'
+              type="text"
+              placeholder="고등학교를 검색해주세요"
               value={highschoolInput}
               onChange={onChangeSearchHandler}
               ref={highSchoolSearchInput}
@@ -233,13 +226,13 @@ const ProfileInfo = () => {
             {highschoolInput.length > 0 ? (
               <button
                 onClick={onClickSearchCancelHandler}
-                className='cancelSvg'
+                className="cancelSvg"
               >
-                <img src={cancelSvg} alt='search' />
+                <img src={cancelSvg} alt="search" />
               </button>
             ) : (
               <button>
-                <img src={searchSvg} alt='search' />
+                <img src={searchSvg} alt="search" />
               </button>
             )}
           </div>
@@ -247,18 +240,19 @@ const ProfileInfo = () => {
         <StHighschoolSearchBox>
           {highschoolInput.length > 0
             ? highschoolResult.length > 0 &&
-            highschoolResult.map((data, index) => (
-              <div className='content' key={index}>
-                <div className='school' onClick={onClickSelectHandler}>
-                  {data.schoolName}
+              highschoolResult.map((data, index) => (
+                <div className="content" key={index}>
+                  <div className="school" onClick={onClickSelectHandler}>
+                    {data.schoolName}
+                  </div>
+                  <div className="region">
+                    <img src={regionSvg} alt="addressIcon" />
+                    {data.address}
+                  </div>
                 </div>
-                <div className='region'>
-                  <img src={regionSvg} alt='addressIcon' />
-                  {data.address}
-                </div>
-              </div>
-            ))
+              ))
             : null}
+          <div style={{ height: "50px" }}></div>
         </StHighschoolSearchBox>
 
         {/* 버튼 기능 활성/비활성 */}
@@ -267,9 +261,9 @@ const ProfileInfo = () => {
             ref={startButton}
             disabled={
               isNicknameCheck &&
-                nicknameCheck?.includes("가능") &&
-                grade !== null &&
-                highschoolResultClick
+              nicknameCheck?.includes("가능") &&
+              grade !== null &&
+              highschoolResultClick
                 ? false
                 : "disabled"
             }
@@ -283,15 +277,24 @@ const ProfileInfo = () => {
 };
 
 const StDiv = styled.div`
-  width:100%;
+  width: 100%;
   height: 100%;
-  box-sizing:border-box;
+  box-sizing: border-box;
+  font-family: "SUIT-Regular", sans-serif;
+
+  .infoBody {
+    padding: 0rem 1rem 0rem 1rem;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    font-family: "SUIT-Regular", sans-serif;
+  }
 `;
 
 const StInfoTitle = styled.div`
   background-color: white;
   font-size: 1.4rem;
   font-weight: bold;
+  font-family: "SUIT-Regular", sans-serif;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   height: 72px;
@@ -308,6 +311,7 @@ const StInfoNicknameBox = styled.div`
   box-sizing: border-box;
 
   & p {
+    font-size: 17px;
     margin-bottom: 5px;
     font-weight: bold;
   }
@@ -320,11 +324,12 @@ const StInfoNicknameBox = styled.div`
   & form input {
     border: 1px solid #e8e8e8;
     height: 54px;
-    padding: 0 0.5rem;
+    padding: 0 0.8rem;
     width: 75%;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     outline: none;
+    font-size: 17px;
   }
 
   & form input::placeholder {
@@ -348,7 +353,7 @@ const StInfoNicknameBox = styled.div`
     border-bottom-right-radius: 10px;
     height: 56px;
     width: 25%;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: bold;
     background-color: #fff;
     color: #ff7b00;
@@ -399,9 +404,10 @@ const StHighschoolBox = styled.div`
   box-sizing: border-box;
 
   & p {
+    font-size: 17px;
     margin-bottom: 0.5rem;
     font-weight: bold;
-    margin-top:0;
+    margin-top: 0;
   }
 
   & .gradeBox {
@@ -413,7 +419,7 @@ const StHighschoolBox = styled.div`
       border-radius: 20px;
       margin-right: 0.5rem;
       color: #767676;
-      font-size: 0.9rem;
+      font-size: 14px;
     }
 
     div.active {
@@ -427,9 +433,11 @@ const StHighschoolBox = styled.div`
     margin-top: 1rem;
 
     input {
+      height: 54px;
+      font-size: 17px;
       border: 1px solid #e8e8e8;
       border-right: none;
-      padding: 0.8rem;
+      padding: 0 0.8rem;
       width: 90%;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
@@ -462,10 +470,25 @@ const StHighschoolBox = styled.div`
 `;
 
 const StHighschoolSearchBox = styled.div`
+  /* position: relative; */
   width: 100%;
   background-color: #fafafa;
   overflow: scroll;
-  height:40%;
+  @media screen and (max-device-height: 640px) {
+    height: 35%;
+  }
+  @media screen and (min-device-height: 667px) and (max-device-height: 670px) {
+    height: 40%;
+  }
+  @media screen and (min-device-height: 730px) and (max-device-height: 750px) {
+    height: 45%;
+  }
+  @media screen and (min-device-height: 810px) and (max-device-height: 820px) {
+    height: 50%;
+  }
+
+  /* height: 45%; */
+
   border-radius: 10px;
 
   & .content {
@@ -489,10 +512,11 @@ const StBtnBox = styled.form`
   justify-content: center;
   background-color: #fafafa;
   /* margin: 0 0 0.5rem 0; */
-  padding: 0 0 1rem 0;
-  height: 8%;
+  padding: 0 0 0 0;
 
   button {
+    position: fixed;
+    bottom: 1rem;
     font-weight: bold;
   }
 
