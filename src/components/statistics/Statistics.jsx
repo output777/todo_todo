@@ -128,9 +128,9 @@ const Statistics = () => {
         <StThisWeekStatus>
           <div>
             {weeklyScore2 === 0 ? '이번 주도 시작해볼까요'
-              : lastweekScore2 > 0 ? '이번 주도 화이팅이에요'
-                : lastweekScore2 * 0.5 < weeklyScore2 ? '저번 주의 절반 이상 왔어요!'
-                  : lastweekScore2 * 0.9 < weeklyScore2 ? '곧 저번 주 점수를 넘기겠어요!!'
+              : lastweekScore2 > 0 && lastweekScore2 * 0.5 > weeklyScore2 ? '이번 주도 화이팅이에요'
+                : lastweekScore2 * 0.5 < weeklyScore2 && lastweekScore2 * 0.9 > weeklyScore2 ? '저번 주의 절반 이상 왔어요!'
+                  : lastweekScore2 * 0.9 < weeklyScore2 && lastweekScore2 > weeklyScore2 ? '곧 저번 주 점수를 넘기겠어요!!'
                     : lastweekScore2 <= weeklyScore2 ? '저번 주 점수를 넘으셨어요!!!'
                       : null}
           </div>
