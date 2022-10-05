@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  __getDday,
   __getTotalRate,
   __reset,
 } from "../../redux/modules/mainSlice";
@@ -33,24 +32,13 @@ const OtherProfile = () => {
 
 
   const user = useSelector((state) => state.my?.userInfo);
-  console.log(user);
-
   const userRank = useSelector((state) => state.statistics?.rankScoreData);
-  console.log(userRank);
-
   const userRate = useSelector((state) => state.main?.totalRate);
-  console.log(userRate);
-
-  console.log(params.id);
-
   const followingList = useSelector((state) => state.my.following);
-  console.log(followingList);
-
   const { followcnt } = useSelector((state) => state.my);
-  console.log('followcnt', followcnt)
+
 
   useEffect(() => {
-    // dispatch(__getOtherInfo(params.id));
     dispatch(__getRankScoreData(params.id));
     dispatch(__getTotalRate(params.id));
     dispatch(__getFollowingList(nickname));
@@ -69,7 +57,6 @@ const OtherProfile = () => {
       } else {
         setFollow(() => false);
       }
-      console.log(followingListFunction);
     }
   }, [followingList]);
 
@@ -91,26 +78,24 @@ const OtherProfile = () => {
 
   const monthFunc = async () => {
     const { data } = await axios.get(`${BASE_URL}/month`);
-    console.log("data", data);
     setMonth(() => data);
   };
 
   useEffect(() => {
     dispatch(__getFollowCnt(user.id));
-    console.log(followcnt);
   }, [dispatch, user]);
 
   useEffect(() => {
     monthFunc();
   }, []);
 
-  if (!followcnt) {
-    return <div></div>;
-  }
+  // if (!followcnt) {
+  //   return <div></div>;
+  // }
 
-  if (!user) {
-    return <div></div>;
-  }
+  // if (!user) {
+  //   return <div></div>;
+  // }
 
   return (
     <>
@@ -166,35 +151,39 @@ const OtherProfile = () => {
             <div>{user.myMotto}</div>
           </StStatusDiv>
           <StScoreBox>
-            <span>
-              {userRank[1].ranking === 0 || "undefined"
-                ? "-"
-                : `${userRank[1].ranking}`}위
-              {userRank[1].score === 0 || "NaN"
-                ? "-"
-                : (userRank[1].score / 7).toFixed(2)}
-              점<div>주간 점수</div>
-            </span>
-
-            <span>
-              {userRank[2].ranking === 0 || "undefined"
-                ? "- "
-                : `${userRank[2].ranking}`}위
-              {userRank[2].score === 0 || "NaN" ? "-" : userRank[2].score}점
-              <StMonthlyScoreText>월간 점수</StMonthlyScoreText>
-            </span>
-
-            <span>
-              <StuserRate>{userRate.length > 0 ? userRate[0] : 0}%</StuserRate>
+            <div>
+              <p>
+                {userRank[1].ranking === 0
+                  ? "-"
+                  : `${userRank[1].ranking}`}위
+                {userRank[1].score === 0
+                  ? "-"
+                  : (userRank[1].score / 7).toFixed(2)}점
+              </p>
+              <p>주간 점수</p>
+            </div>
+            <div>
+              <p>
+                {userRank[2].ranking === 0
+                  ? "- "
+                  : `${userRank[2].ranking}`}위
+                {userRank[2].score === 0 ? "-" : ((userRank[2].score / month) * 10).toFixed(2)}점
+              </p>
+              <p>월간 점수</p>
+            </div>
+            <div>
+              <p>
+                {userRate.achievementRate.toFixed(2)}%
+              </p>
               <StAverageText>평균 달성률</StAverageText>
-            </span>
+            </div>
           </StScoreBox>
         </StNameAndScore>
 
         {follow === true ? (
           <StFollowingBtn onClick={followerBtnHandler}>
             팔로잉
-            <img src={follwingcheck} />
+            <img src={follwingcheck} alt='follwingcheckImg' />
           </StFollowingBtn>
         ) : (
           <StNotFollowBtn onClick={followBtnHandler}>
@@ -376,7 +365,6 @@ const StNameAndScore = styled.div`
 
 const StScoreBox = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
@@ -392,14 +380,21 @@ const StScoreBox = styled.div`
 
   padding: 0 10px;
 
-  span {
-    color: #ff7b00;
+  p {
+    margin:0;
   }
 
   div {
+    flex:1;
     display: flex;
+    flex-direction:column;
     justify-content: center;
+    align-items:center;
     color: #9f9e9e;
+
+    p:first-child {
+      color: #ff7b00;
+    }
   }
 `;
 

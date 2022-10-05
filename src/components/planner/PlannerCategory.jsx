@@ -242,7 +242,6 @@ const StProgressBar = styled.div`
       `;
     }
   }};
-  transition: all 0.3s;
   height: 13px;
   border-radius: 10px;
 `;

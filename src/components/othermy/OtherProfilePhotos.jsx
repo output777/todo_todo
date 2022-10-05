@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __getImages, __deleteImages } from "../../redux/modules/mySlice";
 import cancelSvg from "../../assets/img/cancelSvg.svg";
-import threeDotSvg from "../../assets/img/threeDotSvg.svg";
-import wastebasketSvg from "../../assets/img/myPage/wastebasket.svg";
 import Modal from "../utils/Modal";
 import { useParams } from "react-router-dom";
 
@@ -16,20 +14,14 @@ const OtherProfilePhotos = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectImgId, setSelectImgId] = useState(1);
   const [selectImg, setSelectImg] = useState("");
-  const [selectImgIndex, setSelectImgIndex] = useState(0);
 
   const params = useParams();
 
-  const { userInfo } = useSelector((state) => state.my);
   const { images } = useSelector((state) => state.my);
-  console.log("images", images);
-
-  console.log(selectImgId);
 
   // 1
   const onClickFullScreenImgsHandler = (e) => {
     const { id } = e.target;
-    console.log("e.target.id", id);
     selectImgFunc(id);
   };
 
@@ -45,7 +37,6 @@ const OtherProfilePhotos = () => {
   const onClickPrevHandler = (id) => {
     let a = images.find((data) => data.id === Number(id));
     const prevData = images[images.indexOf(a) - 1];
-    console.log(prevData);
     setSelectImgId(prevData.id);
     setSelectImg(prevData.imageUrl);
   };
@@ -61,9 +52,6 @@ const OtherProfilePhotos = () => {
     setFullScreen(false);
   };
 
-  const onClicOptionModalOpenHandler = () => {
-    setModalVisible(true);
-  };
 
   const onClickDeleteImgHandler = () => {
     dispatch(__deleteImages(selectImgId));
@@ -106,13 +94,6 @@ const OtherProfilePhotos = () => {
               )}
             </div>
             <div></div>
-            {/* <div className='optionBox'>
-              <img
-                src={wastebasketSvg}
-                alt='optionBtn'
-                onClick={onClicOptionModalOpenHandler}
-              />
-            </div> */}
           </div>
           <div className="StSliderBoxParent">
             <StSliderBox>
@@ -132,7 +113,7 @@ const OtherProfilePhotos = () => {
 
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
-                ) ==
+                ) ===
                   images.length - 1 ? null : (
                   <button
                     className="next"
@@ -218,15 +199,15 @@ const StModalBottom = styled.div`
 `;
 
 const StContainer = styled.div`
-  width: 100%;
-  height: auto;
-  min-height: 40vh;
-  background-color: #f8f8f8;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: 100px;
-  grid-gap: 5px;
-  padding-bottom: 70px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 114px;
+  grid-gap: 3px;
+  /* width: 100%; */
+  /* height: auto;
+  min-height: 40vh; */
+  /* background-color: #f8f8f8; */
+  /* padding-bottom: 70px; */
   -ms-overflow-style: none;
   &::-webkit-scrollbar{
   display:none;
@@ -234,13 +215,13 @@ const StContainer = styled.div`
 `;
 
 const StImg = styled.div`
-  height: 100px;
-
   & img {
     width: 100%;
-    height: 100px;
+    height: 100%;
     margin: auto;
     border-radius: 16px;
+    object-fit: cover;
+    background-position: center center;
   }
 `;
 

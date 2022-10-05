@@ -1,20 +1,14 @@
 import React from "react";
 import Main from "../components/main/Main";
-import InfiniteScroll from "../components/main/InfiniteScroll";
 import Navbar from "../components/utils/Navbar";
-import Layout from "../components/utils/Layout";
 import styled from "styled-components";
 
 const MainPage = () => {
   return (
-    // <StContainer>
-    // <Layout>
     <StContainer>
       <Main />
       <Navbar home={true} />
     </StContainer>
-    // </Layout>
-    // </StContainer>
   );
 };
 
@@ -28,8 +22,6 @@ const StContainer = styled.div`
   background-color: #fafafa;
   justify-content:center;
   box-sizing:border-box;
-  /* overflow:hidden; */
-
 
   @media screen and (min-width: 768px) {
     width:600px;

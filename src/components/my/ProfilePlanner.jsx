@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import categorySvg from "../../assets/img/categorySvg.svg";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __getCategory,
   __getTodayTodo,
 } from "../../redux/modules/plannerSlice";
 import dayjs from "dayjs";
-import { __getDday } from "../../redux/modules/mainSlice";
 import MypageCalender from "./MypageCalender";
 import toggleSvg from "../../assets/img/toggleSvg.svg";
 import ProfilePlannerDate from "./ProfilePlannerDate";
@@ -29,20 +26,15 @@ const ProfilePlanner = () => {
   const [categoryTodoList, setCategoryTodoList] = useState([]);
   const [categoryTodoComplete, setCategoryTodoComplete] = useState([]);
 
-  const { category, todos, dateTodo, date } = useSelector(
+  const { category, todos } = useSelector(
     (state) => state.planner
   );
-
-  console.log('todos', todos);
-
-  console.log('categoryTodoList', categoryTodoList)
 
   const onClickSelectCategoryToTodoListHandler = (e) => {
     const { innerText } = e.target.children[0];
     const { id } = e.target.parentElement;
     localStorage.setItem("category", innerText);
     localStorage.setItem("categoryId", id);
-    // navigate("/planner/category/todolist");
   };
 
   const onClickShowTodoHandler = (e) => {
@@ -299,7 +291,7 @@ const StProgressBar = styled.div`
       `;
     }
   }};
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
   height: 13px;
   border-radius: 10px;
 `;
@@ -325,6 +317,11 @@ const StTodoToggleBox = styled.div`
 
 const StTodoContainer = styled.div`
   width:100%;
+  &:first-child {
+    margin-bottom:16px;
+  }
+
+
 `;
 
 const StTodoItem = styled.div`
@@ -335,8 +332,6 @@ const StTodoItem = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  margin: 16px 0;
-  padding: 15px 0px;
 
   & .top {
     display: flex;
