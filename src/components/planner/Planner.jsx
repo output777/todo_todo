@@ -157,7 +157,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
 
   useEffect(() => {
     console.log("todos", todos);
-    if (todos !== '') {
+    if (todos !== "") {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
       setTodoList([...data]);
@@ -405,14 +405,14 @@ const StDiv = styled.div`
   & .header {
     width: 100%;
     /* min-width: 360px; */
-    height: 110px;
+    height: 112px;
     position: fixed;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
-    z-index:5;
+    z-index: 5;
 
     @media screen and (min-width: 768px) {
       width: 600px;
@@ -422,7 +422,7 @@ const StDiv = styled.div`
 
 const StHeaderBox = styled.div`
   display: flex;
-  width:100%;
+  width: 100%;
   height: 50px;
   justify-content: space-between;
   align-items: center;
@@ -582,12 +582,12 @@ const StModalBtn = styled.button`
 `;
 
 const StTodoContainer = styled.div`
-  padding: 10px 20px;
+  padding: 10px 20px 0px 20px;
   transform: translateY(100px);
 `;
 
 const StTodoContainerComplete = styled.div`
-  padding: 10px 20px 71px 20px;
+  padding: 0px 20px 71px 20px;
   transform: translateY(100px);
 `;
 
