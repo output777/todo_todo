@@ -252,6 +252,7 @@ const ProfileInfo = () => {
                 </div>
               ))
             : null}
+          <div style={{ height: "50px" }}></div>
         </StHighschoolSearchBox>
 
         {/* 버튼 기능 활성/비활성 */}
@@ -310,6 +311,7 @@ const StInfoNicknameBox = styled.div`
   box-sizing: border-box;
 
   & p {
+    font-size: 17px;
     margin-bottom: 5px;
     font-weight: bold;
   }
@@ -327,6 +329,7 @@ const StInfoNicknameBox = styled.div`
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     outline: none;
+    font-size: 17px;
   }
 
   & form input::placeholder {
@@ -350,7 +353,7 @@ const StInfoNicknameBox = styled.div`
     border-bottom-right-radius: 10px;
     height: 56px;
     width: 25%;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: bold;
     background-color: #fff;
     color: #ff7b00;
@@ -401,6 +404,7 @@ const StHighschoolBox = styled.div`
   box-sizing: border-box;
 
   & p {
+    font-size: 17px;
     margin-bottom: 0.5rem;
     font-weight: bold;
     margin-top: 0;
@@ -415,7 +419,7 @@ const StHighschoolBox = styled.div`
       border-radius: 20px;
       margin-right: 0.5rem;
       color: #767676;
-      font-size: 0.9rem;
+      font-size: 14px;
     }
 
     div.active {
@@ -430,6 +434,7 @@ const StHighschoolBox = styled.div`
 
     input {
       height: 54px;
+      font-size: 17px;
       border: 1px solid #e8e8e8;
       border-right: none;
       padding: 0 0.8rem;
@@ -465,10 +470,25 @@ const StHighschoolBox = styled.div`
 `;
 
 const StHighschoolSearchBox = styled.div`
+  /* position: relative; */
   width: 100%;
   background-color: #fafafa;
   overflow: scroll;
-  height: 40%;
+  @media screen and (max-device-height: 640px) {
+    height: 35%;
+  }
+  @media screen and (min-device-height: 667px) and (max-device-height: 670px) {
+    height: 40%;
+  }
+  @media screen and (min-device-height: 730px) and (max-device-height: 750px) {
+    height: 45%;
+  }
+  @media screen and (min-device-height: 810px) and (max-device-height: 820px) {
+    height: 50%;
+  }
+
+  /* height: 45%; */
+
   border-radius: 10px;
 
   & .content {
@@ -492,10 +512,11 @@ const StBtnBox = styled.form`
   justify-content: center;
   background-color: #fafafa;
   /* margin: 0 0 0.5rem 0; */
-  padding: 0 0 1rem 0;
-  height: 8%;
+  padding: 0 0 0 0;
 
   button {
+    position: fixed;
+    bottom: 1rem;
     font-weight: bold;
   }
 
