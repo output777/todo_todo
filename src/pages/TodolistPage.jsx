@@ -70,10 +70,6 @@ const StNavBox = styled.div`
   display: ${(props) => props.display};
   justify-content: center;
   align-items: center;
-
-  @media screen and (min-width: 768px) {
-    width: 600px;
-  }
 `;
 
 const StPlusBtnBox = styled.div`
