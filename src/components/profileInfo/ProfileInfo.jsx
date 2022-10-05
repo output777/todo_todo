@@ -175,31 +175,24 @@ const ProfileInfo = () => {
           <p>회원 정보를 입력해주세요</p>
         </div>
       </StInfoTitle>
-      <div
-        style={{
-          padding: "0rem 1rem 0rem 1rem",
-          height: "100%",
-          background: "#fff",
-          fontFamily: "SUIT-Regular, sans-serif",
-        }}
-      >
+      <div className="infoBody">
         <StInfoNicknameBox>
           <p>닉네임</p>
 
           <form ref={nicknameRef} onSubmit={onSubmitNicknameCheckHandler}>
             {isNicknameCheck && nicknameCheck?.includes("가능") ? (
               <input
-                type='text'
-                placeholder='2-12자의 영문,한글,숫자 사용 가능'
+                type="text"
+                placeholder="2-12자의 영문,한글,숫자 사용 가능"
                 value={nickname}
                 onChange={onChangeNicknameHandler}
-                className='checkedInput'
+                className="checkedInput"
               />
             ) : (
               <>
                 <input
-                  type='text'
-                  placeholder='2-12자의 영문,한글,숫자 사용 가능'
+                  type="text"
+                  placeholder="2-12자의 영문,한글,숫자 사용 가능"
                   value={nickname}
                   onChange={onChangeNicknameHandler}
                 />
@@ -211,7 +204,7 @@ const ProfileInfo = () => {
         </StInfoNicknameBox>
         <StHighschoolBox>
           <p>고등학교</p>
-          <div className='gradeBox'>
+          <div className="gradeBox">
             <div ref={oneRef} onClick={onClickOneRefHandler}>
               1학년
             </div>
@@ -222,10 +215,10 @@ const ProfileInfo = () => {
               3학년
             </div>
           </div>
-          <div className='inputBox' style={{ display: "flex" }}>
+          <div className="inputBox" style={{ display: "flex" }}>
             <input
-              type='text'
-              placeholder='고등학교를 검색해주세요'
+              type="text"
+              placeholder="고등학교를 검색해주세요"
               value={highschoolInput}
               onChange={onChangeSearchHandler}
               ref={highSchoolSearchInput}
@@ -233,13 +226,13 @@ const ProfileInfo = () => {
             {highschoolInput.length > 0 ? (
               <button
                 onClick={onClickSearchCancelHandler}
-                className='cancelSvg'
+                className="cancelSvg"
               >
-                <img src={cancelSvg} alt='search' />
+                <img src={cancelSvg} alt="search" />
               </button>
             ) : (
               <button>
-                <img src={searchSvg} alt='search' />
+                <img src={searchSvg} alt="search" />
               </button>
             )}
           </div>
@@ -247,17 +240,17 @@ const ProfileInfo = () => {
         <StHighschoolSearchBox>
           {highschoolInput.length > 0
             ? highschoolResult.length > 0 &&
-            highschoolResult.map((data, index) => (
-              <div className='content' key={index}>
-                <div className='school' onClick={onClickSelectHandler}>
-                  {data.schoolName}
+              highschoolResult.map((data, index) => (
+                <div className="content" key={index}>
+                  <div className="school" onClick={onClickSelectHandler}>
+                    {data.schoolName}
+                  </div>
+                  <div className="region">
+                    <img src={regionSvg} alt="addressIcon" />
+                    {data.address}
+                  </div>
                 </div>
-                <div className='region'>
-                  <img src={regionSvg} alt='addressIcon' />
-                  {data.address}
-                </div>
-              </div>
-            ))
+              ))
             : null}
         </StHighschoolSearchBox>
 
@@ -267,9 +260,9 @@ const ProfileInfo = () => {
             ref={startButton}
             disabled={
               isNicknameCheck &&
-                nicknameCheck?.includes("가능") &&
-                grade !== null &&
-                highschoolResultClick
+              nicknameCheck?.includes("가능") &&
+              grade !== null &&
+              highschoolResultClick
                 ? false
                 : "disabled"
             }
@@ -283,15 +276,24 @@ const ProfileInfo = () => {
 };
 
 const StDiv = styled.div`
-  width:100%;
+  width: 100%;
   height: 100%;
-  box-sizing:border-box;
+  box-sizing: border-box;
+  font-family: "SUIT-Regular", sans-serif;
+
+  .infoBody {
+    padding: 0rem 1rem 0rem 1rem;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    font-family: "SUIT-Regular", sans-serif;
+  }
 `;
 
 const StInfoTitle = styled.div`
   background-color: white;
   font-size: 1.4rem;
   font-weight: bold;
+  font-family: "SUIT-Regular", sans-serif;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   height: 72px;
@@ -401,7 +403,7 @@ const StHighschoolBox = styled.div`
   & p {
     margin-bottom: 0.5rem;
     font-weight: bold;
-    margin-top:0;
+    margin-top: 0;
   }
 
   & .gradeBox {
@@ -465,7 +467,7 @@ const StHighschoolSearchBox = styled.div`
   width: 100%;
   background-color: #fafafa;
   overflow: scroll;
-  height:40%;
+  height: 40%;
   border-radius: 10px;
 
   & .content {
