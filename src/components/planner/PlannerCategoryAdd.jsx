@@ -213,12 +213,12 @@ const PlannerCategoryAdd = () => {
           <p>삭제하면 연결돼있는 투두가</p>
           <p>모두 사라집니다.</p>
           <StDeleteBtnbox>
-            <StModalCancelBtn onClick={onClickEditCategoryNameDeleteCancel}>
-              취소
-            </StModalCancelBtn>
             <StModalAddBtn onClick={onClickEditCategoryNameDeleteCheck}>
               확인
             </StModalAddBtn>
+            <StModalCancelBtn onClick={onClickEditCategoryNameDeleteCancel}>
+              취소
+            </StModalCancelBtn>
           </StDeleteBtnbox>
         </StModalBtnBox>
       </Modal>

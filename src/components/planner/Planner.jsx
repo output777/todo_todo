@@ -360,12 +360,12 @@ const Planner = ({ modalVisible, setModalVisible }) => {
           <p className='title'>투두를 삭제하시겠습니까?</p>
           <p>삭제하면 다시 불러올 수 없습니다</p>
           <StDeleteBtnbox>
-            <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
-              취소
-            </StModalCancelBtn>
             <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
               확인
             </StModalAddBtn>
+            <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
+              취소
+            </StModalCancelBtn>
           </StDeleteBtnbox>
         </StModalBtnBox>
       </Modal>
@@ -521,7 +521,7 @@ const StModalBtnBox = styled.div`
   padding: 1rem;
   box-sizing: border-box;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 40px;
   & p {
@@ -704,12 +704,12 @@ const StEditBtnBox = styled.div`
 const StEditBtnbox = styled.div`
   display: flex;
   position: relative;
-  top: 20px;
+  top: 10px;
 `;
 
 const StDeleteBtnbox = styled.div`
   display: flex;
   position: relative;
-  top: 30px;
+  top: 10px;
 `;
 export default Planner;
