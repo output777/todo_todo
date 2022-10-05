@@ -409,6 +409,7 @@ const StRankingPhrases = styled.div`
   flex-direction: row;
   align-items: center;
   position: sticky;
+  z-index: 1;
   top: 0;
   background-color: #fafafa;
   margin-left: 22px;
@@ -421,6 +422,7 @@ const StRankingBtnBox = styled.div`
   margin-left: 22px;
   margin-bottom: 32px;
   position: sticky;
+  z-index: 1;
   top: 2.6em;
 `;
 
