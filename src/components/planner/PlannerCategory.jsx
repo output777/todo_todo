@@ -56,12 +56,14 @@ const PlannerCategory = () => {
     // length를 구해놓고 for문을 돌리면 성능이 빨라짐 -> 코드 수정하기
     if (todos.length > 0) {
       for (let i = 0; i < category.length; i++) {
-        const data = todos.filter((data) => data.category === category[i].title);
+        const data = todos.filter(
+          (data) => data.category === category[i].title
+        );
         arr.push(data);
       }
     }
 
-    console.log('arr', arr)
+    console.log("arr", arr);
 
     if (arr.length > 0) {
       for (let i = 0; i < arr.length; i++) {
@@ -114,15 +116,20 @@ const PlannerCategory = () => {
                   className='top'
                   onClick={onClickSelectCategoryToTodoListHandler}
                 >
-                  <p className='title'>{data.title}</p>
+                  <p className='title' onClick={(e) => e.stopPropagation()}>
+                    {data.title}
+                  </p>
                   {/* filter undefined 에러 확인하기 */}
                   <p onClick={(e) => e.stopPropagation()}>
-                    {
-                      categoryTodoList.length === 0 ? 0 : categoryTodoList[index].filter(
-                        (data) => data.complete === true
-                      ).length
-                    }
-                    /{categoryTodoList.length === 0 ? 0 : categoryTodoList[index].length}
+                    {categoryTodoList.length === 0
+                      ? 0
+                      : categoryTodoList[index].filter(
+                          (data) => data.complete === true
+                        ).length}
+                    /
+                    {categoryTodoList.length === 0
+                      ? 0
+                      : categoryTodoList[index].length}
                   </p>
                 </div>
                 <StProgressBarBox onClick={(e) => e.stopPropagation()}>
@@ -149,8 +156,8 @@ const StDiv = styled.div`
   overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
   -ms-overflow-style: none;
-  &::-webkit-scrollbar{
-  display:none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
   & .header {
@@ -158,7 +165,7 @@ const StDiv = styled.div`
     top: 0;
 
     width: 100%;
-    height: 71px;
+    height: 72px;
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;
@@ -235,7 +242,6 @@ const StProgressBar = styled.div`
       `;
     }
   }};
-  transition: all 0.3s;
   height: 13px;
   border-radius: 10px;
 `;

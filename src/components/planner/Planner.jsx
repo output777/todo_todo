@@ -157,7 +157,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
 
   useEffect(() => {
     console.log("todos", todos);
-    if (todos !== '') {
+    if (todos !== "") {
       const data = todos.filter((data) => data.category === categoryName);
       console.log("data", data);
       setTodoList([...data]);
@@ -285,15 +285,15 @@ const Planner = ({ modalVisible, setModalVisible }) => {
           <StTodoInput
             minLength='2'
             maxLength='15'
-            placeholder='투두를 추가해주세요.(2-15자 이내)'
+            placeholder='내용을 입력해주세요.(2-15자 이내)'
             type='text'
             value={todo}
             onChange={onChangeInputHandler}
             ref={todoInputRef}
           />
           <StEditBtnbox>
-            <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
             <StModalAddBtn onClick={onClickTodoAddHandler}>추가</StModalAddBtn>
+            <StModalCancelBtn onClick={closeModal}>취소</StModalCancelBtn>
           </StEditBtnbox>
         </StModalBtnBox>
       </Modal>
@@ -333,12 +333,12 @@ const Planner = ({ modalVisible, setModalVisible }) => {
                 onChange={onChangeInputHandler}
               />
               <StEditBtnbox>
-                <StModalCancelBtn onClick={onClickEditTodoNameCancel}>
-                  취소
-                </StModalCancelBtn>
                 <StModalAddBtn onClick={onClickEditTodoHandler}>
                   확인
                 </StModalAddBtn>
+                <StModalCancelBtn onClick={onClickEditTodoNameCancel}>
+                  취소
+                </StModalCancelBtn>
               </StEditBtnbox>
             </>
           )}
@@ -360,12 +360,12 @@ const Planner = ({ modalVisible, setModalVisible }) => {
           <p className='title'>투두를 삭제하시겠습니까?</p>
           <p>삭제하면 다시 불러올 수 없습니다</p>
           <StDeleteBtnbox>
-            <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
-              취소
-            </StModalCancelBtn>
             <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
               확인
             </StModalAddBtn>
+            <StModalCancelBtn onClick={onClickEditTodoDeleteCancel}>
+              취소
+            </StModalCancelBtn>
           </StDeleteBtnbox>
         </StModalBtnBox>
       </Modal>
@@ -405,14 +405,14 @@ const StDiv = styled.div`
   & .header {
     width: 100%;
     /* min-width: 360px; */
-    height: 110px;
+    height: 112px;
     position: fixed;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #f1f3f5;
     box-sizing: border-box;
-    z-index:5;
+    z-index: 5;
 
     @media screen and (min-width: 768px) {
       width: 600px;
@@ -422,7 +422,7 @@ const StDiv = styled.div`
 
 const StHeaderBox = styled.div`
   display: flex;
-  width:100%;
+  width: 100%;
   height: 50px;
   justify-content: space-between;
   align-items: center;
@@ -521,7 +521,7 @@ const StModalBtnBox = styled.div`
   padding: 1rem;
   box-sizing: border-box;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 40px;
   & p {
@@ -534,7 +534,7 @@ const StModalBtnBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 240px;
+    width: 250px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
   }
@@ -553,14 +553,16 @@ const StModalBtnBox = styled.div`
 const StTodoInput = styled.input`
   // props로 입력할 때 마다 border 색 변경하기
   border: 1px solid #d7d5d5;
-  margin-top:10px;
+  margin-top: 10px;
   height: 25px;
   width: 100%;
   padding: 0.5rem;
   border-radius: 16px;
   outline: none;
   resize: none;
-  &:focus {border-color:#FF8F27
+  &:focus {
+    border-color: #ff8f27;
+  }
 `;
 
 const StModalBtn = styled.button`
@@ -582,12 +584,12 @@ const StModalBtn = styled.button`
 `;
 
 const StTodoContainer = styled.div`
-  padding: 10px 20px;
+  padding: 10px 20px 0px 20px;
   transform: translateY(100px);
 `;
 
 const StTodoContainerComplete = styled.div`
-  padding: 10px 20px 71px 20px;
+  padding: 0px 20px 71px 20px;
   transform: translateY(100px);
 `;
 
@@ -638,9 +640,11 @@ const StModalAddBtn = styled.button`
   border-top: 1px solid #f1f3f5;
   border-left: none;
   border-bottom: none;
-  border-radius: 0 0 16px 0;
+  border-radius: 0 0 0 16px;
   background-color: white;
   color: #ff8f27;
+  font-family: "SUIT-Regular";
+  font-size: 16px;
 
   &:last-child {
     border-bottom: none;
@@ -656,11 +660,14 @@ const StModalCancelBtn = styled.button`
   outline: none;
   border-left: none;
   border-top: 1px solid #f1f3f5;
-  border-right: 1px solid #f1f3f5;
+  border-left: 1px solid #f1f3f5;
+  border-right: none;
   border-bottom: none;
-  border-radius: 0 0 0 16px;
+  border-radius: 0 0 16px 0;
   background-color: white;
   color: black;
+  font-family: "SUIT-Regular";
+  font-size: 16px;
 
   &:last-child {
     border-bottom: none;
@@ -681,6 +688,8 @@ const StModalDeleteBtn = styled.button`
   border-right: none;
   border-radius: 0 0 16px 16px;
   background-color: white;
+  font-size: 16px;
+  font-family: "SUIT-Regular";
 `;
 
 const StbuttonSet = styled.div`
@@ -695,12 +704,12 @@ const StEditBtnBox = styled.div`
 const StEditBtnbox = styled.div`
   display: flex;
   position: relative;
-  top: 20px;
+  top: 10px;
 `;
 
 const StDeleteBtnbox = styled.div`
   display: flex;
   position: relative;
-  top: 30px;
+  top: 10px;
 `;
 export default Planner;
