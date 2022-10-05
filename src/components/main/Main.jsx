@@ -412,7 +412,7 @@ const StRankingPhrases = styled.div`
   z-index: 1;
   top: 0;
   background-color: #fafafa;
-  margin-left: 22px;
+  padding-left: 22px;
   padding-bottom: 18px;
 `;
 
