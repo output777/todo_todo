@@ -77,7 +77,7 @@ const Profile = () => {
             <img
               src={
                 userInfo?.profileImage === null ||
-                  userInfo?.profileImage === "null"
+                userInfo?.profileImage === "null"
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
@@ -185,7 +185,7 @@ const StProfileContainer = styled.div`
     height: 72px;
     background-color: #fff;
     color: black;
-    box-sizing:border-box;
+    box-sizing: border-box;
     padding: 0 26.82px 0 22px;
 
     .title {
@@ -207,6 +207,7 @@ const StImgInfoBox = styled.div`
   height: auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const StImg = styled.div`
@@ -265,6 +266,8 @@ const StInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 
   .nextToPicture {
     width: 57px;
