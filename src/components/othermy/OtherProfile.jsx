@@ -154,20 +154,20 @@ const OtherProfile = () => {
             <div>
               <p>
                 {userRank[1].ranking === 0
-                  ? "-"
-                  : `${userRank[1].ranking}`}위
+                  ? "-위 "
+                  : `${userRank[1].ranking}위 `}
                 {userRank[1].score === 0
-                  ? "-"
-                  : (userRank[1].score / 7).toFixed(2)}점
+                  ? "-점"
+                  : `${(userRank[1].score / 7).toFixed(2)}점`}
               </p>
               <p>주간 점수</p>
             </div>
             <div>
               <p>
                 {userRank[2].ranking === 0
-                  ? "- "
-                  : `${userRank[2].ranking}`}위
-                {userRank[2].score === 0 ? "-" : ((userRank[2].score / month) * 10).toFixed(2)}점
+                  ? "-위 "
+                  : `${userRank[2].ranking}위 `}
+                {userRank[2].score === 0 ? "-점 " : `${((userRank[2].score / month) * 10).toFixed(2)}점`}
               </p>
               <p>월간 점수</p>
             </div>

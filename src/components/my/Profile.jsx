@@ -218,7 +218,7 @@ const StImg = styled.div`
   position: relative;
 
   img {
-    @media screen and (max-device-width: 400px) {
+    @media screen and (max-device-width: 899px) {
       width: 86px;
       height: 86px;
     }

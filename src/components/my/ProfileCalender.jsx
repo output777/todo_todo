@@ -24,9 +24,7 @@ const ProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelect
   return (
     <StDiv>
       <ReactCalendar
-        // onChange={setSelectDate}
         onClickDay={selectDateHandler}
-        // value={selectDate}
         locale='Korean'
         formatDay={(locale, date) => dayjs(date).format("DD")}
         calendarType='US'
@@ -38,12 +36,19 @@ const ProfileCalender = ({ setCalenderdate, setFirstCheck, selectDate, setSelect
 export default ProfileCalender;
 
 const StDiv = styled.div`
+    width: 100%;
+    z-index:10;
+    background-color:rgba(0,0,0,.2);
+
   .react-calendar {
-    width: 350px;
-    max-width: 100%;
-    border: 1px solid #a0a096;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.125em;
+    width: 100%;
+    background: white;
+    /* border: 1px solid #a0a096; */
+    font-family: 'SpoqaHanSansNeo-Regular', sans-serif;
+    font-size:1rem;
+    line-height: 17px;
+    z-index:10;
+    border:none;
   }
   .react-calendar--doubleView {
     width: 700px;
@@ -76,11 +81,13 @@ const StDiv = styled.div`
     display: flex;
     height: 44px;
     margin-bottom: 1em;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
   }
   .react-calendar__navigation button {
     min-width: 44px;
     background: none;
-    color: #ff8f27;
+    color: black;
   }
   .react-calendar__navigation button:disabled {
     background-color: #f0f0f0;
@@ -98,6 +105,12 @@ const StDiv = styled.div`
   }
   .react-calendar__month-view__weekdays__weekday {
     padding: 0.5em;
+    font-weight: 500;
+    color: #9F9E9E;
+
+    & abbr[title] {
+    text-decoration: none;
+    } 
   }
   .react-calendar__month-view__weekNumbers .react-calendar__tile {
     display: flex;
@@ -106,8 +119,11 @@ const StDiv = styled.div`
     font-size: 0.75em;
     font-weight: bold;
   }
+  .react-calendar__month-view__days__day {
+    color:#111;
+  }
   .react-calendar__month-view__days__day--weekend {
-    color: red;
+    color: #111;
   }
   .react-calendar__month-view__days__day--neighboringMonth {
     color: #d7d5d5;
@@ -167,5 +183,26 @@ const StDiv = styled.div`
   }
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
+  }
+  .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+    font-size:24px;
+    padding-left:27px;
+    color:#FF7B00;
+  }
+  .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+    font-size:24px;
+    padding-right:27px;
+    color:#FF7B00;
+  }
+  .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button {
+    display: none;
+  }
+  .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
+    display: none;
+  }
+  .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
+    font-family: 'SUIT-Regular', sans-serif;
+    font-weight:700;
+    font-size: 17px;
   }
 `;

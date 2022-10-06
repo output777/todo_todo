@@ -238,4 +238,5 @@ const StGoogleBtnFont = styled.span`
   position: relative;
   left: 5px;
   font-size: 16px;
+  color: #111;
 `;
