@@ -156,14 +156,14 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='170px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>{selectCategory?.title}</p>
+          <p className='edittitle'>{selectCategory?.title}</p>
           {!editCategoryName ? (
             <StEditBtnBox>
               <p className='updatetitle' onClick={onClickEditCategoryName}>
@@ -202,16 +202,16 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='170px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
           <p className='title'>'{selectCategory?.title}'을 삭제하시겠습니까?</p>
-          <p>삭제하면 연결돼있는 투두가</p>
-          <p>모두 사라집니다.</p>
+          <p className='confirm'>삭제하면 연결돼있는 투두가</p>
+          <p className='confirm'>모두 사라집니다.</p>
           <StDeleteBtnbox>
             <StModalAddBtn onClick={onClickEditCategoryNameDeleteCheck}>
               확인
@@ -228,9 +228,9 @@ const PlannerCategoryAdd = () => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='180px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
@@ -310,7 +310,14 @@ const StModalBtnBox = styled.div`
     /* padding: 5px; */
   }
 
+  & p.confirm {
+    position: relative;
+    top: 7px;
+  }
+
   & p.updatetitle {
+    font-size: 16px;
+    font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -320,9 +327,19 @@ const StModalBtnBox = styled.div`
   }
 
   & p.title {
+    font-size: 17px;
+    margin-top: 15px;
     font-weight: 600;
     position: relative;
     bottom: 5px;
+  }
+
+  & p.edittitle {
+    font-size: 17px;
+    margin-top: 15px;
+    font-weight: 600;
+    position: relative;
+    bottom: 10px;
   }
 
   & .btnBox {
@@ -335,10 +352,12 @@ const StCategoryInput = styled.input`
   border: 1px solid #d7d5d5;
   height: 25px;
   margin-top: 10px;
-  width: 100%;
+  width: 250px;
   padding: 0.5rem;
   border-radius: 16px;
   outline: none;
+  font-size: 15px;
+  font-family: "SUIT-Regular";
   &:focus {
     border-color: #ff8f27;
   }
@@ -348,17 +367,18 @@ const StModalAddBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
-  height: 40px;
+  width: 145px;
+  height: 50px;
   outline: none;
   border-right: none;
   border-top: 1px solid #f1f3f5;
   border-left: none;
   border-bottom: none;
-  border-radius: 0 0 0 16px;
+  border-radius: 0 0 0 40px;
   background-color: white;
   color: #ff8f27;
   font-family: "SUIT-Regular";
+  font-weight: 600;
   font-size: 16px;
 
   &:last-child {
@@ -370,18 +390,19 @@ const StModalCancelBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
-  height: 40px;
+  width: 145px;
+  height: 50px;
   outline: none;
   border-left: none;
   border-top: 1px solid #f1f3f5;
   border-left: 1px solid #f1f3f5;
   border-right: none;
   border-bottom: none;
-  border-radius: 0 0 16px 0;
+  border-radius: 0 0 40px 0;
   background-color: white;
   color: black;
   font-family: "SUIT-Regular";
+  font-weight: 600;
   font-size: 16px;
 
   &:last-child {
@@ -404,11 +425,14 @@ const StModalDeleteBtn = styled.button`
   border-radius: 0 0 16px 16px;
   background-color: white;
   font-size: 16px;
+  font-weight: 600;
   font-family: "SUIT-Regular";
 `;
 
 const StbuttonSet = styled.div`
   display: flex;
+  position: relative;
+  top: 10px;
 `;
 
 const StEditBtnBox = styled.div`
