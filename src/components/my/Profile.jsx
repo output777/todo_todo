@@ -25,11 +25,9 @@ const Profile = () => {
 
   const { userInfo } = useSelector((state) => state.my);
   const { images } = useSelector((state) => state.my);
-  console.log("userInfo", userInfo);
   const { profileImage } = useSelector((state) => state.my);
   const { motto } = useSelector((state) => state.my);
   const { followcnt } = useSelector((state) => state.my);
-  console.log(followcnt);
 
   const [edit, setEdit] = useState(false);
   const [mottoInput, setmottoInput] = useState("");
@@ -61,14 +59,14 @@ const Profile = () => {
   return (
     <StContainer>
       <StProfileContainer>
-        <div className="titleDiv">
-          <div className="title">마이페이지</div>
+        <div className='titleDiv'>
+          <div className='title'>마이페이지</div>
           <img
             src={settingSvg}
             onClick={() => {
               navigate("/setting");
             }}
-            alt="settingImg"
+            alt='settingImg'
           />
         </div>
         <StLine></StLine>
@@ -81,48 +79,48 @@ const Profile = () => {
                   ? profileImgSvg
                   : userInfo?.profileImage
               }
-              alt="profileImage"
+              alt='profileImage'
               onError={handleImgError}
             />
           </StImg>
           <StInfo>
-            <div className="nextToPicture">
-              <span className="count">
+            <div className='nextToPicture'>
+              <span className='count'>
                 {images === null || images.errorMessage !== undefined
                   ? 0
                   : images.length}
               </span>
-              <span className="text">사진</span>
+              <span className='text'>사진</span>
             </div>
             <div
-              className="nextToPicture"
+              className='nextToPicture'
               onClick={() => {
                 navigate(`/follower/${nickname}`);
               }}
             >
-              <span className="count">
+              <span className='count'>
                 {followcnt?.followerCnt === null ? 0 : followcnt?.followerCnt}
               </span>
-              <span className="text">팔로워</span>
+              <span className='text'>팔로워</span>
             </div>
             <div
-              className="nextToPicture"
+              className='nextToPicture'
               onClick={() => {
                 navigate(`/following/${nickname}`);
               }}
             >
-              <span className="count">
+              <span className='count'>
                 {followcnt?.followingCnt === null ? 0 : followcnt?.followingCnt}
               </span>
-              <span className="text">팔로잉</span>
+              <span className='text'>팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
         <StStatusDiv>
-          <div className="userName">
+          <div className='userName'>
             {nickname == null || nickname === "null" ? "" : nickname}
           </div>
-          <div className="myMotto">
+          <div className='myMotto'>
             {userInfo?.myMotto == null ? "" : userInfo?.myMotto}
           </div>
         </StStatusDiv>
@@ -223,8 +221,8 @@ const StImg = styled.div`
       height: 86px;
     }
     @media screen and (min-device-width: 900px) {
-      width: 8rem;
-      height: 8rem;
+      width: 7rem;
+      height: 7rem;
     }
     border-radius: 100px;
     object-fit: cover;
@@ -244,7 +242,7 @@ const StInfo = styled.div`
   }
 
   .nextToPicture {
-    width: 57px;
+    width: 23%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -258,17 +256,17 @@ const StInfo = styled.div`
         font-size: 1.1rem;
       }
       @media screen and (min-device-width: 900px) {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     }
     .text {
       color: gray;
       font-weight: 7000;
       @media screen and (max-device-width: 899px) {
-        font-size: 0.8rem;
+        font-size: 1rem;
       }
       @media screen and (min-device-width: 900px) {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
   }

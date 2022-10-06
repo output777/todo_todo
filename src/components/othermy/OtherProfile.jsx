@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __getTotalRate,
-  __reset,
-} from "../../redux/modules/mainSlice";
+import { __getTotalRate, __reset } from "../../redux/modules/mainSlice";
 import {
   __getOtherInfo,
   __getFollowInfo,
@@ -30,13 +27,11 @@ const OtherProfile = () => {
   const [follow, setFollow] = useState();
   const [month, setMonth] = useState(null);
 
-
   const user = useSelector((state) => state.my?.userInfo);
   const userRank = useSelector((state) => state.statistics?.rankScoreData);
   const userRate = useSelector((state) => state.main?.totalRate);
   const followingList = useSelector((state) => state.my.following);
   const { followcnt } = useSelector((state) => state.my);
-
 
   useEffect(() => {
     dispatch(__getRankScoreData(params.id));
@@ -44,8 +39,6 @@ const OtherProfile = () => {
     dispatch(__getFollowingList(nickname));
     dispatch(__reset());
   }, []);
-
-
 
   useEffect(() => {
     if (followingList !== null && followingList.length > 0) {
@@ -100,13 +93,13 @@ const OtherProfile = () => {
   return (
     <>
       <StProfileContainer>
-        <div className='title'>
+        <div className="title">
           <img
             src={arrow}
             onClick={() => {
               navigate("/");
             }}
-            alt='arrowImg'
+            alt="arrowImg"
           />
         </div>
         <StLine />
@@ -114,40 +107,40 @@ const OtherProfile = () => {
           <StImg>
             <img
               src={user.profileImage === "" ? profileImgSvg : user.profileImage}
-              alt='profile'
+              alt="profile"
             />
           </StImg>
           <StInfo>
-            <div className='nextToPicture'>
-              <span className='count'>
+            <div className="nextToPicture">
+              <span className="count">
                 {user.imgList === null ? 0 : user.imgList.length}
               </span>
-              <span className='text'>게시물</span>
+              <span className="text">사진</span>
             </div>
             <div
-              className='nextToPicture'
+              className="nextToPicture"
               onClick={() => {
                 navigate(`/follower/${params.id}`);
               }}
             >
-              <span className='count'>{followcnt.followerCnt}</span>
-              <span className='text'>팔로워</span>
+              <span className="count">{followcnt.followerCnt}</span>
+              <span className="text">팔로워</span>
             </div>
             <div
-              className='nextToPicture'
+              className="nextToPicture"
               onClick={() => {
                 navigate(`/following/${params.id}`);
               }}
             >
-              <span className='count'>{followcnt.followingCnt}</span>
-              <span className='text'>팔로잉</span>
+              <span className="count">{followcnt.followingCnt}</span>
+              <span className="text">팔로잉</span>
             </div>
           </StInfo>
         </StImgInfoBox>
 
         <StNameAndScore>
           <StStatusDiv>
-            <div className='userName'>{user.nickname}</div>
+            <div className="userName">{user.nickname}</div>
             <div>{user.myMotto}</div>
           </StStatusDiv>
           <StScoreBox>
@@ -167,14 +160,14 @@ const OtherProfile = () => {
                 {userRank[2].ranking === 0
                   ? "-위 "
                   : `${userRank[2].ranking}위 `}
-                {userRank[2].score === 0 ? "-점 " : `${((userRank[2].score / month) * 10).toFixed(2)}점`}
+                {userRank[2].score === 0
+                  ? "-점 "
+                  : `${((userRank[2].score / month) * 10).toFixed(2)}점`}
               </p>
               <p>월간 점수</p>
             </div>
             <div>
-              <p>
-                {userRate.achievementRate.toFixed(2)}%
-              </p>
+              <p>{userRate.achievementRate.toFixed(2)}%</p>
               <StAverageText>평균 달성률</StAverageText>
             </div>
           </StScoreBox>
@@ -183,7 +176,7 @@ const OtherProfile = () => {
         {follow === true ? (
           <StFollowingBtn onClick={followerBtnHandler}>
             팔로잉
-            <img src={follwingcheck} alt='follwingcheckImg' />
+            <img src={follwingcheck} alt="follwingcheckImg" />
           </StFollowingBtn>
         ) : (
           <StNotFollowBtn onClick={followBtnHandler}>
@@ -198,7 +191,7 @@ const OtherProfile = () => {
 
 const StStatusDiv = styled.div`
   width: 90%;
-  margin: 0 10px 0 auto;
+  margin: 0.5rem auto 0 auto;
   .userName {
     font-weight: 1000;
   }
@@ -232,7 +225,7 @@ const StProfileContainer = styled.div`
 
 const StImgInfoBox = styled.div`
   width: 90%;
-  margin: 0 auto 0 auto;
+  margin: 1rem 1rem 0 1rem;
   height: 30%;
   display: flex;
   justify-content: space-between;
@@ -240,14 +233,19 @@ const StImgInfoBox = styled.div`
 `;
 
 const StImg = styled.div`
-  width: 80px;
-  height: 80px;
   border-radius: 50%;
   position: relative;
 
-  & img {
-    width: 80px;
-    height: 80px;
+  img {
+    @media screen and (max-device-width: 899px) {
+      width: 86px;
+      height: 86px;
+    }
+    @media screen and (min-device-width: 900px) {
+      width: 7rem;
+      height: 7rem;
+    }
+
     border-radius: 50%;
   }
 
@@ -308,12 +306,24 @@ const StInfo = styled.div`
     text-align: center;
 
     .count {
-      font-size: 1.2em;
       font-weight: bold;
+      @media screen and (max-device-width: 899px) {
+        font-size: 1.1rem;
+      }
+      @media screen and (min-device-width: 900px) {
+        font-size: 1.2rem;
+      }
     }
+
     .text {
       color: gray;
       font-weight: 7000;
+      @media screen and (max-device-width: 899px) {
+        font-size: 1rem;
+      }
+      @media screen and (min-device-width: 900px) {
+        font-size: 1rem;
+      }
     }
   }
 `;
@@ -330,7 +340,7 @@ const StNotFollowBtn = styled.button`
   height: 40px;
   background: #ff8f27;
   border-radius: 16px;
-  margin: 20px auto 0rem auto;
+  margin: 20px auto 1rem auto;
   span {
     padding: 0 0 4px 4px;
     font-size: 20px;
@@ -381,15 +391,15 @@ const StScoreBox = styled.div`
   padding: 0 10px;
 
   p {
-    margin:0;
+    margin: 0;
   }
 
   div {
-    flex:1;
+    flex: 1;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     color: #9f9e9e;
 
     p:first-child {
