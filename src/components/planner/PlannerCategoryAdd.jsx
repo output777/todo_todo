@@ -133,7 +133,7 @@ const PlannerCategoryAdd = () => {
             onClick={onClickBackHandler}
           />
         </div>
-        <p>과목 목록</p>
+        <p className='title'>과목 목록</p>
         <div className='iconBox'>
           <img src={plusSvg} alt='plusIcon' onClick={onClickCategorynHandler} />
         </div>
@@ -174,6 +174,7 @@ const PlannerCategoryAdd = () => {
                   삭제
                 </StModalDeleteBtn>
               </div>
+              <StEditCancelBtn onClick={closeModal}>취소</StEditCancelBtn>
             </StEditBtnBox>
           ) : (
             <>
@@ -286,6 +287,11 @@ const StDiv = styled.div`
       align-items: center;
     }
 
+    .title {
+      font-size: 17px;
+      font-weight: 600;
+    }
+
     p {
       margin: 0;
       padding: 10px;
@@ -324,6 +330,7 @@ const StModalBtnBox = styled.div`
     width: 250px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
+    cursor: default;
   }
 
   & p.title {
@@ -340,6 +347,7 @@ const StModalBtnBox = styled.div`
     font-weight: 600;
     position: relative;
     bottom: 10px;
+    cursor: default;
   }
 
   & .btnBox {
@@ -427,12 +435,25 @@ const StModalDeleteBtn = styled.button`
   font-size: 16px;
   font-weight: 600;
   font-family: "SUIT-Regular";
+  padding-top: 10px;
 `;
 
 const StbuttonSet = styled.div`
   display: flex;
   position: relative;
   top: 10px;
+`;
+
+const StEditCancelBtn = styled.div`
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 40px;
+  position: absolute;
+  margin-top: 26px;
+  cursor: default;
 `;
 
 const StEditBtnBox = styled.div`

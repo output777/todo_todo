@@ -321,6 +321,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
                   삭제
                 </StModalDeleteBtn>
               </div>
+              <StEditCancelBtn onClick={closeModal}>취소</StEditCancelBtn>
             </StEditBtnBox>
           ) : (
             <>
@@ -442,6 +443,7 @@ const StHeaderBox = styled.div`
   }
 
   & .categoryTitle {
+    font-weight: 600;
     text-align: center;
     transform: translateX(-5px);
   }
@@ -538,6 +540,7 @@ const StModalBtnBox = styled.div`
     width: 250px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
+    cursor: default;
   }
 
   & p.title {
@@ -565,6 +568,7 @@ const StModalBtnBox = styled.div`
     position: relative;
     bottom: 12px;
     margin-bottom: 10px;
+    cursor: default;
   }
 
   & p.addtitle {
@@ -714,6 +718,7 @@ const StModalDeleteBtn = styled.button`
   width: 250px;
   height: 40px;
   color: red;
+  padding-top: 12px;
   outline: none;
   border-top: 1px solid #f1f3f5;
   border-bottom: none;
@@ -728,6 +733,19 @@ const StModalDeleteBtn = styled.button`
 
 const StbuttonSet = styled.div`
   display: flex;
+`;
+
+const StEditCancelBtn = styled.div`
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 250px;
+  height: 40px;
+  margin-top: 26px;
+
+  cursor: default;
 `;
 
 const StEditBtnBox = styled.div`

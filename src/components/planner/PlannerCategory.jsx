@@ -210,6 +210,7 @@ const StCategoryItem = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-bottom: 5px;
+    font-weight: 600;
     p {
       margin: 0;
     }
