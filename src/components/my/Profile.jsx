@@ -209,7 +209,6 @@ const StImgInfoBox = styled.div`
   }
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   margin: 1rem 1rem 0 1rem;
 `;
 

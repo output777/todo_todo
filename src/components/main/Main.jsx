@@ -437,6 +437,7 @@ const StWeeklyRankingBtn = styled.button`
   span {
     color: white;
     font-size: 14px;
+    font-family: "SUIT-Regular";
   }
 `;
 
@@ -452,6 +453,7 @@ const StMonthRankingBtn2nd = styled.button`
   span {
     color: #9f9e9e;
     font-size: 14px;
+    font-family: "SUIT-Regular";
   }
 `;
 const StMonthRankingBtn = styled.button`
@@ -466,6 +468,7 @@ const StMonthRankingBtn = styled.button`
   span {
     color: white;
     font-size: 14px;
+    font-family: "SUIT-Regular";
   }
 `;
 
@@ -480,6 +483,7 @@ const StWeeklyRankingBtn2nd = styled.button`
   span {
     color: #9f9e9e;
     font-size: 14px;
+    font-family: "SUIT-Regular";
   }
 `;
 
