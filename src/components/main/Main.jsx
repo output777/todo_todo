@@ -157,41 +157,40 @@ const Main = () => {
       </StAchievementsBox>
 
       {/* -------------- 모달창 ---------------*/}
-      {modalVisible && (
-        <Modal
-          visible={modalVisible}
-          closable={true}
-          maskClosable={true}
-          onClose={closeModal}
-          width="290px"
-          height="320px"
-          radius="48px"
-          top="40%"
-          backgroundcolor="rgba(17, 17, 17, 0.6)"
+      <Modal
+        visible={modalVisible}
+        closable={true}
+        maskClosable={true}
+        onClose={closeModal}
+        width="290px"
+        height="320px"
+        radius="48px"
+        top="40%"
+        backgroundcolor="rgba(17, 17, 17, 0.6)"
+      >
+        <StModalTop>
+          <span>투두투두 랭킹 산정 방법</span>
+        </StModalTop>
+        <Swiper
+          className="banner"
+          spaceBetween={50}
+          slidesPerView={1}
+          // navigation
+          pagination={{ clickable: true }}
         >
-          <StModalTop>
-            <span>투두투두 랭킹 산정 방법</span>
-          </StModalTop>
-          <Swiper
-            className="banner"
-            spaceBetween={50}
-            slidesPerView={1}
-            // navigation
-            pagination={{ clickable: true }}
-          >
-            <SwiperSlide>
-              <StModalBottom>
-                <StModalExplainDiv>
-                  <span>주간/월간 랭킹</span>
-                  <img src={bigTrophy} alt="bigTrophyImg" />
-                  <div>
-                    주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
-                    순으로 순위가 결정됩니다.
-                  </div>
-                </StModalExplainDiv>
-              </StModalBottom>
-            </SwiperSlide>
-            {/* <SwiperSlide>
+          <SwiperSlide>
+            <StModalBottom>
+              <StModalExplainDiv>
+                <span>주간/월간 랭킹</span>
+                <img src={bigTrophy} alt="bigTrophyImg" />
+                <div>
+                  주간 랭킹은 일주일/한달 간 측정한 투두 달성률 평균이 높은
+                  순으로 순위가 결정됩니다.
+                </div>
+              </StModalExplainDiv>
+            </StModalBottom>
+          </SwiperSlide>
+          {/* <SwiperSlide>
               <StModalBottom>
                 <StModalExplainDiv>
                   <span>학교 랭킹</span>
@@ -203,13 +202,12 @@ const Main = () => {
                 </StModalExplainDiv>
               </StModalBottom>
             </SwiperSlide> */}
-          </Swiper>
+        </Swiper>
 
-          <StCloseBtnContainer>
-            <StModalCloseBtn onClick={closeModal}>확인</StModalCloseBtn>
-          </StCloseBtnContainer>
-        </Modal>
-      )}
+        <StCloseBtnContainer>
+          <StModalCloseBtn onClick={closeModal}>확인</StModalCloseBtn>
+        </StCloseBtnContainer>
+      </Modal>
 
       {/* -------------------- 랭킹 --------------------*/}
       <div className="rank">
@@ -291,13 +289,13 @@ const StProgressBar = styled.div`
       `;
     }
   }};
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
   height: 13px;
   border-radius: 10px;
 `;
 
 const StMainContainer = styled.div`
-  height: 100%;
+  height: calc(100%-71px);
   overflow: hidden auto;
   font-family: "SUIT-Regular", sans-serif;
   -ms-overflow-style: none;
@@ -427,9 +425,8 @@ const StRankingBtnBox = styled.div`
 `;
 
 const StWeeklyRankingBtn = styled.button`
-  width: 77px;
+  width: 80px;
   height: 40px;
-  min-width: 77px;
   min-height: 40px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
@@ -442,10 +439,8 @@ const StWeeklyRankingBtn = styled.button`
 `;
 
 const StMonthRankingBtn2nd = styled.button`
-  width: 77px;
+  width: 80px;
   height: 40px;
-  min-width: 77px;
-  min-height: 40px;
   margin-left: 6px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
@@ -457,10 +452,8 @@ const StMonthRankingBtn2nd = styled.button`
   }
 `;
 const StMonthRankingBtn = styled.button`
-  width: 77px;
+  width: 80px;
   height: 40px;
-  min-width: 77px;
-  min-height: 40px;
   margin-left: 6px;
   background: #ff8f27;
   border: 1px solid #ff8f27;
@@ -473,10 +466,8 @@ const StMonthRankingBtn = styled.button`
 `;
 
 const StWeeklyRankingBtn2nd = styled.button`
-  width: 77px;
+  width: 80px;
   height: 40px;
-  min-width: 77px;
-  min-height: 40px;
   background: #ffffff;
   border: 1px solid #d7d5d5;
   border-radius: 44px;

@@ -1,16 +1,19 @@
 import "./App.css";
 import Router from "./shared/Router";
-import manSvg from './assets/img/manSvg.svg';
 import todoSvg from './assets/img/todoSvg.svg';
 import styled, { keyframes } from "styled-components";
-import bg1 from './assets/img/bg/bg1.jpg';
-import bg2 from './assets/img/bg/bg2.jpg';
-import bg3 from './assets/img/bg/bg3.jpg';
-import bg4 from './assets/img/bg/bg4.jpg';
-import bg5 from './assets/img/bg/bg5.jpg';
+import { useEffect } from "react";
 
 
 function App() {
+
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
 
   return (
     <StContainer>

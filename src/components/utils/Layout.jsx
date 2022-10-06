@@ -1,6 +1,8 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
+
+
 const Layout = ({ children }) => {
   return <StLayout>{children}</StLayout>;
 };
@@ -28,9 +30,10 @@ const layoutShow = keyframes`
   }
 `
 const StLayout = styled.div`
+
   width:100%;
   min-width: 360px;
-  height:100vh;
+  height: 100vh;
   background-color: #fafafa;
   position:relative;
   opacity:0;
@@ -48,6 +51,7 @@ const StLayout = styled.div`
 @media screen and (min-width: 768px) {
     width:600px;
   }
+
 
 `;
 
