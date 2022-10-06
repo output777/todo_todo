@@ -205,70 +205,43 @@ const StProfileContainer = styled.div`
 `;
 
 const StImgInfoBox = styled.div`
-  height: auto;
+  @media screen and (min-device-width: 900px) {
+  }
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
 `;
 
 const StImg = styled.div`
   width: auto;
-  height: 86px;
   border-radius: 100px;
   position: relative;
-  margin: 10px 0 0 22px;
 
   img {
-    width: 86px;
-    height: 86px;
+    @media screen and (max-device-width: 400px) {
+      width: 86px;
+      height: 86px;
+    }
+    @media screen and (min-device-width: 900px) {
+      width: 8rem;
+      height: 8rem;
+    }
     border-radius: 100px;
     object-fit: cover;
   }
-
-  /* & div.rank {
-    width: 70px;
-    height: 20px;
-    background-color: #e2eaff;
-    color: #618af2;
-    font-size: 0.7rem;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 0.1rem;
-    text-align: center;
-    position: absolute;
-    bottom: -5px;
-    left: 5px;
-  } */
-
-  /* & div.editBox {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ff7b00;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    position: absolute;
-    bottom: 0;
-    left: 60px;
-  } */
-
-  /* & input {
-    display: none;
-  } */
 `;
 
 const StInfo = styled.div`
-  width: 70%;
+  width: 100%;
   height: 60px;
   border-radius: 10px;
-  /* margin-left: 31px; */
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  justify-content: center;
-  margin-top: 10px;
+  @media screen and (min-device-width: 900px) {
+    gap: 1rem;
+  }
 
   .nextToPicture {
     width: 57px;
@@ -280,13 +253,23 @@ const StInfo = styled.div`
     text-align: center;
 
     .count {
-      font-size: 15px;
       font-weight: bold;
+      @media screen and (max-device-width: 899px) {
+        font-size: 1.1rem;
+      }
+      @media screen and (min-device-width: 900px) {
+        font-size: 1.5rem;
+      }
     }
     .text {
-      font-size: 13px;
       color: gray;
       font-weight: 7000;
+      @media screen and (max-device-width: 899px) {
+        font-size: 0.8rem;
+      }
+      @media screen and (min-device-width: 900px) {
+        font-size: 1.1rem;
+      }
     }
   }
 `;
@@ -295,6 +278,7 @@ const StBtn = styled.button`
   width: 140px;
   height: 38px;
   font-size: 16px;
+  color: #767676;
   font-weight: 600;
   background-color: #f8f8f8;
   border-radius: 16px;

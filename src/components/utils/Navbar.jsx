@@ -95,14 +95,11 @@ const StNav = styled.div`
   z-index: 5;
   width: 100%;
   min-width: 360px;
-  height: 71px;
-  /* top:790px; */
-  bottom: 0;
+  min-height: 71px;
   border-top: 1px solid #ddd;
   background-color: white;
-
+  box-sizing:border-box;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
 
@@ -112,14 +109,22 @@ const StNav = styled.div`
 `;
 
 const StHome = styled.img`
+  width:45px;
+  height:100%;
   cursor: pointer;
 `;
 const StStatistics = styled.img`
+  width:45px;
+  height:100%;
   cursor: pointer;
 `;
 const StPlanner = styled.img`
+  width:45px;
+  height:100%;
   cursor: pointer;
 `;
 const StMypage = styled.img`
+  width:45px;
+  height:100%;
   cursor: pointer;
 `;

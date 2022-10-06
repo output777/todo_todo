@@ -274,14 +274,14 @@ const Planner = ({ modalVisible, setModalVisible }) => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='180px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>투두 추가</p>
+          <p className='addtitle'>투두 추가</p>
           <StTodoInput
             minLength='2'
             maxLength='15'
@@ -303,16 +303,16 @@ const Planner = ({ modalVisible, setModalVisible }) => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='250px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='170px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
           {!editTodoName ? (
             <StEditBtnBox>
-              <p className='title'>{selectTodo?.content}</p>
+              <p className='edittitle'>{selectTodo?.content}</p>
               <p onClick={onClickEditTodoName} className='updatetitle'>
                 이름 변경
               </p>
@@ -321,6 +321,7 @@ const Planner = ({ modalVisible, setModalVisible }) => {
                   삭제
                 </StModalDeleteBtn>
               </div>
+              <StEditCancelBtn onClick={closeModal}>취소</StEditCancelBtn>
             </StEditBtnBox>
           ) : (
             <>
@@ -350,15 +351,15 @@ const Planner = ({ modalVisible, setModalVisible }) => {
         closable={true}
         maskClosable={true}
         onClose={closeModal}
-        width='260px'
-        height='150px'
-        radius='20px'
+        width='290px'
+        height='180px'
+        radius='40px'
         top='40%'
         backgroundcolor='rgba(0, 0, 0, 0.2)'
       >
         <StModalBtnBox>
-          <p className='title'>투두를 삭제하시겠습니까?</p>
-          <p>삭제하면 다시 불러올 수 없습니다</p>
+          <p className='deletetitle'>투두를 삭제하시겠습니까?</p>
+          <p className='confirm'>삭제하면 다시 불러올 수 없습니다</p>
           <StDeleteBtnbox>
             <StModalAddBtn onClick={onClickEditTodoDeleteCheck}>
               확인
@@ -442,6 +443,7 @@ const StHeaderBox = styled.div`
   }
 
   & .categoryTitle {
+    font-weight: 600;
     text-align: center;
     transform: translateX(-5px);
   }
@@ -531,18 +533,49 @@ const StModalBtnBox = styled.div`
   }
 
   & p.updatetitle {
+    font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 250px;
     height: 45px;
     border-top: 1px solid #f1f3f5;
+    cursor: default;
   }
 
   & p.title {
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 700;
     position: relative;
-    bottom: 5px;
+    /* bottom: 5px; */
+  }
+
+  & p.deletetitle {
+    font-size: 17px;
+    font-weight: 700;
+    position: relative;
+    top: 10px;
+  }
+
+  & p.confirm {
+    position: relative;
+    top: 5px;
+  }
+
+  & p.edittitle {
+    font-size: 17px;
+    font-weight: 700;
+    position: relative;
+    bottom: 12px;
+    margin-bottom: 10px;
+    cursor: default;
+  }
+
+  & p.addtitle {
+    font-weight: 700;
+    position: relative;
+    font-size: 17px;
+    bottom: -5px;
   }
 
   & .btnBox {
@@ -555,11 +588,13 @@ const StTodoInput = styled.input`
   border: 1px solid #d7d5d5;
   margin-top: 10px;
   height: 25px;
-  width: 100%;
+  width: 250px;
   padding: 0.5rem;
   border-radius: 16px;
   outline: none;
   resize: none;
+  font-size: 15px;
+  font-family: "SUIT-Regular";
   &:focus {
     border-color: #ff8f27;
   }
@@ -644,6 +679,7 @@ const StModalAddBtn = styled.button`
   background-color: white;
   color: #ff8f27;
   font-family: "SUIT-Regular";
+  font-weight: 600;
   font-size: 16px;
 
   &:last-child {
@@ -667,6 +703,7 @@ const StModalCancelBtn = styled.button`
   background-color: white;
   color: black;
   font-family: "SUIT-Regular";
+  font-weight: 600;
   font-size: 16px;
 
   &:last-child {
@@ -681,6 +718,7 @@ const StModalDeleteBtn = styled.button`
   width: 250px;
   height: 40px;
   color: red;
+  padding-top: 12px;
   outline: none;
   border-top: 1px solid #f1f3f5;
   border-bottom: none;
@@ -689,6 +727,7 @@ const StModalDeleteBtn = styled.button`
   border-radius: 0 0 16px 16px;
   background-color: white;
   font-size: 16px;
+  font-weight: 600;
   font-family: "SUIT-Regular";
 `;
 
@@ -696,9 +735,22 @@ const StbuttonSet = styled.div`
   display: flex;
 `;
 
+const StEditCancelBtn = styled.div`
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 250px;
+  height: 40px;
+  margin-top: 26px;
+
+  cursor: default;
+`;
+
 const StEditBtnBox = styled.div`
   position: relative;
-  top: 10px;
+  top: 20px;
 `;
 
 const StEditBtnbox = styled.div`

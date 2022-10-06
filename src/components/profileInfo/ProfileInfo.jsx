@@ -330,6 +330,7 @@ const StInfoNicknameBox = styled.div`
     border-bottom-left-radius: 10px;
     outline: none;
     font-size: 17px;
+    font-family: "SUIT-Regular", sans-serif;
   }
 
   & form input::placeholder {
@@ -435,6 +436,7 @@ const StHighschoolBox = styled.div`
     input {
       height: 54px;
       font-size: 17px;
+      font-family: "SUIT-Regular", sans-serif;
       border: 1px solid #e8e8e8;
       border-right: none;
       padding: 0 0.8rem;
@@ -473,21 +475,28 @@ const StHighschoolSearchBox = styled.div`
   /* position: relative; */
   width: 100%;
   background-color: #fafafa;
-  overflow: scroll;
-  @media screen and (max-device-height: 640px) {
+  overflow: auto;
+
+  @media screen and (max-device-height: 659px) {
     height: 35%;
   }
-  @media screen and (min-device-height: 667px) and (max-device-height: 670px) {
+  @media screen and (min-device-height: 660px) and (max-device-height: 699px) {
     height: 40%;
   }
-  @media screen and (min-device-height: 730px) and (max-device-height: 750px) {
+  @media screen and (min-device-height: 700px) and (max-device-height: 799px) {
     height: 45%;
   }
-  @media screen and (min-device-height: 810px) and (max-device-height: 820px) {
+  @media screen and (min-device-height: 800px) and (max-device-height: 860px) {
     height: 50%;
   }
 
-  /* height: 45%; */
+  @media screen and (min-device-height: 861px) and (max-device-height: 899px) {
+    height: 43%;
+  }
+
+  @media screen and (min-device-height: 900px) {
+    height: 56%;
+  }
 
   border-radius: 10px;
 
