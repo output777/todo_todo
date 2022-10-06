@@ -52,7 +52,6 @@ const OtherProfilePhotos = () => {
     setFullScreen(false);
   };
 
-
   const onClickDeleteImgHandler = () => {
     dispatch(__deleteImages(selectImgId));
     setFullScreen(false);
@@ -114,7 +113,7 @@ const OtherProfilePhotos = () => {
                 {images.indexOf(
                   images.find((data) => data.id == selectImgId)
                 ) ===
-                  images.length - 1 ? null : (
+                images.length - 1 ? null : (
                   <button
                     className="next"
                     onClick={() => onClickNextHandler(selectImgId)}
@@ -199,9 +198,10 @@ const StModalBottom = styled.div`
 `;
 
 const StContainer = styled.div`
+  margin: 6px 6px 0 6px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 114px;
+  grid-auto-rows: 40%;
   grid-gap: 3px;
   /* width: 100%; */
   /* height: auto;
@@ -209,8 +209,8 @@ const StContainer = styled.div`
   /* background-color: #f8f8f8; */
   /* padding-bottom: 70px; */
   -ms-overflow-style: none;
-  &::-webkit-scrollbar{
-  display:none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -304,7 +304,7 @@ const StSliderBox = styled.div`
 `;
 
 const StFullScreen = styled.div`
-  width:100%;
+  width: 100%;
   min-width: 360px;
   height: 100vh;
   background-color: #111111;
@@ -317,22 +317,22 @@ const StFullScreen = styled.div`
   margin: 0 auto;
 
   @media screen and (min-width: 768px) {
-    width:600px;
+    width: 600px;
   }
 
   @media screen and (min-height: 850px) {
-  height:1180px;
+    height: 1180px;
   }
 
   @media screen and (min-height: 915px) {
-  height:1024px;
+    height: 1024px;
   }
 
   @media screen and (min-height: 1024px) {
-  height:1180px;
+    height: 1180px;
   }
   @media screen and (min-height: 1180px) {
-  height:1366px;
+    height: 1366px;
   }
 
   .StSliderBoxParent {

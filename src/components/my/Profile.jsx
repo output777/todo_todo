@@ -223,8 +223,8 @@ const StImg = styled.div`
       height: 86px;
     }
     @media screen and (min-device-width: 900px) {
-      width: 8rem;
-      height: 8rem;
+      width: 7rem;
+      height: 7rem;
     }
     border-radius: 100px;
     object-fit: cover;
@@ -244,7 +244,7 @@ const StInfo = styled.div`
   }
 
   .nextToPicture {
-    width: 57px;
+    width: 23%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -258,17 +258,17 @@ const StInfo = styled.div`
         font-size: 1.1rem;
       }
       @media screen and (min-device-width: 900px) {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
     }
     .text {
       color: gray;
       font-weight: 7000;
       @media screen and (max-device-width: 899px) {
-        font-size: 0.8rem;
+        font-size: 1rem;
       }
       @media screen and (min-device-width: 900px) {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
   }
