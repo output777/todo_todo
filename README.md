@@ -1,7 +1,7 @@
-<img width='150px' src='https://user-images.githubusercontent.com/98303004/194283462-7d70182b-d4d9-4291-b050-5983b0177374.png' alt='logo'/>
-<hr />
+<img width='100%' src='https://user-images.githubusercontent.com/98303004/194334684-7ee7e923-9abd-4260-b3a6-256ee2c65682.png' alt='img1'/>
+<br />
 
-<h1>고등학생들을 위한 투두리스트📑:, '투두투두' 를 소개 합니다!! 🏫</h1>
+<h1>고등학생들을 위한 투두리스트📑, <img width='150px' src='https://user-images.githubusercontent.com/98303004/194283462-7d70182b-d4d9-4291-b050-5983b0177374.png' alt='logo'/> 를 소개 합니다!! 🏫</h1>
 <p>'투두투두'는 자신이 원하는 카테고리를 생성하고 공부해야할 To-do List를 자유롭게 작성하는 서비스입니다!🎒</p>
 <p>투두리스트 뿐만 아니라, 자신이 공부한 통계 데이터, 랭킹순위, 소셜 기능 등이 더해진 서비스입니다! 📚</p>
 <br />
