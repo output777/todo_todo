@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __getImages, __deleteImages } from "../../redux/modules/mySlice";
 import cancelSvg from "../../assets/img/cancelSvg.svg";
-import threeDotSvg from "../../assets/img/threeDotSvg.svg";
 import wastebasketSvg from "../../assets/img/myPage/wastebasket.svg";
 import Modal from "../utils/Modal";
-import UploadPhoto from "./UploadPhoto";
 
 const ProfilePhotos = () => {
   const dispatch = useDispatch();
@@ -16,11 +14,8 @@ const ProfilePhotos = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectImgId, setSelectImgId] = useState(1);
   const [selectImg, setSelectImg] = useState("");
-  const [selectImgIndex, setSelectImgIndex] = useState(0);
 
-  const { userInfo } = useSelector((state) => state.my);
   const { images } = useSelector((state) => state.my);
-  console.log("images", images);
 
   // 1
   const onClickFullScreenImgsHandler = (e) => {
@@ -46,7 +41,6 @@ const ProfilePhotos = () => {
 
   const onClickNextHandler = (id) => {
     let temp = images.find((data) => data.id === Number(id));
-
     const nextData = images[images.indexOf(temp) + 1];
     setSelectImgId(nextData.id);
     setSelectImg(nextData.imageUrl);
@@ -179,9 +173,7 @@ const ProfilePhotos = () => {
 
 const StPhotoContainer = styled.div`
   margin: 6px 6px 0 6px;
-  /* background-color: #f8f8f8; */
   height: auto;
-  /* border:1px solid red; */
   position: relative;
 `;
 
@@ -223,15 +215,10 @@ const StModalBottom = styled.div`
 `;
 
 const StContainer = styled.div`
-  /* width: 348px; */
-  /* height: auto; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 114px;
   grid-gap: 3px;
-  /* padding-bottom: 70px; */
-  /* background-color: white; */
-  /* overflow: scroll; */
 `;
 
 const StImg = styled.div`

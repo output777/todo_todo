@@ -19,10 +19,7 @@ const FollowerList = () => {
   const navigate = useNavigate();
 
   const followerList = useSelector((state) => state.my?.follower);
-  console.log(followerList);
-
   const followingList = useSelector((state) => state.my?.following);
-  // console.log(followingList);
 
   const params = useParams();
 

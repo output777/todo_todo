@@ -80,7 +80,7 @@ const InfiniteScroll = () => {
             <div>
               <StRankingNumber>{each.rank}</StRankingNumber>
               <div>
-                {console.log('aaaa', allUser.filter((data) => data.nickname === each.nickname).length === 0)}
+                {/* 영상 찍은 후 쓸데없는 코드 줄이기 */}
                 {allUser.filter((data) => data.nickname === each.nickname).length === 0
                   ?
                   <StRankingProfile
