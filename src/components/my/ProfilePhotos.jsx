@@ -217,7 +217,7 @@ const StModalBottom = styled.div`
 const StContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 114px;
+  grid-auto-rows: 40%;
   grid-gap: 3px;
 `;
 
