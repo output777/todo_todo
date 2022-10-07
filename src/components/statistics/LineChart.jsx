@@ -8,6 +8,7 @@ const LineChart = () => {
   const { lineData } = useSelector((state) => state?.statistics);
   const dispatch = useDispatch();
   const [lineDataRate, setLineDataRate] = useState([]);
+  console.log('lineData', lineData)
 
   const options = {
     legend: {
