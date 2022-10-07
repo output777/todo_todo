@@ -18,7 +18,7 @@ const InfiniteScroll = () => {
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const checkIntersect = ([entry], observer) => {
     if (entry.isIntersecting) {
@@ -46,9 +46,6 @@ const InfiniteScroll = () => {
     dispatch(__getMainRank(page));
   }, [page]);
 
-  useEffect(() => {
-    dispatch(__getMainRank(0));
-  }, []);
 
   useEffect(() => {
     let observer;

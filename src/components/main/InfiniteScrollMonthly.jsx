@@ -17,7 +17,7 @@ const InfiniteScrollMonthly = () => {
   const targetRef = useRef(null);
   const [allUser, setAllUser] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(1); // 페이지
+  const [page, setPage] = useState(0); // 페이지
   const [month, setMonth] = useState(null);
 
   let nickname = localStorage.getItem("nickname");
@@ -55,9 +55,6 @@ const InfiniteScrollMonthly = () => {
     dispatch(__getMainRankMonthly(page));
   }, [page]);
 
-  useEffect(() => {
-    dispatch(__getMainRankMonthly(0));
-  }, []);
 
   useEffect(() => {
     monthFunc();
