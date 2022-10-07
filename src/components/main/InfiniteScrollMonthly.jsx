@@ -17,7 +17,7 @@ const InfiniteScrollMonthly = () => {
   const targetRef = useRef(null);
   const [allUser, setAllUser] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false); // 로드 true, false
-  const [page, setPage] = useState(0); // 페이지
+  const [page, setPage] = useState(1); // 페이지
   const [month, setMonth] = useState(null);
 
   let nickname = localStorage.getItem("nickname");
@@ -56,6 +56,10 @@ const InfiniteScrollMonthly = () => {
   }, [page]);
 
   useEffect(() => {
+    dispatch(__getMainRankMonthly(0));
+  }, []);
+
+  useEffect(() => {
     monthFunc();
   }, []);
 
@@ -67,6 +71,7 @@ const InfiniteScrollMonthly = () => {
       });
       observer.observe(targetRef.current);
     }
+
 
     return () => {
       observer && observer.disconnect();
@@ -100,8 +105,8 @@ const InfiniteScrollMonthly = () => {
                       .profileImage === ""
                       ? profileImgSvg
                       : allUser.filter(
-                          (data) => data.nickname === each.nickname
-                        )[0].profileImage
+                        (data) => data.nickname === each.nickname
+                      )[0].profileImage
                   }
                   alt='profileImg'
                 />
