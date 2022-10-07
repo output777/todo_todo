@@ -18,7 +18,7 @@ const InfiniteScroll = () => {
 
   let nickname = localStorage.getItem("nickname");
   const targetRef = useRef(null);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const checkIntersect = ([entry], observer) => {
     if (entry.isIntersecting) {
@@ -45,6 +45,10 @@ const InfiniteScroll = () => {
   useEffect(() => {
     dispatch(__getMainRank(page));
   }, [page]);
+
+  useEffect(() => {
+    dispatch(__getMainRank(0));
+  }, []);
 
   useEffect(() => {
     let observer;
@@ -88,8 +92,8 @@ const InfiniteScroll = () => {
                       )[0].profileImage === ""
                         ? profileImgSvg
                         : allUser.filter(
-                            (data) => data.nickname === each.nickname
-                          )[0].profileImage
+                          (data) => data.nickname === each.nickname
+                        )[0].profileImage
                     }
                     alt='profileImg'
                   />

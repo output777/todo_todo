@@ -99,7 +99,7 @@ export const __getMainRank = createAsyncThunk(
       };
 
       const data = await axios.get(
-        `${BASE_URL}/rank/weekly?page=${payload}&size=${10}`,
+        `${BASE_URL}/rank/weekly?page=${payload}&size=${3}`,
         // payload,
         config
       );
@@ -123,7 +123,7 @@ export const __getMainRankMonthly = createAsyncThunk(
       };
 
       const data = await axios.get(
-        `${BASE_URL}/rank/monthly?page=${payload}&size=${10}`,
+        `${BASE_URL}/rank/monthly?page=${payload}&size=${3}`,
         // payload,
         config
       );
