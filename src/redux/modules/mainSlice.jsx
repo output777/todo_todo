@@ -103,8 +103,6 @@ export const __getMainRank = createAsyncThunk(
         // payload,
         config
       );
-
-      console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data.content);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -262,7 +260,6 @@ export const mainSlice = createSlice({
     },
     [__getMainRank.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('__getMainRank.action.payload', action.payload);
       state.mainRankList.push(...action.payload);
       state.mainRankListMonthly = [];
       // state.mainRankListSchool = [];
@@ -277,7 +274,6 @@ export const mainSlice = createSlice({
     },
     [__getMainRankMonthly.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('__getMainRankMonthly.action.payload', action.payload);
       state.mainRankListMonthly.push(...action.payload);
       state.mainRankList = [];
       // state.mainRankListSchool = [];
